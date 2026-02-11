@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internal Portal | BuildSignals</title>
+    <title>Candidate Portal | BuildSignals</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -30,7 +30,6 @@
             padding: 60px 20px;
         }
 
-        /* Status Badge */
         .status-header {
             text-align: center;
             margin-bottom: 40px;
@@ -39,9 +38,9 @@
         .badge {
             display: inline-block;
             padding: 6px 14px;
-            background: rgba(79, 209, 197, 0.1);
-            border: 1px solid var(--accent-teal);
-            color: var(--accent-teal);
+            background: rgba(243, 169, 82, 0.1);
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
             border-radius: 100px;
             font-size: 12px;
             font-weight: 600;
@@ -59,11 +58,10 @@
         .subtitle {
             color: var(--text-dim);
             font-size: 18px;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto 40px auto;
         }
 
-        /* Main Video Styling */
         .main-briefing {
             background: var(--card-bg);
             border-radius: 24px;
@@ -81,14 +79,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
         }
 
-        /* Video Grid Menu */
         .menu-heading {
             font-size: 24px;
             margin-bottom: 30px;
             text-align: center;
+            font-weight: 600;
         }
 
         .video-grid {
@@ -102,13 +99,12 @@
             border-radius: 20px;
             border: 1px solid #27272a;
             padding: 24px;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .menu-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-orange);
+            border-color: var(--accent-teal);
+            background: #1c1c1f;
         }
 
         .card-thumb {
@@ -120,11 +116,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
         }
 
         .menu-card h3 {
             margin: 0 0 10px 0;
-            font-size: 20px;
+            font-size: 19px;
         }
 
         .menu-card p {
@@ -133,30 +130,30 @@
             margin: 0;
         }
 
-        /* Preparation Bar */
         .prep-bar {
             margin-top: 80px;
-            background: linear-gradient(90deg, rgba(243,169,82,0.1) 0%, rgba(79,209,197,0.1) 100%);
+            background: #161618;
             border: 1px solid #27272a;
-            padding: 30px;
-            border-radius: 20px;
+            padding: 40px;
+            border-radius: 24px;
             text-align: center;
         }
 
         .btn-confirm {
             display: inline-block;
-            margin-top: 20px;
-            background: #fff;
-            color: #000;
-            padding: 16px 32px;
+            margin-top: 24px;
+            background: #ffffff;
+            color: #000000;
+            padding: 18px 36px;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            transition: opacity 0.2s;
+            font-size: 16px;
+            transition: transform 0.2s ease;
         }
 
         .btn-confirm:hover {
-            opacity: 0.9;
+            transform: scale(1.02);
         }
     </style>
 </head>
@@ -164,49 +161,43 @@
 
 <div class="container">
     <div class="status-header">
-        <span class="badge">Internal Partner Portal</span>
-        <h1>Welcome to the Team, Leo</h1>
-        <p class="subtitle">Please watch the mandatory briefing below before our scheduled interview. Then, explore the deep-dive menu to prepare for the call.</p>
+        <span class="badge">Growth Partner Interview Briefing</span>
+        <h1>Pre-Interview Overview</h1>
+        <p class="subtitle">Please complete this briefing to ensure we're aligned on the role and the mission before our scheduled 1:1 call.</p>
     </div>
 
     <section class="main-briefing">
         <div class="video-placeholder">
-            <p style="color:#444">Main Briefing: Intro + Math + Standards</p>
+            <p style="color:#666">Main Briefing Video</p>
         </div>
     </section>
 
-    <h2 class="menu-heading">Deep Dive Preparation</h2>
+    <h2 class="menu-heading">Additional Deep Dives</h2>
     
     <div class="video-grid">
         <div class="menu-card">
-            <div class="card-thumb">
-                <span style="color:var(--accent-teal)">▶</span>
-            </div>
-            <h3>The $2.8M Case Study</h3>
-            <p>See exactly how we generate a 6x ROAS for our clients.</p>
+            <div class="card-thumb">📈</div>
+            <h3>$2.8M Case Study</h3>
+            <p>See the engine that drives a 6x average return for our clients.</p>
         </div>
 
         <div class="menu-card">
-            <div class="card-thumb">
-                <span style="color:var(--accent-teal)">▶</span>
-            </div>
-            <h3>The Cold Call Script</h3>
-            <p>A 60-second walkthrough of the exact B2B script you'll use.</p>
+            <div class="card-thumb">📞</div>
+            <h3>The Script Walkthrough</h3>
+            <p>A look at the B2B high-intent leads and the triage process.</p>
         </div>
 
         <div class="menu-card">
-            <div class="card-thumb">
-                <span style="color:var(--accent-teal)">▶</span>
-            </div>
-            <h3>The $100k Vision</h3>
-            <p>From athlete to founder: Our roadmap for the year.</p>
+            <div class="card-thumb">🚀</div>
+            <h3>The $100k Roadmap</h3>
+            <p>Our vision for scaling BuildSignals and your role in it.</p>
         </div>
     </div>
 
     <div class="prep-bar">
-        <h3>Ready for the Call?</h3>
-        <p>Ensure you have accepted the Google Meet invite and tested your headset.</p>
-        <a href="https://mail.google.com" target="_blank" class="btn-confirm">Accept Google Meet Invite</a>
+        <h3>Final Checklist</h3>
+        <p style="color: var(--text-dim);">Accept the Google Meet invite, test your headset, and ensure you're in a quiet environment.</p>
+        <a href="#" class="btn-confirm">Confirm Meeting Acceptance</a>
     </div>
 </div>
 
