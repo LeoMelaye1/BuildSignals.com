@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildSignals - Potential Calculator</title>
+<style>
+    /* APPLE AESTHETIC RESET */
+    :root {
+        --bg-color: #F5F5F7;
+        --card-bg: #FFFFFF;
+        --text-main: #1D1D1F;
+        --text-sub: #86868B;
+        --accent-blue: #0071E3;
+        --accent-green: #34C759;
+        --radius: 24px;
+        --shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 0;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .calculator-card {
+        background: var(--card-bg);
+        width: 100%;
+        max-width: 500px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 40px;
+        margin: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        letter-spacing: -0.5px;
+    }
+
+    p.subtitle {
+        color: var(--text-sub);
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+
+    /* CONTROLS SECTION */
+    .control-group {
+        margin-bottom: 30px;
+        text-align: left;
+    }
+
+    .label-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-sub);
+    }
+
+    .active-val {
+        color: var(--accent-blue);
+        font-weight: 700;
+    }
+
+    /* SLIDER STYLING */
+    input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 28px;
+        width: 28px;
+        border-radius: 50%;
+        background: #FFFFFF;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+        margin-top: -10px;
+        border: 1px solid #E5E5E5;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8px;
+        cursor: pointer;
+        background: #E5E5EA;
+        border-radius: 10px;
+    }
+
+    /* BUTTON TOGGLES */
+    .skill-toggles {
+        display: flex;
+        background: #F2F2F7;
+        padding: 4px;
+        border-radius: 12px;
+        margin-top: 10px;
+    }
+
+    .toggle-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        color: var(--text-sub);
+        transition: all 0.2s;
+    }
+
+    .toggle-btn.active {
+        background: #FFFFFF;
+        color: var(--text-main);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* RESULTS SECTION */
+    .results-box {
+        background: #F5F9FF;
+        border-radius: 16px;
+        padding: 30px;
+        margin-top: 40px;
+        border: 1px solid rgba(0, 113, 227, 0.1);
+    }
+
+    .result-row {
+        margin-bottom: 20px;
+    }
+    
+    .result-row:last-child { margin-bottom: 0; }
+
+    .result-label {
+        font-size: 13px;
+        color: var(--text-sub);
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .result-value {
+        font-size: 42px;
+        font-weight: 800;
+        color: var(--text-main);
+        letter-spacing: -1px;
+    }
+
+    .result-value.monthly {
+        color: var(--accent-blue);
+    }
+
+    .math-breakdown {
+        margin-top: 15px;
+        font-size: 12px;
+        color: var(--text-sub);
+        background: rgba(255,255,255,0.5);
+        padding: 8px;
+        border-radius: 6px;
+    }
+
+    /* CTA */
+    .cta-btn {
+        display: block;
+        width: 100%;
+        background: var(--text-main);
+        color: white;
+        text-decoration: none;
+        padding: 18px;
+        border-radius: 14px;
+        font-weight: 600;
+        margin-top: 30px;
+        transition: transform 0.2s;
+    }
+    
+    .cta-btn:hover {
+        transform: scale(1.02);
+        background: #000;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="calculator-card">
+    <h1>The Potential</h1>
+    <p class="subtitle">Input your work ethic to see your output.</p>
+
+    <div class="control-group">
+        <div class="label-row">
+            <span>Daily Dials</span>
+            <span class="active-val" id="dialDisplay">200</span>
+        </div>
+        <input type="range" min="0" max="300" value="200" id="dialSlider" oninput="calculate()">
+    </div>
+
+    <div class="control-group">
+        <div class="label-row">
+            <span>Skill Level</span>
+        </div>
+        <div class="skill-toggles">
+            <button class="toggle-btn" onclick="setSkill('rookie')" id="btn-rookie">Rookie</button>
+            <button class="toggle-btn active" onclick="setSkill('pro')" id="btn-pro">Pro (Standard)</button>
+            <button class="toggle-btn" onclick="setSkill('athlete')" id="btn-athlete">Athlete</button>
+        </div>
+    </div>
+
+    <div class="results-box">
+        <div class="result-row">
+            <div class="result-label">Weekly Earnings</div>
+            <div class="result-value" id="weeklyPay">$1,325</div>
+        </div>
+        
+        <div class="result-row">
+            <div class="result-label">Monthly Potential</div>
+            <div class="result-value monthly" id="monthlyPay">$5,300</div>
+        </div>
+
+        <div class="math-breakdown" id="breakdownText">
+            Based on 6 deals closed per week.
+        </div>
+    </div>
+
+    <a href="/interview-prep" class="cta-btn">I Can Hit These Numbers</a>
+
+</div>
+
+<script>
+    // CONSTANTS FROM YOUR SLIDES
+    const BASE_WEEKLY = 125;
+    const COMM_PER_DEAL = 200;
+    const CLOSE_RATE = 0.20; // 20% close rate (Slide 3)
+
+    // VARIABLES
+    let bookRate = 0.03; // Default 3% (Slide 3)
+    let dials = 200;
+
+    function setSkill(level) {
+        // Reset buttons
+        document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + level).classList.add('active');
+
+        // Set Book Rates based on Slide 3 range (3-5%)
+        if (level === 'rookie') {
+            bookRate = 0.015; // 1.5% (Learning curve)
+        } else if (level === 'pro') {
+            bookRate = 0.03; // 3% (The Standard)
+        } else if (level === 'athlete') {
+            bookRate = 0.05; // 5% (High End)
+        }
+        calculate();
+    }
+
+    function calculate() {
+        dials = document.getElementById('dialSlider').value;
+        document.getElementById('dialDisplay').innerText = dials;
+
+        // MATH LOGIC
+        // Weekly Dials = Daily * 5 days
+        const weeklyDials = dials * 5;
+        
+        // Weekly Deals = Dials * Book Rate * Close Rate
+        // Note: We floor the deals because you can't close 0.5 of a deal
+        let weeklyDeals = (weeklyDials * bookRate * CLOSE_RATE);
+        
+        // Let's allow one decimal for average sake, or round to nearest whole for cleaner look?
+        // Let's round to 1 decimal for "run rate" accuracy, but pay needs to be realistic.
+        // Actually, let's round to nearest whole number to keep it "Real".
+        // Example: 200 dials * 5 = 1000/wk. * 0.03 = 30 appts. * 0.20 = 6 deals.
+        
+        let preciseDeals = weeklyDials * bookRate * CLOSE_RATE;
+        
+        let commission = preciseDeals * COMM_PER_DEAL;
+        let totalWeekly = BASE_WEEKLY + commission;
+        let totalMonthly = totalWeekly * 4;
+
+        // ANIMATE NUMBERS (Simple Formatting)
+        document.getElementById('weeklyPay').innerText = formatMoney(totalWeekly);
+        document.getElementById('monthlyPay').innerText = formatMoney(totalMonthly);
+        
+        // Update Breakdown Text
+        document.getElementById('breakdownText').innerText = 
+            `Based on ~${preciseDeals.toFixed(1)} deals closed per week from ${dials} daily dials.`;
+    }
+
+    function formatMoney(amount) {
+        return '$' + Math.floor(amount).toLocaleString();
+    }
+
+    // Initialize
+    calculate();
+</script>
+
+</body>
+</html>
