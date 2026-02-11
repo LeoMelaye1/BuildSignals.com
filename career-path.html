@@ -13,7 +13,7 @@
         --text-sub: #86868B;
         --accent-blue: #0071E3; 
         --success-green: #34C759;
-        --radius: 24px; /* Increased radius for modern look */
+        --radius: 24px;
         --shadow: 0 12px 40px rgba(0,0,0,0.08);
     }
 
@@ -28,173 +28,74 @@
     }
 
     .container {
-        max-width: 800px; /* Tightened container for better reading flow */
+        max-width: 800px;
         margin: 0 auto;
         padding: 60px 20px;
     }
 
-    /* HEADER SECTION */
-    header {
-        text-align: center;
-        margin-bottom: 60px;
-    }
+    /* HEADER */
+    header { text-align: center; margin-bottom: 60px; }
 
     .status-pill {
-        background: #E8F2FF;
-        color: var(--accent-blue);
-        padding: 8px 16px;
-        border-radius: 30px;
-        font-size: 13px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
+        background: #E8F2FF; color: var(--accent-blue); padding: 8px 16px; border-radius: 30px;
+        font-size: 13px; font-weight: 600; display: inline-flex; align-items: center;
+        margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); letter-spacing: 0.5px; text-transform: uppercase;
     }
-
     .status-pill span { margin-right: 8px; font-size: 16px; }
 
-    h1 {
-        font-size: 48px;
-        font-weight: 700;
-        letter-spacing: -1.5px;
-        margin: 0 0 15px 0;
-        line-height: 1.1;
-    }
+    h1 { font-size: 48px; font-weight: 700; letter-spacing: -1.5px; margin: 0 0 15px 0; line-height: 1.1; }
+    p.subtitle { font-size: 20px; color: var(--text-sub); max-width: 600px; margin: 0 auto; }
 
-    p.subtitle {
-        font-size: 20px;
-        color: var(--text-sub);
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    /* STEP BADGES */
+    /* SECTIONS */
+    .step-section { text-align: center; margin-bottom: 80px; }
     .step-badge {
-        display: inline-block;
-        background: var(--text-main);
-        color: white;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        padding: 6px 12px;
-        border-radius: 12px;
-        letter-spacing: 1px;
-        margin-bottom: 15px;
+        display: inline-block; background: var(--text-main); color: white; font-size: 11px;
+        font-weight: 700; text-transform: uppercase; padding: 6px 12px; border-radius: 12px;
+        letter-spacing: 1px; margin-bottom: 15px;
     }
+    .section-title { font-size: 28px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.5px; }
+    .section-desc { color: var(--text-sub); margin-bottom: 40px; font-size: 16px; max-width: 600px; margin-left: auto; margin-right: auto; }
 
-    /* SECTION TITLES */
-    .step-section {
-        text-align: center;
-        margin-bottom: 80px;
-    }
-
-    .section-title {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 10px;
-        letter-spacing: -0.5px;
-    }
-
-    .section-desc {
-        color: var(--text-sub);
-        margin-bottom: 40px;
-        font-size: 16px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* VIDEO PLAYERS - CINEMA STYLE */
+    /* VIDEO PLAYERS */
     .loom-container {
-        position: relative;
-        padding-bottom: 62.5%; /* Recording Aspect Ratio */
-        height: 0;
-        background: #000;
-        /* No border radius here because it lives inside the card now */
-        overflow: hidden; 
+        position: relative; padding-bottom: 62.5%; height: 0; background: #000; overflow: hidden;
+    }
+    .loom-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+    /* MAIN VIDEO WRAPPER */
+    .main-video-wrapper {
+        border-radius: var(--radius); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); margin-bottom: 20px;
     }
 
-    .loom-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
-    /* VERTICAL STACK GRID (The Fix) */
+    /* VERTICAL STACK */
     .vertical-stack {
-        display: flex;
-        flex-direction: column;
-        gap: 40px; /* Space between video cards */
-        max-width: 700px;
-        margin: 0 auto 60px auto;
+        display: flex; flex-direction: column; gap: 50px; /* Space between sections */
+        max-width: 700px; margin: 0 auto;
     }
 
     .video-card {
-        background: var(--card-bg);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        overflow: hidden; /* Ensures video stays inside rounded corners */
-        text-align: left;
+        background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow);
+        overflow: hidden; text-align: left;
     }
 
-    /* Text Content INSIDE the card (Below Video) */
-    .card-content {
-        padding: 25px 30px;
+    .card-content { padding: 25px 30px; }
+    .card-title { font-size: 20px; font-weight: 700; margin: 0 0 5px 0; color: var(--text-main); }
+    .card-desc { font-size: 15px; color: var(--text-sub); }
+
+    /* INTEGRATED CALCULATOR (Now fits inside the stack) */
+    .calculator-wrapper {
+        background: #F5F9FF; /* Slight tint to differentiate from video */
+        padding: 30px;
+        border-top: 1px solid #E5E5EA;
+    }
+    
+    .calc-header-small {
+        font-size: 14px; font-weight: 700; text-transform: uppercase; 
+        color: var(--accent-blue); margin-bottom: 20px; letter-spacing: 0.5px;
     }
 
-    .card-title {
-        font-size: 20px;
-        font-weight: 700;
-        margin: 0 0 5px 0;
-        color: var(--text-main);
-    }
-
-    .card-desc {
-        font-size: 15px;
-        color: var(--text-sub);
-    }
-
-    /* MAIN BRIEFING (STEP 1) SPECIAL STYLING */
-    .main-video-wrapper {
-        border-radius: var(--radius);
-        overflow: hidden;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* Bigger shadow for main video */
-        margin-bottom: 20px;
-    }
-
-    /* CALCULATOR STYLES */
-    .calculator-section {
-        background: #FFFFFF;
-        border-radius: 24px;
-        padding: 40px;
-        box-shadow: var(--shadow);
-        max-width: 700px; /* Match the video width */
-        margin: 0 auto 50px auto;
-        border: 1px solid #E5E5EA;
-        text-align: center;
-    }
-
-    .calc-header h2 { font-size: 24px; font-weight: 700; margin: 0 0 10px 0; }
-    .calc-header p { color: #86868B; font-size: 15px; margin-bottom: 30px; }
-
-    .calc-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-        text-align: left;
-        margin-bottom: 30px;
-    }
-
-    .input-group label {
-        display: block; font-size: 12px; font-weight: 700; 
-        text-transform: uppercase; color: #86868B; margin-bottom: 10px;
-    }
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+    .input-group label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #86868B; margin-bottom: 10px; }
 
     /* SLIDER & TOGGLES */
     .slider-container { position: relative; }
@@ -204,25 +105,23 @@
         background: #FFFFFF; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;
         margin-top: -10px; border: 1px solid #E5E5E5;
     }
-    input[type=range]::-webkit-slider-runnable-track {
-        width: 100%; height: 4px; cursor: pointer; background: #E5E5EA; border-radius: 10px;
-    }
+    input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #D1D1D6; border-radius: 10px; }
 
-    .skill-toggles { display: flex; background: #F5F5F7; padding: 4px; border-radius: 10px; }
+    .skill-toggles { display: flex; background: #E5E5EA; padding: 4px; border-radius: 10px; }
     .toggle-btn {
         flex: 1; border: none; background: transparent; padding: 8px; border-radius: 8px;
-        font-size: 13px; font-weight: 600; cursor: pointer; color: #86868B; transition: all 0.2s;
+        font-size: 12px; font-weight: 600; cursor: pointer; color: #86868B; transition: all 0.2s;
     }
     .toggle-btn.active { background: #FFFFFF; color: #000; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
     .results-display {
-        background: #F5F9FF; border-radius: 16px; padding: 30px;
+        background: #FFFFFF; border-radius: 16px; padding: 25px;
         display: flex; justify-content: space-around; align-items: center;
-        border: 1px solid rgba(0, 113, 227, 0.1);
+        border: 1px solid rgba(0, 113, 227, 0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.03);
     }
     .res-item { text-align: center; }
-    .res-label { font-size: 12px; text-transform: uppercase; color: #86868B; font-weight: 600; margin-bottom: 5px; }
-    .res-value { font-size: 32px; font-weight: 800; color: #1D1D1F; letter-spacing: -1px; }
+    .res-label { font-size: 11px; text-transform: uppercase; color: #86868B; font-weight: 600; margin-bottom: 5px; }
+    .res-value { font-size: 28px; font-weight: 800; color: #1D1D1F; letter-spacing: -1px; }
     .res-value.highlight { color: var(--accent-blue); }
 
     /* CHECKLIST */
@@ -249,10 +148,10 @@
     @media (max-width: 600px) {
         h1 { font-size: 32px; }
         .container { padding: 40px 15px; }
-        .checklist-box, .calculator-section, .video-card { padding: 25px; }
+        .checklist-box, .video-card { padding: 0; }
+        .card-content { padding: 20px; }
         .calc-grid { grid-template-columns: 1fr; gap: 20px; }
         .results-display { flex-direction: column; gap: 20px; }
-        .card-content { padding: 20px; }
     }
 </style>
 </head>
@@ -281,7 +180,7 @@
     <div class="step-section">
         <div class="step-badge">Step 2</div>
         <div class="section-title">Deep Dive: The Economics</div>
-        <div class="section-desc">Most candidates have the same questions. Watch these to get clarity.</div>
+        <div class="section-desc">Understand exactly how the "Growth Partner" model works.</div>
 
         <div class="vertical-stack">
             
@@ -292,6 +191,36 @@
                 <div class="card-content">
                     <div class="card-title">The Math Breakdown</div>
                     <div class="card-desc">How consistent performance yields $1,000+/week.</div>
+                </div>
+                
+                <div class="calculator-wrapper">
+                    <div class="calc-header-small">👇 Test The Math Yourself</div>
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label>Daily Dials: <span id="dialText">200</span></label>
+                            <div class="slider-container">
+                                <input type="range" min="0" max="300" value="200" id="dialSlider" oninput="runCalc()">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Booking Rate</label>
+                            <div class="skill-toggles">
+                                <button class="toggle-btn" onclick="setSkill(0.02, this)">2%</button>
+                                <button class="toggle-btn active" onclick="setSkill(0.05, this)">5%</button>
+                                <button class="toggle-btn" onclick="setSkill(0.08, this)">8%</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="results-display">
+                        <div class="res-item">
+                            <div class="res-label">Weekly Pay</div>
+                            <div class="res-value" id="weekOut">$1,125</div>
+                        </div>
+                        <div class="res-item">
+                            <div class="res-label">Monthly Potential</div>
+                            <div class="res-value highlight" id="monthOut">$4,500</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -315,46 +244,6 @@
                 </div>
             </div>
 
-        </div>
-
-        <div class="calculator-section">
-            <div class="calc-header">
-                <h2>Your Earning Potential</h2>
-                <p>Adjust the dials and booking rate to see the math.</p>
-            </div>
-        
-            <div class="calc-grid">
-                <div class="input-group">
-                    <label>Daily Dials: <span id="dialText">200</span></label>
-                    <div class="slider-container">
-                        <input type="range" min="0" max="300" value="200" id="dialSlider" oninput="runCalc()">
-                    </div>
-                </div>
-        
-                <div class="input-group">
-                    <label>Skill Level (Booking Rate)</label>
-                    <div class="skill-toggles">
-                        <button class="toggle-btn" onclick="setSkill(0.02, this)">Rookie</button>
-                        <button class="toggle-btn active" onclick="setSkill(0.05, this)">Pro</button>
-                        <button class="toggle-btn" onclick="setSkill(0.08, this)">Athlete</button>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="results-display">
-                <div class="res-item">
-                    <div class="res-label">Weekly Pay</div>
-                    <div class="res-value" id="weekOut">$1,125</div>
-                </div>
-                <div class="res-item">
-                    <div class="res-label">Monthly Run Rate</div>
-                    <div class="res-value highlight" id="monthOut">$4,500</div>
-                </div>
-            </div>
-            
-            <div style="font-size: 12px; color: #aaa; margin-top: 15px;">
-                *Calculated based on $125/wk base + $200 commission/deal (10% Close Rate).
-            </div>
         </div>
     </div>
 
@@ -393,7 +282,7 @@
 </div>
 
 <script>
-    let bookRate = 0.05; // Default Pro (5%)
+    let bookRate = 0.05; // Default 5%
     const BASE = 125;
     const COMM = 200;
     const CLOSE = 0.10; // 10% Close Rate
