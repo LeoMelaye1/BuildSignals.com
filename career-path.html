@@ -131,6 +131,7 @@
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 30px;
         text-align: left;
+        margin-bottom: 50px;
     }
 
     .video-card {
@@ -155,6 +156,132 @@
         font-size: 14px;
         color: var(--text-sub);
     }
+
+    /* CALCULATOR STYLES */
+    .calculator-section {
+        background: #FFFFFF;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: var(--shadow);
+        max-width: 800px;
+        margin: 0 auto 50px auto;
+        border: 1px solid #E5E5EA;
+        text-align: center;
+    }
+
+    .calc-header h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        color: #1D1D1F;
+    }
+
+    .calc-header p {
+        color: #86868B;
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+
+    .calc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        text-align: left;
+        margin-bottom: 30px;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #86868B;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+    }
+
+    .slider-container { position: relative; }
+    
+    input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        background: #FFFFFF;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+        margin-top: -10px;
+        border: 1px solid #E5E5E5;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 4px;
+        cursor: pointer;
+        background: #E5E5EA;
+        border-radius: 10px;
+    }
+
+    .skill-toggles {
+        display: flex;
+        background: #F5F5F7;
+        padding: 4px;
+        border-radius: 10px;
+    }
+
+    .toggle-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 8px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #86868B;
+        transition: all 0.2s;
+    }
+
+    .toggle-btn.active {
+        background: #FFFFFF;
+        color: #000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .results-display {
+        background: #F5F9FF;
+        border-radius: 16px;
+        padding: 30px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid rgba(0, 113, 227, 0.1);
+    }
+
+    .res-item { text-align: center; }
+
+    .res-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #86868B;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .res-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: #1D1D1F;
+        letter-spacing: -1px;
+    }
+
+    .res-value.highlight { color: var(--accent-blue); }
 
     /* STEP 3: CHECKLIST */
     .checklist-box {
@@ -213,6 +340,8 @@
         h1 { font-size: 32px; }
         .container { padding: 40px 15px; }
         .checklist-box { padding: 25px; }
+        .calc-grid { grid-template-columns: 1fr; gap: 20px; }
+        .results-display { flex-direction: column; gap: 20px; }
     }
 </style>
 </head>
@@ -268,6 +397,46 @@
             </div>
 
         </div>
+
+        <div class="calculator-section">
+            <div class="calc-header">
+                <h2>Your Earning Potential</h2>
+                <p>Adjust the inputs to see what's possible at BuildSignals.</p>
+            </div>
+        
+            <div class="calc-grid">
+                <div class="input-group">
+                    <label>Daily Dials: <span id="dialText">200</span></label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="300" value="200" id="dialSlider" oninput="runCalc()">
+                    </div>
+                </div>
+        
+                <div class="input-group">
+                    <label>Skill Level</label>
+                    <div class="skill-toggles">
+                        <button class="toggle-btn" onclick="setSkill(0.015, this)">Rookie</button>
+                        <button class="toggle-btn active" onclick="setSkill(0.03, this)">Pro</button>
+                        <button class="toggle-btn" onclick="setSkill(0.05, this)">Athlete</button>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="results-display">
+                <div class="res-item">
+                    <div class="res-label">Weekly Pay</div>
+                    <div class="res-value" id="weekOut">$1,325</div>
+                </div>
+                <div class="res-item">
+                    <div class="res-label">Monthly Run Rate</div>
+                    <div class="res-value highlight" id="monthOut">$5,300</div>
+                </div>
+            </div>
+            
+            <div style="font-size: 12px; color: #aaa; margin-top: 15px;">
+                *Calculated based on $125/wk base + $200 commission/deal.
+            </div>
+        </div>
     </div>
 
     <div class="step-section">
@@ -303,6 +472,36 @@
     </div>
 
 </div>
+
+<script>
+    let bookRate = 0.03; // Default Pro
+    const BASE = 125;
+    const COMM = 200;
+    const CLOSE = 0.20;
+
+    function setSkill(rate, btn) {
+        bookRate = rate;
+        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        runCalc();
+    }
+
+    function runCalc() {
+        const dials = document.getElementById('dialSlider').value;
+        document.getElementById('dialText').innerText = dials;
+
+        // Weekly Math: Dials * 5 days * bookRate * CloseRate
+        const weeklyDeals = (dials * 5 * bookRate * CLOSE);
+        
+        // Income
+        const totalWeekly = BASE + (weeklyDeals * COMM);
+        const totalMonthly = totalWeekly * 4;
+
+        // Display
+        document.getElementById('weekOut').innerText = '$' + Math.floor(totalWeekly).toLocaleString();
+        document.getElementById('monthOut').innerText = '$' + Math.floor(totalMonthly).toLocaleString();
+    }
+</script>
 
 </body>
 </html>
