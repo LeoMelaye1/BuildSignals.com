@@ -3,24 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Application | Build Signals</title>
+    <title>Growth Partner Interview | BuildSignals</title>
     <style>
-        /* This makes the calendar look full screen and professional */
+        /* Modern reset and background styling */
         body, html { 
             margin: 0; 
             padding: 0; 
             height: 100%; 
-            overflow: hidden; 
-            background-color: #ffffff; 
+            background-color: #f3f4f6; /* Modern light-grey background */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
+
+        /* The container providing the padding you requested */
+        .calendar-wrapper {
+            max-width: 1100px; /* Optimal width for the GHL calendar widget */
+            margin: 0 auto;
+            padding: 40px 20px; /* 40px Top/Bottom, 20px Left/Right */
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Styling the iframe to look like a clean card */
         iframe { 
             width: 100%; 
-            height: 100%; 
+            min-height: 800px; /* Ensures the calendar has room to breathe */
             border: none; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            background-color: #ffffff;
+        }
+
+        /* Responsive padding for mobile devices */
+        @media (max-width: 600px) {
+            .calendar-wrapper {
+                padding: 15px 10px;
+            }
+            iframe {
+                border-radius: 8px;
+            }
         }
     </style>
 </head>
 <body>
-    <iframe src="https://api.leadconnectorhq.com/widget/booking/fnTve28NLm8CdmTXR301" style="width: 100%;border:none;overflow: hidden;" scrolling="no" id="fnTve28NLm8CdmTXR301_1770781270390"></iframe><br><script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+
+    <div class="calendar-wrapper">
+        <iframe 
+            src="https://api.leadconnectorhq.com/widget/booking/fnTve28NLm8CdmTXR301" 
+            style="width: 100%; border:none; overflow: hidden;" 
+            scrolling="no" 
+            id="fnTve28NLm8CdmTXR301_1770781477429">
+        </iframe>
+        <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+    </div>
+
 </body>
 </html>
