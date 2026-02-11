@@ -19,37 +19,45 @@
             padding: 40px 20px;
             min-height: 100vh;
         }
-        iframe { 
-            width: 100%; 
+        .calendar-container {
+            width: 100%;
             max-width: 1100px;
-            height: 800px;
-            border: none;
-            display: block;
             background: white;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Critical: hides the overflow from negative margins */
+        }
+        iframe { 
+            width: calc(100% + 8px); /* Compensate for internal padding */
+            height: 800px;
+            border: none;
+            display: block;
+            margin: -4px; /* Negative margin to pull iframe and hide internal padding */
         }
         
         @media (max-width: 768px) {
             .calendar-wrapper {
                 padding: 0;
             }
-            iframe {
+            .calendar-container {
                 border-radius: 0;
                 box-shadow: none;
+            }
+            iframe {
                 height: 1100px;
-                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="calendar-wrapper">
-        <iframe 
-            src="https://api.leadconnectorhq.com/widget/booking/fnTve28NLm8CdmTXR301" 
-            scrolling="no" 
-            id="fnTve28NLm8CdmTXR301_1770781477429">
-        </iframe>
+        <div class="calendar-container">
+            <iframe 
+                src="https://api.leadconnectorhq.com/widget/booking/fnTve28NLm8CdmTXR301" 
+                scrolling="no" 
+                id="fnTve28NLm8CdmTXR301_1770781477429">
+            </iframe>
+        </div>
     </div>
     <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 </body>
