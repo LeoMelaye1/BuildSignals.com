@@ -401,7 +401,7 @@
         <div class="calculator-section">
             <div class="calc-header">
                 <h2>Your Earning Potential</h2>
-                <p>Adjust the inputs to see what's possible at BuildSignals.</p>
+                <p>Adjust the dials and booking rate to see the math.</p>
             </div>
         
             <div class="calc-grid">
@@ -413,11 +413,11 @@
                 </div>
         
                 <div class="input-group">
-                    <label>Skill Level</label>
+                    <label>Skill Level (Booking Rate)</label>
                     <div class="skill-toggles">
-                        <button class="toggle-btn" onclick="setSkill(0.015, this)">Rookie</button>
-                        <button class="toggle-btn active" onclick="setSkill(0.03, this)">Pro</button>
-                        <button class="toggle-btn" onclick="setSkill(0.05, this)">Athlete</button>
+                        <button class="toggle-btn" onclick="setSkill(0.02, this)">Rookie</button>
+                        <button class="toggle-btn active" onclick="setSkill(0.05, this)">Pro</button>
+                        <button class="toggle-btn" onclick="setSkill(0.08, this)">Athlete</button>
                     </div>
                 </div>
             </div>
@@ -425,16 +425,16 @@
             <div class="results-display">
                 <div class="res-item">
                     <div class="res-label">Weekly Pay</div>
-                    <div class="res-value" id="weekOut">$1,325</div>
+                    <div class="res-value" id="weekOut">$1,125</div>
                 </div>
                 <div class="res-item">
                     <div class="res-label">Monthly Run Rate</div>
-                    <div class="res-value highlight" id="monthOut">$5,300</div>
+                    <div class="res-value highlight" id="monthOut">$4,500</div>
                 </div>
             </div>
             
             <div style="font-size: 12px; color: #aaa; margin-top: 15px;">
-                *Calculated based on $125/wk base + $200 commission/deal.
+                *Calculated based on $125/wk base + $200 commission/deal (10% Close Rate).
             </div>
         </div>
     </div>
@@ -474,10 +474,10 @@
 </div>
 
 <script>
-    let bookRate = 0.03; // Default Pro
+    let bookRate = 0.05; // Default Pro (5%)
     const BASE = 125;
     const COMM = 200;
-    const CLOSE = 0.20;
+    const CLOSE = 0.10; // UPDATED to 10% Close Rate
 
     function setSkill(rate, btn) {
         bookRate = rate;
@@ -491,6 +491,9 @@
         document.getElementById('dialText').innerText = dials;
 
         // Weekly Math: Dials * 5 days * bookRate * CloseRate
+        // 200 dials * 5 days = 1000 dials
+        // 1000 dials * 0.05 (Pro) = 50 Appts
+        // 50 Appts * 0.10 (Close) = 5 Deals
         const weeklyDeals = (dials * 5 * bookRate * CLOSE);
         
         // Income
@@ -501,6 +504,9 @@
         document.getElementById('weekOut').innerText = '$' + Math.floor(totalWeekly).toLocaleString();
         document.getElementById('monthOut').innerText = '$' + Math.floor(totalMonthly).toLocaleString();
     }
+    
+    // Initialize
+    runCalc();
 </script>
 
 </body>
