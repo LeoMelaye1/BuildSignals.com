@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BuildSignals - You're Booked</title>
+<title>BuildSignals - Interview Prep</title>
 <style>
     /* APPLE AESTHETIC RESET */
     :root {
@@ -11,7 +11,8 @@
         --card-bg: #FFFFFF;
         --text-main: #1D1D1F;
         --text-sub: #86868B;
-        --accent-blue: #0071E3;
+        --accent-blue: #0071E3; /* Or your brand color */
+        --success-green: #34C759;
         --radius: 20px;
         --shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
@@ -38,9 +39,9 @@
         margin-bottom: 60px;
     }
 
-    .success-pill {
-        background: #D1FAE5;
-        color: #065F46;
+    .status-pill {
+        background: #E8F2FF;
+        color: var(--accent-blue);
         padding: 8px 16px;
         border-radius: 30px;
         font-size: 13px;
@@ -49,9 +50,11 @@
         align-items: center;
         margin-bottom: 20px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
     }
 
-    .success-pill span { margin-right: 6px; }
+    .status-pill span { margin-right: 8px; font-size: 16px; }
 
     h1 {
         font-size: 48px;
@@ -174,8 +177,8 @@
     .checklist-item:last-child { border-bottom: none; }
 
     .check-icon {
-        background: #E8F2FF;
-        color: var(--accent-blue);
+        background: rgba(52, 199, 89, 0.1);
+        color: var(--success-green);
         min-width: 28px;
         height: 28px;
         border-radius: 50%;
@@ -185,6 +188,7 @@
         margin-right: 15px;
         font-size: 14px;
         margin-top: 2px;
+        font-weight: bold;
     }
 
     /* CTA BUTTON */
@@ -206,7 +210,7 @@
 
     /* RESPONSIVE TEXT */
     @media (max-width: 600px) {
-        h1 { font-size: 36px; }
+        h1 { font-size: 32px; }
         .container { padding: 40px 15px; }
         .checklist-box { padding: 25px; }
     }
@@ -217,15 +221,15 @@
 <div class="container">
 
     <header>
-        <div class="success-pill"><span>✓</span> Strategy Call Confirmed</div>
-        <h1>You're Booked. Here's What Happens Next.</h1>
-        <p class="subtitle">Follow the steps below to prepare for your interview.</p>
+        <div class="status-pill"><span>●</span> Application Accepted</div>
+        <h1>Interview Confirmed.</h1>
+        <p class="subtitle">Your application has passed the initial screen. Review the briefing below to prepare for your interview.</p>
     </header>
 
     <div class="step-section">
         <div class="step-badge">Step 1</div>
-        <div class="section-title">Watch The Briefing</div>
-        <div class="section-desc">Understand the role, the standards, and the opportunity.</div>
+        <div class="section-title">The Role Briefing</div>
+        <div class="section-desc">Watch this immediately. It covers the standards required to join.</div>
         
         <div class="loom-container">
             <iframe src="https://www.loom.com/embed/YOUR_MAIN_LOOM_ID?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -234,8 +238,8 @@
 
     <div class="step-section">
         <div class="step-badge">Step 2</div>
-        <div class="section-title">Get Your Questions Answered</div>
-        <div class="section-desc">Most candidates have these questions. Watch these to get clarity.</div>
+        <div class="section-title">Deep Dive: The Economics</div>
+        <div class="section-desc">Understand exactly how the "Growth Partner" model works.</div>
 
         <div class="grid-container">
             
@@ -244,7 +248,7 @@
                     <iframe src="https://www.loom.com/embed/YOUR_MATH_LOOM_ID?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
                 <div class="card-title">The Math Breakdown</div>
-                <div class="card-desc">How 5 deals/week = $4,500/mo.</div>
+                <div class="card-desc">How consistent performance yields $1,000+/week.</div>
             </div>
 
             <div class="video-card">
@@ -252,7 +256,7 @@
                     <iframe src="https://www.loom.com/embed/YOUR_CASE_STUDY_LOOM_ID?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
                 <div class="card-title">$2.8M Case Study</div>
-                <div class="card-desc">Behind the scenes of our success.</div>
+                <div class="card-desc">The results we generate for clients (and your role in it).</div>
             </div>
 
             <div class="video-card">
@@ -260,7 +264,7 @@
                     <iframe src="https://www.loom.com/embed/YOUR_VISION_LOOM_ID?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
                 <div class="card-title">The $100k Vision</div>
-                <div class="card-desc">Where we are going by EOY.</div>
+                <div class="card-desc">Our roadmap for the year and where you fit in.</div>
             </div>
 
         </div>
@@ -268,29 +272,29 @@
 
     <div class="step-section">
         <div class="step-badge">Step 3</div>
-        <div class="section-title">The Prep Checklist</div>
-        <div class="section-desc">Complete these items before our call.</div>
+        <div class="section-title">Interview Prep Checklist</div>
+        <div class="section-desc">Failure to complete these items will result in a cancellation.</div>
 
         <div class="checklist-box">
             <div class="checklist-item">
                 <div class="check-icon">✓</div>
                 <div>
-                    <strong>Accept the Invite</strong>
-                    <div style="font-size: 14px; color: #666; margin-top: 4px;">Check your email and click "Yes" on the Google Meet invitation immediately.</div>
+                    <strong>Confirm Your Slot</strong>
+                    <div style="font-size: 14px; color: #666; margin-top: 4px;">Go to your email and click "Yes" on the Google Meet invitation immediately.</div>
                 </div>
             </div>
             <div class="checklist-item">
                 <div class="check-icon">✓</div>
                 <div>
-                    <strong>Test Your Tech</strong>
-                    <div style="font-size: 14px; color: #666; margin-top: 4px;">Ensure you have a working headset and a quiet environment.</div>
+                    <strong>Tech Check</strong>
+                    <div style="font-size: 14px; color: #666; margin-top: 4px;">We are a remote agency. Ensure your headset is clear and environment is silent.</div>
                 </div>
             </div>
             <div class="checklist-item">
                 <div class="check-icon">✓</div>
                 <div>
-                    <strong>Be Punctual</strong>
-                    <div style="font-size: 14px; color: #666; margin-top: 4px;">The room locks at 10 minutes past. We value discipline.</div>
+                    <strong>Be Early</strong>
+                    <div style="font-size: 14px; color: #666; margin-top: 4px;">The room locks at 10 minutes past. Elite performance starts with punctuality.</div>
                 </div>
             </div>
         </div>
