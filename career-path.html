@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Portal | BuildSignals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0c;
+            --card-bg: #161618;
+            --accent-orange: #f3a952;
+            --accent-teal: #4fd1c5;
+            --text-main: #ffffff;
+            --text-dim: #a0a0ab;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Status Badge */
+        .status-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(79, 209, 197, 0.1);
+            border: 1px solid var(--accent-teal);
+            color: var(--accent-teal);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 20px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Main Video Styling */
+        .main-briefing {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 10px;
+            border: 1px solid #27272a;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-bottom: 80px;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Video Grid Menu */
+        .menu-heading {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid #27272a;
+            padding: 24px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-orange);
+        }
+
+        .card-thumb {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+        }
+
+        .menu-card p {
+            color: var(--text-dim);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Preparation Bar */
+        .prep-bar {
+            margin-top: 80px;
+            background: linear-gradient(90deg, rgba(243,169,82,0.1) 0%, rgba(79,209,197,0.1) 100%);
+            border: 1px solid #27272a;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .btn-confirm {
+            display: inline-block;
+            margin-top: 20px;
+            background: #fff;
+            color: #000;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn-confirm:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="status-header">
+        <span class="badge">Internal Partner Portal</span>
+        <h1>Welcome to the Team, Leo</h1>
+        <p class="subtitle">Please watch the mandatory briefing below before our scheduled interview. Then, explore the deep-dive menu to prepare for the call.</p>
+    </div>
+
+    <section class="main-briefing">
+        <div class="video-placeholder">
+            <p style="color:#444">Main Briefing: Intro + Math + Standards</p>
+        </div>
+    </section>
+
+    <h2 class="menu-heading">Deep Dive Preparation</h2>
+    
+    <div class="video-grid">
+        <div class="menu-card">
+            <div class="card-thumb">
+                <span style="color:var(--accent-teal)">▶</span>
+            </div>
+            <h3>The $2.8M Case Study</h3>
+            <p>See exactly how we generate a 6x ROAS for our clients.</p>
+        </div>
+
+        <div class="menu-card">
+            <div class="card-thumb">
+                <span style="color:var(--accent-teal)">▶</span>
+            </div>
+            <h3>The Cold Call Script</h3>
+            <p>A 60-second walkthrough of the exact B2B script you'll use.</p>
+        </div>
+
+        <div class="menu-card">
+            <div class="card-thumb">
+                <span style="color:var(--accent-teal)">▶</span>
+            </div>
+            <h3>The $100k Vision</h3>
+            <p>From athlete to founder: Our roadmap for the year.</p>
+        </div>
+    </div>
+
+    <div class="prep-bar">
+        <h3>Ready for the Call?</h3>
+        <p>Ensure you have accepted the Google Meet invite and tested your headset.</p>
+        <a href="https://mail.google.com" target="_blank" class="btn-confirm">Accept Google Meet Invite</a>
+    </div>
+</div>
+
+</body>
+</html>
