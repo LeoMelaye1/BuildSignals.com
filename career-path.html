@@ -4,155 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Candidate Portal | BuildSignals</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0a0a0c;
-            --card-bg: #161618;
+            --bg-main: #121214;       /* Matte Space Gray */
+            --card-bg: #1c1c1f;       /* Subtle lift */
             --accent-orange: #f3a952;
             --accent-teal: #4fd1c5;
-            --text-main: #ffffff;
-            --text-dim: #a0a0ab;
+            --text-main: #f5f5f7;     /* Soft white */
+            --text-dim: #86868b;      /* Apple-style gray text */
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-main);
             color: var(--text-main);
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             margin: 0;
-            line-height: 1.6;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 24px;
         }
 
+        /* Status Badge */
         .status-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 56px;
         }
 
         .badge {
             display: inline-block;
-            padding: 6px 14px;
-            background: rgba(243, 169, 82, 0.1);
-            border: 1px solid var(--accent-orange);
+            padding: 6px 16px;
+            background: rgba(243, 169, 82, 0.08);
+            border: 1px solid rgba(243, 169, 82, 0.3);
             color: var(--accent-orange);
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
         }
 
         h1 {
-            font-size: 48px;
+            font-size: 44px;
             font-weight: 700;
-            margin: 20px 0;
-            letter-spacing: -0.02em;
+            margin: 24px 0 16px;
+            letter-spacing: -0.022em;
         }
 
         .subtitle {
             color: var(--text-dim);
-            font-size: 18px;
-            max-width: 650px;
-            margin: 0 auto 40px auto;
+            font-size: 19px;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
+        /* Main Briefing Container */
         .main-briefing {
             background: var(--card-bg);
-            border-radius: 24px;
-            padding: 10px;
-            border: 1px solid #27272a;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-radius: 28px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             margin-bottom: 80px;
         }
 
-        .video-placeholder {
+        .video-wrapper {
             width: 100%;
             aspect-ratio: 16/9;
             background: #000;
-            border-radius: 18px;
+            border-radius: 20px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .menu-heading {
-            font-size: 24px;
-            margin-bottom: 30px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .video-grid {
+        /* Grid Layout */
+        .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
         }
 
         .menu-card {
             background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid #27272a;
-            padding: 24px;
-            transition: all 0.3s ease;
+            border-radius: 22px;
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
         }
 
         .menu-card:hover {
-            border-color: var(--accent-teal);
-            background: #1c1c1f;
+            transform: translateY(-8px);
+            background: #252529;
+            border-color: rgba(255,255,255,0.1);
         }
 
-        .card-thumb {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 12px;
+        .icon {
+            font-size: 28px;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            display: block;
         }
 
-        .menu-card h3 {
-            margin: 0 0 10px 0;
-            font-size: 19px;
+        h3 {
+            font-size: 21px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
         }
 
         .menu-card p {
             color: var(--text-dim);
-            font-size: 14px;
+            font-size: 15px;
             margin: 0;
+            line-height: 1.6;
         }
 
-        .prep-bar {
-            margin-top: 80px;
-            background: #161618;
-            border: 1px solid #27272a;
-            padding: 40px;
-            border-radius: 24px;
+        /* Action Bar */
+        .action-bar {
+            margin-top: 100px;
             text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 60px;
         }
 
         .btn-confirm {
             display: inline-block;
-            margin-top: 24px;
             background: #ffffff;
             color: #000000;
-            padding: 18px 36px;
-            border-radius: 12px;
+            padding: 18px 40px;
+            border-radius: 14px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 16px;
-            transition: transform 0.2s ease;
+            font-size: 17px;
+            transition: all 0.2s ease;
         }
 
         .btn-confirm:hover {
+            background: #f5f5f7;
             transform: scale(1.02);
         }
     </style>
@@ -161,43 +156,41 @@
 
 <div class="container">
     <div class="status-header">
-        <span class="badge">Growth Partner Interview Briefing</span>
-        <h1>Pre-Interview Overview</h1>
-        <p class="subtitle">Please complete this briefing to ensure we're aligned on the role and the mission before our scheduled 1:1 call.</p>
+        <span class="badge">Interview Briefing Phase</span>
+        <h1>Growth Partner Overview</h1>
+        <p class="subtitle">Complete the briefing modules below to prepare for your 1:1 strategy session.</p>
     </div>
 
     <section class="main-briefing">
-        <div class="video-placeholder">
-            <p style="color:#666">Main Briefing Video</p>
+        <div class="video-wrapper">
+            <p style="color:#444">Primary Briefing Module</p>
         </div>
     </section>
 
-    <h2 class="menu-heading">Additional Deep Dives</h2>
-    
-    <div class="video-grid">
+    <div class="menu-grid">
         <div class="menu-card">
-            <div class="card-thumb">📈</div>
-            <h3>$2.8M Case Study</h3>
-            <p>See the engine that drives a 6x average return for our clients.</p>
+            <span class="icon">📈</span>
+            <h3>The $2.8M Case Study</h3>
+            <p>A deep dive into the engine that has generated over $2.8M for our clients since last June.</p>
         </div>
 
         <div class="menu-card">
-            <div class="card-thumb">📞</div>
-            <h3>The Script Walkthrough</h3>
-            <p>A look at the B2B high-intent leads and the triage process.</p>
+            <span class="icon">📞</span>
+            <h3>Script & Triage</h3>
+            <p>An overview of the lead triage process and the B2B script we use to scale.</p>
         </div>
 
         <div class="menu-card">
-            <div class="card-thumb">🚀</div>
-            <h3>The $100k Roadmap</h3>
-            <p>Our vision for scaling BuildSignals and your role in it.</p>
+            <span class="icon">🏁</span>
+            <h3>The Roadmap</h3>
+            <p>The vision for scaling from $23k/mo to our $100k/mo milestone.</p>
         </div>
     </div>
 
-    <div class="prep-bar">
-        <h3>Final Checklist</h3>
-        <p style="color: var(--text-dim);">Accept the Google Meet invite, test your headset, and ensure you're in a quiet environment.</p>
-        <a href="#" class="btn-confirm">Confirm Meeting Acceptance</a>
+    <div class="action-bar">
+        <h3>Ready to proceed?</h3>
+        <p style="color: var(--text-dim); margin-bottom: 30px;">Accept the invite and test your tech. Punctuality is non-negotiable.</p>
+        <a href="#" class="btn-confirm">Accept Google Meet Invite</a>
     </div>
 </div>
 
