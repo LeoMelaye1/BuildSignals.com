@@ -13,8 +13,8 @@
         --text-sub: #86868B;
         --accent-blue: #0071E3; 
         --success-green: #34C759;
-        --radius: 20px;
-        --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        --radius: 24px; /* Increased radius for modern look */
+        --shadow: 0 12px 40px rgba(0,0,0,0.08);
     }
 
     body {
@@ -28,7 +28,7 @@
     }
 
     .container {
-        max-width: 900px;
+        max-width: 800px; /* Tightened container for better reading flow */
         margin: 0 auto;
         padding: 60px 20px;
     }
@@ -85,7 +85,12 @@
         margin-bottom: 15px;
     }
 
-    /* VIDEO WRAPPERS */
+    /* SECTION TITLES */
+    .step-section {
+        text-align: center;
+        margin-bottom: 80px;
+    }
+
     .section-title {
         font-size: 28px;
         font-weight: 700;
@@ -95,19 +100,21 @@
 
     .section-desc {
         color: var(--text-sub);
-        margin-bottom: 30px;
+        margin-bottom: 40px;
         font-size: 16px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
+    /* VIDEO PLAYERS - CINEMA STYLE */
     .loom-container {
         position: relative;
-        padding-bottom: 62.5%; /* Adjusted to match your recording ratio */
+        padding-bottom: 62.5%; /* Recording Aspect Ratio */
         height: 0;
         background: #000;
-        border-radius: var(--radius);
-        overflow: hidden;
-        box-shadow: var(--shadow);
-        margin-bottom: 20px;
+        /* No border radius here because it lives inside the card now */
+        overflow: hidden; 
     }
 
     .loom-container iframe {
@@ -119,42 +126,46 @@
         border: none;
     }
 
-    /* STEP 1: MAIN STAGE */
-    .step-section {
-        text-align: center;
-        margin-bottom: 80px;
-    }
-
-    /* STEP 2: GRID SYSTEM */
-    .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
-        text-align: left;
-        margin-bottom: 50px;
+    /* VERTICAL STACK GRID (The Fix) */
+    .vertical-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 40px; /* Space between video cards */
+        max-width: 700px;
+        margin: 0 auto 60px auto;
     }
 
     .video-card {
         background: var(--card-bg);
-        padding: 20px;
         border-radius: var(--radius);
         box-shadow: var(--shadow);
-        transition: transform 0.2s ease;
+        overflow: hidden; /* Ensures video stays inside rounded corners */
+        text-align: left;
     }
 
-    .video-card:hover {
-        transform: translateY(-5px);
+    /* Text Content INSIDE the card (Below Video) */
+    .card-content {
+        padding: 25px 30px;
     }
 
     .card-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin: 15px 0 5px 0;
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 5px 0;
+        color: var(--text-main);
     }
 
     .card-desc {
-        font-size: 14px;
+        font-size: 15px;
         color: var(--text-sub);
+    }
+
+    /* MAIN BRIEFING (STEP 1) SPECIAL STYLING */
+    .main-video-wrapper {
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* Bigger shadow for main video */
+        margin-bottom: 20px;
     }
 
     /* CALCULATOR STYLES */
@@ -163,24 +174,14 @@
         border-radius: 24px;
         padding: 40px;
         box-shadow: var(--shadow);
-        max-width: 800px;
+        max-width: 700px; /* Match the video width */
         margin: 0 auto 50px auto;
         border: 1px solid #E5E5EA;
         text-align: center;
     }
 
-    .calc-header h2 {
-        font-size: 24px;
-        font-weight: 700;
-        margin: 0 0 10px 0;
-        color: #1D1D1F;
-    }
-
-    .calc-header p {
-        color: #86868B;
-        font-size: 15px;
-        margin-bottom: 30px;
-    }
+    .calc-header h2 { font-size: 24px; font-weight: 700; margin: 0 0 10px 0; }
+    .calc-header p { color: #86868B; font-size: 15px; margin-bottom: 30px; }
 
     .calc-grid {
         display: grid;
@@ -191,157 +192,67 @@
     }
 
     .input-group label {
-        display: block;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: #86868B;
-        margin-bottom: 10px;
-        letter-spacing: 0.5px;
+        display: block; font-size: 12px; font-weight: 700; 
+        text-transform: uppercase; color: #86868B; margin-bottom: 10px;
     }
 
+    /* SLIDER & TOGGLES */
     .slider-container { position: relative; }
-    
-    input[type=range] {
-        -webkit-appearance: none;
-        width: 100%;
-        background: transparent;
-    }
-
+    input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
     input[type=range]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        height: 24px;
-        width: 24px;
-        border-radius: 50%;
-        background: #FFFFFF;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        cursor: pointer;
-        margin-top: -10px;
-        border: 1px solid #E5E5E5;
+        -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%;
+        background: #FFFFFF; box-shadow: 0 2px 6px rgba(0,0,0,0.2); cursor: pointer;
+        margin-top: -10px; border: 1px solid #E5E5E5;
     }
-
     input[type=range]::-webkit-slider-runnable-track {
-        width: 100%;
-        height: 4px;
-        cursor: pointer;
-        background: #E5E5EA;
-        border-radius: 10px;
+        width: 100%; height: 4px; cursor: pointer; background: #E5E5EA; border-radius: 10px;
     }
 
-    .skill-toggles {
-        display: flex;
-        background: #F5F5F7;
-        padding: 4px;
-        border-radius: 10px;
-    }
-
+    .skill-toggles { display: flex; background: #F5F5F7; padding: 4px; border-radius: 10px; }
     .toggle-btn {
-        flex: 1;
-        border: none;
-        background: transparent;
-        padding: 8px;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        color: #86868B;
-        transition: all 0.2s;
+        flex: 1; border: none; background: transparent; padding: 8px; border-radius: 8px;
+        font-size: 13px; font-weight: 600; cursor: pointer; color: #86868B; transition: all 0.2s;
     }
-
-    .toggle-btn.active {
-        background: #FFFFFF;
-        color: #000;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
+    .toggle-btn.active { background: #FFFFFF; color: #000; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
     .results-display {
-        background: #F5F9FF;
-        border-radius: 16px;
-        padding: 30px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
+        background: #F5F9FF; border-radius: 16px; padding: 30px;
+        display: flex; justify-content: space-around; align-items: center;
         border: 1px solid rgba(0, 113, 227, 0.1);
     }
-
     .res-item { text-align: center; }
-
-    .res-label {
-        font-size: 12px;
-        text-transform: uppercase;
-        color: #86868B;
-        font-weight: 600;
-        margin-bottom: 5px;
-    }
-
-    .res-value {
-        font-size: 32px;
-        font-weight: 800;
-        color: #1D1D1F;
-        letter-spacing: -1px;
-    }
-
+    .res-label { font-size: 12px; text-transform: uppercase; color: #86868B; font-weight: 600; margin-bottom: 5px; }
+    .res-value { font-size: 32px; font-weight: 800; color: #1D1D1F; letter-spacing: -1px; }
     .res-value.highlight { color: var(--accent-blue); }
 
-    /* STEP 3: CHECKLIST */
+    /* CHECKLIST */
     .checklist-box {
-        background: var(--card-bg);
-        border-radius: var(--radius);
-        padding: 40px;
-        text-align: left;
-        box-shadow: var(--shadow);
-        max-width: 700px;
-        margin: 0 auto;
+        background: var(--card-bg); border-radius: var(--radius); padding: 40px;
+        text-align: left; box-shadow: var(--shadow); max-width: 700px; margin: 0 auto;
     }
-
-    .checklist-item {
-        display: flex;
-        align-items: flex-start;
-        padding: 15px 0;
-        border-bottom: 1px solid #F0F0F0;
-    }
-
+    .checklist-item { display: flex; align-items: flex-start; padding: 15px 0; border-bottom: 1px solid #F0F0F0; }
     .checklist-item:last-child { border-bottom: none; }
-
     .check-icon {
-        background: rgba(52, 199, 89, 0.1);
-        color: var(--success-green);
-        min-width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 15px;
-        font-size: 14px;
-        margin-top: 2px;
-        font-weight: bold;
+        background: rgba(52, 199, 89, 0.1); color: var(--success-green); min-width: 28px; height: 28px;
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        margin-right: 15px; font-size: 14px; margin-top: 2px; font-weight: bold;
     }
 
-    /* CTA BUTTON */
+    /* CTA */
     .cta-button {
-        background: var(--text-main);
-        color: white;
-        text-decoration: none;
-        padding: 16px 32px;
-        border-radius: 50px;
-        font-weight: 600;
-        display: inline-block;
-        margin-top: 40px;
+        background: var(--text-main); color: white; text-decoration: none; padding: 16px 32px;
+        border-radius: 50px; font-weight: 600; display: inline-block; margin-top: 40px;
         transition: transform 0.2s;
     }
-    .cta-button:hover {
-        transform: scale(1.05);
-        background: black;
-    }
+    .cta-button:hover { transform: scale(1.05); background: black; }
 
-    /* RESPONSIVE TEXT */
     @media (max-width: 600px) {
         h1 { font-size: 32px; }
         .container { padding: 40px 15px; }
-        .checklist-box { padding: 25px; }
+        .checklist-box, .calculator-section, .video-card { padding: 25px; }
         .calc-grid { grid-template-columns: 1fr; gap: 20px; }
         .results-display { flex-direction: column; gap: 20px; }
+        .card-content { padding: 20px; }
     }
 </style>
 </head>
@@ -360,40 +271,48 @@
         <div class="section-title">The Role Briefing</div>
         <div class="section-desc">Watch this immediately. It covers the standards required to join.</div>
         
-        <div class="loom-container">
-            <iframe src="https://www.loom.com/embed/f96d880172984bc9945500c114589737?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <div class="main-video-wrapper">
+            <div class="loom-container">
+                <iframe src="https://www.loom.com/embed/f96d880172984bc9945500c114589737?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
     <div class="step-section">
         <div class="step-badge">Step 2</div>
         <div class="section-title">Deep Dive: The Economics</div>
-        <div class="section-desc">Understand exactly how the "Growth Partner" model works.</div>
+        <div class="section-desc">Most candidates have the same questions. Watch these to get clarity.</div>
 
-        <div class="grid-container">
+        <div class="vertical-stack">
             
             <div class="video-card">
-                <div class="loom-container" style="margin-bottom: 0;">
+                <div class="loom-container">
                     <iframe src="https://www.loom.com/embed/ec2cdddd30294446ab4d8378eac6e7f0?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
-                <div class="card-title">The Math Breakdown</div>
-                <div class="card-desc">How consistent performance yields $1,000+/week.</div>
+                <div class="card-content">
+                    <div class="card-title">The Math Breakdown</div>
+                    <div class="card-desc">How consistent performance yields $1,000+/week.</div>
+                </div>
             </div>
 
             <div class="video-card">
-                <div class="loom-container" style="margin-bottom: 0;">
+                <div class="loom-container">
                     <iframe src="https://www.loom.com/embed/YOUR_CASE_STUDY_LOOM_ID?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
-                <div class="card-title">$2.8M Case Study</div>
-                <div class="card-desc">The results we generate for clients (and your role in it).</div>
+                <div class="card-content">
+                    <div class="card-title">$2.8M Case Study</div>
+                    <div class="card-desc">The results we generate for clients (and your role in it).</div>
+                </div>
             </div>
 
             <div class="video-card">
-                <div class="loom-container" style="margin-bottom: 0;">
+                <div class="loom-container">
                     <iframe src="https://www.loom.com/embed/YOUR_VISION_LOOM_ID?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
-                <div class="card-title">The $100k Vision</div>
-                <div class="card-desc">Our roadmap for the year and where you fit in.</div>
+                <div class="card-content">
+                    <div class="card-title">The $100k Vision</div>
+                    <div class="card-desc">Our roadmap for the year and where you fit in.</div>
+                </div>
             </div>
 
         </div>
@@ -477,7 +396,7 @@
     let bookRate = 0.05; // Default Pro (5%)
     const BASE = 125;
     const COMM = 200;
-    const CLOSE = 0.10; // UPDATED to 10% Close Rate
+    const CLOSE = 0.10; // 10% Close Rate
 
     function setSkill(rate, btn) {
         bookRate = rate;
@@ -490,22 +409,14 @@
         const dials = document.getElementById('dialSlider').value;
         document.getElementById('dialText').innerText = dials;
 
-        // Weekly Math: Dials * 5 days * bookRate * CloseRate
-        // 200 dials * 5 days = 1000 dials
-        // 1000 dials * 0.05 (Pro) = 50 Appts
-        // 50 Appts * 0.10 (Close) = 5 Deals
         const weeklyDeals = (dials * 5 * bookRate * CLOSE);
-        
-        // Income
         const totalWeekly = BASE + (weeklyDeals * COMM);
         const totalMonthly = totalWeekly * 4;
 
-        // Display
         document.getElementById('weekOut').innerText = '$' + Math.floor(totalWeekly).toLocaleString();
         document.getElementById('monthOut').innerText = '$' + Math.floor(totalMonthly).toLocaleString();
     }
     
-    // Initialize
     runCalc();
 </script>
 
