@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointment Secured!</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -19,14 +18,22 @@
         }
         .card {
             background: white;
-            padding: 40px;
+            padding: 30px;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             max-width: 400px;
             width: 90%;
         }
-        h1 { color: #166534; margin-bottom: 10px; }
-        p { color: #4b5563; margin-bottom: 20px; }
+        /* Style for the meme image */
+        .meme-gif {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover; /* Ensures it fits nicely */
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        h1 { color: #166534; margin: 0 0 10px 0; font-size: 28px; }
+        p { color: #4b5563; margin: 0 0 20px 0; font-size: 18px; font-weight: bold;}
         
         /* The Countdown Timer Style */
         .timer {
@@ -52,33 +59,18 @@
 <body>
 
     <div class="card">
-        <h1>Boom! 🎯</h1>
-        <p>Appointment locked in. Great Job!</p>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Q0YzNhNGEzYjA5N2Q4YjE0YjI4YjI5YjI2YjI3YjI4YjI5YyZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/3o7abKhOpu0NwenH3O/giphy.gif" alt="Funny Cat Thumbs Up" class="meme-gif">
         
-        <a href="internal-booking" class="btn">Book Another Lead Now</a>
+        <h1>:) Great Job!</h1>
+        <p>Appointment locked in.</p>
+        
+        <a href="booking.html" class="btn">Book Another Lead Now</a>
 
         <div class="timer">Redirecting in <span id="countdown">10</span> seconds...</div>
     </div>
 
     <script>
-        // 1. Confetti Animation
-        window.onload = function() {
-            var duration = 3 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            function random(min, max) { return Math.random() * (max - min) + min; }
-
-            var interval = setInterval(function() {
-                var timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) { return clearInterval(interval); }
-                var particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-        };
-
-        // 2. Auto-Redirect Logic
+        // Auto-Redirect Logic
         var seconds = 10; // How long to wait
         var countdownElement = document.getElementById("countdown");
 
