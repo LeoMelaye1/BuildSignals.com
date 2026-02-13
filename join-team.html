@@ -103,7 +103,7 @@
             height: 100%;
         }
 
-        /* --- CARDS (The "Build Signals" Look) --- */
+        /* --- CARDS --- */
         .card {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -140,27 +140,55 @@
             font-weight: 400;
         }
 
-        /* --- LISTS --- */
+        /* --- SCOPE LIST (FIXED LAYOUT) --- */
         ul.scope-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
         ul.scope-list li {
-            padding: 10px 0;
+            padding: 15px 0;
             border-bottom: 1px solid #f3f4f6;
-            font-size: 16px;
-            color: #374151;
             display: flex;
-            align-items: start;
+            flex-direction: column; /* Stacked for better readability */
+            gap: 5px;
         }
         ul.scope-list li:last-child { border-bottom: none; }
-        ul.scope-list li::before {
+        
+        .scope-title {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .scope-title::before {
             content: "✓";
             color: var(--gold);
             font-weight: bold;
-            margin-right: 15px;
+            margin-right: 10px;
         }
+
+        .scope-desc {
+            font-size: 15px;
+            color: #4b5563;
+            margin-left: 20px; /* Indent slightly to align with text */
+        }
+
+        /* --- TRIAL BOX --- */
+        .trial-box {
+            background-color: #FFFBEB; /* Light Gold/Yellow bg */
+            border: 1px solid #FCD34D;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            gap: 15px;
+            align-items: start;
+        }
+        .trial-icon { font-size: 24px; }
+        .trial-content h4 { margin: 0 0 5px 0; color: #92400E; font-size: 16px; font-weight: 700; }
+        .trial-content p { margin: 0; color: #B45309; font-size: 14px; }
 
         /* --- BUTTONS --- */
         .btn-container {
@@ -226,7 +254,6 @@
             <iframe src="https://www.loom.com/embed/YOUR_VIDEO_ID" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </div>
 
-
         <div class="card">
             <div class="card-header">
                 <h2>⚡️ The Economics</h2>
@@ -243,9 +270,9 @@
                     <span class="sub-text">Per closed deal (No cap)</span>
                 </div>
                 <div class="detail-item">
-                    <h3>Target KPI</h3>
-                    <p>2 Bookings / Day</p>
-                    <span class="sub-text">Standard quota</span>
+                    <h3>Minimum KPI</h3>
+                    <p>20 Appts / Week</p>
+                    <span class="sub-text">Required to maintain role</span>
                 </div>
                 <div class="detail-item">
                     <h3>Pay Schedule</h3>
@@ -255,46 +282,43 @@
             </div>
         </div>
 
-
         <div class="card">
             <div class="card-header">
                 <h2>📋 Scope of Work</h2>
             </div>
             <ul class="scope-list">
-                <li><strong>High-Volume Outreach:</strong> Execute 150-200 dials per day using our provided Power Dialer.</li>
-                <li><strong>Appointment Setting:</strong> Book qualified meetings ("Partnership Discoveries") onto the Closer's calendar.</li>
-                <li><strong>Pipeline Management:</strong> Manage the CRM, tag leads correctly, and ensure no lead is left behind.</li>
-                <li><strong>Daily Reporting:</strong> Post End-of-Day stats in the Discord "Bullpen" channel by 5:00 PM PST.</li>
-                <li><strong>Continuous Training:</strong> Attend the daily 7:00 AM PST team sync and complete Academy modules.</li>
+                <li>
+                    <span class="scope-title">High-Volume Outreach</span>
+                    <span class="scope-desc">Execute 150-200 dials per day using our provided Power Dialer.</span>
+                </li>
+                <li>
+                    <span class="scope-title">Appointment Setting</span>
+                    <span class="scope-desc">Book qualified meetings ("Partnership Discoveries") onto the Closer's calendar.</span>
+                </li>
+                <li>
+                    <span class="scope-title">Pipeline Management</span>
+                    <span class="scope-desc">Manage the CRM, tag leads correctly, and ensure no lead is left behind.</span>
+                </li>
+                <li>
+                    <span class="scope-title">Daily Reporting</span>
+                    <span class="scope-desc">Post End-of-Day stats in the Discord "Bullpen" channel by 5:00 PM PST.</span>
+                </li>
+                <li>
+                    <span class="scope-title">Continuous Training</span>
+                    <span class="scope-desc">Attend the daily 7:00 AM PST team sync and complete Academy modules.</span>
+                </li>
             </ul>
         </div>
 
-
-        <div class="card">
-            <div class="card-header">
-                <h2>🛡 The Non-Negotiables</h2>
-            </div>
-            <p style="color: #4b5563; margin-bottom: 20px;">To maintain "Sniper" status, the following are strictly required:</p>
-            <div class="details-grid">
-                <div class="detail-item">
-                    <h3>Tech Requirements</h3>
-                    <p style="font-size: 18px;">Noise Canceling Headset</p>
-                    <span class="sub-text">Must have zero background noise.</span>
-                </div>
-                <div class="detail-item">
-                    <h3>Internet Speed</h3>
-                    <p style="font-size: 18px;">25 Mbps Upload</p>
-                    <span class="sub-text">Minimum for stable VoIP calls.</span>
-                </div>
+        <div class="trial-box">
+            <span class="trial-icon">🤝</span>
+            <div class="trial-content">
+                <h4>Paid Trial Period</h4>
+                <p>The first week is a probationary trial period. This week <strong>is fully paid</strong>. We use this time to ensure the role is a mutual fit for both you and the team before locking in long-term.</p>
             </div>
         </div>
-
         
         <div class="center-text">
-            <p style="color: #6B7280; margin-bottom: 20px; font-size: 14px;">
-                By clicking "Accept", you agree to the terms above and will be taken to the Onboarding Portal.
-            </p>
-            
             <div class="btn-container">
                 <a href="mailto:leo@buildsignals.com?subject=Declining Offer" class="btn btn-secondary">
                     Decline Offer
@@ -304,6 +328,10 @@
                     Accept & Start Onboarding →
                 </a>
             </div>
+            
+            <p style="color: #9CA3AF; font-size: 13px;">
+                By clicking "Accept", you agree to the terms above and will be redirected to the secure onboarding portal.
+            </p>
         </div>
 
     </div>
