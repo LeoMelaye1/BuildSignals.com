@@ -3,110 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offer Accepted | Build Signals</title>
+    <title>Your Offer | Build Signals</title>
     <style>
-        /* BRAND COLORS: 
-           Black: #000000
-           Gold: #E6AA38 (Pulled from your logo)
-           White: #FFFFFF
-        */
-        
+        /* BUILD SIGNALS BRANDING */
+        :root {
+            --black: #000000;
+            --gold: #E6AA38; /* Your logo gold */
+            --white: #FFFFFF;
+            --gray: #f9fafb;
+            --text: #1f2937;
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
+            background-color: var(--gray);
+            color: var(--text);
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 500px;
-            padding: 40px;
-            /* Optional: Add a subtle border like a contract */
-            border: 1px solid #f0f0f0; 
+            max-width: 800px;
+            margin: 60px auto;
+            background: var(--white);
+            padding: 50px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            text-align: center;
         }
 
         .logo {
-            width: 180px; /* Adjust based on your preference */
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        h3 {
-            font-size: 18px;
-            font-weight: 500;
-            color: #E6AA38; /* Your Brand Gold */
-            margin-top: 0;
+            width: 160px;
             margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .divider {
-            height: 2px;
-            background-color: #f3f4f6;
+        h1 { font-size: 36px; font-weight: 800; color: var(--black); margin-bottom: 10px; }
+        h2 { font-size: 20px; font-weight: 500; color: var(--gold); margin-top: 0; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* VIDEO CONTAINER */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            margin: 30px 0;
+            height: 100%;
         }
 
-        p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #4b5563;
-            margin-bottom: 20px;
-        }
-
-        .alert-box {
-            background-color: #fffbeb; /* Light yellow bg */
-            border-left: 4px solid #E6AA38;
-            padding: 15px;
+        /* OFFER DETAILS BOX */
+        .offer-box {
+            background-color: #f8f8f8;
+            border-left: 4px solid var(--black);
             text-align: left;
-            margin-top: 30px;
+            padding: 25px;
+            margin-bottom: 40px;
             border-radius: 4px;
         }
-
-        .alert-text {
-            font-size: 14px;
-            color: #92400e;
-            margin: 0;
-            font-weight: 600;
+        .offer-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 10px 0;
         }
+        .offer-row:last-child { border-bottom: none; }
+        .label { font-weight: bold; color: var(--black); }
+        .value { color: #374151; }
+
+        /* BUTTONS */
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .btn-accept {
+            background-color: var(--black);
+            color: var(--white);
+            border: 2px solid var(--black);
+        }
+        .btn-accept:hover {
+            background-color: #222;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-reject {
+            background-color: transparent;
+            color: #666;
+            border: 2px solid #ddd;
+        }
+        .btn-reject:hover {
+            border-color: #999;
+            color: #333;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
-        <img src="logo.png" alt="Build Signals Logo" class="logo">
+        <img src="logo.png" alt="Build Signals" class="logo">
 
-        <h1>Offer Accepted.</h1>
-        <h3>Welcome to the Team</h3>
+        <h1>Official Job Offer</h1>
+        <h2>Appointment Setter / Growth Partner</h2>
 
-        <div class="divider"></div>
-
-        <p><strong>Success.</strong> Your response has been logged.</p>
-        
-        <p>Our system is currently generating your Independent Contractor Agreement and setting up your agency credentials.</p>
-
-        <div class="alert-box">
-            <p class="alert-text">
-                Please check your inbox in 2 minutes.<br>
-                Look for an email with the subject: <br>
-                "Welcome Aboard! (Login Details & Next Steps)"
-            </p>
+        <div class="video-wrapper">
+            <iframe src="https://www.loom.com/embed/YOUR_VIDEO_ID" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </div>
+
+        <div class="offer-box">
+            <div class="offer-row">
+                <span class="label">Role</span>
+                <span class="value">Outbound Growth Partner</span>
+            </div>
+            <div class="offer-row">
+                <span class="label">Base Pay</span>
+                <span class="value">$500 / Month</span>
+            </div>
+            <div class="offer-row">
+                <span class="label">Commission</span>
+                <span class="value">$200 / Closed Deal</span>
+            </div>
+            <div class="offer-row">
+                <span class="label">Pay Schedule</span>
+                <span class="value">Bi-Weekly (Wise/GCash)</span>
+            </div>
+        </div>
+
+        <p style="margin-bottom: 30px; color: #666;">
+            By accepting this position, you agree to the terms discussed in the video.<br>
+            We are ready to start immediately.
+        </p>
+
+        <div class="btn-container">
+            <a href="mailto:leo@buildsignals.com?subject=Declining Offer" class="btn btn-reject">
+                Decline Offer
+            </a>
+
+            <a href="INSERT_YOUR_GHL_FORM_URL" class="btn btn-accept">
+                Accept & Start Onboarding →
+            </a>
+        </div>
+
     </div>
 
 </body>
