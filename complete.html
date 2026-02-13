@@ -22,7 +22,7 @@
         .container {
             width: 90%;
             max-width: 450px;
-            padding: 30px;
+            padding: 40px 30px;
             background: #FFFFFF;
             border-radius: 16px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
@@ -32,7 +32,7 @@
         /* TYPOGRAPHY */
         h1.main-headline {
             margin: 0 0 15px 0;
-            font-size: 26px; /* Adjusted size for longer text */
+            font-size: 28px;
             font-weight: 800;
             color: #111827;
             letter-spacing: -0.5px;
@@ -40,46 +40,61 @@
 
         p.description { 
             color: #4B5563; 
-            font-size: 15px; 
+            font-size: 16px; 
             margin-bottom: 25px; 
             line-height: 1.5; 
-            padding: 0 5px;
+            padding: 0 10px;
         }
 
         /* STEPS BOX */
         .alert-box {
             background-color: #FFFBEB;
             border: 1px solid #FCD34D;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 25px;
+            border-radius: 12px;
             text-align: left;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .step-row {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 18px;
         }
         .step-row:last-child { margin-bottom: 0; }
         
         .step-number {
             background: #000;
             color: #fff;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
-            margin-right: 12px;
+            margin-right: 15px;
             flex-shrink: 0;
             margin-top: 2px;
         }
         
-        .step-text { font-size: 14px; color: #1F2937; font-weight: 500; line-height: 1.4; }
+        .step-text { 
+            font-size: 15px; 
+            color: #1F2937; 
+            font-weight: 500; 
+            line-height: 1.5; 
+        }
+
+        .spam-note {
+            margin-top: 20px; 
+            font-size: 13px; 
+            color: #9CA3AF;
+        }
+
+        strong {
+            color: #000;
+        }
 
     </style>
 </head>
@@ -90,41 +105,37 @@
         <h1 class="main-headline">Please check your email.</h1>
         
         <p class="description">
-            We are currently generating your <strong>Independent Contractor Agreement</strong>. 
+            We have generated your <strong>Independent Contractor Agreement</strong> and your team onboarding details.
         </p>
 
-<div class="alert-box">
+        <div class="alert-box">
             <div class="step-row">
                 <div class="step-number">1</div>
                 <div class="step-text">
                     Open your email inbox.
                 </div>
             </div>
+
             <div class="step-row">
                 <div class="step-number">2</div>
                 <div class="step-text">
-                    Find these <strong>two</strong> emails: <br>
+                    Find these <strong>two</strong> emails:<br>
                     • <strong>"Action Required: Contractor Agreement"</strong><br>
-                    • <strong>"Welcome to the Team! 🚀 (Login Details Inside)"</strong>
-                            <p style="margin-top: 20px; font-size: 12px; color: #9CA3AF;">
-            (Check Spam folder if not received in 30 seconds)
+                    • <strong>"Welcome to the Team! 🚀"</strong>
+                </div>
+            </div>
+
+            <div class="step-row">
+                <div class="step-number">3</div>
+                <div class="step-text">
+                    Sign the agreement first to officially complete your onboarding.
+                </div>
+            </div>
+        </div>
+        
+        <p class="spam-note">
+            (Check your Spam folder if you don't see them within 60 seconds)
         </p>
-                </div>
-            </div>
-            <div class="step-row">
-                <div class="step-number">3</div>
-                <div class="step-text">
-                    Sign the agreement first to complete your onboarding.
-                </div>
-            </div>
-        </div>
-            <div class="step-row">
-                <div class="step-number">3</div>
-                <div class="step-text">
-                    Click the link to sign (Expires in 24 hours).
-                </div>
-            </div>
-        </div>
         
     </div>
 
