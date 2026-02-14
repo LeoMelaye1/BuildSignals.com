@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 1.1: The Identity Shift</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <title>Module 1.1: The Identity Shift (Master)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2563EB;
@@ -17,6 +17,7 @@
             --green-text: #065F46;
             --accent-orange: #D97706;
             --bg-orange-light: #FFFBF0;
+            --highlight: #FEF3C7; /* Yellow highlight */
         }
 
         body {
@@ -73,7 +74,7 @@
 
         /* --- SECTIONS --- */
         section {
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
 
         h2 {
@@ -100,150 +101,52 @@
             font-size: 14px;
         }
 
-        p {
-            font-size: 18px;
-            color: var(--text);
-            margin-bottom: 20px;
-            line-height: 1.7;
-        }
-
-        /* --- DEEP DIVE BOXES --- */
-        .deep-dive {
-            background-color: var(--light-bg);
+        /* --- SCRIPT ANALYSIS BOXES --- */
+        .script-box {
+            background: #fff;
             border: 1px solid #E5E7EB;
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-
-        .deep-dive h3 {
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text);
-            margin-top: 0;
-        }
-
-        .deep-dive ul {
-            padding-left: 20px;
-            margin: 0;
-        }
-
-        .deep-dive li {
-            margin-bottom: 10px;
-            font-size: 16px;
-            color: var(--text);
-        }
-
-        /* --- INTERACTIVE CARDS --- */
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .card {
-            border: 1px solid #E5E7EB;
-            border-radius: 12px;
-            padding: 25px;
-            transition: all 0.2s ease;
-            cursor: default;
-            background: white;
-        }
-
-        .card-label {
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            display: block;
-            color: #9CA3AF;
-        }
-
-        .card-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--dark);
-        }
-
-        /* HOVER EFFECTS */
-        .card.bad:hover {
-            border-color: #EF4444;
-            background-color: var(--red-bg);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.1);
-        }
-        .card.bad:hover .card-label { color: #DC2626; }
-        .card.bad:hover .card-text { color: var(--red-text); text-decoration: line-through; }
-
-        .card.good:hover {
-            border-color: #10B981;
-            background-color: var(--green-bg);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
-        }
-        .card.good:hover .card-label { color: #059669; }
-        .card.good:hover .card-text { color: var(--green-text); font-weight: 700; }
-
-        /* --- CHECKLIST SECTION --- */
-        .checklist-box {
-            background-color: var(--bg-orange-light);
-            border: 2px solid var(--accent-orange);
             border-radius: 12px;
             padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        .checklist-title {
-            color: var(--accent-orange);
+        .status-label {
+            font-size: 12px;
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 14px;
-            display: block;
-            margin-bottom: 20px;
-            text-align: center;
             letter-spacing: 1px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
             margin-bottom: 15px;
-            background: white;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #E5E7EB;
+            display: block;
         }
 
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
+        .status-low { color: #DC2626; }
+        .status-high { color: #059669; }
 
-        label {
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        /* --- EMPHASIS BOX --- */
-        .emphasis-box {
-            background-color: #F3F4F6;
-            border-left: 4px solid var(--dark);
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .emphasis-text {
-            font-weight: 700;
+        .script-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 17px;
             color: var(--dark);
-            margin: 0;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 3px solid #E5E7EB;
         }
+
+        /* ANATOMY HIGHLIGHTS */
+        .highlight-name { background-color: #DBEAFE; color: #1E3A8A; padding: 2px 4px; border-radius: 4px; font-weight: 600; }
+        .highlight-empathy { background-color: #D1FAE5; color: #064E3B; padding: 2px 4px; border-radius: 4px; font-weight: 600; }
+        .highlight-audit { background-color: #FEF3C7; color: #78350F; padding: 2px 4px; border-radius: 4px; font-weight: 600; }
+        .highlight-weak { text-decoration: line-through; color: #999; }
+
+        .analysis {
+            font-size: 14px;
+            color: #6B7280;
+            background: #F9FAFB;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .analysis strong { color: var(--dark); }
 
     </style>
 </head>
@@ -254,124 +157,109 @@
     <header>
         <span class="badge">Module 1.1 // Mindset</span>
         <h1>The Identity Shift.</h1>
-        <div class="subtitle">Detailed Breakdown: Why "Telemarketers" fail and "Growth Partners" get rich.</div>
+        <div class="subtitle">Deep Dive: The Syntax of Status.</div>
     </header>
 
     <section>
-        <h2><span class="step-number">1</span> The Core Problem: The "BS Detector"</h2>
-        <p>
-            Before you dial a single number, you have to understand the psychology of the person you are calling.
-            We call Blue Collar Business Owners (Contractors). They have a "BS Detector" that is highly sensitive.
+        <h2><span class="step-number">1</span> The 3 Levels of Status</h2>
+        <p style="font-size: 18px; color: #4B5563;">
+            Most callers fail because they position themselves as "The Pest." 
+            You need to understand the structural difference in how these three levels speak.
         </p>
-        
-        <div class="deep-dive">
-            <h3>Why they hang up instantly:</h3>
-            <ul>
-                <li><strong>The "Customer Service" Voice:</strong> If you pitch your voice up (high frequency), it signals submissiveness. In the construction world, submissiveness = weakness.</li>
-                <li><strong>The Apology:</strong> Starting with "Sorry to bother you" confirms that you are, in fact, bothering them. You are admitting guilt before you even speak.</li>
-                <li><strong>The Ask:</strong> "Do you have a minute?" signals that you are here to take, not to give.</li>
-            </ul>
+
+        <div class="script-box" style="border-left: 4px solid #EF4444;">
+            <span class="status-label status-low">Level 1: The Pest (Low Status)</span>
+            <div class="script-text">
+                "Hello <span class="highlight-weak">Sir</span>? <span class="highlight-weak">Sorry to bother you</span>... my name is Leo from Build Signals... <span class="highlight-weak">do you have a quick minute?</span>"
+            </div>
+            <div class="analysis">
+                <strong>Why it fails:</strong> The apology ("Sorry") creates guilt. The permission ask ("Do you have a minute") gives them the power to say no immediately.
+            </div>
         </div>
 
-        <div class="emphasis-box">
-            <p class="emphasis-text">
-                THE RULE: Contractors do not buy from people they can bully. They buy from people they respect.
+        <div class="script-box" style="border-left: 4px solid #F59E0B;">
+            <span class="status-label" style="color: #D97706;">Level 2: The Vendor (Mid Status)</span>
+            <div class="script-text">
+                "Hi Mike, this is Leo. We help contractors get more leads. Are you looking for more work right now?"
+            </div>
+            <div class="analysis">
+                <strong>Why it fails:</strong> It's too transactional. It sounds like a pitch, not a partnership. They will say "Just email me."
+            </div>
+        </div>
+
+        <div class="script-box" style="border-left: 4px solid #10B981;">
+            <span class="status-label status-high">Level 3: The Partner (High Status)</span>
+            <div class="script-text">
+                "<span class="highlight-name">Mike?</span> ... Hey, it's Leo. <span class="highlight-empathy">I know you're slammed</span>, so I'll be brief. <span class="highlight-audit">I'm looking at your service area right now...</span>"
+            </div>
+            <div class="analysis">
+                <strong>Why it works:</strong> First name basis ("Mike"). Empathy ("I know you're slammed"). The Audit ("I'm looking at your area") implies you are doing research, not just robo-dialing.
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="step-number">2</span> High Status Scripts (5 Examples)</h2>
+        <p style="margin-bottom: 30px;">Here are 5 ways to demonstrate High Status immediately. Study the highlighted structure.</p>
+
+        <div class="script-box">
+            <span class="status-label status-high">Option 1: The "Respect Time" Opener (Standard)</span>
+            <div class="script-text">
+                "<span class="highlight-name">Mike?</span> ... It's Leo. Look, <span class="highlight-empathy">I know you're probably on a roof right now</span>, so I'll get straight to the point."
+            </div>
+            <div class="analysis">
+                <strong>The Psychology:</strong> By calling out the specific context ("on a roof"), you prove you know who they are. You aren't a generic caller; you understand the industry.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <span class="status-label status-high">Option 2: The "Audit" Opener (Active)</span>
+            <div class="script-text">
+                "<span class="highlight-name">Mike?</span> ... Hey man, it's Leo. <span class="highlight-audit">I was just on your website checking out your recent work</span>, and I had a quick question about your capacity."
+            </div>
+            <div class="analysis">
+                <strong>The Psychology:</strong> "Checking out your work" is a compliment (Ego). "Question about capacity" implies you might have work for them (Greed).
+            </div>
+        </div>
+
+        <div class="script-box">
+            <span class="status-label status-high">Option 3: The "Pattern Interrupt" (Casual)</span>
+            <div class="script-text">
+                "<span class="highlight-name">Mike?</span> ... (Pause) ... Hey, it's Leo. <span class="highlight-empathy">I'm not sure if you guys are even taking on new jobs right now</span>, but I wanted to check..."
+            </div>
+            <div class="analysis">
+                <strong>The Psychology:</strong> The "Takeaway." By saying "I'm not sure if you're taking jobs," you make them defend themselves: "Yes we are!"
+            </div>
+        </div>
+
+        <div class="script-box">
+            <span class="status-label status-high">Option 4: The "Competitor" Opener (Aggressive)</span>
+            <div class="script-text">
+                "<span class="highlight-name">Mike?</span> ... It's Leo. <span class="highlight-audit">I see you're active in the Dallas area</span>—are you guys fully booked out for the next month, or <span class="highlight-empathy">can you handle 3-4 more estimates?</span>"
+            </div>
+            <div class="analysis">
+                <strong>The Psychology:</strong> Geography ("Dallas") creates relevance. "3-4 more estimates" is specific and believable, unlike "I can get you 100 leads."
+            </div>
+        </div>
+
+        <div class="script-box">
+            <span class="status-label status-high">Option 5: The "Mystery" Opener (Curiosity)</span>
+            <div class="script-text">
+                "<span class="highlight-name">Mike?</span> ... Hey, it's Leo calling from Build Signals. <span class="highlight-audit">I've got a file open here for your business</span>, just wanted to verify one thing quickly..."
+            </div>
+            <div class="analysis">
+                <strong>The Psychology:</strong> "I've got a file open" sounds official and administrative, not like a sales call. It triggers the "What is this about?" instinct.
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="step-number">3</span> The Protocol</h2>
+        <div style="background: #F3F4F6; padding: 20px; border-radius: 8px;">
+            <p><strong>Before you record your assignment, memorize this rule:</strong></p>
+            <p style="font-size: 20px; font-weight: 700; color: #111;">
+                "Low Status asks for permission. High Status asks for information."
             </p>
-        </div>
-    </section>
-
-    <section>
-        <h2><span class="step-number">2</span> The "Smell" Test (Interactive)</h2>
-        <p>Hover over the cards below to see the script difference.</p>
-
-        <div class="comparison-grid">
-            <div class="card bad">
-                <span class="card-label">Identity A: The Beggar (Telemarketer)</span>
-                <div class="card-text">
-                    "Hello? Sorry to bother you...<br>
-                    Is now a good time?<br>
-                    I'll be really quick..."
-                </div>
-                <p style="font-size: 12px; margin-top: 10px; color: #666;">
-                    <strong>Subtext:</strong> "Please don't yell at me. My time is worthless."
-                </p>
-            </div>
-
-            <div class="card good">
-                <span class="card-label">Identity B: The Partner (Consultant)</span>
-                <div class="card-text">
-                    "Mike? Hey, it's Leo.<br>
-                    I know you're slammed right now,<br>
-                    so I'll get straight to the point."
-                </div>
-                <p style="font-size: 12px; margin-top: 10px; color: #666;">
-                    <strong>Subtext:</strong> "I am busy too. Let's talk business."
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2><span class="step-number">3</span> The Status Game Hierarchy</h2>
-        <p>
-            Every conversation is a negotiation of status. Who is the Alpha in the conversation?
-        </p>
-        
-        <div class="deep-dive">
-            <h3>The 3 Levels of Status:</h3>
-            <ul>
-                <li><strong>Level 1: The Pest (Low Status).</strong> Begs for time. Uses "Sir/Madam." Result: Hang up.</li>
-                <li><strong>Level 2: The Vendor (Mid Status).</strong> Pitches a product immediately. Result: "Send me an email."</li>
-                <li><strong>Level 3: The Partner (High Status).</strong> Audits the business. asks hard questions. Result: A booked meeting.</li>
-            </ul>
-        </div>
-
-        <div class="comparison-grid">
-            <div class="card bad">
-                <span class="card-label">Low Status Goal</span>
-                <div class="card-text">
-                    "I hope they like me."<br>
-                    "I hope I hit my 200 dials."
-                </div>
-            </div>
-
-            <div class="card good">
-                <span class="card-label">High Status Goal</span>
-                <div class="card-text">
-                    "Is this guy qualified for us?"<br>
-                    "Can he afford our $2,000 fee?"
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2><span class="step-number">4</span> The Protocol Checklist</h2>
-        <p>Check these off mentally. These are the standards for the role.</p>
-
-        <div class="checklist-box">
-            <span class="checklist-title">THE GROWTH PARTNER PLEDGE</span>
-            
-            <div class="checkbox-item">
-                <input type="checkbox" id="c1">
-                <label for="c1">I will DELETE the phrase "Sorry to bother you" from my vocabulary.</label>
-            </div>
-
-            <div class="checkbox-item">
-                <input type="checkbox" id="c2">
-                <label for="c2">I will NEVER use "Sir" or "Madam." I will use First Names only.</label>
-            </div>
-
-            <div class="checkbox-item">
-                <input type="checkbox" id="c3">
-                <label for="c3">I understand that if a prospect is rude, I am allowed to hang up.</label>
-            </div>
-
-            <div class="checkbox-item">
-                <input type="checkbox" id="c4">
-                <label for="c4">I am not an employee. I am a Commission Hunter.</label>
-            </div>
-            
         </div>
     </section>
 
