@@ -3,280 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deployment Calculator // Build Signals</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <title>Module 1.2: The Economics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0F172A;
-            --card: #1E293B;
-            --text: #F8FAFC;
-            --accent: #3B82F6;
-            --success: #10B981;
-            --danger: #EF4444;
-            --border: #334155;
+            --bg-page: #F9FAFB; /* Light Gray Background */
+            --bg-card: #FFFFFF; /* White Card */
+            --text-main: #111827; /* Near Black */
+            --text-sub: #6B7280; /* Gray 500 */
+            --accent-black: #000000;
+            --border: #E5E7EB;
+            --blue: #2563EB;
+            --green-bg: #ECFDF5;
+            --green-text: #047857;
+            --red-bg: #FEF2F2;
+            --red-text: #B91C1C;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-page);
+            color: var(--text-main);
             font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 60px 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
         }
 
-        .calculator-card {
-            background-color: var(--card);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 480px;
-            border: 1px solid var(--border);
+        /* --- HEADER SECTION (Matches Screenshot) --- */
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .step-badge {
+            background-color: var(--accent-black);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 20px;
         }
 
         h1 {
-            font-size: 20px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 0 0 5px 0;
-            color: #94A3B8;
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
         }
 
         .subtitle {
-            font-size: 14px;
-            color: #64748B;
-            margin-bottom: 30px;
+            font-size: 18px;
+            color: var(--text-sub);
+            font-weight: 400;
         }
 
-        .input-group {
-            margin-bottom: 30px;
+        /* --- CALCULATOR CARD --- */
+        .calculator-card {
+            background-color: var(--bg-card);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            padding: 40px;
+            border: 1px solid var(--border);
+            text-align: center;
         }
 
-        label {
-            display: block;
+        /* --- INPUT SECTION --- */
+        .input-label {
             font-size: 12px;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            color: var(--text-sub);
             letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            display: block;
         }
 
-        .currency-input {
+        .input-wrapper {
             position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 40px;
         }
 
         .currency-symbol {
             position: absolute;
-            left: 15px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: #94A3B8;
-            font-size: 18px;
+            font-size: 28px;
+            color: var(--text-sub);
+            font-weight: 500;
         }
 
         input[type="number"] {
             width: 100%;
-            background: #0F172A;
+            padding: 20px 20px 20px 50px;
+            font-size: 42px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif; /* Clean look */
             border: 2px solid var(--border);
-            color: white;
-            padding: 15px 15px 15px 35px; /* space for $ */
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 24px;
-            border-radius: 8px;
-            box-sizing: border-box;
+            border-radius: 12px;
             outline: none;
-            transition: border-color 0.2s;
+            color: var(--text-main);
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            text-align: left;
         }
 
         input[type="number"]:focus {
-            border-color: var(--accent);
+            border-color: var(--accent-black);
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
         }
 
-        /* RESULTS GRID */
-        .results-grid {
+        input[type="number"]::placeholder {
+            color: #D1D5DB;
+        }
+
+        /* --- RESULTS GRID --- */
+        .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 30px;
+            text-align: left;
         }
 
-        .result-box {
-            background: #0F172A;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            text-align: center;
+        .stat-box {
+            background: #F3F4F6;
+            padding: 15px 20px;
+            border-radius: 12px;
         }
 
-        .result-label {
+        .stat-label {
             font-size: 11px;
-            color: #64748B;
             text-transform: uppercase;
             font-weight: 700;
+            color: var(--text-sub);
             margin-bottom: 5px;
         }
 
-        .result-value {
+        .stat-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
         }
 
-        /* BIG NUMBER */
-        .main-result {
-            background: rgba(59, 130, 246, 0.1); /* Blue tint */
-            border: 1px solid var(--accent);
-            border-radius: 12px;
+        /* --- BIG RESULT --- */
+        .main-result-box {
+            background: var(--bg-page);
+            border: 2px solid var(--border);
+            border-radius: 16px;
             padding: 30px;
-            text-align: center;
             transition: all 0.3s ease;
         }
 
-        .main-label {
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
-
-        .main-number {
-            font-size: 64px;
-            font-weight: 900;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+        .result-title {
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
+            color: var(--text-sub);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
-        /* DYNAMIC COLORS */
-        .mode-easy .main-result { border-color: var(--danger); background: rgba(239, 68, 68, 0.1); }
-        .mode-easy .main-label { color: var(--danger); }
-        .mode-easy .status-badge { background: var(--danger); color: #fff; }
+        .result-number {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 15px;
+        }
 
-        .mode-hard .main-result { border-color: var(--success); background: rgba(16, 185, 129, 0.1); }
-        .mode-hard .main-label { color: var(--success); }
-        .mode-hard .status-badge { background: var(--success); color: #064E3B; }
+        .status-pill {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
 
-        .assumptions {
+        /* --- STATES --- */
+        .state-wealth .main-result-box {
+            background-color: var(--green-bg);
+            border-color: var(--green-text);
+        }
+        .state-wealth .result-number { color: var(--green-text); }
+        .state-wealth .status-pill { background: white; color: var(--green-text); }
+
+        .state-broke .main-result-box {
+            background-color: var(--red-bg);
+            border-color: var(--red-text);
+        }
+        .state-broke .result-number { color: var(--red-text); }
+        .state-broke .status-pill { background: white; color: var(--red-text); }
+
+        .fine-print {
             margin-top: 30px;
-            font-size: 11px;
-            color: #475569;
-            text-align: center;
-            line-height: 1.6;
+            font-size: 12px;
+            color: #9CA3AF;
+            line-height: 1.5;
         }
 
     </style>
 </head>
 <body>
 
+    <div class="header-section">
+        <div class="step-badge">Step 2</div>
+        <h1>Deep Dive: The Economics</h1>
+        <div class="subtitle">Understand exactly how the "Growth Partner" math works.</div>
+    </div>
+
     <div class="calculator-card">
-        <h1>Income Engineer</h1>
-        <div class="subtitle">Reverse engineer your daily workload.</div>
+        
+        <label class="input-label">Enter Monthly Income Goal</label>
+        <div class="input-wrapper">
+            <span class="currency-symbol">$</span>
+            <input type="number" id="incomeInput" placeholder="5000" value="5000">
+        </div>
 
-        <div class="input-group">
-            <label>Monthly Income Goal ($)</label>
-            <div class="currency-input">
-                <span class="currency-symbol">$</span>
-                <input type="number" id="incomeGoal" placeholder="5000" value="5000">
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-label">Base Salary (Safe)</div>
+                <div class="stat-value">$500</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Comm. Needed</div>
+                <div class="stat-value" id="commNeeded">$4,500</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Deals Needed</div>
+                <div class="stat-value" id="dealsNeeded">23</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Value Per Dial</div>
+                <div class="stat-value" style="color: #059669;">$2.00</div>
             </div>
         </div>
 
-        <div class="results-grid">
-            <div class="result-box">
-                <div class="result-label">Base Salary</div>
-                <div class="result-value" style="color: #64748B;">$500</div>
-            </div>
-            <div class="result-box">
-                <div class="result-label">Commission Needed</div>
-                <div class="result-value" id="commNeeded">$4,500</div>
-            </div>
-            <div class="result-box">
-                <div class="result-label">Deals Needed</div>
-                <div class="result-value" id="dealsNeeded">23</div>
-            </div>
-            <div class="result-box">
-                <div class="result-label">Exp. Value / Dial</div>
-                <div class="result-value" style="color: var(--success);">$2.00</div>
-            </div>
+        <div class="main-result-box" id="resultBox">
+            <div class="result-title">Daily Dials Required</div>
+            <div class="result-number" id="dialCount">113</div>
+            <div class="status-pill" id="statusPill">Wealth Zone</div>
         </div>
 
-        <div class="main-result" id="mainBox">
-            <div class="main-label">Daily Dials Required</div>
-            <div class="main-number" id="dailyDials">113</div>
-            <div class="status-badge" id="statusBadge">Wealth Mode</div>
+        <div class="fine-print">
+            Calculated based on $200 Commission per close.<br>
+            Assumes 20 working days/mo & conservative 1% conversion rate.
         </div>
 
-        <div class="assumptions">
-            Based on: $200 Commission per Deal | 20 Working Days | 1% Closing Rate (100 Dials = 1 Deal).
-        </div>
     </div>
 
     <script>
-        const incomeInput = document.getElementById('incomeGoal');
+        const incomeInput = document.getElementById('incomeInput');
         const commDisplay = document.getElementById('commNeeded');
         const dealsDisplay = document.getElementById('dealsNeeded');
-        const dialsDisplay = document.getElementById('dailyDials');
-        const mainBox = document.getElementById('mainBox');
-        const statusBadge = document.getElementById('statusBadge');
+        const dialDisplay = document.getElementById('dialCount');
+        const resultBox = document.getElementById('resultBox');
+        const statusPill = document.getElementById('statusPill');
 
-        function calculate() {
+        function updateCalc() {
             // CONSTANTS
-            const BASE_SALARY = 500;
+            const BASE = 500;
             const COMM_PER_DEAL = 200;
-            const DIALS_PER_DEAL = 100; // 1% conversion from cold dial to close
-            const WORKING_DAYS = 20;
+            const DIALS_PER_DEAL = 100; // 1%
+            const DAYS = 20;
 
-            // INPUT
-            let goal = parseFloat(incomeInput.value);
+            // GET INPUT
+            let goal = parseInt(incomeInput.value);
+            if (!goal || goal < 500) goal = 500;
+
+            // MATH
+            let commNeeded = Math.max(0, goal - BASE);
+            let deals = commNeeded / COMM_PER_DEAL;
+            let totalDials = deals * DIALS_PER_DEAL;
+            let dailyDials = Math.ceil(totalDials / DAYS);
+
+            // RENDER
+            commDisplay.textContent = "$" + commNeeded.toLocaleString();
+            dealsDisplay.textContent = Math.ceil(deals);
+            dialDisplay.textContent = dailyDials;
+
+            // STYLING LOGIC
+            resultBox.className = "main-result-box"; // Reset
             
-            // LOGIC
-            if (isNaN(goal) || goal < 500) goal = 500;
-
-            let commissionNeeded = goal - BASE_SALARY;
-            if (commissionNeeded < 0) commissionNeeded = 0;
-
-            let dealsNeeded = commissionNeeded / COMM_PER_DEAL;
-            let totalDials = dealsNeeded * DIALS_PER_DEAL;
-            let dailyDials = Math.ceil(totalDials / WORKING_DAYS);
-
-            // UPDATE UI
-            commDisplay.textContent = "$" + commissionNeeded.toLocaleString();
-            dealsDisplay.textContent = Math.ceil(dealsNeeded);
-            dialsDisplay.textContent = dailyDials;
-
-            // DYNAMIC STYLING
-            mainBox.classList.remove('mode-easy', 'mode-hard');
-            
-            if (dailyDials < 40) {
-                mainBox.classList.add('mode-easy');
-                statusBadge.textContent = "Broke Zone (Too Low)";
+            if (dailyDials < 50) {
+                resultBox.classList.add("state-broke");
+                statusPill.textContent = "Broke Zone (Too Low)";
             } else if (dailyDials > 150) {
-                statusBadge.textContent = "Grind Mode (Hard)";
+                 // Normal Style for very high grind
+                statusPill.textContent = "Grind Mode (Hard)";
             } else {
-                mainBox.classList.add('mode-hard');
-                statusBadge.textContent = "Wealth Zone (Optimal)";
+                resultBox.classList.add("state-wealth");
+                statusPill.textContent = "Wealth Zone (Optimal)";
             }
         }
 
-        // Listen for typing
-        incomeInput.addEventListener('input', calculate);
-
-        // Run once on load
-        calculate();
+        incomeInput.addEventListener('input', updateCalc);
+        updateCalc(); // Init
     </script>
 
 </body>
