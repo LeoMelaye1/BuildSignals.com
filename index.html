@@ -72,7 +72,6 @@
             color: white;
         }
         
-        /* Hero */
         .hero {
             padding: 60px 0 80px;
             background: #ffffff;
@@ -167,7 +166,6 @@
             transform: translateY(-1px);
         }
         
-        /* Guarantee */
         .guarantee-section {
             padding: 60px 0;
             background: var(--black);
@@ -208,7 +206,6 @@
             color: var(--gold);
         }
         
-        /* How It Works */
         .section {
             padding: 80px 0;
             border-top: 1px solid #e2e8f0;
@@ -260,7 +257,6 @@
             line-height: 1.6;
         }
         
-        /* Investment Plans */
         .investment-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -448,7 +444,6 @@
             color: white;
         }
         
-        /* Proof */
         .proof-cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -510,7 +505,6 @@
             color: #64748b;
         }
         
-        /* Screenshots - Scrolling */
         .screenshots-section {
             padding: 80px 0;
             background: white;
@@ -551,12 +545,8 @@
         }
         
         @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
         
         .screenshots-track:hover {
@@ -582,21 +572,6 @@
             border-radius: 8px;
         }
         
-        .screenshot-placeholder {
-            background: #f1f5f9;
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            padding: 40px 20px;
-            text-align: center;
-            color: #94a3b8;
-            font-size: 13px;
-            min-height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Final CTA */
         .final-cta-section {
             padding: 80px 0;
             text-align: center;
@@ -615,34 +590,66 @@
             color: #64748b;
             margin-bottom: 32px;
         }
+
+        /* SMS Disclosure */
+        .sms-disclosure {
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            padding: 32px 0;
+        }
+
+        .sms-disclosure-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .sms-disclosure-inner p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .sms-disclosure-inner a {
+            color: var(--black);
+            text-decoration: underline;
+        }
         
         .footer {
-            padding: 32px 0;
+            padding: 24px 0;
             text-align: center;
+            background: var(--black);
             color: #94a3b8;
             font-size: 14px;
-            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
         }
         
         @media (max-width: 768px) {
-            h1 {
-                font-size: 36px;
-            }
-            
+            h1 { font-size: 36px; }
             .trust-grid,
             .process-steps,
             .investment-grid,
-            .proof-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .investment-card.featured {
-                border-width: 2px;
-            }
-            
-            .screenshots-track {
-                animation: scroll 30s linear infinite;
-            }
+            .proof-cards { grid-template-columns: 1fr; }
+            .investment-card.featured { border-width: 2px; }
+            .screenshots-track { animation: scroll 30s linear infinite; }
         }
     </style>
 </head>
@@ -658,11 +665,9 @@
         <div class="container">
             <div class="hero-content">
                 <h1>We'll Add $150K-$300K In Revenue To Your Kitchen & Bath Business This Year</h1>
-                
                 <p class="hero-subtitle">
                     Qualified homeowners. Real budgets. Scheduled appointments. <strong>Or you pay nothing.</strong>
                 </p>
-                
                 <div class="trust-grid">
                     <div class="trust-item">
                         <div class="trust-number">170+</div>
@@ -677,7 +682,6 @@
                         <div class="trust-label">Average Close Rate</div>
                     </div>
                 </div>
-                
                 <div style="text-align: center;">
                     <a href="tel:5303026738" class="cta-primary">Call: (530) 302-6738</a>
                 </div>
@@ -692,48 +696,18 @@
                 <p class="screenshots-subtitle">Real messages from contractors closing jobs</p>
             </div>
         </div>
-        
         <div class="screenshots-scroll-container">
             <div class="screenshots-track">
-                <div class="text-message">
-                    <img src="IMG_3947.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3948.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3949.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3950.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3951.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3947.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3948.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3949.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3950.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
-                
-                <div class="text-message">
-                    <img src="IMG_3951.jpg" class="message-screenshot" alt="Contractor win screenshot">
-                </div>
+                <div class="text-message"><img src="IMG_3947.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3948.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3949.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3950.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3951.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3947.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3948.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3949.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3950.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
+                <div class="text-message"><img src="IMG_3951.jpg" class="message-screenshot" alt="Contractor win screenshot"></div>
             </div>
         </div>
     </section>
@@ -741,49 +715,23 @@
     <section class="section">
         <div class="container">
             <h2 class="section-title">Detailed Case Studies</h2>
-            
             <div class="proof-cards">
                 <a href="https://docs.google.com/document/d/1hwfSxOSXhHfMDm53eLxEAwELm13Ik8DsOxJHDGxAzUk/edit?usp=sharing" target="_blank" class="proof-card">
                     <h3 class="proof-company">DRH Construction Services</h3>
-                    <p class="proof-description">
-                        Starter plan. Received 3 appointments in first 17 days. 
-                        Closed 2 shower conversions and 1 full bathroom remodel.
-                    </p>
+                    <p class="proof-description">Starter plan. Received 3 appointments in first 17 days. Closed 2 shower conversions and 1 full bathroom remodel.</p>
                     <div class="proof-stats">
-                        <div class="proof-stat">
-                            <span class="proof-stat-value">$600</span>
-                            <span class="proof-stat-label">Total Spent</span>
-                        </div>
-                        <div class="proof-stat">
-                            <span class="proof-stat-value">$22K</span>
-                            <span class="proof-stat-label">Revenue</span>
-                        </div>
-                        <div class="proof-stat">
-                            <span class="proof-stat-value">36X</span>
-                            <span class="proof-stat-label">ROI</span>
-                        </div>
+                        <div class="proof-stat"><span class="proof-stat-value">$600</span><span class="proof-stat-label">Total Spent</span></div>
+                        <div class="proof-stat"><span class="proof-stat-value">$22K</span><span class="proof-stat-label">Revenue</span></div>
+                        <div class="proof-stat"><span class="proof-stat-value">36X</span><span class="proof-stat-label">ROI</span></div>
                     </div>
                 </a>
-                
                 <a href="https://docs.google.com/document/d/1wwnRsLiBgJ1Iwt9HMSWQJNNQXkTYOsiAJxk1TiBxc7k/edit?usp=sharing" target="_blank" class="proof-card">
                     <h3 class="proof-company">MTR Baths</h3>
-                    <p class="proof-description">
-                        Growth plan. 51 leads generated over 60 days. 
-                        Closed 4 shower remodels at $10K+ each.
-                    </p>
+                    <p class="proof-description">Growth plan. 51 leads generated over 60 days. Closed 4 shower remodels at $10K+ each.</p>
                     <div class="proof-stats">
-                        <div class="proof-stat">
-                            <span class="proof-stat-value">$3.8K</span>
-                            <span class="proof-stat-label">Total Spent</span>
-                        </div>
-                        <div class="proof-stat">
-                            <span class="proof-stat-value">$52K</span>
-                            <span class="proof-stat-label">Revenue</span>
-                        </div>
-                        <div class="proof-stat">
-                            <span class="proof-stat-value">13.7X</span>
-                            <span class="proof-stat-label">ROI</span>
-                        </div>
+                        <div class="proof-stat"><span class="proof-stat-value">$3.8K</span><span class="proof-stat-label">Total Spent</span></div>
+                        <div class="proof-stat"><span class="proof-stat-value">$52K</span><span class="proof-stat-label">Revenue</span></div>
+                        <div class="proof-stat"><span class="proof-stat-value">13.7X</span><span class="proof-stat-label">ROI</span></div>
                     </div>
                 </a>
             </div>
@@ -794,9 +742,7 @@
         <div class="container">
             <div class="guarantee-content">
                 <h2 class="guarantee-title">Our Revenue Guarantee</h2>
-                <p class="guarantee-text">
-                    We're so confident in our system that we guarantee specific revenue targets for your business. Not leads. Not appointments. Actual closed revenue.
-                </p>
+                <p class="guarantee-text">We're so confident in our system that we guarantee specific revenue targets for your business. Not leads. Not appointments. Actual closed revenue.</p>
                 <div class="guarantee-box">
                     <strong>Growth Package:</strong> If we don't add $150,000 in revenue over 6 months, you get a full refund.<br><br>
                     <strong>Scale Package:</strong> If we don't add $300,000 in revenue over 12 months, you get a full refund.
@@ -808,7 +754,6 @@
     <section class="section">
         <div class="container">
             <h2 class="section-title">The Investment</h2>
-            
             <div class="investment-grid">
                 <div class="investment-card">
                     <h3 class="plan-name">Pay Per Appointment</h3>
@@ -826,7 +771,6 @@
                     </ul>
                     <a href="tel:5303026738" class="plan-cta">Get Started</a>
                 </div>
-                
                 <div class="investment-card featured">
                     <div class="featured-badge">Most Popular</div>
                     <h3 class="plan-name">Growth Package</h3>
@@ -841,7 +785,6 @@
                     </ul>
                     <a href="tel:5303026738" class="plan-cta">Get Started</a>
                 </div>
-                
                 <div class="investment-card">
                     <h3 class="plan-name">Scale Package</h3>
                     <p class="plan-details">12 month plan</p>
@@ -857,7 +800,6 @@
                     <a href="tel:5303026738" class="plan-cta">Get Started</a>
                 </div>
             </div>
-            
             <div class="custom-box">
                 <h3 class="custom-title">Need a Custom Solution?</h3>
                 <p class="custom-description">We'll create a tailored plan based on your specific business needs and capacity.</p>
@@ -874,9 +816,27 @@
         </div>
     </section>
 
+    <!-- SMS DISCLOSURE — Required for A2P 10DLC -->
+    <div class="sms-disclosure">
+        <div class="sms-disclosure-inner">
+            <p>
+                By speaking with a BuildSignals representative and agreeing to receive communications, you consent to receive SMS messages from BuildSignals regarding your appointment, our services, and follow-up information. Message frequency varies. Message and data rates may apply.
+            </p>
+            <p>
+                Reply <strong>STOP</strong> to opt out of SMS messages at any time. Reply <strong>HELP</strong> for assistance. SMS consent is not a condition of purchase. 
+                View our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>.
+            </p>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
-            © 2026 BuildSignals by Leo Melaye
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="tel:5303026738">(530) 302-6738</a>
+            </div>
+            <div>© 2026 BuildSignals. All rights reserved.</div>
         </div>
     </footer>
 </body>
