@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commercial Bid Scouting - BuildSignals</title>
+    <title>Commercial Growth Partners - BuildSignals</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* --- RESET & VARIABLES --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --gold: #E8A955;
+            --gold: #C5A059; /* Slightly more muted/premium gold */
             --black: #0f172a;
             --grey-light: #f8fafc;
             --border: #e2e8f0;
-            --text-main: #0f172a;
+            --text-main: #1e293b;
             --text-muted: #64748b;
         }
         
@@ -32,319 +28,85 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
         
         /* --- HEADER --- */
-        .header {
-            background: #ffffff;
-            padding: 24px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--black);
-            letter-spacing: -0.5px;
-        }
-        
+        .header { background: #ffffff; padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 22px; font-weight: 800; color: var(--black); letter-spacing: -0.5px; }
         .logo-accent { color: var(--gold); }
-        
         .phone {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--black);
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 2px solid var(--black);
-            border-radius: 6px;
-            transition: all 0.2s;
+            font-size: 14px; font-weight: 600; color: var(--black); text-decoration: none;
+            padding: 8px 16px; border: 1px solid var(--border); border-radius: 4px;
+            background: var(--grey-light); transition: all 0.2s;
         }
-        
-        .phone:hover {
-            background: var(--black);
-            color: white;
-        }
+        .phone:hover { border-color: var(--black); background: #fff; }
         
         /* --- HERO SECTION --- */
-        .hero {
-            padding: 80px 0 60px;
-            background: #ffffff;
-            text-align: center;
-        }
-        
+        .hero { padding: 90px 0 70px; background: #ffffff; text-align: center; }
         h1 {
-            font-size: 46px;
-            font-weight: 800;
-            line-height: 1.15;
-            color: var(--black);
-            margin-bottom: 24px;
-            letter-spacing: -1px;
+            font-size: 48px; font-weight: 800; line-height: 1.1; color: var(--black);
+            margin-bottom: 24px; letter-spacing: -1.5px;
         }
-        
         .highlight {
-            background: linear-gradient(120deg, rgba(232, 169, 85, 0.2) 0%, rgba(232, 169, 85, 0.2) 100%);
-            background-repeat: no-repeat;
-            background-size: 100% 35%;
-            background-position: 0 85%;
+            background: linear-gradient(120deg, rgba(197, 160, 89, 0.15) 0%, rgba(197, 160, 89, 0.15) 100%);
+            color: #8f6b28;
+            padding: 0 8px;
         }
-        
         .hero-subtitle {
-            font-size: 20px;
-            color: #475569;
-            margin-bottom: 40px;
-            line-height: 1.6;
-            max-width: 680px;
-            margin-left: auto;
-            margin-right: auto;
+            font-size: 20px; color: #475569; margin-bottom: 40px; line-height: 1.6;
+            max-width: 720px; margin-left: auto; margin-right: auto;
         }
-        
         .cta-primary {
-            display: inline-block;
-            background: var(--black);
-            color: white;
-            padding: 18px 36px;
-            border-radius: 6px;
-            font-size: 17px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+            display: inline-block; background: var(--black); color: white;
+            padding: 20px 40px; border-radius: 6px; font-size: 18px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s; margin-bottom: 16px;
+            box-shadow: 0 10px 25px -10px rgba(15, 23, 42, 0.4);
         }
+        .cta-primary:hover { transform: translateY(-2px); background: #1e293b; }
+        .cta-subtext { font-size: 13px; color: var(--text-muted); font-weight: 500; }
         
-        .cta-primary:hover {
-            background: #1e293b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
-        }
-
-        .cta-subtext {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
+        /* --- PROCESS SECTION (THE VALUE BUILDER) --- */
+        .process-section { padding: 80px 0; background: var(--grey-light); }
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 50px; }
+        .section-header h2 { font-size: 30px; font-weight: 800; margin-bottom: 12px; }
         
-        /* --- STATS BAR --- */
-        .stats-bar {
-            background: var(--grey-light);
-            padding: 32px 0;
-            margin-top: 40px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+        .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .process-card {
+            background: #fff; padding: 32px; border-radius: 8px;
+            border: 1px solid var(--border); position: relative;
         }
-
-        .stats-grid {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
+        .step-num {
+            font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 16px; display: block;
         }
-
-        .stat-item {
-            flex: 1;
-        }
-
-        .stat-number {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--black);
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 4px;
-        }
-
-        /* --- OPERATIONAL REQUIREMENTS (The "Legit" Section) --- */
-        .qualify-section {
-            padding: 90px 0;
-            background: #ffffff;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            color: var(--black);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 17px;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 50px;
-            line-height: 1.6;
-        }
-
-        .qualify-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-            align-items: stretch;
-        }
-
-        .qualify-card {
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            padding: 0;
-            overflow: hidden;
-            background: #fff;
-            /* Subtle lift effect */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
-        }
-
-        .card-header {
-            padding: 24px 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        /* Styling for the "Good" card header */
-        .qualify-card.professional .card-header {
-            background: #f8fafc;
-        }
+        .process-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+        .process-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
         
-        /* Styling for the "Bad" card header */
-        .qualify-card.incompatibility .card-header {
-            background: #ffffff;
+        /* --- QUALIFY SECTION --- */
+        .qualify-section { padding: 90px 0; background: #ffffff; }
+        .qualify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .qualify-col h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+        
+        .check-list li {
+            list-style: none; display: flex; gap: 12px; margin-bottom: 20px;
+            font-size: 15px; color: var(--text-main);
         }
-
-        .card-header h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 0;
-            color: var(--black);
-        }
-
-        .badge {
-            font-size: 11px;
-            font-weight: 700;
-            padding: 6px 12px;
-            border-radius: 100px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge.dark { background: var(--black); color: white; }
-        .badge.gray { background: #f1f5f9; color: var(--text-muted); border: 1px solid var(--border); }
-
-        .spec-list {
-            list-style: none;
-            padding: 32px;
-        }
-
-        .spec-list li {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 28px;
-            align-items: flex-start;
-        }
-
-        .spec-list li:last-child {
-            margin-bottom: 0;
-        }
-
-        .spec-list .icon {
-            font-size: 20px;
-            margin-top: 2px;
-            flex-shrink: 0;
-            width: 24px;
-            text-align: center;
-        }
-
-        .spec-list .text strong {
-            display: block;
-            font-size: 16px;
-            color: var(--black);
-            margin-bottom: 6px;
-        }
-
-        .spec-list .text p {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin: 0;
-        }
-
+        .check-list li strong { display: block; color: var(--black); margin-bottom: 4px; }
+        .icon-check { color: var(--gold); font-weight: bold; }
+        .icon-cross { color: #cbd5e1; }
+        
         /* --- GUARANTEE --- */
-        .guarantee-section {
-            background: var(--black);
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .guarantee-box {
-            border: 2px solid var(--gold);
-            padding: 48px;
-            border-radius: 12px;
-            max-width: 780px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.03);
-        }
-
-        .guarantee-headline {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            color: var(--gold);
-        }
-
-        .guarantee-text {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-bottom: 32px;
-            line-height: 1.6;
-        }
-
-        /* --- SMS & FOOTER --- */
-        .sms-disclosure {
-            background: var(--grey-light);
-            padding: 40px 0;
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            line-height: 1.6;
-            border-top: 1px solid var(--border);
-        }
-
-        .footer {
-            background: var(--black);
-            color: #64748b;
-            padding: 30px 0;
-            text-align: center;
-            font-size: 14px;
-            border-top: 1px solid #1e293b;
-        }
+        .guarantee-section { background: var(--black); color: white; padding: 80px 0; text-align: center; }
+        .guarantee-box { border: 1px solid rgba(255,255,255,0.15); padding: 48px; border-radius: 12px; max-width: 780px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%); }
+        .guarantee-headline { font-size: 28px; font-weight: 800; margin-bottom: 20px; color: white; }
+        .guarantee-text { font-size: 17px; opacity: 0.8; margin-bottom: 32px; line-height: 1.6; }
 
         /* --- MOBILE --- */
         @media (max-width: 768px) {
             h1 { font-size: 34px; }
-            .hero-subtitle { font-size: 18px; }
+            .process-grid { grid-template-columns: 1fr; }
             .qualify-grid { grid-template-columns: 1fr; }
-            .stats-grid { flex-direction: column; gap: 32px; }
-            .card-header { padding: 20px; }
-            .spec-list { padding: 24px; }
-            .guarantee-box { padding: 32px 24px; }
         }
     </style>
 </head>
@@ -359,98 +121,277 @@
 
     <section class="hero">
         <div class="container">
-            <h1>We Source <span class="highlight">Commercial Bids</span> For General Contractors</h1>
+            <h1>We Don't Just Source Bids.<br>We Build Your <span class="highlight">Commercial Division.</span></h1>
             
             <p class="hero-subtitle">
-                Stop chasing homeowners. We will place <strong>5 Qualified Commercial Bid Opportunities</strong> (with full plans & prints) on your desk in the next 30 days. <br><br>
-                <strong>Or we work for free until we do.</strong>
+                Exclusive to Residential GCs: We source 5-10 qualified Commercial projects per month <strong>AND help you package the winning submittals.</strong>
             </p>
 
-            <a href="tel:5303026738" class="cta-primary">Call To Check Availability: (530) 302-6738</a>
-            <p class="cta-subtext">Strictly for Contractors capable of Tenant Improvement & Commercial Work.</p>
+            <a href="tel:5303026738" class="cta-primary">Apply For Commercial Access</a>
+            <p class="cta-subtext">Currently accepting 2 partners in your area.</p>
         </div>
     </section>
 
-    <section class="stats-bar">
-        <div class="container stats-grid">
-            <div class="stat-item">
-                <div class="stat-number">$3.2M+</div>
-                <div class="stat-label">Bid Volume Sourced</div>
+<section class="opportunities-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Recent Bid Activity</h2>
+                <p>Real projects we sourced for our partners this week. <br>This is the caliber of work you can expect.</p>
             </div>
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Verified ITBs</div>
+
+            <div class="opp-grid">
+                <div class="opp-card">
+                    <div class="opp-header">
+                        <span class="opp-tag">Medical Office</span>
+                        <span class="opp-status">Sourced 2 Days Ago</span>
+                    </div>
+                    <h3 class="opp-title">2,500 Sq Ft Dental Build-Out</h3>
+                    <div class="opp-details">
+                        <div class="detail-row">
+                            <span class="label">Location:</span>
+                            <span class="value blur-text">1200 Market St, Downtown</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Scope:</span>
+                            <span class="value">Full interior demo, plumbing trenching, reception framing, med-gas install.</span>
+                        </div>
+                        <div class="detail-row highlight-row">
+                            <span class="label">Est. Budget:</span>
+                            <span class="value money">$350,000 - $420,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="opp-card">
+                    <div class="opp-header">
+                        <span class="opp-tag">Retail Franchise</span>
+                        <span class="opp-status">Sourced Yesterday</span>
+                    </div>
+                    <h3 class="opp-title">Fast-Casual Restaurant Fit-Out</h3>
+                    <div class="opp-details">
+                        <div class="detail-row">
+                            <span class="label">Location:</span>
+                            <span class="value blur-text">Westfield Shopping Center</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Scope:</span>
+                            <span class="value">Grease trap installation, HVAC drop, millwork package, acoustic ceiling.</span>
+                        </div>
+                        <div class="detail-row highlight-row">
+                            <span class="label">Est. Budget:</span>
+                            <span class="value money">$185,000 - $225,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="opp-card">
+                    <div class="opp-header">
+                        <span class="opp-tag">Flex / Warehouse</span>
+                        <span class="opp-status">Sourced Today</span>
+                    </div>
+                    <h3 class="opp-title">Mezzanine Office Addition</h3>
+                    <div class="opp-details">
+                        <div class="detail-row">
+                            <span class="label">Location:</span>
+                            <span class="value blur-text">Industrial Park, Building 4</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Scope:</span>
+                            <span class="value">Steel mezzanine fabrication, 3 office partitions, electrical sub-panel upgrade.</span>
+                        </div>
+                        <div class="detail-row highlight-row">
+                            <span class="label">Est. Budget:</span>
+                            <span class="value money">$650,000+</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number">Active</div>
-                <div class="stat-label">In Your Market</div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="tel:5303026738" class="cta-secondary">See Available Bids In Your Area &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* ADD THIS TO YOUR STYLE SECTION */
+        .opportunities-section {
+            padding: 80px 0;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .opp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .opp-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .opp-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.1);
+            border-color: var(--gold);
+        }
+
+        .opp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .opp-tag {
+            background: var(--black);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .opp-status {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .opp-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--black);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row .label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .detail-row .value {
+            color: var(--text-main);
+            font-weight: 600;
+            text-align: right;
+            max-width: 65%;
+        }
+
+        .money {
+            color: #059669; /* Green for money */
+            font-weight: 800 !important;
+        }
+
+        /* The Velvet Rope Effect */
+        .blur-text {
+            color: transparent !important;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
+            user-select: none;
+        }
+
+        .cta-secondary {
+            display: inline-block;
+            color: var(--black);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 16px;
+            padding-bottom: 2px;
+            border-bottom: 2px solid var(--gold);
+            transition: all 0.2s;
+        }
+        
+        .cta-secondary:hover {
+            color: var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .opp-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Commercial Accelerator System</h2>
+                <p>We are not a lead list. We act as your fractional Business Development Executive, handling the process from outreach to submittal.</p>
+            </div>
+            
+            <div class="process-grid">
+                <div class="process-card">
+                    <span class="step-num">Phase 1</span>
+                    <h3>Precision Sourcing</h3>
+                    <p>We filter through the noise to find Light Commercial projects (TI, Retail, Office) that match your exact bonding capacity and crew size.</p>
+                </div>
+                <div class="process-card" style="border-color: var(--gold);">
+                    <span class="step-num">Phase 2</span>
+                    <h3>The Closing Package</h3>
+                    <p><strong>This is where we win.</strong> We assist in preparing your capability statements and bid qualifications so you look like a $10M company on paper.</p>
+                </div>
+                <div class="process-card">
+                    <span class="step-num">Phase 3</span>
+                    <h3>Hand-Off & Negotiation</h3>
+                    <p>We manage the communication with the project owner or architect until the moment the contract is ready for your signature.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="qualify-section">
         <div class="container">
-            <h2 class="section-title">Operational Requirements</h2>
-            <p class="section-subtitle">
-                To maintain our network's <strong>22% Bid-to-Interview ratio</strong>, we strictly partner with contractors who meet these pre-construction standards.
-            </p>
-            
             <div class="qualify-grid">
-                <div class="qualify-card professional">
-                    <div class="card-header">
-                        <h3>Required Capabilities</h3>
-                        <span class="badge dark">Commercial Standard</span>
-                    </div>
-                    <ul class="spec-list">
+                <div class="qualify-col">
+                    <h3><span class="icon-check">✓</span> Who We Partner With</h3>
+                    <ul class="check-list">
                         <li>
-                            <span class="icon">📐</span>
-                            <div class="text">
-                                <strong>Remote Estimating</strong>
-                                <p>Must be able to produce line-item proposals from PDF plans & specs without an initial site visit.</p>
+                            <span class="icon-check">✓</span>
+                            <div>
+                                <strong>High-End Residential GCs</strong>
+                                Looking to pivot into Tenant Improvement & Light Commercial work with better margins.
                             </div>
                         </li>
                         <li>
-                            <span class="icon">🛡️</span>
-                            <div class="text">
-                                <strong>Commercial Insurance</strong>
-                                <p>Currently holds General Liability with commercial endorsements (or has capacity to add it).</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="icon">💼</span>
-                            <div class="text">
-                                <strong>Financial Health</strong>
-                                <p>Capable of sustaining operations on Net-30 or Net-60 payment terms typical of commercial contracts.</p>
+                            <span class="icon-check">✓</span>
+                            <div>
+                                <strong>Liquid & Ready</strong>
+                                Companies with the cash flow to handle Net-30/60 terms and the budget to invest in growth.
                             </div>
                         </li>
                     </ul>
                 </div>
-
-                <div class="qualify-card incompatibility">
-                    <div class="card-header">
-                        <h3>Out of Scope</h3>
-                        <span class="badge gray">Incompatible Profiles</span>
-                    </div>
-                    <ul class="spec-list">
+                <div class="qualify-col">
+                    <h3><span class="icon-cross">✕</span> Who We Turn Away</h3>
+                    <ul class="check-list">
                         <li>
-                            <span class="icon">❌</span>
-                            <div class="text">
-                                <strong>Walkthrough Dependent</strong>
-                                <p>We do not work with contractors who require on-site visits to provide initial rough estimates.</p>
+                            <span class="icon-cross">✕</span>
+                            <div>
+                                <strong>"Chuck in a Truck"</strong>
+                                If you don't have a professional back-office process or insurance capacity, we cannot represent you.
                             </div>
                         </li>
                         <li>
-                            <span class="icon">❌</span>
-                            <div class="text">
-                                <strong>Handyman / Service Work</strong>
-                                <p>Our focus is project-based renovations and build-outs, not hourly service calls.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="icon">❌</span>
-                            <div class="text">
-                                <strong>Cash Flow Constraints</strong>
-                                <p>Contractors requiring upfront client deposits for materials are generally not a fit for these ITBs.</p>
+                            <span class="icon-cross">✕</span>
+                            <div>
+                                <strong>Lead Chasers</strong>
+                                If you are looking for $50 leads, go to Angi. We build long-term commercial pipelines.
                             </div>
                         </li>
                     </ul>
@@ -462,32 +403,20 @@
     <section class="guarantee-section">
         <div class="container">
             <div class="guarantee-box">
-                <div class="guarantee-headline">The 30-Day Performance Guarantee</div>
+                <div class="guarantee-headline">The Performance Standard</div>
                 <p class="guarantee-text">
-                    We are not a lead broker. We act as your outsourced Business Development team.
+                    Hiring a Commercial VP of Sales costs $120k/year + Commission.<br>
+                    We provide the same output—sourcing, vetting, and packaging—for a fraction of the cost.
                     <br><br>
-                    <strong>Our Promise:</strong> We will source 5 qualified commercial ITBs (Invitations to Bid) with verified decision-makers in your first 30 days. If we miss the mark, we continue working for free until we hit the number.
+                    <strong>Our Guarantee:</strong> We work until you have 5 qualified commercial opportunities on your desk. Period.
                 </p>
-                <a href="tel:5303026738" class="cta-primary" style="background:var(--gold); color:black; border:none; margin:0;">Apply For Access</a>
+                <a href="tel:5303026738" class="cta-primary" style="background:white; color:black; border:none; margin:0;">Call (530) 302-6738</a>
             </div>
         </div>
     </section>
 
-    <div class="sms-disclosure">
-        <div class="container">
-            <p>
-                By speaking with a BuildSignals representative and agreeing to receive communications, you consent to receive SMS messages from BuildSignals regarding your projects, bid updates, and service information. Message frequency varies. Message and data rates may apply.
-                Reply <strong>STOP</strong> to opt out. Reply <strong>HELP</strong> for assistance.
-                <br><br>
-                <a href="#" style="color:#64748b;">Privacy Policy</a> | <a href="#" style="color:#64748b;">Terms of Service</a>
-            </p>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="container">
-            © 2026 BuildSignals. All rights reserved.
-        </div>
+    <footer style="text-align: center; padding: 40px; font-size: 12px; color: #94a3b8;">
+        © 2026 BuildSignals. Commercial Pre-Construction Services.
     </footer>
 
 </body>
