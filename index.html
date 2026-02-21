@@ -1,423 +1,717 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commercial Growth Partners - BuildSignals</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* --- RESET & VARIABLES --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        :root {
-            --gold: #C5A059; /* Slightly more muted/premium gold */
-            --black: #0f172a;
-            --grey-light: #f8fafc;
-            --border: #e2e8f0;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            line-height: 1.6;
-            color: var(--text-main);
-            background: #ffffff;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
-        
-        /* --- HEADER --- */
-        .header { background: #ffffff; padding: 20px 0; border-bottom: 1px solid var(--border); }
-        .nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 22px; font-weight: 800; color: var(--black); letter-spacing: -0.5px; }
-        .logo-accent { color: var(--gold); }
-        .phone {
-            font-size: 14px; font-weight: 600; color: var(--black); text-decoration: none;
-            padding: 8px 16px; border: 1px solid var(--border); border-radius: 4px;
-            background: var(--grey-light); transition: all 0.2s;
-        }
-        .phone:hover { border-color: var(--black); background: #fff; }
-        
-        /* --- HERO SECTION --- */
-        .hero { padding: 90px 0 70px; background: #ffffff; text-align: center; }
-        h1 {
-            font-size: 48px; font-weight: 800; line-height: 1.1; color: var(--black);
-            margin-bottom: 24px; letter-spacing: -1.5px;
-        }
-        .highlight {
-            background: linear-gradient(120deg, rgba(197, 160, 89, 0.15) 0%, rgba(197, 160, 89, 0.15) 100%);
-            color: #8f6b28;
-            padding: 0 8px;
-        }
-        .hero-subtitle {
-            font-size: 20px; color: #475569; margin-bottom: 40px; line-height: 1.6;
-            max-width: 720px; margin-left: auto; margin-right: auto;
-        }
-        .cta-primary {
-            display: inline-block; background: var(--black); color: white;
-            padding: 20px 40px; border-radius: 6px; font-size: 18px; font-weight: 600;
-            text-decoration: none; transition: all 0.2s; margin-bottom: 16px;
-            box-shadow: 0 10px 25px -10px rgba(15, 23, 42, 0.4);
-        }
-        .cta-primary:hover { transform: translateY(-2px); background: #1e293b; }
-        .cta-subtext { font-size: 13px; color: var(--text-muted); font-weight: 500; }
-        
-        /* --- PROCESS SECTION (THE VALUE BUILDER) --- */
-        .process-section { padding: 80px 0; background: var(--grey-light); }
-        .section-header { text-align: center; max-width: 600px; margin: 0 auto 50px; }
-        .section-header h2 { font-size: 30px; font-weight: 800; margin-bottom: 12px; }
-        
-        .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .process-card {
-            background: #fff; padding: 32px; border-radius: 8px;
-            border: 1px solid var(--border); position: relative;
-        }
-        .step-num {
-            font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase;
-            letter-spacing: 1px; margin-bottom: 16px; display: block;
-        }
-        .process-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-        .process-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-        
-        /* --- QUALIFY SECTION --- */
-        .qualify-section { padding: 90px 0; background: #ffffff; }
-        .qualify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .qualify-col h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
-        
-        .check-list li {
-            list-style: none; display: flex; gap: 12px; margin-bottom: 20px;
-            font-size: 15px; color: var(--text-main);
-        }
-        .check-list li strong { display: block; color: var(--black); margin-bottom: 4px; }
-        .icon-check { color: var(--gold); font-weight: bold; }
-        .icon-cross { color: #cbd5e1; }
-        
-        /* --- GUARANTEE --- */
-        .guarantee-section { background: var(--black); color: white; padding: 80px 0; text-align: center; }
-        .guarantee-box { border: 1px solid rgba(255,255,255,0.15); padding: 48px; border-radius: 12px; max-width: 780px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%); }
-        .guarantee-headline { font-size: 28px; font-weight: 800; margin-bottom: 20px; color: white; }
-        .guarantee-text { font-size: 17px; opacity: 0.8; margin-bottom: 32px; line-height: 1.6; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BuildSignals — Guaranteed Growth for Remodelers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
 
-        /* --- MOBILE --- */
-        @media (max-width: 768px) {
-            h1 { font-size: 34px; }
-            .process-grid { grid-template-columns: 1fr; }
-            .qualify-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:       #0b1120;
+      --ink-2:     #1a2540;
+      --ink-3:     #243050;
+      --gold:      #c8a84b;
+      --gold-lt:   #e8cc80;
+      --gold-bg:   rgba(200, 168, 75, 0.08);
+      --cream:     #f7f4ef;
+      --slate:     #8494ae;
+      --border:    rgba(255,255,255,0.08);
+      --border-lt: #e4ddd2;
+      --white:     #ffffff;
+      --green:     #2dbd84;
+      --f-display: 'Cormorant Garamond', Georgia, serif;
+      --f-body:    'DM Sans', system-ui, sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--f-body);
+      background: var(--ink);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.35;
+    }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+    .container--wide { max-width: 1280px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 22px 0;
+      transition: background 0.4s var(--ease), backdrop-filter 0.4s;
+    }
+    .nav.scrolled {
+      background: rgba(11, 17, 32, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1080px; margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-family: var(--f-display); font-size: 22px; font-weight: 700; color: var(--white); text-decoration: none; }
+    .logo em { color: var(--gold); font-style: normal; }
+    .nav-cta {
+      font-size: 12px; font-weight: 600; color: var(--ink);
+      background: var(--gold); padding: 10px 22px; border-radius: 3px;
+      text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      padding: 130px 0 80px; position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 900px; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse, rgba(200,168,75,0.07) 0%, transparent 70%);
+    }
+    .hero-rule {
+      width: 48px; height: 2px; background: var(--gold); margin-bottom: 32px;
+      opacity: 0; transform: scaleX(0); transform-origin: left;
+      animation: scaleIn 0.6s var(--ease) 0.2s forwards;
+    }
+    .hero-kicker {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 28px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.7s var(--ease) 0.35s forwards;
+    }
+    .hero h1 {
+      font-family: var(--f-display);
+      font-size: clamp(52px, 7vw, 88px); font-weight: 600;
+      line-height: 1.05; letter-spacing: -0.02em;
+      max-width: 780px; margin-bottom: 32px;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.8s var(--ease) 0.5s forwards;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 18px; font-weight: 300; line-height: 1.7; color: var(--slate);
+      max-width: 520px; margin-bottom: 48px;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.8s var(--ease) 0.65s forwards;
+    }
+    .hero-actions {
+      display: flex; align-items: center; gap: 28px;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.8s var(--ease) 0.8s forwards;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold); color: var(--ink);
+      font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 16px 32px; border-radius: 3px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--gold-lt); transform: translateY(-2px);
+      box-shadow: 0 12px 40px -10px rgba(200,168,75,0.35);
+    }
+    .btn-primary svg { transition: transform 0.2s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+    .hero-link {
+      font-size: 14px; color: var(--slate); text-decoration: none;
+      border-bottom: 1px solid rgba(132,148,174,0.3); padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .hero-link:hover { color: var(--white); border-color: var(--white); }
+
+    /* HERO STATS */
+    .hero-stats {
+      display: flex; gap: 0; margin-top: 80px; padding-top: 48px;
+      border-top: 1px solid var(--border);
+      opacity: 0; animation: fadeUp 0.8s var(--ease) 1s forwards;
+    }
+    .hero-stat { flex: 1; padding-right: 48px; border-right: 1px solid var(--border); margin-right: 48px; }
+    .hero-stat:last-child { border-right: none; margin-right: 0; }
+    .stat-number {
+      font-family: var(--f-display); font-size: 48px; font-weight: 700;
+      line-height: 1; color: var(--gold); margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 12px; font-weight: 500; color: var(--slate);
+      letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.5;
+    }
+
+    /* TICKER */
+    .guarantee-band { background: var(--gold); padding: 18px 0; overflow: hidden; }
+    .guarantee-band-inner {
+      display: flex; align-items: center; white-space: nowrap;
+      animation: ticker 30s linear infinite;
+    }
+    .guarantee-band-item {
+      display: inline-flex; align-items: center; gap: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink); padding: 0 40px;
+    }
+    .guarantee-band-item::after { content: '◆'; font-size: 7px; opacity: 0.35; }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+
+    /* RESULTS */
+    .results-section { padding: 120px 0; background: var(--cream); }
+    .results-section .section-label { color: #9a7c2e; }
+    .results-section .section-label::before { background: #9a7c2e; }
+    .results-header {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: end; margin-bottom: 64px;
+    }
+    .results-header h2 {
+      font-family: var(--f-display); font-size: clamp(38px, 4vw, 56px);
+      font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink);
+    }
+    .results-header h2 em { font-style: italic; color: var(--gold); }
+    .results-header p { font-size: 16px; color: #475569; line-height: 1.7; font-weight: 300; }
+
+    .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+    .case-card {
+      background: var(--white); padding: 48px;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s var(--ease);
+    }
+    .case-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%; background: var(--gold);
+      transform: scaleY(0); transform-origin: bottom;
+      transition: transform 0.4s var(--ease);
+    }
+    .case-card:hover { transform: translateY(-4px); }
+    .case-card:hover::before { transform: scaleY(1); }
+    .case-card.featured { grid-column: span 2; background: var(--ink); }
+    .case-client {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--slate); margin-bottom: 24px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .case-client .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    .case-card.featured .case-client { color: rgba(255,255,255,0.4); }
+    .case-metric {
+      font-family: var(--f-display); font-size: 68px; font-weight: 700;
+      line-height: 1; color: var(--gold); margin-bottom: 8px; letter-spacing: -0.02em;
+    }
+    .case-metric-label {
+      font-size: 12px; font-weight: 500; color: var(--slate);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 24px;
+    }
+    .case-card.featured .case-metric-label { color: rgba(255,255,255,0.4); }
+    .case-desc { font-size: 15px; line-height: 1.75; color: #475569; max-width: 440px; }
+    .case-card.featured .case-desc { color: rgba(255,255,255,0.6); }
+    .case-tag {
+      display: inline-block; margin-top: 28px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink); background: rgba(200,168,75,0.12);
+      border: 1px solid rgba(200,168,75,0.25); padding: 6px 14px; border-radius: 2px;
+    }
+    .case-card.featured .case-tag { color: var(--gold); background: rgba(200,168,75,0.1); }
+    .case-card.featured .case-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+    }
+    .case-card.featured .case-metric { font-size: 88px; }
+    .mini-stats { display: flex; gap: 32px; margin-top: 28px; }
+    .mini-stat-num { font-family: var(--f-display); font-size: 30px; font-weight: 700; color: var(--gold); }
+    .mini-stat-label { font-size: 11px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+    /* SYSTEM */
+    .system-section { padding: 120px 0; }
+    .system-header { margin-bottom: 72px; }
+    .system-header h2 {
+      font-family: var(--f-display); font-size: clamp(38px, 4vw, 56px);
+      font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; max-width: 580px;
+    }
+    .system-header h2 em { font-style: italic; color: var(--gold); }
+    .system-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+    }
+    .system-step {
+      background: var(--ink-2); padding: 48px 40px; position: relative;
+      transition: background 0.3s;
+    }
+    .system-step:hover { background: var(--ink-3); }
+    .step-number {
+      font-family: var(--f-display); font-size: 72px; font-weight: 700;
+      line-height: 1; color: var(--border);
+      position: absolute; top: 28px; right: 28px;
+      transition: color 0.3s; pointer-events: none;
+    }
+    .system-step:hover .step-number { color: rgba(200,168,75,0.12); }
+    .step-icon { width: 36px; height: 36px; margin-bottom: 28px; color: var(--gold); }
+    .system-step h3 { font-family: var(--f-display); font-size: 24px; font-weight: 600; margin-bottom: 16px; }
+    .system-step p { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--slate); }
+
+    /* GUARANTEE */
+    .guarantee-section { padding: 120px 0; background: var(--ink-2); position: relative; overflow: hidden; }
+    .guarantee-glow {
+      position: absolute; top: 50%; left: -200px; transform: translateY(-50%);
+      width: 600px; height: 600px; pointer-events: none;
+      background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
+    }
+    .guarantee-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+    .guarantee-text h2 {
+      font-family: var(--f-display); font-size: clamp(40px, 4.5vw, 62px);
+      font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 28px;
+    }
+    .guarantee-text h2 em { font-style: italic; color: var(--gold); }
+    .guarantee-text p { font-size: 16px; line-height: 1.75; color: var(--slate); font-weight: 300; margin-bottom: 40px; }
+    .guarantee-badge {
+      background: var(--ink); border: 1px solid var(--border); padding: 40px; position: relative;
+    }
+    .guarantee-badge::before {
+      content: ''; position: absolute; top: -1px; left: 0; width: 60px; height: 3px; background: var(--gold);
+    }
+    .badge-number {
+      font-family: var(--f-display); font-size: 96px; font-weight: 700;
+      line-height: 1; color: var(--gold); margin-bottom: 4px; letter-spacing: -0.03em;
+    }
+    .badge-unit {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--slate); margin-bottom: 24px;
+    }
+    .badge-desc { font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.6); }
+    .badge-refund {
+      margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);
+      font-size: 12px; font-weight: 600; color: var(--green);
+      letter-spacing: 0.04em; display: flex; align-items: center; gap: 8px;
+    }
+    .badge-refund::before {
+      content: '✓'; width: 18px; height: 18px; background: rgba(45,189,132,0.15);
+      border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; flex-shrink: 0;
+    }
+
+    /* PROOF */
+    .proof-section { padding: 120px 0; }
+    .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .proof-card {
+      background: var(--ink-2); border: 1px solid var(--border); padding: 40px;
+      transition: border-color 0.3s, transform 0.3s var(--ease);
+    }
+    .proof-card:hover { border-color: rgba(200,168,75,0.3); transform: translateY(-4px); }
+    .proof-quote { font-family: var(--f-display); font-size: 52px; color: var(--gold); line-height: 1; opacity: 0.5; margin-bottom: 16px; }
+    .proof-text { font-family: var(--f-display); font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.65); font-style: italic; margin-bottom: 28px; }
+    .proof-divider { width: 32px; height: 1px; background: var(--border); margin-bottom: 20px; }
+    .proof-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .proof-company { font-size: 12px; color: var(--slate); }
+    .proof-result { margin-top: 24px; padding: 16px; background: var(--gold-bg); border-left: 2px solid var(--gold); }
+    .proof-result-num { font-family: var(--f-display); font-size: 28px; font-weight: 700; color: var(--gold); line-height: 1; }
+    .proof-result-label { font-size: 11px; color: var(--slate); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+    /* CTA */
+    .cta-section { padding: 140px 0; text-align: center; position: relative; overflow: hidden; }
+    .cta-glow {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 700px; height: 700px; pointer-events: none;
+      background: radial-gradient(circle, rgba(200,168,75,0.07) 0%, transparent 65%);
+    }
+    .cta-section h2 {
+      font-family: var(--f-display); font-size: clamp(44px, 5.5vw, 76px);
+      font-weight: 600; line-height: 1.05; letter-spacing: -0.025em;
+      margin-bottom: 24px; max-width: 680px; margin-left: auto; margin-right: auto;
+    }
+    .cta-section h2 em { font-style: italic; color: var(--gold); }
+    .cta-section p { font-size: 18px; font-weight: 300; color: var(--slate); max-width: 440px; margin: 0 auto 48px; line-height: 1.7; }
+    .cta-group { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .cta-note { font-size: 13px; color: var(--slate); }
+
+    /* FOOTER */
+    footer { padding: 40px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: var(--f-display); font-size: 18px; font-weight: 700; color: var(--white); text-decoration: none; }
+    .footer-logo em { color: var(--gold); font-style: normal; }
+    .footer-note { font-size: 12px; color: var(--slate); }
+    .footer-link { font-size: 12px; color: var(--slate); text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s; }
+    .footer-link:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scaleX(0); }
+      to   { opacity: 1; transform: scaleX(1); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.12s; }
+    .reveal-delay-2 { transition-delay: 0.24s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .results-header { grid-template-columns: 1fr; gap: 24px; }
+      .case-grid { grid-template-columns: 1fr; }
+      .case-card.featured { grid-column: span 1; }
+      .case-card.featured .case-inner { grid-template-columns: 1fr; gap: 24px; }
+      .case-card.featured .case-metric { font-size: 68px; }
+      .system-grid { grid-template-columns: 1fr; }
+      .guarantee-inner { grid-template-columns: 1fr; gap: 48px; }
+      .proof-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 0; }
+      .hero-stat { border-right: none; padding-right: 0; margin-right: 0; padding: 24px 0; border-bottom: 1px solid var(--border); }
+      .hero-stat:last-child { border-bottom: none; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+      .hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+  </style>
 </head>
 <body>
 
-    <header class="header">
-        <nav class="nav container">
-            <div class="logo">Build<span class="logo-accent">Signals</span></div>
-            <a href="tel:5303026738" class="phone">Partner Line: (530) 302-6738</a>
-        </nav>
-    </header>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="logo">Build<em>Signals</em></a>
+      <a href="tel:5303026738" class="nav-cta">Book a Call</a>
+    </div>
+  </nav>
 
-    <section class="hero">
-        <div class="container">
-            <h1>We Don't Just Source Bids.<br>We Build Your <span class="highlight">Commercial Division.</span></h1>
-            
-            <p class="hero-subtitle">
-                Exclusive to Residential GCs: We source 5-10 qualified Commercial projects per month <strong>AND help you package the winning submittals.</strong>
-            </p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-rule"></div>
+      <p class="hero-kicker">Guaranteed Lead Generation · Bathroom &amp; Kitchen Remodelers</p>
+      <h1>More Qualified<br>Estimates. <em>Every<br>Single Month.</em></h1>
+      <p class="hero-sub">
+        A done-for-you appointment pipeline built exclusively for residential remodelers — with a performance guarantee backed by a full refund.
+      </p>
+      <div class="hero-actions">
+        <a href="tel:5303026738" class="btn-primary">
+          Book a Discovery Call
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#results" class="hero-link">See client results ↓</a>
+      </div>
 
-            <a href="tel:5303026738" class="cta-primary">Apply For Commercial Access</a>
-            <p class="cta-subtext">Currently accepting 2 partners in your area.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="stat-number" data-target="200" data-prefix="$" data-suffix="K">$0K</div>
+          <div class="stat-label">Added to one client's<br>monthly revenue</div>
         </div>
-    </section>
-
-<section class="opportunities-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Recent Bid Activity</h2>
-                <p>Real projects we sourced for our partners this week. <br>This is the caliber of work you can expect.</p>
-            </div>
-
-            <div class="opp-grid">
-                <div class="opp-card">
-                    <div class="opp-header">
-                        <span class="opp-tag">Medical Office</span>
-                        <span class="opp-status">Sourced 2 Days Ago</span>
-                    </div>
-                    <h3 class="opp-title">2,500 Sq Ft Dental Build-Out</h3>
-                    <div class="opp-details">
-                        <div class="detail-row">
-                            <span class="label">Location:</span>
-                            <span class="value blur-text">1200 Market St, Downtown</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Scope:</span>
-                            <span class="value">Full interior demo, plumbing trenching, reception framing, med-gas install.</span>
-                        </div>
-                        <div class="detail-row highlight-row">
-                            <span class="label">Est. Budget:</span>
-                            <span class="value money">$350,000 - $420,000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="opp-card">
-                    <div class="opp-header">
-                        <span class="opp-tag">Retail Franchise</span>
-                        <span class="opp-status">Sourced Yesterday</span>
-                    </div>
-                    <h3 class="opp-title">Fast-Casual Restaurant Fit-Out</h3>
-                    <div class="opp-details">
-                        <div class="detail-row">
-                            <span class="label">Location:</span>
-                            <span class="value blur-text">Westfield Shopping Center</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Scope:</span>
-                            <span class="value">Grease trap installation, HVAC drop, millwork package, acoustic ceiling.</span>
-                        </div>
-                        <div class="detail-row highlight-row">
-                            <span class="label">Est. Budget:</span>
-                            <span class="value money">$185,000 - $225,000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="opp-card">
-                    <div class="opp-header">
-                        <span class="opp-tag">Flex / Warehouse</span>
-                        <span class="opp-status">Sourced Today</span>
-                    </div>
-                    <h3 class="opp-title">Mezzanine Office Addition</h3>
-                    <div class="opp-details">
-                        <div class="detail-row">
-                            <span class="label">Location:</span>
-                            <span class="value blur-text">Industrial Park, Building 4</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Scope:</span>
-                            <span class="value">Steel mezzanine fabrication, 3 office partitions, electrical sub-panel upgrade.</span>
-                        </div>
-                        <div class="detail-row highlight-row">
-                            <span class="label">Est. Budget:</span>
-                            <span class="value money">$650,000+</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="tel:5303026738" class="cta-secondary">See Available Bids In Your Area &rarr;</a>
-            </div>
+        <div class="hero-stat">
+          <div class="stat-number" data-target="10" data-prefix="" data-suffix="x">0x</div>
+          <div class="stat-label">Minimum return on<br>ad spend, guaranteed</div>
         </div>
-    </section>
-
-    <style>
-        /* ADD THIS TO YOUR STYLE SECTION */
-        .opportunities-section {
-            padding: 80px 0;
-            background: #ffffff;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .opp-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .opp-card {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 24px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .opp-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.1);
-            border-color: var(--gold);
-        }
-
-        .opp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .opp-tag {
-            background: var(--black);
-            color: white;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .opp-status {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .opp-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--black);
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-row .label {
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .detail-row .value {
-            color: var(--text-main);
-            font-weight: 600;
-            text-align: right;
-            max-width: 65%;
-        }
-
-        .money {
-            color: #059669; /* Green for money */
-            font-weight: 800 !important;
-        }
-
-        /* The Velvet Rope Effect */
-        .blur-text {
-            color: transparent !important;
-            text-shadow: 0 0 8px rgba(0,0,0,0.5);
-            user-select: none;
-        }
-
-        .cta-secondary {
-            display: inline-block;
-            color: var(--black);
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 16px;
-            padding-bottom: 2px;
-            border-bottom: 2px solid var(--gold);
-            transition: all 0.2s;
-        }
-        
-        .cta-secondary:hover {
-            color: var(--gold);
-        }
-
-        @media (max-width: 768px) {
-            .opp-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-
-    <section class="process-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>The Commercial Accelerator System</h2>
-                <p>We are not a lead list. We act as your fractional Business Development Executive, handling the process from outreach to submittal.</p>
-            </div>
-            
-            <div class="process-grid">
-                <div class="process-card">
-                    <span class="step-num">Phase 1</span>
-                    <h3>Precision Sourcing</h3>
-                    <p>We filter through the noise to find Light Commercial projects (TI, Retail, Office) that match your exact bonding capacity and crew size.</p>
-                </div>
-                <div class="process-card" style="border-color: var(--gold);">
-                    <span class="step-num">Phase 2</span>
-                    <h3>The Closing Package</h3>
-                    <p><strong>This is where we win.</strong> We assist in preparing your capability statements and bid qualifications so you look like a $10M company on paper.</p>
-                </div>
-                <div class="process-card">
-                    <span class="step-num">Phase 3</span>
-                    <h3>Hand-Off & Negotiation</h3>
-                    <p>We manage the communication with the project owner or architect until the moment the contract is ready for your signature.</p>
-                </div>
-            </div>
+        <div class="hero-stat">
+          <div class="stat-number" data-target="10" data-prefix="" data-suffix="">0</div>
+          <div class="stat-label">Qualified appointments<br>per $1K in ads</div>
         </div>
-    </section>
-
-    <section class="qualify-section">
-        <div class="container">
-            <div class="qualify-grid">
-                <div class="qualify-col">
-                    <h3><span class="icon-check">✓</span> Who We Partner With</h3>
-                    <ul class="check-list">
-                        <li>
-                            <span class="icon-check">✓</span>
-                            <div>
-                                <strong>High-End Residential GCs</strong>
-                                Looking to pivot into Tenant Improvement & Light Commercial work with better margins.
-                            </div>
-                        </li>
-                        <li>
-                            <span class="icon-check">✓</span>
-                            <div>
-                                <strong>Liquid & Ready</strong>
-                                Companies with the cash flow to handle Net-30/60 terms and the budget to invest in growth.
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="qualify-col">
-                    <h3><span class="icon-cross">✕</span> Who We Turn Away</h3>
-                    <ul class="check-list">
-                        <li>
-                            <span class="icon-cross">✕</span>
-                            <div>
-                                <strong>"Chuck in a Truck"</strong>
-                                If you don't have a professional back-office process or insurance capacity, we cannot represent you.
-                            </div>
-                        </li>
-                        <li>
-                            <span class="icon-cross">✕</span>
-                            <div>
-                                <strong>Lead Chasers</strong>
-                                If you are looking for $50 leads, go to Angi. We build long-term commercial pipelines.
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="hero-stat">
+          <div class="stat-number" data-target="100" data-prefix="" data-suffix="%">0%</div>
+          <div class="stat-label">Refund if we miss<br>the guarantee</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section class="guarantee-section">
-        <div class="container">
-            <div class="guarantee-box">
-                <div class="guarantee-headline">The Performance Standard</div>
-                <p class="guarantee-text">
-                    Hiring a Commercial VP of Sales costs $120k/year + Commission.<br>
-                    We provide the same output—sourcing, vetting, and packaging—for a fraction of the cost.
-                    <br><br>
-                    <strong>Our Guarantee:</strong> We work until you have 5 qualified commercial opportunities on your desk. Period.
-                </p>
-                <a href="tel:5303026738" class="cta-primary" style="background:white; color:black; border:none; margin:0;">Call (530) 302-6738</a>
-            </div>
+  <!-- TICKER -->
+  <div class="guarantee-band">
+    <div class="guarantee-band-inner">
+      <span class="guarantee-band-item">10 Qualified Appointments Per $1K Spent</span>
+      <span class="guarantee-band-item">Google &amp; Facebook Ads</span>
+      <span class="guarantee-band-item">Full Lead Warm-Up System</span>
+      <span class="guarantee-band-item">Appointment Setting Included</span>
+      <span class="guarantee-band-item">Post-Estimate Follow-Up</span>
+      <span class="guarantee-band-item">Full Refund Guarantee</span>
+      <span class="guarantee-band-item">10 Qualified Appointments Per $1K Spent</span>
+      <span class="guarantee-band-item">Google &amp; Facebook Ads</span>
+      <span class="guarantee-band-item">Full Lead Warm-Up System</span>
+      <span class="guarantee-band-item">Appointment Setting Included</span>
+      <span class="guarantee-band-item">Post-Estimate Follow-Up</span>
+      <span class="guarantee-band-item">Full Refund Guarantee</span>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <section class="results-section" id="results">
+    <div class="container--wide">
+      <div class="results-header reveal">
+        <div>
+          <p class="section-label">Client Results</p>
+          <h2>Revenue added.<br><em>Not just leads.</em></h2>
         </div>
-    </section>
+        <p>We measure success in dollars added to your monthly revenue — not clicks, impressions, or form fills. Every client below is a real remodeling business with real, verifiable numbers.</p>
+      </div>
 
-    <footer style="text-align: center; padding: 40px; font-size: 12px; color: #94a3b8;">
-        © 2026 BuildSignals. Commercial Pre-Construction Services.
-    </footer>
+      <div class="case-grid">
 
+        <div class="case-card featured reveal">
+          <div class="case-inner">
+            <div>
+              <div class="case-client"><span class="dot"></span>Rosemary Remodeling</div>
+              <div class="case-metric">$200K</div>
+              <div class="case-metric-label">Added to monthly revenue — consistently</div>
+              <span class="case-tag">Google → Facebook Retarget System</span>
+            </div>
+            <div>
+              <p class="case-desc">We built a full Google + Facebook funnel — capturing high-intent search traffic, then retargeting warm visitors on social to push them to inquire. Combined with our lead triage and VSL warm-up system, the result was $200,000 in new monthly revenue on $20,000 in ad spend. Not a one-time spike — a compounding machine that delivers month after month.</p>
+              <div class="mini-stats">
+                <div>
+                  <div class="mini-stat-num">10x</div>
+                  <div class="mini-stat-label">Return on ad spend</div>
+                </div>
+                <div>
+                  <div class="mini-stat-num">$20K</div>
+                  <div class="mini-stat-label">Monthly ad budget</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card reveal reveal-delay-1">
+          <div class="case-client"><span class="dot"></span>Watkinson Construction</div>
+          <div class="case-metric">80x</div>
+          <div class="case-metric-label">Return on initial ad spend</div>
+          <p class="case-desc">$1,000 in ad spend generated an $80,000 kitchen remodel. Then kept delivering — now adds $50,000+ to monthly revenue on a consistent basis.</p>
+          <span class="case-tag">Orangevale, CA</span>
+        </div>
+
+        <div class="case-card reveal reveal-delay-2">
+          <div class="case-client"><span class="dot"></span>MTR Baths</div>
+          <div class="case-metric">$40K</div>
+          <div class="case-metric-label">Added to monthly revenue</div>
+          <p class="case-desc">Walk-in shower and ADA bathroom specialist. Google Ads campaign built from scratch — now generates $40,000 in new monthly revenue on under $1,500 in spend.</p>
+          <span class="case-tag">West Sacramento, CA</span>
+        </div>
+
+        <div class="case-card reveal reveal-delay-3">
+          <div class="case-client"><span class="dot"></span>DRH Construction Services</div>
+          <div class="case-metric">$20K</div>
+          <div class="case-metric-label">Added monthly — every month</div>
+          <p class="case-desc">Consistent, predictable revenue added to their pipeline month after month. A system that keeps delivering without any additional effort from the client team.</p>
+          <span class="case-tag">Sacramento, CA</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SYSTEM -->
+  <section class="system-section" id="system">
+    <div class="container">
+      <div class="system-header reveal">
+        <p class="section-label">The System</p>
+        <h2>End-to-end.<br>Cold traffic to<br><em>booked estimate.</em></h2>
+      </div>
+
+      <div class="system-grid">
+        <div class="system-step reveal">
+          <div class="step-number">01</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <rect x="4" y="8" width="32" height="24" rx="2"/><path d="M4 14h32"/><circle cx="10" cy="11" r="1.5" fill="currentColor" stroke="none"/><circle cx="16" cy="11" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+          <h3>Targeted Advertising</h3>
+          <p>Google and Facebook campaigns targeting homeowners actively searching for remodeling services in your area. Every dollar tracked, every audience tested against your specific project types.</p>
+        </div>
+        <div class="system-step reveal reveal-delay-1">
+          <div class="step-number">02</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <path d="M8 14h24M8 20h18M8 26h12"/><rect x="4" y="8" width="32" height="28" rx="2"/>
+          </svg>
+          <h3>Instant Lead Warm-Up</h3>
+          <p>Every new lead immediately receives a personalized VSL — putting a face to the name, establishing trust, and positioning you above every other contractor they're considering.</p>
+        </div>
+        <div class="system-step reveal reveal-delay-2">
+          <div class="step-number">03</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <path d="M20 8v24M8 20h24"/><circle cx="20" cy="20" r="3" fill="currentColor" stroke="none"/>
+          </svg>
+          <h3>Qualification &amp; Triage</h3>
+          <p>Automated text sequences qualify every lead against your exact criteria — project type, budget, timeline. We gather photos and scope details before they ever reach your calendar.</p>
+        </div>
+        <div class="system-step reveal">
+          <div class="step-number">04</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <rect x="8" y="6" width="24" height="28" rx="2"/><path d="M14 16h12M14 22h8M22 28h4"/>
+          </svg>
+          <h3>Appointment Setting</h3>
+          <p>We handle the full booking — scheduling, confirmations, calendar management. You receive a notification with everything you need. You show up. That's it.</p>
+        </div>
+        <div class="system-step reveal reveal-delay-1">
+          <div class="step-number">05</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <circle cx="20" cy="20" r="14"/><path d="M13 20l5 5 9-10"/>
+          </svg>
+          <h3>Pre-Warmed Estimates</h3>
+          <p>By the time you walk in, the lead has seen your face, read your story, and received multiple touchpoints. You arrive as a trusted expert — not another quote they're shopping.</p>
+        </div>
+        <div class="system-step reveal reveal-delay-2">
+          <div class="step-number">06</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <path d="M8 28l8-8 6 6 10-14"/><circle cx="8" cy="28" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="20" r="2" fill="currentColor" stroke="none"/>
+          </svg>
+          <h3>Post-Estimate Follow-Up</h3>
+          <p>Leads that don't close on the day enter an automated follow-up sequence — keeping you top of mind and extracting more revenue from the same pipeline, on autopilot.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARANTEE -->
+  <section class="guarantee-section" id="guarantee">
+    <div class="guarantee-glow"></div>
+    <div class="container">
+      <div class="guarantee-inner">
+        <div class="guarantee-text reveal">
+          <p class="section-label">The Guarantee</p>
+          <h2>We perform<br>or you pay<br><em>nothing.</em></h2>
+          <p>We're not another agency selling you ad management and hoping for the best. We guarantee a specific, measurable outcome — and if we miss, you get a full refund on our service fee. No fine print. No partial credits. No excuses.</p>
+          <a href="tel:5303026738" class="btn-primary">
+            Claim Your Guarantee
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="guarantee-badge reveal reveal-delay-2">
+          <div class="badge-number">10</div>
+          <div class="badge-unit">Qualified appointments per $1,000 in ad spend</div>
+          <p class="badge-desc">Every appointment is pre-qualified against your criteria — budget, project type, timeline, location. No tire kickers. No wasted estimate slots. Only homeowners who are ready to move forward.</p>
+          <div class="badge-refund">Full refund if we don't deliver. Every month.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="proof-section">
+    <div class="container">
+      <div style="margin-bottom:56px;" class="reveal">
+        <p class="section-label">From the Field</p>
+        <h2 style="font-family:var(--f-display); font-size:clamp(36px,4vw,52px); font-weight:600; letter-spacing:-0.02em; line-height:1.1; max-width:520px;">
+          What happens when the<br>pipeline <em>never runs dry.</em>
+        </h2>
+      </div>
+      <div class="proof-grid">
+        <div class="proof-card reveal">
+          <div class="proof-quote">"</div>
+          <p class="proof-text">We went from chasing leads that went nowhere to having qualified homeowners already warmed up before we even showed up. The difference in close rate was immediate.</p>
+          <div class="proof-divider"></div>
+          <div class="proof-name">Watkinson Construction</div>
+          <div class="proof-company">Orangevale, Sacramento CA</div>
+          <div class="proof-result">
+            <div class="proof-result-num">$50K</div>
+            <div class="proof-result-label">Added to monthly revenue</div>
+          </div>
+        </div>
+        <div class="proof-card reveal reveal-delay-1">
+          <div class="proof-quote">"</div>
+          <p class="proof-text">Our previous ads got us calls from people who wanted a $500 fix. Now every appointment is a real project with a real budget. The triage system alone was worth it.</p>
+          <div class="proof-divider"></div>
+          <div class="proof-name">MTR Baths</div>
+          <div class="proof-company">West Sacramento, CA</div>
+          <div class="proof-result">
+            <div class="proof-result-num">$40K</div>
+            <div class="proof-result-label">Added to monthly revenue</div>
+          </div>
+        </div>
+        <div class="proof-card reveal reveal-delay-2">
+          <div class="proof-quote">"</div>
+          <p class="proof-text">The guarantee made the decision easy. No one else in this space puts their money where their mouth is. We've seen consistent results every month since we started.</p>
+          <div class="proof-divider"></div>
+          <div class="proof-name">DRH Construction Services</div>
+          <div class="proof-company">Sacramento, CA</div>
+          <div class="proof-result">
+            <div class="proof-result-num">$20K</div>
+            <div class="proof-result-label">Added monthly, consistently</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="container">
+      <p class="section-label" style="justify-content:center; margin-bottom:32px;">Ready to grow?</p>
+      <h2>Let's build your<br><em>appointment machine.</em></h2>
+      <p>A 20-minute call. No pitch, no pressure — just a real conversation about whether this is the right fit for your business and your market.</p>
+      <div class="cta-group">
+        <a href="tel:5303026738" class="btn-primary" style="font-size:14px; padding:18px 44px;">
+          Book Your Discovery Call
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <p class="cta-note">If we don't hit your guarantee, you pay nothing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a href="/" class="footer-logo">Build<em>Signals</em></a>
+        <span class="footer-note">© 2026 BuildSignals · Guaranteed Lead Generation for Remodelers</span>
+        <a href="/commercial" class="footer-link">Commercial Division →</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Scroll reveal
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // Counter animation
+    function animateCounter(el) {
+      const target = parseFloat(el.dataset.target);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      const fmt = n => prefix + (Number.isInteger(target) ? Math.round(n) : n.toFixed(1)) + suffix;
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      function step(now) {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = fmt(ease(p) * target);
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = fmt(target);
+      }
+      requestAnimationFrame(step);
+    }
+    const statObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); statObs.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-number').forEach(el => statObs.observe(el));
+  </script>
 </body>
 </html>
