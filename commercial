@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Growth Partners - BuildSignals</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --gold: #C5A059; /* Slightly more muted/premium gold */
+            --black: #0f172a;
+            --grey-light: #f8fafc;
+            --border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background: #ffffff;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+        
+        /* --- HEADER --- */
+        .header { background: #ffffff; padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 22px; font-weight: 800; color: var(--black); letter-spacing: -0.5px; }
+        .logo-accent { color: var(--gold); }
+        .phone {
+            font-size: 14px; font-weight: 600; color: var(--black); text-decoration: none;
+            padding: 8px 16px; border: 1px solid var(--border); border-radius: 4px;
+            background: var(--grey-light); transition: all 0.2s;
+        }
+        .phone:hover { border-color: var(--black); background: #fff; }
+        
+        /* --- HERO SECTION --- */
+        .hero { padding: 90px 0 70px; background: #ffffff; text-align: center; }
+        h1 {
+            font-size: 48px; font-weight: 800; line-height: 1.1; color: var(--black);
+            margin-bottom: 24px; letter-spacing: -1.5px;
+        }
+        .highlight {
+            background: linear-gradient(120deg, rgba(197, 160, 89, 0.15) 0%, rgba(197, 160, 89, 0.15) 100%);
+            color: #8f6b28;
+            padding: 0 8px;
+        }
+        .hero-subtitle {
+            font-size: 20px; color: #475569; margin-bottom: 40px; line-height: 1.6;
+            max-width: 720px; margin-left: auto; margin-right: auto;
+        }
+        .cta-primary {
+            display: inline-block; background: var(--black); color: white;
+            padding: 20px 40px; border-radius: 6px; font-size: 18px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s; margin-bottom: 16px;
+            box-shadow: 0 10px 25px -10px rgba(15, 23, 42, 0.4);
+        }
+        .cta-primary:hover { transform: translateY(-2px); background: #1e293b; }
+        .cta-subtext { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        
+        /* --- PROCESS SECTION (THE VALUE BUILDER) --- */
+        .process-section { padding: 80px 0; background: var(--grey-light); }
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 50px; }
+        .section-header h2 { font-size: 30px; font-weight: 800; margin-bottom: 12px; }
+        
+        .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .process-card {
+            background: #fff; padding: 32px; border-radius: 8px;
+            border: 1px solid var(--border); position: relative;
+        }
+        .step-num {
+            font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 16px; display: block;
+        }
+        .process-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+        .process-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+        
+        /* --- QUALIFY SECTION --- */
+        .qualify-section { padding: 90px 0; background: #ffffff; }
+        .qualify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .qualify-col h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+        
+        .check-list li {
+            list-style: none; display: flex; gap: 12px; margin-bottom: 20px;
+            font-size: 15px; color: var(--text-main);
+        }
+        .check-list li strong { display: block; color: var(--black); margin-bottom: 4px; }
+        .icon-check { color: var(--gold); font-weight: bold; }
+        .icon-cross { color: #cbd5e1; }
+        
+        /* --- GUARANTEE --- */
+        .guarantee-section { background: var(--black); color: white; padding: 80px 0; text-align: center; }
+        .guarantee-box { border: 1px solid rgba(255,255,255,0.15); padding: 48px; border-radius: 12px; max-width: 780px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%); }
+        .guarantee-headline { font-size: 28px; font-weight: 800; margin-bottom: 20px; color: white; }
+        .guarantee-text { font-size: 17px; opacity: 0.8; margin-bottom: 32px; line-height: 1.6; }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 34px; }
+            .process-grid { grid-template-columns: 1fr; }
+            .qualify-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">Build<span class="logo-accent">Signals</span></div>
+            <a href="tel:5303026738" class="phone">Partner Line: (530) 302-6738</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>We Don't Just Source Bids.<br>We Build Your <span class="highlight">Commercial Division.</span></h1>
+            
+            <p class="hero-subtitle">
+                Exclusive to Residential GCs: We source 5-10 qualified Commercial projects per month <strong>AND help you package the winning submittals.</strong>
+            </p>
+
+            <a href="tel:5303026738" class="cta-primary">Apply For Commercial Access</a>
+            <p class="cta-subtext">Currently accepting 2 partners in your area.</p>
+        </div>
+    </section>
+
+<section class="opportunities-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Recent Bid Activity</h2>
+                <p>Real projects we sourced for our partners this week. <br>This is the caliber of work you can expect.</p>
+            </div>
+
+            <div class="opp-grid">
+                <div class="opp-card">
+                    <div class="opp-header">
+                        <span class="opp-tag">Medical Office</span>
+                        <span class="opp-status">Sourced 2 Days Ago</span>
+                    </div>
+                    <h3 class="opp-title">2,500 Sq Ft Dental Build-Out</h3>
+                    <div class="opp-details">
+                        <div class="detail-row">
+                            <span class="label">Location:</span>
+                            <span class="value blur-text">1200 Market St, Downtown</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Scope:</span>
+                            <span class="value">Full interior demo, plumbing trenching, reception framing, med-gas install.</span>
+                        </div>
+                        <div class="detail-row highlight-row">
+                            <span class="label">Est. Budget:</span>
+                            <span class="value money">$350,000 - $420,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="opp-card">
+                    <div class="opp-header">
+                        <span class="opp-tag">Retail Franchise</span>
+                        <span class="opp-status">Sourced Yesterday</span>
+                    </div>
+                    <h3 class="opp-title">Fast-Casual Restaurant Fit-Out</h3>
+                    <div class="opp-details">
+                        <div class="detail-row">
+                            <span class="label">Location:</span>
+                            <span class="value blur-text">Westfield Shopping Center</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Scope:</span>
+                            <span class="value">Grease trap installation, HVAC drop, millwork package, acoustic ceiling.</span>
+                        </div>
+                        <div class="detail-row highlight-row">
+                            <span class="label">Est. Budget:</span>
+                            <span class="value money">$185,000 - $225,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="opp-card">
+                    <div class="opp-header">
+                        <span class="opp-tag">Flex / Warehouse</span>
+                        <span class="opp-status">Sourced Today</span>
+                    </div>
+                    <h3 class="opp-title">Mezzanine Office Addition</h3>
+                    <div class="opp-details">
+                        <div class="detail-row">
+                            <span class="label">Location:</span>
+                            <span class="value blur-text">Industrial Park, Building 4</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Scope:</span>
+                            <span class="value">Steel mezzanine fabrication, 3 office partitions, electrical sub-panel upgrade.</span>
+                        </div>
+                        <div class="detail-row highlight-row">
+                            <span class="label">Est. Budget:</span>
+                            <span class="value money">$650,000+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="tel:5303026738" class="cta-secondary">See Available Bids In Your Area &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* ADD THIS TO YOUR STYLE SECTION */
+        .opportunities-section {
+            padding: 80px 0;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .opp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .opp-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .opp-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.1);
+            border-color: var(--gold);
+        }
+
+        .opp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .opp-tag {
+            background: var(--black);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .opp-status {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .opp-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--black);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row .label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .detail-row .value {
+            color: var(--text-main);
+            font-weight: 600;
+            text-align: right;
+            max-width: 65%;
+        }
+
+        .money {
+            color: #059669; /* Green for money */
+            font-weight: 800 !important;
+        }
+
+        /* The Velvet Rope Effect */
+        .blur-text {
+            color: transparent !important;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
+            user-select: none;
+        }
+
+        .cta-secondary {
+            display: inline-block;
+            color: var(--black);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 16px;
+            padding-bottom: 2px;
+            border-bottom: 2px solid var(--gold);
+            transition: all 0.2s;
+        }
+        
+        .cta-secondary:hover {
+            color: var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .opp-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Commercial Accelerator System</h2>
+                <p>We are not a lead list. We act as your fractional Business Development Executive, handling the process from outreach to submittal.</p>
+            </div>
+            
+            <div class="process-grid">
+                <div class="process-card">
+                    <span class="step-num">Phase 1</span>
+                    <h3>Precision Sourcing</h3>
+                    <p>We filter through the noise to find Light Commercial projects (TI, Retail, Office) that match your exact bonding capacity and crew size.</p>
+                </div>
+                <div class="process-card" style="border-color: var(--gold);">
+                    <span class="step-num">Phase 2</span>
+                    <h3>The Closing Package</h3>
+                    <p><strong>This is where we win.</strong> We assist in preparing your capability statements and bid qualifications so you look like a $10M company on paper.</p>
+                </div>
+                <div class="process-card">
+                    <span class="step-num">Phase 3</span>
+                    <h3>Hand-Off & Negotiation</h3>
+                    <p>We manage the communication with the project owner or architect until the moment the contract is ready for your signature.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="qualify-section">
+        <div class="container">
+            <div class="qualify-grid">
+                <div class="qualify-col">
+                    <h3><span class="icon-check">✓</span> Who We Partner With</h3>
+                    <ul class="check-list">
+                        <li>
+                            <span class="icon-check">✓</span>
+                            <div>
+                                <strong>High-End Residential GCs</strong>
+                                Looking to pivot into Tenant Improvement & Light Commercial work with better margins.
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon-check">✓</span>
+                            <div>
+                                <strong>Liquid & Ready</strong>
+                                Companies with the cash flow to handle Net-30/60 terms and the budget to invest in growth.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="qualify-col">
+                    <h3><span class="icon-cross">✕</span> Who We Turn Away</h3>
+                    <ul class="check-list">
+                        <li>
+                            <span class="icon-cross">✕</span>
+                            <div>
+                                <strong>"Chuck in a Truck"</strong>
+                                If you don't have a professional back-office process or insurance capacity, we cannot represent you.
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon-cross">✕</span>
+                            <div>
+                                <strong>Lead Chasers</strong>
+                                If you are looking for $50 leads, go to Angi. We build long-term commercial pipelines.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="guarantee-section">
+        <div class="container">
+            <div class="guarantee-box">
+                <div class="guarantee-headline">The Performance Standard</div>
+                <p class="guarantee-text">
+                    Hiring a Commercial VP of Sales costs $120k/year + Commission.<br>
+                    We provide the same output—sourcing, vetting, and packaging—for a fraction of the cost.
+                    <br><br>
+                    <strong>Our Guarantee:</strong> We work until you have 5 qualified commercial opportunities on your desk. Period.
+                </p>
+                <a href="tel:5303026738" class="cta-primary" style="background:white; color:black; border:none; margin:0;">Call (530) 302-6738</a>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; font-size: 12px; color: #94a3b8;">
+        © 2026 BuildSignals. Commercial Pre-Construction Services.
+    </footer>
+
+</body>
+</html>
