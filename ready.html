@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commercial Work Is Simpler Than You Think</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0D1B3E;
+    --gold: #C9A84C;
+    --white: #FFFFFF;
+    --off: #F7F5F0;
+    --ink: #1A1A2E;
+    --muted: #6B7280;
+    --light-gold: #FDF6E3;
+    --green: #16A34A;
+    --green-bg: #F0FDF4;
+    --red: #DC2626;
+    --red-bg: #FEF2F2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-brand {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .header-tag {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    padding: 56px 28px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 48px;
+    background: var(--off);
+    clip-path: ellipse(60% 100% at 50% 100%);
+  }
+
+  .myth-tag {
+    display: inline-block;
+    background: rgba(220,38,38,0.15);
+    border: 1px solid rgba(220,38,38,0.4);
+    color: #FCA5A5;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 11vw, 88px);
+    line-height: 0.95;
+    color: var(--white);
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #9EB3D4;
+    max-width: 500px;
+  }
+
+  /* ── MYTH VS REALITY ── */
+  .myth-reality {
+    padding: 64px 28px 48px;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 36px;
+    color: var(--navy);
+  }
+
+  .compare-card {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .compare-card.visible { opacity: 1; transform: translateY(0); }
+
+  .compare-myth {
+    background: var(--red-bg);
+    border: 1px solid #FECACA;
+    padding: 18px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .compare-real {
+    background: var(--green-bg);
+    border: 1px solid #BBF7D0;
+    border-top: none;
+    padding: 18px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .badge {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .badge-myth { background: #FEE2E2; color: var(--red); }
+  .badge-real { background: #DCFCE7; color: var(--green); }
+
+  .compare-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .compare-text strong { font-weight: 600; }
+
+  /* ── VOLUME SECTION ── */
+  .volume {
+    background: var(--navy);
+    padding: 64px 28px;
+    color: var(--white);
+  }
+
+  .volume .section-title { color: var(--white); }
+
+  .volume-sub {
+    font-size: 15px;
+    color: #9EB3D4;
+    line-height: 1.65;
+    margin-bottom: 40px;
+  }
+
+  .stat-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .volume-stat {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 20px;
+    border-left: 3px solid var(--gold);
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .volume-stat.visible { opacity: 1; transform: translateX(0); }
+
+  .vol-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .vol-label {
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .vol-note {
+    font-size: 12px;
+    color: #6B7FA3;
+    line-height: 1.5;
+  }
+
+  /* ── CONTRACTS ── */
+  .contracts {
+    padding: 64px 28px;
+  }
+
+  .contracts .section-title { color: var(--navy); }
+
+  .contracts-intro {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 36px;
+  }
+
+  .contract-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-top: 3px solid var(--gold);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .contract-card.visible { opacity: 1; transform: translateY(0); }
+
+  .contract-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .contract-type {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .contract-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .contract-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--navy);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .contract-body {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .contract-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .contract-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #EEF2FF;
+    color: #4338CA;
+  }
+
+  .contract-tag.easy {
+    background: var(--green-bg);
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .comparison {
+    background: var(--light-gold);
+    padding: 64px 28px;
+  }
+
+  .comparison .section-title { color: var(--navy); }
+
+  .comp-intro {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+
+  .comp-table {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .comp-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    border-bottom: 1px solid #F3F4F6;
+  }
+
+  .comp-row:last-child { border-bottom: none; }
+
+  .comp-cell {
+    padding: 14px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .comp-header .comp-cell {
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .comp-label { color: var(--ink); font-weight: 500; }
+
+  .comp-res { color: var(--muted); }
+
+  .comp-com {
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .comp-com.neutral { color: var(--muted); }
+  .comp-com.hard { color: var(--red); }
+
+  /* ── BOTTOM CTA ── */
+  .bottom {
+    background: var(--navy);
+    padding: 64px 28px;
+    text-align: center;
+  }
+
+  .bottom h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 64px);
+    color: var(--white);
+    letter-spacing: 1px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+
+  .bottom h2 span { color: var(--gold); }
+
+  .bottom p {
+    font-size: 15px;
+    color: #9EB3D4;
+    line-height: 1.65;
+    max-width: 420px;
+    margin: 0 auto 12px;
+  }
+
+  .bottom-brand {
+    margin-top: 40px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="header-brand">Fractional Commercial</span>
+  <span class="header-tag">Sacramento, CA</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="myth-tag">Industry Myth</div>
+  <h1>You don't need<br>a big team<br><span>to go commercial.</span></h1>
+  <p class="hero-sub">The contractors who never make the jump believe commercial means massive crews, complex bonding, and million-dollar operations. Here's what the work actually looks like.</p>
+</section>
+
+<!-- MYTH VS REALITY -->
+<section class="myth-reality">
+  <p class="section-eyebrow">Setting the record straight</p>
+  <h2 class="section-title">What you think vs.<br>what's actually true</h2>
+
+  <div class="compare-card">
+    <div class="compare-myth">
+      <span class="badge badge-myth">Myth</span>
+      <p class="compare-text">"Commercial jobs require a huge bonded crew. I can't compete with the big guys."</p>
+    </div>
+    <div class="compare-real">
+      <span class="badge badge-real">Real</span>
+      <p class="compare-text">Most sub contracts under $500K require <strong>the same bond and insurance you already carry for residential work.</strong> GCs don't want the big guys for smaller scopes — they want a reliable crew that shows up and delivers.</p>
+    </div>
+  </div>
+
+  <div class="compare-card">
+    <div class="compare-myth">
+      <span class="badge badge-myth">Myth</span>
+      <p class="compare-text">"Commercial bidding is way more complicated than residential. I'll get lost in the paperwork."</p>
+    </div>
+    <div class="compare-real">
+      <span class="badge badge-real">Real</span>
+      <p class="compare-text">A sub quote to a GC is a <strong>scope letter, your price, an insurance cert, and your license copy.</strong> That's it. It's not more complicated than a residential proposal — it just looks different on the surface.</p>
+    </div>
+  </div>
+
+  <div class="compare-card">
+    <div class="compare-myth">
+      <span class="badge badge-myth">Myth</span>
+      <p class="compare-text">"I need a track record in commercial before anyone will hire me."</p>
+    </div>
+    <div class="compare-real">
+      <span class="badge badge-real">Real</span>
+      <p class="compare-text">GCs care about <strong>three things: can you do the scope, do you have the right insurance, and will you show up.</strong> A strong capability statement that translates your residential and European commercial experience answers all three.</p>
+    </div>
+  </div>
+
+  <div class="compare-card">
+    <div class="compare-myth">
+      <span class="badge badge-myth">Myth</span>
+      <p class="compare-text">"Commercial contracts are all massive. I can't handle a $2M job right now."</p>
+    </div>
+    <div class="compare-real">
+      <span class="badge badge-real">Real</span>
+      <p class="compare-text">The majority of GC sub awards in the Sacramento market are <strong>between $150K and $700K.</strong> These are sized for small operators. You start here, build the track record, then go bigger when you're ready.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUME -->
+<section class="volume">
+  <p class="section-eyebrow">The Market</p>
+  <h2 class="section-title">How much work is actually out there</h2>
+  <p class="volume-sub">Sacramento is one of the most active construction markets in California. Most of it never reaches small contractors because they are not registered in the right places — not because the work isn't there.</p>
+
+  <div class="stat-row">
+    <div class="volume-stat">
+      <div class="vol-number">Hundreds</div>
+      <div class="vol-label">of commercial bids posted monthly in Sacramento metro</div>
+      <div class="vol-note">Across OpenGov, PlanetBids, Sacramento County procurement, ConstructConnect, and BuildingConnected. Most small contractors see a fraction of them because they are not registered on the right platforms.</div>
+    </div>
+    <div class="volume-stat">
+      <div class="vol-number">Few</div>
+      <div class="vol-label">qualified sub quotes received on smaller scopes — typically 3 to 5</div>
+      <div class="vol-note">On a $200K to $400K scope, GCs are not flooded with responses. A professional package from a licensed, insured contractor is often enough to stand out. The bar is lower than most people assume.</div>
+    </div>
+    <div class="volume-stat">
+      <div class="vol-number">Most</div>
+      <div class="vol-label">public agency contracts in Sacramento are under $1M</div>
+      <div class="vol-note">Large GCs and national firms typically pass on smaller public scopes — the margins don't justify their overhead. That's where smaller operators win. Less competition, faster awards, steady clients.</div>
+    </div>
+    <div class="volume-stat">
+      <div class="vol-number">Real</div>
+      <div class="vol-label">demand for reliable subs under $500K — GCs say it's hard to find them</div>
+      <div class="vol-note">Talk to any preconstruction manager in Sacramento and they will tell you the same thing: finding a reliable sub for mid-size scopes is genuinely difficult. The supply of qualified, professional contractors at this level is thin.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTRACTS -->
+<section class="contracts">
+  <p class="section-eyebrow">Real Examples</p>
+  <h2 class="section-title">Contracts that are simpler<br>than you'd expect</h2>
+  <p class="contracts-intro">These are real contract types available in the Sacramento market right now. Read the scope and ask yourself if it's harder than what you're already doing.</p>
+
+  <div class="contract-card">
+    <div class="contract-header">
+      <div>
+        <div class="contract-type">GC Sub Contract</div>
+        <div class="contract-name">Office Suite Renovation — Tenant Improvement</div>
+      </div>
+      <div class="contract-value">$280K</div>
+    </div>
+    <p class="contract-body">Demolition of existing walls, new framing and drywall, suspended ceiling grid, basic electrical rough-in coordination with licensed electrician. 6-week timeline. Elk Grove commercial park. GC managing overall project, sub handles interior scope only.</p>
+    <div class="contract-tags">
+      <span class="contract-tag easy">Straightforward scope</span>
+      <span class="contract-tag">No prime risk</span>
+      <span class="contract-tag">Crew of 4–6</span>
+      <span class="contract-tag">Standard insurance</span>
+    </div>
+  </div>
+
+  <div class="contract-card">
+    <div class="contract-header">
+      <div>
+        <div class="contract-type">Public Works Prime</div>
+        <div class="contract-name">Sacramento County — Park Restroom Renovation</div>
+      </div>
+      <div class="contract-value">$195K</div>
+    </div>
+    <p class="contract-body">Full interior renovation of two park restroom facilities. Tile, plumbing rough-in, drywall, painting, ADA compliance upgrades. Work performed while park remains open — coordination with county parks department. No after-hours requirement.</p>
+    <div class="contract-tags">
+      <span class="contract-tag easy">Residential-level work</span>
+      <span class="contract-tag">Same scope, different client</span>
+      <span class="contract-tag">DIR registration required</span>
+    </div>
+  </div>
+
+  <div class="contract-card">
+    <div class="contract-header">
+      <div>
+        <div class="contract-type">GC Sub Contract</div>
+        <div class="contract-name">Restaurant Build-Out — Shell to Finished</div>
+      </div>
+      <div class="contract-value">$420K</div>
+    </div>
+    <p class="contract-body">Framing, drywall, insulation, and ceiling work for a new restaurant tenant in a Roseville retail center. GC managing MEP subs separately. General construction scope only — no specialty trades required. 10-week schedule.</p>
+    <div class="contract-tags">
+      <span class="contract-tag easy">General construction only</span>
+      <span class="contract-tag">No MEP coordination</span>
+      <span class="contract-tag">Repeatable scope</span>
+    </div>
+  </div>
+
+  <div class="contract-card">
+    <div class="contract-header">
+      <div>
+        <div class="contract-type">City Contract — Prime</div>
+        <div class="contract-name">West Sacramento — Municipal Building Interior Refresh</div>
+      </div>
+      <div class="contract-value">$340K</div>
+    </div>
+    <p class="contract-body">Interior painting, new flooring, partition wall modifications, and door hardware replacement across a city administrative building. Phased work to keep offices operational. Three-month timeline with flexible sequencing.</p>
+    <div class="contract-tags">
+      <span class="contract-tag easy">No complex systems</span>
+      <span class="contract-tag">Familiar scope</span>
+      <span class="contract-tag">Stable client, predictable pay</span>
+    </div>
+  </div>
+
+  <div class="contract-card">
+    <div class="contract-header">
+      <div>
+        <div class="contract-type">Housing Authority</div>
+        <div class="contract-name">SHRA — Unit Renovation, 12-Plex Property</div>
+      </div>
+      <div class="contract-value">$510K</div>
+    </div>
+    <p class="contract-body">Full interior renovation of 12 affordable housing units. Kitchen and bath remodels, flooring, painting, window replacement. Sequential unit-by-unit completion. Same work you are already doing in residential — just a different procurement process to get there.</p>
+    <div class="contract-tags">
+      <span class="contract-tag easy">Residential scope, commercial pay</span>
+      <span class="contract-tag">Repeat client potential</span>
+      <span class="contract-tag">Section 8 eligible</span>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison">
+  <p class="section-eyebrow">Side by Side</p>
+  <h2 class="section-title">Residential vs. Entry-Level<br>Commercial — How different is it?</h2>
+  <p class="comp-intro">The differences are real but smaller than most contractors assume. Here is an honest comparison.</p>
+
+  <div class="comp-table">
+    <div class="comp-row comp-header">
+      <div class="comp-cell"></div>
+      <div class="comp-cell">Residential</div>
+      <div class="comp-cell">Entry Commercial</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">Crew size needed</div>
+      <div class="comp-cell comp-res">2–6 people</div>
+      <div class="comp-cell comp-com">3–8 people</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">Scope complexity</div>
+      <div class="comp-cell comp-res">Low to medium</div>
+      <div class="comp-cell comp-com">Low to medium</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">License required</div>
+      <div class="comp-cell comp-res">B or A</div>
+      <div class="comp-cell comp-com">Same A or B</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">Insurance minimum</div>
+      <div class="comp-cell comp-res">$1M GL</div>
+      <div class="comp-cell comp-com">$2M GL (upgrade)</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">Bond requirement</div>
+      <div class="comp-cell comp-res">Varies</div>
+      <div class="comp-cell comp-com">Often none as sub</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">How you get paid</div>
+      <div class="comp-cell comp-res">On completion</div>
+      <div class="comp-cell comp-com">Monthly progress draws</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">Contract value</div>
+      <div class="comp-cell comp-res">$20K–$300K</div>
+      <div class="comp-cell comp-com">$150K–$800K</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">Payment timing</div>
+      <div class="comp-cell comp-res">30–45 days</div>
+      <div class="comp-cell comp-com neutral">30–45 days</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">How you find work</div>
+      <div class="comp-cell comp-res">Word of mouth</div>
+      <div class="comp-cell comp-com hard">Need to get on lists</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label">Bid paperwork</div>
+      <div class="comp-cell comp-res">Proposal + quote</div>
+      <div class="comp-cell comp-com hard">Formal package needed</div>
+    </div>
+  </div>
+
+  <br>
+  <p style="font-size:13px; color:var(--muted); line-height:1.6;">The two things that actually hold contractors back — getting on the right lists, and building a professional bid package — are exactly what we handle. Everything else is work you already know how to do.</p>
+</section>
+
+<!-- BOTTOM -->
+<section class="bottom">
+  <h2>Same skills.<br><span>Bigger checks.</span></h2>
+  <p>Commercial work does not require a bigger company. It requires access to the right opportunities and paperwork that looks the part. The work itself is often simpler than a high-end residential remodel.</p>
+  <p>The only real barrier is the first bid.</p>
+  <div class="bottom-brand">Fractional Commercial &nbsp;·&nbsp; Sacramento</div>
+</section>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), entry.target.dataset.delay || 0);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.compare-card').forEach((el, i) => {
+    el.dataset.delay = i * 100;
+    observer.observe(el);
+  });
+  document.querySelectorAll('.volume-stat').forEach((el, i) => {
+    el.dataset.delay = i * 80;
+    observer.observe(el);
+  });
+  document.querySelectorAll('.contract-card').forEach((el, i) => {
+    el.dataset.delay = i * 90;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
