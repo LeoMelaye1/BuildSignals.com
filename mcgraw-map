@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McGraw Construction — Full Market Shortlist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B3E;
+    --gold: #C9A84C;
+    --card: #1A2545;
+    --card2: #111E38;
+    --card3: #0F1A34;
+    --white: #F4F6FA;
+    --body: #C5D3E8;
+    --muted: #7A90B8;
+    --green: #2A8C5A;
+    --amber: #B87A10;
+    --blue: #2D6FAD;
+    --red: #8C3030;
+    --purple: #5A3A8C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--white); font-family: 'IBM Plex Sans', sans-serif; }
+
+  /* HEADER */
+  header { background: var(--card2); border-bottom: 1px solid rgba(201,168,76,.25); padding: 22px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; }
+  .header-meta { display: flex; gap: 20px; align-items: center; }
+  .tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .tag.highlight { color: var(--gold); background: rgba(201,168,76,.08); border: 1px solid rgba(201,168,76,.2); padding: 4px 10px; }
+
+  /* HERO */
+  .hero { padding: 52px 48px 36px; max-width: 1200px; margin: 0 auto; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 18px; }
+  h1 em { color: var(--gold); font-style: normal; }
+  .hero-sub { font-size: 14px; color: var(--body); line-height: 1.7; max-width: 600px; margin-bottom: 36px; font-weight: 300; }
+
+  /* STAT BAR */
+  .stats { display: flex; border: 1px solid rgba(201,168,76,.2); max-width: 900px; margin-bottom: 0; }
+  .stat { flex: 1; padding: 18px 22px; border-right: 1px solid rgba(201,168,76,.12); }
+  .stat:last-child { border-right: none; }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--gold); font-weight: 700; line-height: 1; margin-bottom: 5px; }
+  .stat-l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'IBM Plex Mono', monospace; }
+
+  /* SECTION */
+  .section { max-width: 1200px; margin: 0 auto; padding: 48px 48px 0; }
+  .section-head { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+  .section-line { flex: 1; height: 1px; background: rgba(255,255,255,.07); }
+  .section-count { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+
+  /* TABLE STYLE BID LIST */
+  .bid-table { width: 100%; border-collapse: collapse; }
+  .bid-table thead tr { border-bottom: 1px solid rgba(201,168,76,.2); }
+  .bid-table th { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding: 10px 14px; text-align: left; font-weight: 400; }
+  .bid-table tbody tr { border-bottom: 1px solid rgba(255,255,255,.05); transition: background .15s; cursor: default; }
+  .bid-table tbody tr:hover { background: rgba(255,255,255,.02); }
+  .bid-table td { padding: 14px 14px; vertical-align: top; }
+
+  .col-status { width: 100px; }
+  .col-project { width: 260px; }
+  .col-agency { width: 180px; }
+  .col-trade { width: 110px; }
+  .col-type { width: 90px; }
+  .col-value { width: 110px; text-align: right; }
+  .col-contact { }
+
+  .project-name { font-size: 13px; font-weight: 600; color: var(--white); line-height: 1.35; margin-bottom: 3px; }
+  .project-note { font-size: 11px; color: var(--muted); line-height: 1.5; font-weight: 300; }
+  .agency-name { font-size: 12px; color: var(--body); font-weight: 400; }
+  .agency-dist { font-size: 10px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .val { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--body); text-align: right; }
+  .contact-val { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); line-height: 1.6; }
+
+  /* BADGES */
+  .badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; padding: 2px 7px; font-weight: 500; white-space: nowrap; }
+  .b-live { background: rgba(42,140,90,.15); color: #4abe82; border: 1px solid rgba(42,140,90,.25); }
+  .b-hot { background: rgba(180,50,50,.15); color: #e87070; border: 1px solid rgba(180,50,50,.25); }
+  .b-soon { background: rgba(201,132,10,.12); color: #e8a832; border: 1px solid rgba(201,132,10,.2); }
+  .b-pipe { background: rgba(80,110,180,.12); color: #8ab0e8; border: 1px solid rgba(80,110,180,.2); }
+  .b-active { background: rgba(100,100,180,.12); color: #aaaae8; border: 1px solid rgba(100,100,180,.2); }
+
+  .t-concrete { background: rgba(201,168,76,.1); color: var(--gold); border: 1px solid rgba(201,168,76,.2); }
+  .t-carp { background: rgba(160,120,200,.1); color: #c4a0e8; border: 1px solid rgba(160,120,200,.2); }
+  .t-both { background: rgba(200,120,60,.1); color: #e8a070; border: 1px solid rgba(200,120,60,.2); }
+
+  .type-sub { background: rgba(42,140,90,.1); color: #4abe82; border: 1px solid rgba(42,140,90,.2); }
+  .type-prime { background: rgba(45,111,173,.1); color: #6aaade; border: 1px solid rgba(45,111,173,.2); }
+  .type-either { background: rgba(140,58,140,.1); color: #d888e8; border: 1px solid rgba(140,58,140,.2); }
+
+  /* GC NETWORK SECTION */
+  .gc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .gc-card { background: var(--card); padding: 24px 26px; border-top: 2px solid var(--gold); }
+  .gc-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .gc-loc { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .gc-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+  .gc-note { font-size: 12px; color: var(--body); line-height: 1.6; font-weight: 300; margin-bottom: 12px; }
+  .gc-contact { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); }
+
+  /* PORTAL GRID */
+  .portal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .portal-card { background: var(--card2); padding: 18px 20px; }
+  .portal-icon { font-size: 18px; margin-bottom: 8px; }
+  .portal-name { font-size: 12px; font-weight: 600; color: var(--white); margin-bottom: 5px; }
+  .portal-desc { font-size: 11px; color: var(--muted); line-height: 1.5; font-weight: 300; }
+  .portal-url { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--gold); margin-top: 8px; word-break: break-all; }
+
+  /* CALLOUT */
+  .callout { background: rgba(201,168,76,.05); border: 1px solid rgba(201,168,76,.2); padding: 22px 28px; margin: 32px 0; display: flex; gap: 16px; align-items: flex-start; }
+  .callout-icon { font-size: 20px; flex-shrink: 0; }
+  .callout-text { font-size: 13px; color: var(--body); line-height: 1.7; font-weight: 300; }
+  .callout-text strong { color: var(--gold); font-weight: 500; }
+
+  /* DIVIDER */
+  .spacer { height: 48px; }
+
+  footer { background: var(--card2); border-top: 1px solid rgba(201,168,76,.15); padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; margin-top: 48px; }
+  .footer-l { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .footer-l span { color: var(--gold); }
+  .footer-r { font-size: 11px; color: rgba(158,179,212,.4); font-style: italic; }
+
+  @media (max-width: 900px) {
+    header, .hero, .section { padding-left: 24px; padding-right: 24px; }
+    h1 { font-size: 32px; }
+    .gc-grid, .portal-grid { grid-template-columns: 1fr; }
+    .stats { flex-wrap: wrap; }
+    .bid-table { font-size: 11px; }
+    .col-project { width: auto; }
+    footer { flex-direction: column; gap: 8px; text-align: center; padding: 14px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <span class="logo">Build Signals</span>
+    <span style="width:1px;height:16px;background:rgba(201,168,76,.3);display:inline-block;"></span>
+    <span class="tag">Market Intelligence</span>
+  </div>
+  <div class="header-meta">
+    <span class="tag">March 2026</span>
+    <span class="tag highlight">McGraw Construction — Patterson CA</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Stanislaus + San Joaquin Counties — Concrete & Carpentry Focus</div>
+  <h1>The Full Picture of<br>What's <em>Out There.</em></h1>
+  <p class="hero-sub">This is everything currently active, bidding, and in the pipeline that matches McGraw's trades — across public portals, GC sub networks, and open ITBs within 60 minutes of Patterson. This is not a cherry-picked list. This is the market.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">20+</div><div class="stat-l">Tracked Opportunities</div></div>
+    <div class="stat"><div class="stat-n">8</div><div class="stat-l">Active GC Networks</div></div>
+    <div class="stat"><div class="stat-n">15</div><div class="stat-l">Bid-Posting Agencies</div></div>
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Opportunity Types</div></div>
+    <div class="stat"><div class="stat-n">$50K–$1.5M</div><div class="stat-l">Scope Range</div></div>
+  </div>
+</div>
+
+<!-- ===== HOT RIGHT NOW ===== -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-label">🔴 Bidding This Month — Act Now</span>
+    <div class="section-line"></div>
+    <span class="section-count">4 opportunities</span>
+  </div>
+  <table class="bid-table">
+    <thead>
+      <tr>
+        <th class="col-status">Status</th>
+        <th class="col-project">Project</th>
+        <th class="col-agency">Agency / Owner</th>
+        <th class="col-trade">Trade</th>
+        <th class="col-type">Type</th>
+        <th class="col-value">Est. Value</th>
+        <th class="col-contact">Contact / Portal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge b-hot">BID MON 3/9</span></td>
+        <td>
+          <div class="project-name">Gantner Elementary School — Site Work</div>
+          <div class="project-note">Concrete site improvements, flatwork, ADA ramps, drainage. Diede actively soliciting subs now.</div>
+        </td>
+        <td><div class="agency-name">Lodi USD / Diede Construction</div><div class="agency-dist">Lodi — 45 min</div></td>
+        <td><span class="badge t-concrete">Concrete</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$80K–$150K</div></td>
+        <td><div class="contact-val">estimating@diedeconstruction.com<br>Bid deadline: Mar 9 1pm</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-hot">BID TUE 3/10</span></td>
+        <td>
+          <div class="project-name">LUSD — Lakewood Elementary Bridge Portable</div>
+          <div class="project-note">Modular classroom bridge connection, site work, concrete foundations. Diede bidding, needs subs.</div>
+        </td>
+        <td><div class="agency-name">Lodi USD / Diede Construction</div><div class="agency-dist">Lodi — 45 min</div></td>
+        <td><span class="badge t-both">Concrete + Carp</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$60K–$120K</div></td>
+        <td><div class="contact-val">estimating@diedeconstruction.com<br>Bid deadline: Mar 10 11am</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-hot">BID WED 3/11</span></td>
+        <td>
+          <div class="project-name">Gospel Center Rescue Mission — Warehouse Improvement</div>
+          <div class="project-note">Commercial warehouse improvements in Stockton. Structural framing, site concrete. Diede bidding this week.</div>
+        </td>
+        <td><div class="agency-name">Gospel Center Rescue Mission / Diede</div><div class="agency-dist">Stockton — 50 min</div></td>
+        <td><span class="badge t-carp">Carpentry</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$50K–$100K</div></td>
+        <td><div class="contact-val">estimating@diedeconstruction.com<br>Bid deadline: Mar 11 12pm</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-live">Mar 26</span></td>
+        <td>
+          <div class="project-name">Independence, Henderson & Lodi High Schools — Shade Shelters</div>
+          <div class="project-note">Structural carpentry, concrete pads, shade structures at 3 high school sites. Diede bidding, sub quotes needed.</div>
+        </td>
+        <td><div class="agency-name">Lodi USD / Diede Construction</div><div class="agency-dist">Lodi — 45 min</div></td>
+        <td><span class="badge t-both">Concrete + Carp</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$60K–$130K</div></td>
+        <td><div class="contact-val">estimating@diedeconstruction.com<br>Bid deadline: Mar 26 12pm</div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== ACTIVE CONSTRUCTION - SUB PACKAGES OPEN ===== -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-label">🟡 Under Construction — Sub Packages Available</span>
+    <div class="section-line"></div>
+    <span class="section-count">5 opportunities</span>
+  </div>
+  <table class="bid-table">
+    <thead>
+      <tr>
+        <th class="col-status">Status</th>
+        <th class="col-project">Project</th>
+        <th class="col-agency">GC / Owner</th>
+        <th class="col-trade">Trade</th>
+        <th class="col-type">Type</th>
+        <th class="col-value">Contract Size</th>
+        <th class="col-contact">Contact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge b-active">Active</span></td>
+        <td>
+          <div class="project-name">Modesto Library Tenant Improvement</div>
+          <div class="project-note">$8.97M renovation running through fall 2026. Concrete, framing, and finish carpentry scopes. Mid-project sub additions are common at this scale.</div>
+        </td>
+        <td><div class="agency-name">Haggerty Construction (GC)</div><div class="agency-dist">Modesto — 25 min</div></td>
+        <td><span class="badge t-both">Concrete + Carp</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$8.97M prime<br>Sub TBD</div></td>
+        <td><div class="contact-val">haggertybuilds.com<br>(209) 475-9898</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-active">Active</span></td>
+        <td>
+          <div class="project-name">New Modesto Courthouse — Final Phase</div>
+          <div class="project-note">$345M project completing June 2026. McCarthy Building Companies is GC. Site concrete, flatwork, and exterior concrete still active. Good fit for a concrete-specialized sub.</div>
+        </td>
+        <td><div class="agency-name">McCarthy Building Companies (GC)</div><div class="agency-dist">Modesto downtown — 25 min</div></td>
+        <td><span class="badge t-concrete">Concrete</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$345M prime<br>Remaining subs TBD</div></td>
+        <td><div class="contact-val">mccarthy.com/offices/sacramento<br>Project contact via BuildingConnected</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-active">Active</span></td>
+        <td>
+          <div class="project-name">Keyes Elementary — Expanded Learning Center Addition</div>
+          <div class="project-note">New building addition + alterations at Keyes USD. Awarded Nov 2025. Concrete foundations and framing scope. 15 minutes from Patterson — McGraw's literal backyard.</div>
+        </td>
+        <td><div class="agency-name">Keyes Union School District</div><div class="agency-dist">Keyes CA — 15 min</div></td>
+        <td><span class="badge t-both">Concrete + Carp</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$50K–$90K</div></td>
+        <td><div class="contact-val">KUSD — (209) 632-5107<br>GC TBD — inquiry needed</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-active">Active</span></td>
+        <td>
+          <div class="project-name">Denair USD — Elementary Charter School Kitchen & HVAC</div>
+          <div class="project-note">New kitchen build-out + gym alterations. Awarded Dec 2025 to Harris Builders. Concrete slab, framing, and rough carpentry scope likely still open for subs.</div>
+        </td>
+        <td><div class="agency-name">Harris Builders (GC) / Denair USD</div><div class="agency-dist">Denair — 20 min</div></td>
+        <td><span class="badge t-both">Concrete + Carp</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$60K–$110K</div></td>
+        <td><div class="contact-val">Harris Builders — Central Valley<br>Direct outreach via BuildingConnected</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-active">Spring 2026</span></td>
+        <td>
+          <div class="project-name">7th Street Bridge Replacement — Tuolumne River</div>
+          <div class="project-note">$7.2M county bridge project breaking ground this spring. Bridge piers, foundations, retaining walls, grading. Concrete sub scope is significant. DIR registration required day one.</div>
+        </td>
+        <td><div class="agency-name">Stanislaus County Public Works</div><div class="agency-dist">Modesto — 25 min</div></td>
+        <td><span class="badge t-concrete">Concrete</span></td>
+        <td><span class="badge type-sub">Sub</span></td>
+        <td><div class="val">$7.2M prime<br>Concrete sub est. $300K+</div></td>
+        <td><div class="contact-val">Stanislaus County Public Works<br>(209) 525-4130</div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q2/Q3 PIPELINE ===== -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-label">🔵 Pipeline — Q2/Q3 2026</span>
+    <div class="section-line"></div>
+    <span class="section-count">7 opportunities</span>
+  </div>
+  <table class="bid-table">
+    <thead>
+      <tr>
+        <th class="col-status">Window</th>
+        <th class="col-project">Project</th>
+        <th class="col-agency">Agency</th>
+        <th class="col-trade">Trade</th>
+        <th class="col-type">Type</th>
+        <th class="col-value">Est. Value</th>
+        <th class="col-contact">How to Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge b-pipe">Q2 2026</span></td>
+        <td>
+          <div class="project-name">Stanislaus County — Annual Concrete Maintenance</div>
+          <div class="project-note">Stanislaus County runs annual concrete repair, flatwork, and ADA compliance contracts county-wide. Class B eligible. Under $220K means informal bid process. McGraw can prime this outright.</div>
+        </td>
+        <td><div class="agency-name">Stanislaus County GSA / Public Works</div><div class="agency-dist">County-wide — McGraw's backyard</div></td>
+        <td><span class="badge t-concrete">Concrete</span></td>
+        <td><span class="badge type-prime">Prime</span></td>
+        <td><div class="val">$80K–$220K</div></td>
+        <td><div class="contact-val">PlanetBids — CompanyID 14599<br>Free registration</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-pipe">Q2 2026</span></td>
+        <td>
+          <div class="project-name">City of Modesto — Sidewalk & ADA Ramp Program</div>
+          <div class="project-note">Modesto runs an annual sidewalk/curb/ADA ramp replacement program. Concrete-only scope, smaller contract ranges. Prime-eligible for Class B contractors, DIR required.</div>
+        </td>
+        <td><div class="agency-name">City of Modesto Public Works</div><div class="agency-dist">Modesto — 25 min</div></td>
+        <td><span class="badge t-concrete">Concrete</span></td>
+        <td><span class="badge type-prime">Prime</span></td>
+        <td><div class="val">$100K–$400K</div></td>
+        <td><div class="contact-val">OpenGov — procurement.opengov.com<br>/portal/modestogov</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-pipe">Q2 2026</span></td>
+        <td>
+          <div class="project-name">City of Turlock — Annual Street Improvement Program</div>
+          <div class="project-note">Turlock bids annual concrete curb, gutter, sidewalk, and ADA work. Project 25-063 specifications already out. Concrete sub or prime opportunity depending on scope size selected.</div>
+        </td>
+        <td><div class="agency-name">City of Turlock Public Works</div><div class="agency-dist">Turlock — 20 min</div></td>
+        <td><span class="badge t-concrete">Concrete</span></td>
+        <td><span class="badge type-either">Sub or Prime</span></td>
+        <td><div class="val">$150K–$500K</div></td>
+        <td><div class="contact-val">OpenGov — procurement.opengov.com<br>/portal/turlock</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-pipe">Q2 2026</span></td>
+        <td>
+          <div class="project-name">Modesto City Schools — Summer Facilities Projects</div>
+          <div class="project-note">MCS runs K–12 facility improvements each summer across 22+ elementary and 9 high school campuses. Concrete, flatwork, ADA improvements, and carpentry consistently bid April–June for summer starts.</div>
+        </td>
+        <td><div class="agency-name">Modesto City Schools</div><div class="agency-dist">Modesto — 25 min</div></td>
+        <td><span class="badge t-both">Concrete + Carp</span></td>
+        <td><span class="badge type-either">Sub or Prime</span></td>
+        <td><div class="val">$50K–$300K per project</div></td>
+        <td><div class="contact-val">PublicPurchase — publicpurchase.com<br>/gems/modestosd,ca/buyer</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-pipe">Q2/Q3 2026</span></td>
+        <td>
+          <div class="project-name">Turlock USD — Campus Modernization Packages</div>
+          <div class="project-note">Turlock USD is actively modernizing school facilities. Prior projects include concrete flatwork, modular building foundations, and structural carpentry. Regular ITBs posted spring and fall cycles.</div>
+        </td>
+        <td><div class="agency-name">Turlock Unified School District</div><div class="agency-dist">Turlock — 20 min</div></td>
+        <td><span class="badge t-both">Concrete + Carp</span></td>
+        <td><span class="badge type-either">Sub or Prime</span></td>
+        <td><div class="val">$60K–$250K</div></td>
+        <td><div class="contact-val">turlock.k12.ca.us<br>Facilities — (209) 667-0632</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-pipe">Q2/Q3 2026</span></td>
+        <td>
+          <div class="project-name">Ceres USD + City of Ceres — Facility Improvements</div>
+          <div class="project-note">Ceres is running a multi-year Measure H facility program. Concrete and carpentry packages for school improvements will be bid spring and summer 2026. Multiple campuses across the district.</div>
+        </td>
+        <td><div class="agency-name">Ceres USD / City of Ceres</div><div class="agency-dist">Ceres — 20 min</div></td>
+        <td><span class="badge t-both">Concrete + Carp</span></td>
+        <td><span class="badge type-either">Sub or Prime</span></td>
+        <td><div class="val">$75K–$300K</div></td>
+        <td><div class="contact-val">ceres.k12.ca.us<br>(209) 556-1500</div></td>
+      </tr>
+      <tr>
+        <td><span class="badge b-pipe">Q3 2026</span></td>
+        <td>
+          <div class="project-name">MID / TID — Infrastructure & Facility Maintenance</div>
+          <div class="project-note">Modesto Irrigation District and Turlock Irrigation District both run annual construction and maintenance bids. Concrete structures, pump stations, facility flatwork. Public utilities with their own bid portals.</div>
+        </td>
+        <td><div class="agency-name">MID + TID</div><div class="agency-dist">Modesto / Turlock — 20–25 min</div></td>
+        <td><span class="badge t-concrete">Concrete</span></td>
+        <td><span class="badge type-prime">Prime</span></td>
+        <td><div class="val">$50K–$200K</div></td>
+        <td><div class="contact-val">mid.org/doing-business-with-mid<br>tid.org/doing-business</div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== GC NETWORK ===== -->
+<div class="section" style="padding-bottom:0;">
+  <div class="section-head">
+    <span class="section-label">GC Sub Networks — Register Today, Get Bid Invites Permanently</span>
+    <div class="section-line"></div>
+    <span class="section-count">8 GCs</span>
+  </div>
+  <div class="gc-grid">
+    <div class="gc-card">
+      <div class="gc-name">Acme Construction</div>
+      <div class="gc-loc">Modesto, CA — 25 min • Founded 1947</div>
+      <div class="gc-tags"><span class="badge t-both">Concrete + Carp</span><span class="badge type-sub">Active Sub List</span></div>
+      <div class="gc-note">The dominant local GC in Modesto. Specializes in school, medical, and government buildings. Self-performs concrete and carpentry — which means they know exactly what they need from subs. Uses BuildingConnected for all sub invitations. 121+ permitted projects on record. Getting on their BuildingConnected profile is a top priority.</div>
+      <div class="gc-contact">bids@acmeconstruction.com<br>BuildingConnected — required<br>(209) 523-2674</div>
+    </div>
+    <div class="gc-card">
+      <div class="gc-name">Diede Construction</div>
+      <div class="gc-loc">Lodi, CA — 45 min • 3 Active Bids Right Now</div>
+      <div class="gc-tags"><span class="badge t-both">Concrete + Carp</span><span class="badge b-hot">3 Bids This Week</span></div>
+      <div class="gc-note">Most accessible GC on this list — free public sub sign-up, active bid calendar, and 3 projects bidding this week. Covers Central Valley from Lodi to Merced. Contact the estimating team and sign up for their list today. They'll email McGraw every time there's a sub opportunity that matches their trades.</div>
+      <div class="gc-contact">estimating@diedeconstruction.com<br>diedeconstruction.com/bidding<br>Free sign-up + email alerts</div>
+    </div>
+    <div class="gc-card">
+      <div class="gc-name">Haggerty Construction</div>
+      <div class="gc-loc">Stockton, CA — 50 min • Active on Modesto Library</div>
+      <div class="gc-tags"><span class="badge t-both">Concrete + Carp</span><span class="badge b-active">Project Active Now</span></div>
+      <div class="gc-note">Running the $8.97M Modesto Library renovation through fall 2026. Known for strong subcontractor relationships — their VP has mentioned it publicly. Mid-project sub additions are standard on jobs this size. Direct call to their PM is the right move, not a contact form.</div>
+      <div class="gc-contact">haggertybuilds.com<br>(209) 475-9898<br>Direct PM contact preferred</div>
+    </div>
+    <div class="gc-card">
+      <div class="gc-name">Bobo Construction</div>
+      <div class="gc-loc">Elk Grove, CA — 60 min • Public Works Specialist</div>
+      <div class="gc-tags"><span class="badge t-concrete">Concrete</span><span class="badge type-sub">Prequalification</span></div>
+      <div class="gc-note">Fourth-generation family GC operating CA, NV, WA, ID, UT. Runs a formal prequalification process that's free and fast. Actively bids school and public works projects in Stanislaus County area. DIR registration and Class B license are the only requirements.</div>
+      <div class="gc-contact">bestimating@boboconstructioninc.com<br>boboconstructioninc.com/subcontractorpq<br>Free PQ form — do this week</div>
+    </div>
+    <div class="gc-card">
+      <div class="gc-name">CWS Construction Group</div>
+      <div class="gc-loc">Central Valley — Active Bidder</div>
+      <div class="gc-tags"><span class="badge t-both">Concrete + Carp</span><span class="badge type-sub">Sub List</span></div>
+      <div class="gc-note">Bid the Modesto Library against Haggerty — meaning they're competing for the exact same county and school work McGraw wants to be part of. Get on their sub list and you're in front of a GC chasing Stanislaus County work constantly.</div>
+      <div class="gc-contact">CWS Construction Group<br>Contact via BuildingConnected<br>Or direct inquiry</div>
+    </div>
+    <div class="gc-card">
+      <div class="gc-name">McCarthy Building Companies</div>
+      <div class="gc-loc">National GC — Modesto Courthouse</div>
+      <div class="gc-tags"><span class="badge t-concrete">Concrete</span><span class="badge b-active">Active Project</span></div>
+      <div class="gc-note">Running the $345M Modesto Courthouse project completing June 2026. Large national GC with local project presence. Concrete and flatwork subs still active. Hard to get into but worth pursuing — one project with McCarthy builds a reference that opens doors everywhere.</div>
+      <div class="gc-contact">mccarthy.com<br>Sacramento/Central Valley office<br>BuildingConnected — McCarthy profile</div>
+    </div>
+    <div class="gc-card">
+      <div class="gc-name">Harris Builders</div>
+      <div class="gc-loc">Central Valley — School Projects</div>
+      <div class="gc-tags"><span class="badge t-both">Concrete + Carp</span><span class="badge type-sub">Sub List</span></div>
+      <div class="gc-note">Just awarded the Denair USD kitchen project. Active on multiple school projects in Stanislaus County. A smaller, local GC that moves fast and relies on local sub relationships. Good fit for McGraw's size and capabilities.</div>
+      <div class="gc-contact">Harris Builders Central Valley<br>Contact via BuildingConnected<br>Direct outreach encouraged</div>
+    </div>
+    <div class="gc-card">
+      <div class="gc-name">Creekside Commercial Builders</div>
+      <div class="gc-loc">Central California — Commercial / Institutional</div>
+      <div class="gc-tags"><span class="badge t-both">Concrete + Carp</span><span class="badge type-sub">Sub List</span></div>
+      <div class="gc-note">Also bid the Modesto Library. Active on institutional and commercial construction in the region. Another GC that's chasing the same Stanislaus County pipeline — being on their sub list puts McGraw in front of another stream of invitations.</div>
+      <div class="gc-contact">Creekside Commercial Builders<br>Contact via BuildingConnected<br>Direct inquiry</div>
+    </div>
+  </div>
+</div>
+
+<!-- CALLOUT -->
+<div class="section" style="padding-bottom:0;">
+  <div class="callout">
+    <div class="callout-icon">⚡</div>
+    <div class="callout-text">
+      <strong>Why this list feels short when you search yourself:</strong> The public portals — OpenGov, PlanetBids, school district websites — only show prime bids that have already been formally advertised. The <strong>real volume</strong> is inside the GC networks: BuildingConnected, Diede's email list, Bobo's PQ portal. Those are private sub invitations that never get posted publicly. One registration on Acme's BuildingConnected profile gets McGraw notified on every project Acme bids in this region — and Acme bids 20–30 projects a year in Stanislaus, San Joaquin, and Merced counties. <strong>That's the channel Build Signals already operates in.</strong>
+    </div>
+  </div>
+</div>
+
+<!-- PORTALS -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-label">Bid Portals — Register on All 15</span>
+    <div class="section-line"></div>
+    <span class="section-count">15 sources</span>
+  </div>
+  <div class="portal-grid">
+    <div class="portal-card"><div class="portal-icon">🏛️</div><div class="portal-name">Stanislaus County</div><div class="portal-desc">All county construction, public works, capital projects. Free registration.</div><div class="portal-url">PlanetBids — CompanyID 14599</div></div>
+    <div class="portal-card"><div class="portal-icon">🏙️</div><div class="portal-name">City of Modesto</div><div class="portal-desc">City construction, sidewalks, ADA, public facilities. Switched to OpenGov Feb 2025.</div><div class="portal-url">procurement.opengov.com/portal/modestogov</div></div>
+    <div class="portal-card"><div class="portal-icon">🏡</div><div class="portal-name">City of Turlock</div><div class="portal-desc">Annual street program, park improvements, facility work. Moving to OpenGov.</div><div class="portal-url">cityofturlock.org/capitalprojects</div></div>
+    <div class="portal-card"><div class="portal-icon">🌾</div><div class="portal-name">City of Ceres</div><div class="portal-desc">Measure H facility program + annual infrastructure bids. 20 min from Patterson.</div><div class="portal-url">ceres.gov — building dept</div></div>
+    <div class="portal-card"><div class="portal-icon">🎓</div><div class="portal-name">Modesto City Schools</div><div class="portal-desc">22 elementary + 9 high school campuses. Annual summer construction cycle.</div><div class="portal-url">PublicPurchase — modestosd,ca</div></div>
+    <div class="portal-card"><div class="portal-icon">🎓</div><div class="portal-name">Turlock USD</div><div class="portal-desc">Active modernization program. Concrete and carpentry every cycle.</div><div class="portal-url">turlock.k12.ca.us — (209) 667-0632</div></div>
+    <div class="portal-card"><div class="portal-icon">🎓</div><div class="portal-name">Ceres USD</div><div class="portal-desc">Multi-year Measure H program underway. Packages bid spring and fall.</div><div class="portal-url">ceres.k12.ca.us — (209) 556-1500</div></div>
+    <div class="portal-card"><div class="portal-icon">🎓</div><div class="portal-name">Patterson USD</div><div class="portal-desc">McGraw's home district. Small but consistent facility projects every year.</div><div class="portal-url">patterson.k12.ca.us — (209) 895-7700</div></div>
+    <div class="portal-card"><div class="portal-icon">🎓</div><div class="portal-name">Keyes Union SD</div><div class="portal-desc">15 min from Patterson. Active learning center project underway right now.</div><div class="portal-url">keyesusd.org — (209) 632-5107</div></div>
+    <div class="portal-card"><div class="portal-icon">💧</div><div class="portal-name">Modesto Irrigation District</div><div class="portal-desc">Public utility — concrete structures, pump stations, facility flatwork.</div><div class="portal-url">mid.org/doing-business-with-mid</div></div>
+    <div class="portal-card"><div class="portal-icon">💧</div><div class="portal-name">Turlock Irrigation District</div><div class="portal-desc">Water + power utility. Infrastructure and facility maintenance contracts.</div><div class="portal-url">tid.org/doing-business</div></div>
+    <div class="portal-card"><div class="portal-icon">🔗</div><div class="portal-name">Diede Construction</div><div class="portal-desc">Free public sub email list — real-time bid invitations matching your trades.</div><div class="portal-url">diedeconstruction.com/bidding</div></div>
+    <div class="portal-card"><div class="portal-icon">🔗</div><div class="portal-name">Acme Construction</div><div class="portal-desc">BuildingConnected — required registration for all sub bids. Largest local GC.</div><div class="portal-url">acmeconstruction.com/bidding-opportunities</div></div>
+    <div class="portal-card"><div class="portal-icon">🔗</div><div class="portal-name">Bobo Construction PQ</div><div class="portal-desc">Free sub prequalification — opens access to all Bobo's California projects.</div><div class="portal-url">boboconstructioninc.com/subcontractorpq</div></div>
+    <div class="portal-card"><div class="portal-icon">🔗</div><div class="portal-name">BuildingConnected (Autodesk)</div><div class="portal-desc">Free for subs. Most GCs in the Valley use it. One profile, invites from all of them.</div><div class="portal-url">buildingconnected.com — free sub account</div></div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<footer>
+  <div class="footer-l"><span>Build Signals</span> — McGraw Construction Full Market Report — March 2026</div>
+  <div class="footer-r">Prepared for Friday 4pm closing call. Not for distribution.</div>
+</footer>
+</body>
+</html>
