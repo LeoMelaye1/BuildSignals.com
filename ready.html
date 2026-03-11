@@ -97,7 +97,7 @@
   <!-- Loom — autoplay + 1x speed -->
   <div class="video-wrap">
     <iframe
-      src="https://www.loom.com/embed/bbc84c679bc143b8be78303ef0f98693?autoplay=1&muted=0&playbackSpeed=1"
+      src="https://www.youtube-nocookie.com/embed/0s9csNhrtJk?autoplay=1&rel=0&modestbranding=1"
       frameborder="0"
       webkitallowfullscreen mozallowfullscreen allowfullscreen
     ></iframe>
@@ -120,7 +120,7 @@
     if (phoneVal.length < 7) { document.getElementById('phone').focus(); return; }
 
     // Send to GHL in the background — fire and forget
-    if (GHL_WEBHOOK !== "YOUR_GHL_WEBHOOK_URL") {
+    if (GHL_WEBHOOK !== "https://services.leadconnectorhq.com/hooks/IFtiovGmHoKETytJU9wy/webhook-trigger/1e68bf96-e265-4986-8de5-87d7140f1506") {
       const parts = nameVal.split(' ');
       fetch(GHL_WEBHOOK, {
         method: "POST",
