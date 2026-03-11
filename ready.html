@@ -1,173 +1,247 @@
-import { useState } from "react";
-
-const RED = "#E53E3E";
-const DARK = "#111111";
-
-export default function Page() {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const canSubmit = name.trim().length > 0 && phone.trim().length > 7;
-
-  const handleSubmit = () => {
-    if (!canSubmit) return;
-    setSubmitted(true);
-  };
-
-  if (submitted) {
-    return (
-      <div style={{
-        minHeight: "100vh", background: "#fff",
-        fontFamily: "'Inter', -apple-system, sans-serif",
-        display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center",
-        padding: "40px 24px", textAlign: "center"
-      }}>
-        <div style={{
-          width: 60, height: 60, borderRadius: "50%",
-          background: "#fff5f5", border: `2px solid ${RED}`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 26, marginBottom: 24, color: RED
-        }}>✓</div>
-        <h2 style={{ fontSize: 22, fontWeight: 700, color: DARK, marginBottom: 10, letterSpacing: "-0.3px" }}>
-          You're in. We'll be in touch shortly.
-        </h2>
-        <p style={{ color: "#6b7280", fontSize: 15, lineHeight: 1.65, maxWidth: 300 }}>
-          Expect a call or text from us within 24 hours. We'll walk you through what commercial work is available in your market.
-        </p>
-      </div>
-    );
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commercial Work for Residential GCs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #fff;
+    color: #111;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 36px 20px 56px;
   }
 
-  return (
-    <div style={{
-      minHeight: "100vh", background: "#fff",
-      fontFamily: "'Inter', -apple-system, sans-serif",
-      maxWidth: 520, margin: "0 auto",
-      padding: "36px 20px 48px"
-    }}>
+  /* HEADLINE */
+  .headline { text-align: center; margin-bottom: 24px; }
+  .headline h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    color: #111;
+    margin-bottom: 10px;
+  }
+  .headline h1 span { color: #E53E3E; }
+  .headline p {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.65;
+  }
 
-      {/* HEADLINE */}
-      <div style={{ textAlign: "center", marginBottom: 22 }}>
-        <h1 style={{
-          fontSize: 26, fontWeight: 700, lineHeight: 1.2,
-          letterSpacing: "-0.5px", color: DARK, margin: "0 0 10px"
-        }}>
-          We get residential GCs landing<br />
-          <span style={{ color: RED }}>commercial jobs every month.</span>
-        </h1>
-        <p style={{ color: "#6b7280", fontSize: 14, lineHeight: 1.6, margin: 0 }}>
-          We find the work, build your packages, get you in front of the right GCs, and stay in it until you close.
-        </p>
-      </div>
+  /* VIDEO */
+  .video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    margin-bottom: 28px;
+  }
+  .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
 
-      {/* LOOM VIDEO */}
-      <div style={{
-        position: "relative", paddingBottom: "56.25%", height: 0,
-        borderRadius: 10, overflow: "hidden",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-        marginBottom: 28
-      }}>
-        <iframe
-          src="https://www.loom.com/embed/2e6a1f5996b740a09dd8b88c3770976b"
-          frameBorder="0"
-          webkitallowfullscreen="true"
-          mozallowfullscreen="true"
-          allowFullScreen
-          style={{
-            position: "absolute", top: 0, left: 0,
-            width: "100%", height: "100%", border: "none"
-          }}
-        />
-      </div>
+  /* FORM */
+  .form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px; }
+  .form input {
+    width: 100%;
+    padding: 15px 16px;
+    border-radius: 8px;
+    border: 1.5px solid #e5e7eb;
+    background: #f9fafb;
+    color: #111;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form input:focus { border-color: #E53E3E; }
+  .form button {
+    width: 100%;
+    padding: 17px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #E53E3E;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: -0.2px;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 2px;
+  }
+  .form button:hover { background: #c53030; transform: translateY(-1px); }
+  .form button:active { transform: translateY(0); }
 
-      {/* FORM */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 10 }}>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          style={{
-            width: "100%", padding: "15px 16px",
-            borderRadius: 8, border: "1.5px solid #e5e7eb",
-            background: "#f9fafb", color: DARK,
-            fontSize: 15, fontFamily: "inherit", outline: "none",
-          }}
-        />
-        <input
-          type="tel"
-          placeholder="Phone number"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
-          style={{
-            width: "100%", padding: "15px 16px",
-            borderRadius: 8, border: "1.5px solid #e5e7eb",
-            background: "#f9fafb", color: DARK,
-            fontSize: 15, fontFamily: "inherit", outline: "none",
-          }}
-        />
-        <button
-          onClick={handleSubmit}
-          style={{
-            width: "100%", padding: "17px 20px",
-            borderRadius: 8, border: "none",
-            background: canSubmit ? RED : "#fca5a5",
-            color: "#fff", fontSize: 16, fontWeight: 700,
-            cursor: canSubmit ? "pointer" : "default",
-            letterSpacing: "-0.2px",
-            transition: "background 0.15s",
-            marginTop: 2,
-          }}
-        >
-          Get a Call Back →
-        </button>
-      </div>
+  .microcopy {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 12px;
+    margin: 0 0 36px;
+  }
 
-      <p style={{ textAlign: "center", color: "#9ca3af", fontSize: 12, margin: "0 0 36px" }}>
-        No commitment. We'll reach out within 24 hours.
-      </p>
+  /* PROOF */
+  .proof { border-top: 1px solid #f3f4f6; padding-top: 28px; }
+  .proof-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9ca3af;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .message { margin-bottom: 16px; }
+  .message-meta { font-size: 11px; color: #9ca3af; margin-bottom: 5px; }
+  .message-bubble {
+    background: #f3f4f6;
+    border-radius: 16px 16px 16px 4px;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: #111;
+    max-width: 88%;
+    line-height: 1.45;
+  }
 
-      {/* PROOF — below form, secondary */}
-      <div style={{ borderTop: "1px solid #f3f4f6", paddingTop: 28 }}>
-        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "1px", color: "#9ca3af", textAlign: "center", marginBottom: 18 }}>
-          Recent client results
-        </p>
-        {[
-          { text: "We just closed that framing job. $515K. Still can't believe it", meta: "Mike C. · Framing · NorCal" },
-          { text: "Just landed our second bid. $330K.", meta: "Eric W. · General · West" },
-          { text: "2 months in and I already have more pipeline than all of last year", meta: "Tony A. · GC · Bay Area" },
-        ].map((p, i) => (
-          <div key={i} style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 11, color: "#9ca3af", marginBottom: 5 }}>{p.meta}</div>
-            <div style={{
-              background: "#f3f4f6",
-              borderRadius: "16px 16px 16px 4px",
-              padding: "11px 14px",
-              fontSize: 14, color: "#111",
-              maxWidth: "88%", lineHeight: 1.45,
-            }}>
-              {p.text}
-            </div>
-          </div>
-        ))}
-      </div>
+  /* GUARANTEE */
+  .guarantee {
+    margin-top: 24px;
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .guarantee-title {
+    color: #E53E3E;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  .guarantee p {
+    color: #374151;
+    font-size: 13px;
+    line-height: 1.65;
+  }
 
-      {/* GUARANTEE */}
-      <div style={{
-        marginTop: 24,
-        background: "#fff5f5", border: "1px solid #fed7d7",
-        borderRadius: 8, padding: "16px 18px"
-      }}>
-        <div style={{ color: RED, fontWeight: 700, fontSize: 13, marginBottom: 5 }}>
-          We stay in it until you close
-        </div>
-        <div style={{ color: "#374151", fontSize: 13, lineHeight: 1.65 }}>
-          After your first contract, everything flips to performance-based. We only get paid when you do. No retainer, no monthly fees.
-        </div>
-      </div>
+  /* THANK YOU */
+  .thankyou {
+    display: none;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 24px;
+  }
+  .thankyou.show { display: flex; }
+  .thankyou-icon {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: #fff5f5;
+    border: 2px solid #E53E3E;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; color: #E53E3E;
+    margin-bottom: 24px;
+  }
+  .thankyou h2 {
+    font-size: 22px; font-weight: 700;
+    color: #111; letter-spacing: -0.3px;
+    margin-bottom: 10px;
+  }
+  .thankyou p { color: #6b7280; font-size: 15px; line-height: 1.65; max-width: 300px; }
+</style>
+</head>
+<body>
 
+<!-- MAIN PAGE -->
+<div id="main" class="wrap">
+
+  <div class="headline">
+    <h1>We get residential GCs landing<br><span>commercial jobs every month.</span></h1>
+    <p>We find the work, build your packages, get you in front of the right GCs, and stay in it until you close.</p>
+  </div>
+
+  <div class="video-wrap">
+    <iframe
+      src="https://www.loom.com/embed/2e6a1f5996b740a09dd8b88c3770976b"
+      frameborder="0"
+      webkitallowfullscreen
+      mozallowfullscreen
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <div class="form">
+    <input type="text" id="name" placeholder="Your name" autocomplete="name" />
+    <input type="tel" id="phone" placeholder="Phone number" autocomplete="tel" />
+    <button onclick="handleSubmit()">Get a Call Back →</button>
+  </div>
+  <p class="microcopy">No commitment. We'll reach out within 24 hours.</p>
+
+  <div class="proof">
+    <p class="proof-label">Recent client results</p>
+    <div class="message">
+      <div class="message-meta">Mike C. · Framing · NorCal</div>
+      <div class="message-bubble">We just closed that framing job. $515K. Still can't believe it</div>
     </div>
-  );
+    <div class="message">
+      <div class="message-meta">Eric W. · General · West</div>
+      <div class="message-bubble">Just landed our second bid. $330K.</div>
+    </div>
+    <div class="message">
+      <div class="message-meta">Tony A. · GC · Bay Area</div>
+      <div class="message-bubble">2 months in and I already have more pipeline than all of last year</div>
+    </div>
+  </div>
+
+  <div class="guarantee">
+    <div class="guarantee-title">We stay in it until you close</div>
+    <p>After your first contract, everything flips to performance-based. We only get paid when you do. No retainer, no monthly fees.</p>
+  </div>
+
+</div>
+
+<!-- THANK YOU -->
+<div id="thankyou" class="thankyou">
+  <div class="thankyou-icon">✓</div>
+  <h2>You're in. We'll be in touch shortly.</h2>
+  <p>Expect a call or text from us within 24 hours. We'll walk you through what commercial work is available in your market.</p>
+</div>
+
+<script>
+function handleSubmit() {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  if (!name || phone.length < 7) {
+    if (!name) document.getElementById('name').focus();
+    else document.getElementById('phone').focus();
+    return;
+  }
+  document.getElementById('main').style.display = 'none';
+  document.getElementById('thankyou').classList.add('show');
+  // Drop your form submission here — e.g. fetch() to your backend or a webhook
 }
+
+// Allow Enter key to submit
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleSubmit();
+});
+</script>
+
+</body>
+</html>
