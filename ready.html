@@ -94,7 +94,6 @@
   <h1>Land commercial jobs.<br><span>We do the legwork.</span></h1>
   <p class="sub">We find commercial projects in your market, package your bids, and work with you until you close.</p>
 
-  <!-- Loom — autoplay + 1x speed -->
   <div class="video-wrap">
     <iframe
       src="https://www.youtube-nocookie.com/embed/0s9csNhrtJk?autoplay=1&rel=0&modestbranding=1"
@@ -110,7 +109,6 @@
 
 </div>
 <script>
-  // ← Paste your GHL webhook URL here (Automations → Webhooks → Copy URL)
   const GHL_WEBHOOK = "https://services.leadconnectorhq.com/hooks/IFtiovGmHoKETytJU9wy/webhook-trigger/1e68bf96-e265-4986-8de5-87d7140f1506";
 
   function next() {
@@ -119,23 +117,20 @@
     if (!nameVal) { document.getElementById('name').focus(); return; }
     if (phoneVal.length < 7) { document.getElementById('phone').focus(); return; }
 
-    // Send to GHL in the background — fire and forget
-    if (GHL_WEBHOOK !== "https://services.leadconnectorhq.com/hooks/IFtiovGmHoKETytJU9wy/webhook-trigger/1e68bf96-e265-4986-8de5-87d7140f1506") {
-      const parts = nameVal.split(' ');
-      fetch(GHL_WEBHOOK, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          first_name: parts[0] || '',
-          last_name: parts.slice(1).join(' ') || '',
-          phone: phoneVal,
-          source: "buildsignals-landing-page"
-        })
-      }).catch(() => {}); // silently ignore errors so redirect always happens
-    }
+    // Send to GHL — fire and forget
+    const parts = nameVal.split(' ');
+    fetch(GHL_WEBHOOK, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        first_name: parts[0] || '',
+        last_name: parts.slice(1).join(' ') || '',
+        phone: phoneVal,
+        source: "buildsignals-landing-page"
+      })
+    }).catch(() => {});
 
     // Redirect to calendar with prefill
-    const parts = nameVal.split(' ');
     const firstName = encodeURIComponent(parts[0] || '');
     const lastName = encodeURIComponent(parts.slice(1).join(' ') || '');
     const phone = encodeURIComponent(phoneVal);
