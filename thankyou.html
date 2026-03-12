@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1860244924650885');
+    fbq('track', 'PageView');
+    
+    // THIS IS THE IMPORTANT PART: 
+    // This fires the "Lead" event only when they land here after booking.
+    fbq('track', 'Lead');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1860244924650885&ev=PageView&noscript=1"
+    /></noscript>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed | BuildSignals</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, 'Helvetica Neue', sans-serif;
+            background: #fff;
+            color: #111;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .wrap {
+            max-width: 480px;
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 27px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        h1 span { color: #E53E3E; }
+        .sub {
+            color: #4b5563;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .card {
+            background: #f9fafb;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .card p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .card strong {
+            display: block;
+            font-size: 16px;
+            color: #111;
+        }
+        .btn-secondary {
+            display: inline-block;
+            color: #E53E3E;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: opacity 0.15s;
+        }
+        .btn-secondary:hover { opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="icon">✅</div>
+    <h1>You're on the list.<br><span>See you soon.</span></h1>
+    <p class="sub">Your commercial strategy session is confirmed. We're looking forward to helping you scale your project volume.</p>
+
+    <div class="card">
+        <p>NEXT STEPS</p>
+        <strong>Check your calendar for the invite link.</strong>
+    </div>
+
+    <a href="/" class="btn-secondary">← Back to Home</a>
+</div>
+
+</body>
+</html>
