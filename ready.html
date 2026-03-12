@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 
- <!-- Meta Pixel Code -->
-<script>
+ <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -18,12 +17,8 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1860244924650885&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code -->
-
-<!-- Phone validation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.11.4/libphonenumber-js.min.js"></script>
 
-<!-- Wistia Player Scripts -->
 <script src="https://fast.wistia.com/player.js" async></script>
 <script src="https://fast.wistia.com/embed/jki0a636b2.js" async type="module"></script>
 <style>
@@ -121,6 +116,7 @@ src="https://www.facebook.com/tr?id=1860244924650885&ev=PageView&noscript=1"
     display: none;
   }
   .error-msg.show { display: block; }
+  .note {
     text-align: center;
     color: #9ca3af;
     font-size: 12px;
@@ -178,6 +174,9 @@ src="https://www.facebook.com/tr?id=1860244924650885&ev=PageView&noscript=1"
       showError('phone');
       return;
     }
+
+    // TRACKING FIX: Tell FB they started the checkout process, not that they are a Lead yet.
+    fbq('track', 'InitiateCheckout');
 
     // Send to GHL — fire and forget
     const parts = nameVal.split(' ');
