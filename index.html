@@ -89,8 +89,16 @@
     .wins-track-wrap::before,.wins-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
     .wins-track-wrap::before{left:0;background:linear-gradient(to right,#1c1a16,transparent)}
     .wins-track-wrap::after{right:0;background:linear-gradient(to left,#1c1a16,transparent)}
-    .wins-track{display:flex;gap:14px;width:max-content;animation:wins-scroll 32s linear infinite}
+.wins-track{
+      display:flex;
+      flex-wrap: nowrap; /* ADD THIS LINE */
+      gap:14px;
+      width:max-content;
+      animation:wins-scroll 32s linear infinite
+    }
     .wins-track:hover{animation-play-state:paused}
+    @keyframes wins-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .win-screenshot{height:160px;width:auto;border-radius:12px;flex-shrink:0;box-shadow:0 4px 20px rgba(0,0,0,.35);display:block}    .wins-track:hover{animation-play-state:paused}
     @keyframes wins-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     .win-screenshot{height:160px;width:auto;border-radius:12px;flex-shrink:0;box-shadow:0 4px 20px rgba(0,0,0,.35);display:block}
 
