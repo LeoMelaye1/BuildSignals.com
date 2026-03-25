@@ -6,222 +6,199 @@
   <title>Growth Partner | BuildSignals</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Söhne:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:      #1a1a17;
-      --ink-2:    #3d3d38;
-      --ink-3:    #7a7a72;
-      --ink-4:    #aeaea6;
-      --paper:    #faf9f6;
-      --white:    #ffffff;
-      --rule:     #e6e5df;
-      --rule-2:   #f0efe9;
-      --green:    #c8a800;
-      --green-bg: #fffbeb;
+      --yellow:    #c8a800;
+      --yellow-bg: #fffdf0;
+      --ink:       #111111;
+      --ink-2:     #444444;
+      --ink-3:     #888888;
+      --border:    #e2e2e2;
+      --bg:        #f8f8f6;
+      --white:     #ffffff;
     }
 
-    html { scroll-behavior: smooth; }
+    html, body { height: 100%; }
 
     body {
-      background: var(--paper);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
       color: var(--ink);
-      font-family: 'Figtree', system-ui, sans-serif;
-      font-size: 16px;
-      line-height: 1.65;
+      background: var(--bg);
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
       background: var(--white);
-      border-bottom: 1px solid var(--rule);
-      padding: 0 40px;
-      height: 54px;
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     .logo {
       font-family: 'Instrument Serif', serif;
       font-size: 17px;
       color: var(--ink);
       text-decoration: none;
-      letter-spacing: -0.01em;
     }
     .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
       font-size: 12px;
       font-weight: 500;
-      color: var(--green);
-      letter-spacing: 0.01em;
-    }
-
-    /* ── WRAPPER ── */
-    .wrap {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 0 32px;
-    }
-
-    /* ── JOB HEADER ── */
-    .job-header {
-      padding: 64px 0 48px;
-    }
-    .company-line {
-      font-size: 13px;
-      color: var(--ink-3);
-      margin-bottom: 12px;
-      letter-spacing: 0.01em;
-    }
-    .company-line span {
-      color: var(--green);
-      font-weight: 500;
-    }
-    h1 {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(36px, 5.5vw, 54px);
-      line-height: 1.1;
-      letter-spacing: -0.025em;
-      color: var(--ink);
-      margin-bottom: 24px;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--green);
-    }
-
-    /* tags row */
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-    .tag {
-      font-size: 12.5px;
-      font-weight: 400;
       color: var(--ink-2);
+    }
+    .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; flex-shrink: 0; }
+
+    /* TWO-COL */
+    .page {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      min-height: calc(100vh - 52px);
+      align-items: start;
+    }
+
+    /* LEFT */
+    .left {
       background: var(--white);
-      border: 1px solid var(--rule);
-      padding: 5px 11px;
-      border-radius: 4px;
-      letter-spacing: 0.01em;
+      border-right: 1px solid var(--border);
+      padding: 40px 36px;
+      position: sticky;
+      top: 52px;
+      height: calc(100vh - 52px);
+      overflow-y: auto;
     }
 
-    .lede {
-      font-size: 17px;
-      color: var(--ink-2);
-      line-height: 1.75;
-      max-width: 580px;
-      font-weight: 300;
-    }
-    .lede strong {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    /* ── DIVIDER ── */
-    hr {
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin: 40px 0;
-    }
-    hr.light {
-      border-color: var(--rule-2);
-      margin: 24px 0;
-    }
-
-    /* ── PROSE SECTIONS ── */
-    .prose-section { margin-bottom: 40px; }
-    .prose-section h2 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 22px;
-      letter-spacing: -0.015em;
-      color: var(--ink);
-      margin-bottom: 14px;
-    }
-    .prose-section p {
-      font-size: 15px;
-      color: var(--ink-2);
-      line-height: 1.75;
-      font-weight: 300;
-    }
-    .prose-section p + p { margin-top: 10px; }
-
-    /* inline list */
-    .inline-list {
-      list-style: none;
-      margin-top: 12px;
-    }
-    .inline-list li {
-      font-size: 15px;
-      color: var(--ink-2);
-      font-weight: 300;
-      line-height: 1.65;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--rule-2);
-      display: flex;
-      gap: 12px;
-      align-items: baseline;
-    }
-    .inline-list li:last-child { border-bottom: none; }
-    .inline-list li b {
-      color: var(--ink);
-      font-weight: 500;
-      min-width: 130px;
-      flex-shrink: 0;
-    }
-
-    /* ── FORM HEADING ── */
-    .form-heading {
-      margin-bottom: 32px;
-    }
-    .form-heading h2 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 28px;
-      letter-spacing: -0.015em;
-      color: var(--ink);
-      margin-bottom: 6px;
-    }
-    .form-heading p {
-      font-size: 14px;
-      color: var(--ink-3);
-      font-weight: 300;
-    }
-
-    /* ── FIELDSET-LIKE GROUPS ── */
-    .fset {
-      margin-bottom: 32px;
-    }
-    .fset-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ink-3);
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      margin-bottom: 16px;
+      color: var(--yellow);
+      margin-bottom: 12px;
       display: block;
     }
 
-    /* ── FIELDS ── */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .field   { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-    .field:last-child { margin-bottom: 0; }
+    .left h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .left h1 em { font-style: italic; color: var(--yellow); }
 
-    label {
-      font-size: 13px;
-      font-weight: 500;
+    .role-track {
+      font-size: 12px;
+      color: var(--ink-3);
+      margin-bottom: 24px;
+    }
+
+    /* stats 2x2 */
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .stat {
+      background: var(--bg);
+      padding: 12px 14px;
+    }
+    .stat-val {
+      font-size: 17px;
+      font-weight: 600;
       color: var(--ink);
       line-height: 1;
+      margin-bottom: 2px;
     }
-    .lopt {
-      font-weight: 300;
-      color: var(--ink-4);
+    .stat-lbl { font-size: 11px; color: var(--ink-3); }
+
+    .rule { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    .left h2 {
       font-size: 12px;
-      margin-left: 4px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin-bottom: 8px;
     }
+
+    .left p {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: var(--ink-2);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .left p strong { color: var(--ink); font-weight: 500; }
+    .left p:last-child { margin-bottom: 0; }
+
+    .bullets {
+      list-style: none;
+    }
+    .bullets li {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink-2);
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      line-height: 1.45;
+    }
+    .bullets li:last-child { border-bottom: none; padding-bottom: 0; }
+    .bullets li b { color: var(--ink); font-weight: 500; white-space: nowrap; }
+
+    /* RIGHT */
+    .right {
+      padding: 40px 48px 72px;
+    }
+
+    .form-hd { margin-bottom: 24px; }
+    .form-hd h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 24px;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+    .form-hd p { font-size: 13px; color: var(--ink-3); font-weight: 300; }
+
+    /* section labels */
+    .slabel {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin: 22px 0 12px;
+    }
+    .slabel:first-of-type { margin-top: 0; }
+
+    /* grid helpers */
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+    .field:last-child { margin-bottom: 0; }
+
+    label { font-size: 12px; font-weight: 500; color: var(--ink-2); }
+    .lopt { font-weight: 300; color: var(--ink-3); font-size: 11px; margin-left: 3px; }
 
     input[type="text"],
     input[type="email"],
@@ -230,80 +207,51 @@
     input[type="url"],
     textarea {
       width: 100%;
-      background: var(--white);
-      border: 1px solid var(--rule);
+      border: 1px solid var(--border);
       border-radius: 5px;
-      color: var(--ink);
-      font-family: 'Figtree', sans-serif;
-      font-size: 14px;
+      background: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
       font-weight: 300;
-      padding: 10px 13px;
+      color: var(--ink);
+      padding: 9px 11px;
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
       -webkit-appearance: none;
     }
     input:focus, textarea:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(28, 107, 60, 0.09);
+      border-color: var(--yellow);
+      box-shadow: 0 0 0 3px rgba(200,168,0,0.1);
     }
-    input::placeholder, textarea::placeholder {
-      color: var(--rule);
-      color: #cac9c2;
-      font-weight: 300;
-    }
-    textarea { resize: vertical; min-height: 90px; }
-    .hint {
-      font-size: 12px;
-      color: var(--ink-4);
-      font-weight: 300;
-      line-height: 1.5;
-    }
+    input::placeholder, textarea::placeholder { color: #d2d2d2; }
+    textarea { resize: vertical; min-height: 84px; line-height: 1.6; }
+    .hint { font-size: 11px; color: var(--ink-3); font-weight: 300; line-height: 1.5; margin-top: 2px; }
 
-    /* ── CHOICE BUTTONS ── */
+    /* choice buttons */
     .choices { display: flex; flex-wrap: wrap; gap: 6px; }
     .choice {
-      font-family: 'Figtree', sans-serif;
-      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12.5px;
       font-weight: 400;
       color: var(--ink-2);
       background: var(--white);
-      border: 1px solid var(--rule);
+      border: 1px solid var(--border);
       border-radius: 5px;
-      padding: 8px 14px;
+      padding: 7px 12px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      transition: border-color 0.12s, background 0.12s, color 0.12s;
+      gap: 6px;
+      transition: border-color 0.12s, background 0.12s;
       user-select: none;
       line-height: 1;
     }
-    .choice:hover { border-color: var(--green); color: var(--green); }
-    .choice.selected {
-      border-color: var(--green);
-      background: var(--green-bg);
-      color: var(--green);
-    }
+    .choice:hover { border-color: var(--yellow); }
+    .choice.on { border-color: var(--yellow); background: var(--yellow-bg); color: var(--ink); }
     .choice input { display: none; }
 
-    /* ── NOTICE BOX ── */
-    .notice {
-      background: var(--green-bg);
-      border: 1px solid #e8d88a;
-      border-radius: 6px;
-      padding: 14px 18px;
-      margin-bottom: 14px;
-    }
-    .notice p {
-      font-size: 13.5px;
-      font-weight: 300;
-      color: var(--ink-2);
-      line-height: 1.7;
-    }
-    .notice strong { font-weight: 500; color: var(--ink); }
-
-    /* ── SUBMIT ── */
-    .submit-wrap { margin-top: 32px; }
+    /* submit */
+    .submit-wrap { margin-top: 28px; }
 
     .submit-btn {
       width: 100%;
@@ -311,80 +259,84 @@
       color: var(--white);
       border: none;
       border-radius: 5px;
-      font-family: 'Figtree', sans-serif;
-      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
       font-weight: 500;
-      padding: 14px;
+      padding: 13px;
       cursor: pointer;
+      transition: background 0.15s;
       letter-spacing: -0.01em;
-      transition: background 0.15s, transform 0.1s;
     }
-    .submit-btn:hover  { background: #2a2a25; }
-    .submit-btn:active { transform: scale(0.998); }
-    .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    .submit-btn:hover { background: #2a2a2a; }
+    .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-    /* ps */
-    .ps-wrap {
-      margin-top: 20px;
-      font-size: 13.5px;
+    .ps {
+      margin-top: 14px;
+      font-size: 12px;
       color: var(--ink-3);
       font-weight: 300;
-      line-height: 1.75;
-      border-top: 1px solid var(--rule-2);
-      padding-top: 18px;
+      line-height: 1.7;
     }
-    .ps-wrap strong { color: var(--ink-2); font-weight: 500; }
+    .ps strong { color: var(--ink-2); font-weight: 500; }
 
-    /* error */
     .err {
       display: none;
-      font-size: 13px;
+      font-size: 12px;
       color: #b91c1c;
       background: #fef2f2;
       border: 1px solid #fecaca;
       border-radius: 5px;
-      padding: 10px 14px;
-      margin-top: 10px;
+      padding: 9px 12px;
+      margin-top: 8px;
     }
 
-    /* ── SUCCESS ── */
-    #successState {
+    /* success */
+    #success {
       display: none;
-      padding: 80px 0;
+      padding: 64px 0;
       text-align: center;
     }
-    #successState h3 {
+    #success h3 {
       font-family: 'Instrument Serif', serif;
-      font-size: 34px;
-      letter-spacing: -0.015em;
-      margin-bottom: 10px;
+      font-size: 30px;
+      margin-bottom: 8px;
     }
-    #successState p {
-      font-size: 15px;
-      color: var(--ink-3);
-      font-weight: 300;
-      max-width: 380px;
-      margin: 0 auto;
-      line-height: 1.75;
-    }
+    #success p { font-size: 14px; color: var(--ink-3); font-weight: 300; line-height: 1.7; max-width: 340px; margin: 0 auto; }
 
-    /* ── FOOTER ── */
+    /* footer */
     footer {
-      border-top: 1px solid var(--rule);
-      padding: 20px 40px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 14px 32px;
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      color: var(--ink-4);
+      font-size: 11px;
+      color: var(--ink-3);
+      grid-column: 1 / -1;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 500px) {
-      .grid-2 { grid-template-columns: 1fr; }
-      .wrap   { padding: 0 20px; }
-      nav, footer { padding: 0 20px; }
-      nav { height: 50px; }
-      footer { padding: 16px 20px; flex-direction: column; gap: 4px; }
+    /* ── MOBILE ── */
+    @media (max-width: 860px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+      .left {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 32px 20px;
+        overflow: visible;
+      }
+      .left h1 { font-size: 30px; }
+      .right { padding: 32px 20px 60px; }
+      nav { padding: 0 20px; }
+      footer { padding: 12px 20px; flex-direction: column; gap: 3px; }
+    }
+
+    @media (max-width: 480px) {
+      .g2 { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -392,81 +344,79 @@
 
 <nav>
   <a class="logo" href="https://buildsignals.com">BuildSignals</a>
-  <span class="nav-status">Accepting applications</span>
+  <div class="nav-status"><div class="dot"></div>Accepting applications</div>
 </nav>
 
-<div class="wrap">
+<div class="page">
 
-  <!-- JOB HEADER -->
-  <div class="job-header">
-    <p class="company-line">BuildSignals — <span>We're hiring</span></p>
-    <h1>Growth Partner<br><em>(Appointment Setter)</em></h1>
-    <div class="tags">
-      <span class="tag">Commission only</span>
-      <span class="tag">Remote</span>
-      <span class="tag">Full-time</span>
-      <span class="tag">Avg. $9,000/mo</span>
+  <!-- LEFT: PITCH -->
+  <aside class="left">
+    <span class="eyebrow">We're hiring</span>
+    <h1>Growth<br><em>Partner</em></h1>
+    <p class="role-track">Appointment Setter → Sales Manager track</p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val">$9K/mo</div>
+        <div class="stat-lbl">Avg. setter earnings</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">No cap</div>
+        <div class="stat-lbl">Commission only</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">100%</div>
+        <div class="stat-lbl">Remote</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">Full-time</div>
+        <div class="stat-lbl">All-in commitment</div>
+      </div>
     </div>
-    <p class="lede">
-      Our setters average $9,000 a month. Not because the role is easy — because the ones who stay are hungry, consistent, and treat this like a business. <strong>If that's you, there's real money here and a path to running your own team.</strong>
-    </p>
-  </div>
 
-  <hr />
+    <h2>What this is</h2>
+    <p>BuildSignals books guaranteed appointments for residential remodeling contractors. You'll be making outbound calls on a proven process we've built. Your job is to execute it every day.</p>
+    <p><strong>Our average setter earns $9,000 a month.</strong> The ones who don't make it quit when it gets repetitive. If you show up regardless — there's serious money here and a real path to running your own team.</p>
 
-  <!-- ABOUT THE ROLE -->
-  <div class="prose-section">
-    <h2>About the role</h2>
-    <p>We generate guaranteed appointments for residential remodeling contractors across the US. You'll be working outbound — calling, following up, booking. We give you a proven process and a warm offer to work with. Your job is to execute it every single day without being told to.</p>
-    <p>This isn't a stepping stone. The long-term vision for this role is sales management — the people who prove themselves here build teams of their own under the BuildSignals umbrella. We want people who can see that path and want to walk it.</p>
-    <p>No salary. No hand-holding. Our top setters clear $9,000 a month consistently. The ones who don't make it quit when it gets repetitive. If you need external motivation to show up, this won't work. If you're the kind of person who shows up anyway — there's a real opportunity here.</p>
-  </div>
+    <hr class="rule" />
 
-  <!-- WHAT WE LOOK FOR -->
-  <div class="prose-section">
     <h2>Who we're looking for</h2>
-    <ul class="inline-list">
-      <li><b>Hunger</b> You're not looking for a job. You're looking for an opportunity. There's a difference, and we can tell.</li>
-      <li><b>Consistency</b> You've done something every single day for a long time — gym, running, a language, anything. How you do one thing is how you do everything.</li>
-      <li><b>Charisma</b> People enjoy talking to you. You're natural on a call, not scripted. Warm, not salesy.</li>
-      <li><b>Full availability</b> This has to be your main focus. We need all of you, not whatever's left after your other commitments.</li>
-      <li><b>Strong English</b> Phone-based role. Non-negotiable.</li>
+    <ul class="bullets">
+      <li><b>Hungry</b> You see this as an opportunity, not a job.</li>
+      <li><b>Consistent</b> You've done something every day for a long time. Gym, sport, language — anything.</li>
+      <li><b>Charismatic</b> Natural and warm on a call. People enjoy talking to you.</li>
+      <li><b>Available</b> This is your main thing, not a side hustle.</li>
+      <li><b>Fluent English</b> Phone-based role. Non-negotiable.</li>
     </ul>
-  </div>
+  </aside>
 
-  <hr />
+  <!-- RIGHT: FORM -->
+  <main class="right">
+    <div class="form-hd">
+      <h2>Apply now</h2>
+      <p>Fill out every field. We read every application and watch every video personally.</p>
+    </div>
 
-  <!-- FORM -->
-  <div class="form-heading">
-    <h2>Apply now</h2>
-    <p>Fill out every section. We read all of them and watch every video personally.</p>
-  </div>
+    <!-- Netlify static detection form (hidden) -->
+    <form name="setter-application" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
+      <input type="text" name="first_name" /><input type="text" name="last_name" />
+      <input type="email" name="email" /><input type="tel" name="phone" />
+      <input type="number" name="age" /><input type="text" name="country" />
+      <input type="text" name="english_fluency" /><input type="text" name="device" />
+      <textarea name="current_situation"></textarea>
+      <input type="text" name="income_goal" />
+      <textarea name="why_you_want_this"></textarea>
+      <input type="url" name="video_link" />
+      <textarea name="anything_else"></textarea>
+    </form>
 
-  <!-- Netlify static detection form (hidden) -->
-  <form name="setter-application" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
-    <input type="text"   name="first_name" />
-    <input type="text"   name="last_name" />
-    <input type="email"  name="email" />
-    <input type="tel"    name="phone" />
-    <input type="number" name="age" />
-    <input type="text"   name="country" />
-    <input type="text"   name="english_fluency" />
-    <input type="text"   name="device" />
-    <textarea            name="current_situation"></textarea>
-    <input type="text"   name="income_goal" />
-    <textarea            name="why_you_want_this"></textarea>
-    <input type="url"    name="video_link" />
-    <textarea            name="anything_else"></textarea>
-  </form>
+    <!-- Visible AJAX form -->
+    <form id="appForm" novalidate>
+      <input type="hidden" name="form-name" value="setter-application" />
+      <p style="display:none;"><label>Leave blank: <input name="bot-field" tabindex="-1" /></label></p>
 
-  <form id="appForm" novalidate>
-    <input type="hidden" name="form-name" value="setter-application" />
-    <p style="display:none;"><label>Leave blank: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
-
-    <!-- CONTACT -->
-    <div class="fset">
-      <span class="fset-title">Contact</span>
-      <div class="grid-2">
+      <span class="slabel">Contact</span>
+      <div class="g2">
         <div class="field">
           <label for="fn">First name</label>
           <input type="text" id="fn" name="first_name" placeholder="Jane" required />
@@ -476,7 +426,7 @@
           <input type="text" id="ln" name="last_name" placeholder="Smith" required />
         </div>
       </div>
-      <div class="grid-2">
+      <div class="g2">
         <div class="field">
           <label for="em">Email</label>
           <input type="email" id="em" name="email" placeholder="you@gmail.com" required />
@@ -486,7 +436,7 @@
           <input type="tel" id="ph" name="phone" placeholder="+1 555 000 0000" required />
         </div>
       </div>
-      <div class="grid-2">
+      <div class="g2">
         <div class="field">
           <label for="ag">Age</label>
           <input type="number" id="ag" name="age" placeholder="26" min="18" max="65" required />
@@ -496,13 +446,8 @@
           <input type="text" id="co" name="country" placeholder="United States" required />
         </div>
       </div>
-    </div>
 
-    <hr class="light" />
-
-    <!-- SETUP -->
-    <div class="fset">
-      <span class="fset-title">Setup</span>
+      <span class="slabel">Setup</span>
       <div class="field">
         <label>English fluency</label>
         <div class="choices">
@@ -511,8 +456,8 @@
           <label class="choice"><input type="radio" name="english_fluency" value="Conversational only" />Conversational only</label>
         </div>
       </div>
-      <div class="field" style="margin-top: 12px;">
-        <label>Device you'd use</label>
+      <div class="field" style="margin-top:8px;">
+        <label>Device you'd work from</label>
         <div class="choices">
           <label class="choice"><input type="radio" name="device" value="MacBook" required />MacBook</label>
           <label class="choice"><input type="radio" name="device" value="Windows laptop / PC" />Windows laptop / PC</label>
@@ -520,94 +465,70 @@
           <label class="choice"><input type="radio" name="device" value="Android" />Android</label>
         </div>
       </div>
-    </div>
 
-    <hr class="light" />
-
-    <!-- BACKGROUND -->
-    <div class="fset">
-      <span class="fset-title">Background</span>
+      <span class="slabel">Background</span>
       <div class="field">
-        <label for="sit">What's your current situation?</label>
-        <textarea id="sit" name="current_situation" placeholder="Work, life, dependents — be honest. We need to know you can go full-time on this." required></textarea>
+        <label for="sit">Current situation</label>
+        <textarea id="sit" name="current_situation" placeholder="Work, life, dependents — be honest. We need to know you can go all-in." required></textarea>
       </div>
       <div class="field">
-        <label for="goal">What are you trying to earn, and by when?</label>
-        <input type="text" id="goal" name="income_goal" placeholder="e.g. $4,000/month within 6 months" required />
+        <label for="goal">Income goal and timeframe</label>
+        <input type="text" id="goal" name="income_goal" placeholder="e.g. $5,000/month within 6 months" required />
       </div>
       <div class="field">
-        <label for="why">Why do you want this role?</label>
-        <textarea id="why" name="why_you_want_this" placeholder="Be real about it. The stronger the reason, the more it shows." required style="min-height:110px;"></textarea>
+        <label for="why">Why do you want this? Be honest.</label>
+        <textarea id="why" name="why_you_want_this" placeholder="The stronger your reason, the more it shows. Don't be vague." required style="min-height:96px;"></textarea>
       </div>
-    </div>
 
-    <hr class="light" />
-
-    <!-- VIDEO -->
-    <div class="fset">
-      <span class="fset-title">Video</span>
-      <div class="notice">
-        <p>Record a <strong>60-second video</strong> about something you've done consistently for 12+ months — gym, running, reading, a language, anything. Upload it to Loom, Google Drive, or YouTube (unlisted) and drop the link below. <strong>How you make this video is how you'll show up on calls.</strong> Don't go over 60 seconds.</p>
-      </div>
+      <span class="slabel">60-Second Video</span>
       <div class="field">
-        <label for="vid">Video link<span class="lopt">optional, but it moves you up</span></label>
-        <input type="url" id="vid" name="video_link" placeholder="https://loom.com/share/..." />
-        <p class="hint">Make sure it's publicly viewable.</p>
+        <label>Video link<span class="lopt">Loom / Google Drive / YouTube — optional but it moves you up</span></label>
+        <input type="url" name="video_link" placeholder="https://loom.com/share/..." />
+        <p class="hint">Record 60 seconds max on something you've done consistently for 12+ months. How you make it is how you'll show up on calls.</p>
       </div>
-    </div>
 
-    <hr class="light" />
-
-    <!-- ANYTHING ELSE -->
-    <div class="fset">
-      <span class="fset-title">Anything else</span>
+      <span class="slabel">Anything else?<span class="lopt" style="margin-left:6px; text-transform:none; letter-spacing:0;">Optional</span></span>
       <div class="field">
-        <label for="extra"><span class="lopt" style="margin-left:0;">Optional — questions, context, whatever you want us to know</span></label>
-        <textarea id="extra" name="anything_else" placeholder=""></textarea>
+        <textarea name="anything_else" placeholder="Questions, extra context, or anything that makes you stand out..."></textarea>
       </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
+        <div class="err" id="errMsg">Something went wrong — try again or email leo@buildsignals.com.</div>
+        <p class="ps"><strong>P.S.</strong> Email <strong>leo@buildsignals.com</strong> every day after submitting — subject: <strong>Follow Up — [Your Name]</strong>. Not required, but the people who do are the ones we notice.</p>
+      </div>
+
+    </form>
+
+    <div id="success">
+      <h3>We got it.</h3>
+      <p>We'll go through your application and video. If you're shortlisted we'll reach out within a week.</p>
     </div>
 
-    <!-- SUBMIT -->
-    <div class="submit-wrap">
-      <button type="submit" id="submitBtn" class="submit-btn">Submit Application</button>
-      <div class="err" id="errMsg">Something went wrong — please try again or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7418111b3416011d1810071d131a1518075a171b19">[email&#160;protected]</a>.</div>
-      <div class="ps-wrap">
-        <strong>P.S.</strong> If you're serious, email <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="402c252f002235292c243329272e212c336e232f2d">[email&#160;protected]</a></strong> every day after you submit until you hear back. Subject: <strong>Follow Up — [Your Name]</strong>. It's not required — but the people who do it are the ones we notice.
-      </div>
-    </div>
+  </main>
 
-  </form>
+  <footer>
+    <span>© 2026 BuildSignals</span>
+    <span>Commission only · Remote · Full-time</span>
+  </footer>
 
-  <!-- SUCCESS -->
-  <div id="successState">
-    <h3>Got it.</h3>
-    <p>We'll go through your application and video. If you're shortlisted, we'll reach out within a week.</p>
-  </div>
+</div>
 
-</div><!-- /wrap -->
-
-<footer>
-  <span>© 2026 BuildSignals</span>
-  <span>Commission only · Remote · Full-time</span>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Highlight selected choices
-  document.querySelectorAll('.choices').forEach(function(group) {
-    group.querySelectorAll('input').forEach(function(inp) {
+<script>
+  document.querySelectorAll('.choices').forEach(function(g) {
+    g.querySelectorAll('input').forEach(function(inp) {
       inp.addEventListener('change', function() {
         document.querySelectorAll('[name="' + inp.name + '"]').forEach(function(i) {
-          i.closest('.choice').classList.toggle('selected', i.checked);
+          i.closest('.choice').classList.toggle('on', i.checked);
         });
       });
     });
   });
 
-  // Submit
   var form    = document.getElementById('appForm');
   var btn     = document.getElementById('submitBtn');
   var errMsg  = document.getElementById('errMsg');
-  var success = document.getElementById('successState');
+  var success = document.getElementById('success');
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -619,6 +540,18 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(form)).toString()
-    })
-    .then(function(res) {
-      if (res.ok) {
+    }).then(function(r) {
+      if (r.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else { throw 0; }
+    }).catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Submit Application';
+      errMsg.style.display = 'block';
+    });
+  });
+</script>
+</body>
+</html>
