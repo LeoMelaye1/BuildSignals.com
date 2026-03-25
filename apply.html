@@ -64,7 +64,7 @@
     /* TWO-COL */
     .page {
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 1fr 1.4fr;
       min-height: calc(100vh - 52px);
       align-items: start;
     }
@@ -73,7 +73,7 @@
     .left {
       background: var(--white);
       border-right: 1px solid var(--border);
-      padding: 40px 36px;
+      padding: 48px 44px;
       position: sticky;
       top: 52px;
       height: calc(100vh - 52px);
@@ -92,7 +92,7 @@
 
     .left h1 {
       font-family: 'Instrument Serif', serif;
-      font-size: 36px;
+      font-size: 44px;
       line-height: 1.1;
       letter-spacing: -0.02em;
       color: var(--ink);
@@ -139,7 +139,7 @@
     }
 
     .left p {
-      font-size: 13.5px;
+      font-size: 14.5px;
       font-weight: 300;
       color: var(--ink-2);
       line-height: 1.7;
@@ -152,7 +152,7 @@
       list-style: none;
     }
     .bullets li {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 300;
       color: var(--ink-2);
       padding: 7px 0;
@@ -494,8 +494,8 @@
 
       <div class="submit-wrap">
         <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
-        <div class="err" id="errMsg">Something went wrong — try again or email leo@buildsignals.com.</div>
-        <p class="ps"><strong>P.S.</strong> Email <strong>leo@buildsignals.com</strong> every day after submitting — subject: <strong>Follow Up — [Your Name]</strong>. Not required, but the people who do are the ones we notice.</p>
+        <div class="err" id="errMsg">Something went wrong — try again or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e9858c86a98b9c80858d9a808e8788859ac78a8684">[email&#160;protected]</a>.</div>
+        <p class="ps"><strong>P.S.</strong> Email <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="204c454f604255494c445349474e414c530e434f4d">[email&#160;protected]</a></strong> every day after submitting — subject: <strong>Follow Up — [Your Name]</strong>. Not required, but the people who do are the ones we notice.</p>
       </div>
 
     </form>
@@ -514,7 +514,7 @@
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   document.querySelectorAll('.choices').forEach(function(g) {
     g.querySelectorAll('input').forEach(function(inp) {
       inp.addEventListener('change', function() {
@@ -536,10 +536,27 @@
     btn.disabled = true;
     btn.textContent = 'Submitting…';
     errMsg.style.display = 'none';
-    fetch('/', {
+
+    var data = {
+      first_name:        form.querySelector('[name="first_name"]').value,
+      last_name:         form.querySelector('[name="last_name"]').value,
+      email:             form.querySelector('[name="email"]').value,
+      phone:             form.querySelector('[name="phone"]').value,
+      age:               form.querySelector('[name="age"]').value,
+      country:           form.querySelector('[name="country"]').value,
+      english_fluency:   (form.querySelector('[name="english_fluency"]:checked') || {}).value || '',
+      device:            (form.querySelector('[name="device"]:checked') || {}).value || '',
+      current_situation: form.querySelector('[name="current_situation"]').value,
+      income_goal:       form.querySelector('[name="income_goal"]').value,
+      why_you_want_this: form.querySelector('[name="why_you_want_this"]').value,
+      video_link:        form.querySelector('[name="video_link"]').value,
+      anything_else:     form.querySelector('[name="anything_else"]').value
+    };
+
+    fetch('https://services.leadconnectorhq.com/hooks/IFtiovGmHoKETytJU9wy/webhook-trigger/ba4bc799-5165-4c6c-8fe5-8208e79aa826', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString()
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     }).then(function(r) {
       if (r.ok) {
         form.style.display = 'none';
