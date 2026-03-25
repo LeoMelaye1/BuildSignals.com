@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Our Team — Cold Caller / Appointment Setter | BuildSignals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:        #ffffff;
+      --off:          #f7f7f5;
+      --border:       #e5e5e2;
+      --text:         #111110;
+      --muted:        #6b6b68;
+      --accent:       #1a6b3c;
+      --accent-light: #e8f5ee;
+      --radius:       4px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-tag {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    /* LAYOUT */
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 68px 0 44px;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 7vw, 62px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 22px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-body {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .hero-body strong { color: var(--text); font-weight: 600; }
+
+    /* PROOF */
+    .proof {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .proof-item { padding-right: 24px; }
+    .proof-item + .proof-item {
+      padding-left: 24px;
+      border-left: 1px solid var(--border);
+    }
+    .proof-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 34px;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .proof-label { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+    /* TRAITS */
+    .section { padding: 44px 0; border-bottom: 1px solid var(--border); }
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .traits { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .trait {
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+    .trait-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+    .trait-desc  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* FORM SECTION */
+    .form-section { padding: 44px 0 72px; }
+    .form-section h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 30px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .form-intro { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+
+    /* STEP LABELS */
+    .step-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 28px 0 16px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+      display: block;
+    }
+    .step-label.first { border-top: none; padding-top: 0; margin-top: 0; }
+
+    /* FIELDS */
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+
+    label { font-size: 13px; font-weight: 500; color: var(--text); }
+    label .opt { font-weight: 400; color: var(--muted); }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(26,107,60,0.08);
+    }
+    input::placeholder, textarea::placeholder { color: #c0c0bc; }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+    textarea { resize: vertical; min-height: 96px; }
+    .hint { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* CALLOUT */
+    .callout {
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 18px;
+    }
+    .callout p { font-size: 14px; color: var(--text); line-height: 1.65; }
+    .callout strong { color: var(--accent); }
+
+    /* OPTIONS */
+    .options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .opt-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+      cursor: pointer;
+      padding: 8px 13px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--white);
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .opt-label:hover { border-color: var(--accent); background: var(--accent-light); }
+    .opt-label input { width: auto; accent-color: var(--accent); border: none; box-shadow: none; padding: 0; outline: none; }
+
+    /* SUBMIT */
+    .submit-btn {
+      width: 100%;
+      background: var(--text);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px 28px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 28px;
+    }
+    .submit-btn:hover { background: #222; }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+    .fine-print { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.6; }
+
+    .error-msg {
+      display: none;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #c0392b;
+      margin-top: 12px;
+    }
+
+    /* SUCCESS */
+    #successState {
+      display: none;
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .success-icon {
+      width: 52px; height: 52px;
+      background: var(--accent-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 22px;
+      color: var(--accent);
+    }
+    #successState h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    #successState p { font-size: 15px; color: var(--muted); max-width: 420px; margin: 0 auto; line-height: 1.7; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 22px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 540px) {
+      .traits  { grid-template-columns: 1fr; }
+      .proof   { grid-template-columns: 1fr; gap: 18px; }
+      .proof-item + .proof-item { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 18px; }
+      .row     { grid-template-columns: 1fr; }
+      nav      { padding: 0 16px; }
+      footer   { flex-direction: column; gap: 6px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="https://buildsignals.com">BuildSignals</a>
+  <span class="nav-tag">Now Hiring</span>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="eyebrow">Open Position · Commission Only · Remote</p>
+    <h1>We're hiring <em>cold callers</em> who can close appointments.</h1>
+    <p class="hero-body">
+      BuildSignals generates guaranteed appointments for remodeling contractors.
+      We need <strong>disciplined, charismatic people</strong> to help us book more of them.
+      No salary. No cap. Your effort is your income.
+    </p>
+  </div>
+
+  <!-- PROOF STRIP -->
+  <div class="proof">
+    <div class="proof-item">
+      <div class="proof-num">$4–8K</div>
+      <div class="proof-label">Monthly earning potential for top performers</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-num">100%</div>
+      <div class="proof-label">Remote — work from anywhere with solid internet</div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-num">Full-time</div>
+      <div class="proof-label">We need your full focus, not a side hustle</div>
+    </div>
+  </div>
+
+  <!-- TRAITS -->
+  <div class="section">
+    <p class="section-title">What we look for</p>
+    <div class="traits">
+      <div class="trait">
+        <div class="trait-title">Charisma</div>
+        <div class="trait-desc">People enjoy talking to you. You're warm, natural, and easy to be around on a call.</div>
+      </div>
+      <div class="trait">
+        <div class="trait-title">Consistency</div>
+        <div class="trait-desc">You've proven you can do something every single day — gym, a sport, a language, anything.</div>
+      </div>
+      <div class="trait">
+        <div class="trait-title">Hunger</div>
+        <div class="trait-desc">Commission-only means your pay is your effort. You want to earn, not just show up.</div>
+      </div>
+      <div class="trait">
+        <div class="trait-title">Full-time availability</div>
+        <div class="trait-desc">You're ready — or willing — to quit your current situation and go all-in on this role.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATION FORM -->
+  <div class="form-section">
+    <h2>Apply now</h2>
+    <p class="form-intro">Complete every field. Incomplete applications aren't reviewed. We watch every video personally.</p>
+
+    <!--
+      Hidden HTML form — required so Netlify's build system detects the form.
+      The visible form below submits via AJAX to give an inline success message.
+    -->
+    <form name="setter-application" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
+      <input type="text"   name="first_name" />
+      <input type="text"   name="last_name" />
+      <input type="email"  name="email" />
+      <input type="tel"    name="phone" />
+      <input type="number" name="age" />
+      <input type="text"   name="country" />
+      <input type="text"   name="english_fluency" />
+      <input type="text"   name="device" />
+      <textarea            name="current_situation"></textarea>
+      <input type="text"   name="income_goal" />
+      <textarea            name="why_you_want_this"></textarea>
+      <input type="url"    name="video_link" />
+      <input type="text"   name="followup_confirmed" />
+      <textarea            name="anything_else"></textarea>
+    </form>
+
+    <!-- Visible AJAX form -->
+    <form id="appForm" novalidate>
+      <input type="hidden" name="form-name" value="setter-application" />
+
+      <!-- Honeypot (hidden from real users) -->
+      <p style="display:none;">
+        <label>Do not fill: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <!-- STEP 01 -->
+      <span class="step-label first">01 — Basic info</span>
+
+      <div class="row">
+        <div class="field">
+          <label for="fn">First name</label>
+          <input type="text" id="fn" name="first_name" placeholder="Jane" required />
+        </div>
+        <div class="field">
+          <label for="ln">Last name</label>
+          <input type="text" id="ln" name="last_name" placeholder="Smith" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="em">Email address</label>
+          <input type="email" id="em" name="email" placeholder="you@gmail.com" required />
+        </div>
+        <div class="field">
+          <label for="ph">Phone / WhatsApp</label>
+          <input type="tel" id="ph" name="phone" placeholder="+1 555 000 0000" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="ag">Age</label>
+          <input type="number" id="ag" name="age" placeholder="e.g. 26" min="18" max="65" required />
+        </div>
+        <div class="field">
+          <label for="co">Country of residence</label>
+          <input type="text" id="co" name="country" placeholder="United States" required />
+        </div>
+      </div>
+
+      <!-- STEP 02 -->
+      <span class="step-label">02 — Language &amp; equipment</span>
+
+      <div class="field">
+        <label>English fluency</label>
+        <div class="options">
+          <label class="opt-label"><input type="radio" name="english_fluency" value="Native speaker" required /> Native speaker</label>
+          <label class="opt-label"><input type="radio" name="english_fluency" value="Fluent (non-native)" /> Fluent (non-native)</label>
+          <label class="opt-label"><input type="radio" name="english_fluency" value="Conversational only" /> Conversational only</label>
+        </div>
+        <p class="hint" style="margin-top:8px;">Strong English is required. This is a phone-based role.</p>
+      </div>
+
+      <div class="field">
+        <label>Primary device for this role</label>
+        <div class="options">
+          <label class="opt-label"><input type="radio" name="device" value="MacBook" required /> MacBook</label>
+          <label class="opt-label"><input type="radio" name="device" value="Windows laptop/PC" /> Windows laptop / PC</label>
+          <label class="opt-label"><input type="radio" name="device" value="iPhone" /> iPhone</label>
+          <label class="opt-label"><input type="radio" name="device" value="Android" /> Android</label>
+        </div>
+      </div>
+
+      <!-- STEP 03 -->
+      <span class="step-label">03 — Your background</span>
+
+      <div class="field">
+        <label for="sit">What's your current work and life situation?</label>
+        <textarea id="sit" name="current_situation" placeholder="e.g. Working a 9-5 in sales, no dependents, ready to go full-time remote." required></textarea>
+        <p class="hint">Be honest. We need to know you can commit to this full-time.</p>
+      </div>
+
+      <div class="field">
+        <label for="goal">Income goal and timeframe</label>
+        <input type="text" id="goal" name="income_goal" placeholder="e.g. $4,000/month within 6 months" required />
+      </div>
+
+      <div class="field">
+        <label for="why">Why do you want this role? Be specific.</label>
+        <textarea id="why" name="why_you_want_this" placeholder="What are you working toward? What's actually driving you? Vague answers don't move forward." required style="min-height:110px;"></textarea>
+      </div>
+
+      <!-- STEP 04 -->
+      <span class="step-label">04 — Your 60-second video</span>
+
+      <div class="callout">
+        <p>
+          Record a <strong>60-second video</strong> — no longer — about something you've done consistently for 12+ months.
+          Could be the gym, running, reading, a language — anything. Upload it to
+          <strong>Loom, Google Drive, or YouTube (unlisted)</strong> and paste the link below.<br /><br />
+          This is how we assess your energy and ability to communicate. <strong>How you make this video is how you'll perform on calls.</strong>
+          Do not go over 60 seconds.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="vid">Video link (Loom / Google Drive / YouTube) <span class="opt">(optional but recommended)</span></label>
+        <input type="url" id="vid" name="video_link" placeholder="https://loom.com/share/..." />
+        <p class="hint">Make sure the link is publicly viewable before submitting.</p>
+      </div>
+
+      <!-- STEP 05 -->
+      <span class="step-label">05 — One last thing</span>
+
+      <p style="font-size:14px; color: var(--muted); line-height:1.7; margin-bottom:20px;">
+        If you're serious about this role, email
+        <strong style="color:var(--text);">leo@buildsignals.com</strong> every day after submitting until you hear back.
+        Subject: <strong style="color:var(--text);">Follow Up — [Your Name]</strong>.
+        It's not required — but the people who do it are the ones we notice.
+      </p>
+
+      <div class="field">
+        <label for="extra">Anything else you want us to know? <span class="opt">(optional)</span></label>
+        <textarea id="extra" name="anything_else" placeholder="Extra context, questions, or anything that makes you stand out..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
+      <div class="error-msg" id="errorMsg">
+        Something went wrong submitting the form. Please try again, or email us directly at leo@buildsignals.com.
+      </div>
+      <p class="fine-print">Commission-only · No salary or signing bonus · Shortlisted candidates contacted within 5–7 business days</p>
+    </form>
+
+    <!-- SUCCESS STATE (shown after AJAX submission) -->
+    <div id="successState">
+      <div class="success-icon">✓</div>
+      <h3>Application received.</h3>
+      <p>
+        We'll review your application and video.
+        If you're shortlisted, we'll reach out to schedule an interview within 5–7 business days.
+      </p>
+    </div>
+
+  </div><!-- /form-section -->
+</div><!-- /page -->
+
+<footer>
+  <span>© 2026 BuildSignals</span>
+  <span>Commission only · Remote · Full-time</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const form      = document.getElementById('appForm');
+  const btn       = document.getElementById('submitBtn');
+  const errorMsg  = document.getElementById('errorMsg');
+  const success   = document.getElementById('successState');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    errorMsg.style.display = 'none';
+
+    const formData = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    })
+    .then(function (res) {
+      if (res.ok) {
+        form.style.disp
