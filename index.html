@@ -7,7 +7,7 @@
 
 <!-- ====================== SEO ====================== -->
 <title>BuildSignals | Marketing Agency for California Remodeling Contractors — Leo Melaye</title>
-<meta name="description" content="BuildSignals delivers guaranteed appointments for residential remodeling contractors in California. Founded by Leo Melaye. Serving Sacramento, the Bay Area, and statewide.">
+<meta name="description" content="BuildSignals runs lead generation and appointment booking for residential remodeling contractors across California. Try us free for two weeks. Founded by Leo Melaye. Sacramento, Bay Area, statewide.">
 <meta name="keywords" content="BuildSignals, Leo Melaye, marketing agency for contractors, contractor marketing California, remodeling contractor leads Sacramento, lead generation for remodelers, appointment generation contractors California, kitchen remodel leads, bath remodel leads, window contractor marketing, roofing contractor leads">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="author" content="Leo Melaye">
@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="BuildSignals">
 <meta property="og:url" content="https://buildsignals.com/">
 <meta property="og:title" content="BuildSignals — Marketing for California Remodeling Contractors">
-<meta property="og:description" content="Guaranteed appointments for residential remodelers in California. 8+ pre-qualified appointments per $1K ad spend, or your fee back. Founded by Leo Melaye.">
+<meta property="og:description" content="Try us free for two weeks, then decide. Lead generation and appointment booking for residential remodelers in California. Founded by Leo Melaye.">
 <meta property="og:image" content="https://buildsignals.com/buildsignals.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -26,7 +26,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BuildSignals — Marketing for California Remodeling Contractors">
-<meta name="twitter:description" content="Guaranteed appointments for residential remodelers in California. 8+ pre-qualified appts per $1K spend, or refunded.">
+<meta name="twitter:description" content="Try us free for two weeks, then decide. Lead-gen for residential remodelers in California.">
 <meta name="twitter:image" content="https://buildsignals.com/buildsignals.png">
 
 <!-- Favicon -->
@@ -45,7 +45,7 @@
   "url": "https://buildsignals.com",
   "logo": "https://buildsignals.com/buildsignals.png",
   "image": "https://buildsignals.com/buildsignals.png",
-  "description": "Marketing agency for residential remodeling contractors in California. Guaranteed appointment generation — 8+ pre-qualified, budget-confirmed appointments per $1,000 in ad spend, or fee refunded.",
+  "description": "Marketing agency for residential remodeling contractors in California. Lead generation and appointment booking for kitchen, bath, window, and roofing remodelers. Two-week free trial — no commitment, no payment.",
   "founder": {
     "@type": "Person",
     "name": "Leo Melaye",
@@ -322,9 +322,20 @@ h2 {
   border-radius: var(--radius);
   display: block;
   border: 1px solid var(--rule);
-  background: var(--card);
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  background: #FFFFFF;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  object-position: center;
+  padding: 8px;
+}
+
+.wins-grid a {
+  display: block;
+  transition: transform 0.18s ease;
+}
+
+.wins-grid a:hover {
+  transform: translateY(-2px);
 }
 
 .wins-footnote {
@@ -358,6 +369,64 @@ footer a {
 
 footer a:hover {
   color: var(--ink-1);
+}
+
+/* Client logo marquee */
+.clients {
+  padding: 44px 0 48px;
+  border-top: 1px solid var(--rule);
+  background: var(--card);
+  overflow: hidden;
+}
+
+.clients-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.marquee {
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 72px;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-track img {
+  height: 52px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.7;
+  filter: grayscale(100%);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.marquee-track img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* Mobile */
@@ -397,15 +466,15 @@ footer a:hover {
   <section class="hero container">
     <div class="hero-text">
       <div class="eyebrow">For residential remodeling contractors</div>
-      <h1>Guaranteed appointments. <em>Or your fee back.</em></h1>
+      <h1>Try us free for 2 weeks. <em>Then decide.</em></h1>
       <p class="sub">
-        BuildSignals delivers 8+ pre-qualified, budget-confirmed appointments per $1,000 in ad spend for kitchen, bath, window, and roofing contractors across California — Sacramento to the Bay Area.
+        BuildSignals runs lead generation and appointment booking for residential remodeling contractors across California — Sacramento to the Bay Area. Run a two-week trial. If it works, keep going. If not, you walk.
       </p>
       <div class="cta-row">
         <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn">
           Book a 20-minute call <span class="btn-arrow">→</span>
         </a>
-        <span class="cta-note">No delivery, no charge.</span>
+        <span class="cta-note">Set up your trial. No card required.</span>
       </div>
     </div>
     
@@ -423,6 +492,27 @@ footer a:hover {
     </div>
   </section>
 
+  <section class="clients">
+    <div class="container">
+      <p class="clients-label">Trusted by</p>
+    </div>
+    <div class="marquee" aria-label="Client logos">
+      <div class="marquee-track">
+        <img src="/Logo-Black-FPHS.png" alt="First Priority Home Solutions">
+        <img src="/watkinson_construction_logo_-_Moises_Abarca-removebg-preview-1.png" alt="Watkinson Construction">
+        <img src="/MTR_Baths__19_-removebg-preview%20%281%29.webp" alt="MTR Baths">
+        <img src="/DRH_Logo_Half_Size-removebg-preview%20%281%29.png" alt="DRH Construction Services">
+        <img src="/logo.png" alt="Client logo">
+        <!-- Duplicate set for seamless loop -->
+        <img src="/Logo-Black-FPHS.png" alt="" aria-hidden="true">
+        <img src="/watkinson_construction_logo_-_Moises_Abarca-removebg-preview-1.png" alt="" aria-hidden="true">
+        <img src="/MTR_Baths__19_-removebg-preview%20%281%29.webp" alt="" aria-hidden="true">
+        <img src="/DRH_Logo_Half_Size-removebg-preview%20%281%29.png" alt="" aria-hidden="true">
+        <img src="/logo.png" alt="" aria-hidden="true">
+      </div>
+    </div>
+  </section>
+
   <section class="wins">
     <div class="container">
       <div class="wins-header">
@@ -430,11 +520,11 @@ footer a:hover {
         <span class="wins-label">This week</span>
       </div>
       <div class="wins-grid">
-        <img src="/IMG_3947.jpg" alt="Recent client appointment booked through BuildSignals">
-        <img src="/IMG_3948.jpg" alt="Recent client appointment booked through BuildSignals">
-        <img src="/IMG_3949.jpg" alt="Recent client appointment booked through BuildSignals">
-        <img src="/IMG_3950.jpg" alt="Recent client appointment booked through BuildSignals">
-        <img src="/IMG_3951.jpg" alt="Recent client appointment booked through BuildSignals">
+        <a href="/IMG_3947.jpg" target="_blank" rel="noopener"><img src="/IMG_3947.jpg" alt="Recent client appointment booked through BuildSignals"></a>
+        <a href="/IMG_3948.jpg" target="_blank" rel="noopener"><img src="/IMG_3948.jpg" alt="Recent client appointment booked through BuildSignals"></a>
+        <a href="/IMG_3949.jpg" target="_blank" rel="noopener"><img src="/IMG_3949.jpg" alt="Recent client appointment booked through BuildSignals"></a>
+        <a href="/IMG_3950.jpg" target="_blank" rel="noopener"><img src="/IMG_3950.jpg" alt="Recent client appointment booked through BuildSignals"></a>
+        <a href="/IMG_3951.jpg" target="_blank" rel="noopener"><img src="/IMG_3951.jpg" alt="Recent client appointment booked through BuildSignals"></a>
       </div>
       <p class="wins-footnote">
         Trusted by residential remodeling contractors across California — including Sacramento, the East Bay, the Peninsula, and the North Bay. Kitchen, bath, window, and roofing specialists.
