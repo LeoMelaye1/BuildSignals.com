@@ -398,8 +398,8 @@ h2 {
 
 .wins-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
 }
 
 .wins-grid img {
@@ -408,10 +408,9 @@ h2 {
   display: block;
   border: 1px solid var(--rule);
   background: #FFFFFF;
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   object-position: center;
-  padding: 8px;
 }
 
 .wins-grid a {
@@ -458,17 +457,155 @@ footer a:hover {
 
 /* Mobile */
 @media (max-width: 820px) {
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 44px;
-    padding: 56px 0 56px;
+  .container {
+    padding: 0 20px;
   }
   
-  .stat { padding: 64px 0; }
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 48px 0 48px;
+  }
+  
+  .hero p.sub {
+    font-size: 17px;
+  }
+  
+  .hero-photo {
+    max-width: 360px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .photo-frame img {
+    aspect-ratio: 5 / 4;
+  }
+  
+  .clients {
+    padding: 36px 0 40px;
+  }
+  
+  .clients-label {
+    margin-bottom: 22px;
+  }
+  
+  .marquee-track {
+    gap: 56px;
+  }
+  
+  .marquee-track img {
+    height: 40px;
+    max-width: 160px;
+  }
+  
+  .stat {
+    padding: 56px 0;
+  }
+  
+  .stat-caption {
+    font-size: 16px;
+  }
+  
+  .wins {
+    padding: 56px 0 64px;
+  }
+  
+  .wins-header {
+    margin-bottom: 22px;
+  }
+  
+  h2 {
+    font-size: 22px;
+  }
   
   .header-inner .btn {
     padding: 10px 14px;
     font-size: 13px;
+  }
+  
+  footer {
+    padding: 24px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+  
+  .hero {
+    padding: 36px 0 40px;
+    gap: 28px;
+  }
+  
+  h1 {
+    font-size: 34px;
+    letter-spacing: -0.02em;
+  }
+  
+  .hero p.sub {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .cta-row {
+    gap: 12px;
+  }
+  
+  .btn {
+    padding: 13px 20px;
+    font-size: 14px;
+  }
+  
+  .hero-photo {
+    max-width: 280px;
+  }
+  
+  .clients {
+    padding: 28px 0 32px;
+  }
+  
+  .marquee-track {
+    gap: 44px;
+  }
+  
+  .marquee-track img {
+    height: 34px;
+    max-width: 130px;
+  }
+  
+  .stat {
+    padding: 44px 0;
+  }
+  
+  .stat-number {
+    font-size: 56px;
+  }
+  
+  .stat-caption {
+    font-size: 15px;
+    padding: 0 8px;
+  }
+  
+  .wins {
+    padding: 44px 0 52px;
+  }
+  
+  .wins-grid {
+    gap: 12px;
+  }
+  
+  footer {
+    text-align: center;
+    font-size: 13px;
+  }
+  
+  .footer-inner {
+    justify-content: center;
+  }
+  
+  .footer-inner a {
+    margin: 0 10px;
   }
 }
 
