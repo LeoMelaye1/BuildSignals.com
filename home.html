@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js"></script>
 <style>
   :root{
     --bg:#FAFAFA; --surface:#FFFFFF; --surface-2:#F4F4F5;
@@ -36,6 +39,40 @@
   ::selection{background:var(--signal-dim); color:var(--signal-deep);}
   :focus-visible{outline:2px solid var(--signal); outline-offset:2px; border-radius:6px;}
 
+  /* ---------- access gate ---------- */
+  #accessGate{
+    position:fixed; inset:0; z-index:500; background:var(--bg);
+    display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  .gate-card{width:100%; max-width:360px; text-align:center;}
+  .gate-logo{height:26px; width:auto; margin:0 auto 34px; display:block;}
+  .gate-title{font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;}
+  .gate-sub{font-size:13.5px; color:var(--ink-muted); margin-bottom:26px; line-height:1.5;}
+  .gate-input{
+    width:100%; text-align:center; font-size:18px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    padding:15px 16px; border-radius:14px; border:1.5px solid var(--border-strong); background:var(--surface);
+    font-family:'JetBrains Mono',monospace; margin-bottom:14px;
+  }
+  .gate-input:focus{outline:none; border-color:var(--signal); box-shadow:0 0 0 4px var(--signal-dim);}
+  .gate-btn{
+    width:100%; padding:14px; border-radius:14px; background:var(--signal); color:#fff; font-size:14px; font-weight:700;
+    box-shadow:0 8px 20px rgba(11,95,255,.28); transition:transform .15s ease, opacity .15s ease;
+  }
+  .gate-btn:active{transform:scale(.98);}
+  .gate-btn:disabled{opacity:.55; box-shadow:none;}
+  .gate-error{
+    color:var(--danger); background:var(--danger-dim); font-size:12.5px; font-weight:600; padding:10px 14px;
+    border-radius:10px; margin-bottom:14px; display:none;
+  }
+  .gate-error.show{display:block;}
+  .gate-spinner{
+    width:22px; height:22px; border-radius:50%; border:2.5px solid var(--border-strong); border-top-color:var(--signal);
+    margin:0 auto; animation:spin .7s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .gate-fine{font-size:11.5px; color:var(--ink-faint); margin-top:22px;}
+  #mainApp{display:none;}
+
   /* ---------- shell ---------- */
   .app{max-width:1080px; margin:0 auto; padding:0 24px;}
   header.topbar{
@@ -48,31 +85,17 @@
   .brand img{height:22px; width:auto; display:block; max-width:38vw;}
   .brand-fallback{font-weight:800; font-size:17px; letter-spacing:-0.02em; white-space:nowrap;}
   .topbar-spacer{flex:1; min-width:8px;}
-  .client-switch{position:relative; min-width:0;}
-  .client-switch select{
-    appearance:none; -webkit-appearance:none;
-    background:var(--surface); border:1px solid var(--border-strong);
-    padding:8px 30px 8px 14px; border-radius:100px; font-size:13px; font-weight:600;
-    color:var(--ink); box-shadow:var(--sh-1); max-width:230px;
-    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+  .client-name-display{font-size:13.5px; font-weight:600; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:44vw;}
+  .logout-btn{
+    width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    color:var(--ink-muted); flex-shrink:0; transition:background .15s;
   }
-  .client-switch::after{
-    content:''; position:absolute; right:13px; top:50%; width:8px; height:8px;
-    border-right:1.6px solid var(--ink-muted); border-bottom:1.6px solid var(--ink-muted);
-    transform:translateY(-70%) rotate(45deg); pointer-events:none;
-  }
-  .preview-tag{font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-right:2px; display:none;}
-  @media(min-width:560px){ .preview-tag{display:inline;} }
-  .avatar{
-    width:34px; height:34px; border-radius:50%; background:linear-gradient(145deg,var(--signal),var(--signal-deep));
-    color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  }
+  .logout-btn:hover{background:var(--surface-2);}
+  .logout-btn svg{width:16px; height:16px;}
   @media(max-width:600px){
     .topbar-inner{padding:12px 16px; gap:8px;}
-    .client-switch select{max-width:132px; padding:8px 26px 8px 12px; font-size:16px;}
-    .avatar{display:none;}
+    .client-name-display{font-size:12.5px;}
   }
-  @media(max-width:360px){ .client-switch select{max-width:104px;} }
 
   /* signal wave divider */
   .wave-strip{height:34px; overflow:hidden; position:relative; background:var(--bg);}
@@ -400,8 +423,7 @@
   .file-badge{font-size:10.5px; font-weight:700; color:var(--success); background:var(--success-dim); padding:4px 10px; border-radius:100px; white-space:nowrap;}
   .empty-state{padding:30px 10px; text-align:center; color:var(--ink-muted); font-size:13px;}
 
-  footer.appfoot{max-width:1080px; margin:0 auto; padding:0 24px 40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
-  .reset-btn{font-size:12px; color:var(--ink-faint); font-weight:600; text-decoration:underline; text-underline-offset:2px;}
+  footer.appfoot{max-width:1080px; margin:0 auto; padding:0 24px 40px; text-align:center;}
   .fine-print{font-size:11.5px; color:var(--ink-faint);}
 
   /* mobile app-bar treatment */
@@ -423,6 +445,21 @@
 </head>
 <body>
 
+<div id="accessGate">
+  <div class="gate-card">
+    <img class="gate-logo" src="https://buildsignals.com/buildsignals.png" alt="BuildSignals" onerror="this.style.display='none';">
+    <div class="gate-title" id="gateTitle">Client Portal</div>
+    <div class="gate-sub" id="gateSub">Enter the access code we sent you to see your dashboard.</div>
+    <div class="gate-error" id="gateError"></div>
+    <input class="gate-input" id="gateInput" placeholder="ACCESS CODE" autocomplete="off" autocapitalize="characters" maxlength="20">
+    <button class="gate-btn" id="gateBtn" type="button">
+      <span id="gateBtnLabel">Continue</span>
+    </button>
+    <div class="gate-fine">Lost your code? Text or email Leo and we'll send it over.</div>
+  </div>
+</div>
+
+<div id="mainApp">
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
@@ -430,11 +467,10 @@
       <span class="brand-fallback" style="display:none;">BuildSignals</span>
     </div>
     <div class="topbar-spacer"></div>
-    <span class="preview-tag">Previewing as</span>
-    <div class="client-switch">
-      <select id="clientSwitcher" aria-label="Switch client view"></select>
-    </div>
-    <div class="avatar" id="avatarInitials">FP</div>
+    <span class="client-name-display" id="clientNameDisplay"></span>
+    <button class="logout-btn" id="logoutBtn" type="button" aria-label="Log out">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+    </button>
   </div>
   <div class="wave-strip" aria-hidden="true">
     <svg viewBox="0 0 1000 34" preserveAspectRatio="none">
@@ -681,9 +717,10 @@
 </main>
 
 <footer class="appfoot">
-  <span class="fine-print">BuildSignals Client Portal · preview build</span>
-  <button class="reset-btn" onclick="resetDemo()">Reset demo data</button>
+  <span class="fine-print">BuildSignals Client Portal</span>
 </footer>
+
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -691,9 +728,10 @@
 /* ============================================================
    DATA
    ============================================================ */
-function clone(o){ return JSON.parse(JSON.stringify(o)); }
 
-const DEFAULT_CLIENTS = {
+// SEED DATA — this is not read by the live app anymore. It's here so you can bulk-import
+// realistic starter records into Firestore for each client (see the setup guide).
+const SEED_CLIENTS = {
   fphs: {
     name:"First Priority Home Solutions", initials:"FP",
     sub:"Windows & roofing campaign · client since Feb 2026",
@@ -825,7 +863,7 @@ const DEFAULT_CLIENTS = {
   }
 };
 
-const DEFAULT_UPLOADS = {
+const SEED_UPLOADS = {
   fphs:[
     {name:"kitchen-window-before-after.mp4",kind:"video",size:"84 MB",date:"Jun 28"},
     {name:"solorio-job-photos.zip",kind:"file",size:"22 MB",date:"Jun 20"}
@@ -839,44 +877,132 @@ const DEFAULT_UPLOADS = {
   ]
 };
 
-const UPLOAD_SLUGS = {fphs:"fphs-3x9k2m", mtr:"mtr-7h2p9q", drh:"drh-k4m1zx"};
+/* ============================================================
+   FIREBASE SETUP — paste your project's config here
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-let CLIENTS = clone(DEFAULT_CLIENTS);
-let UPLOADS = clone(DEFAULT_UPLOADS);
-let activeClientId = "fphs";
+let CLIENTS = {};
+let UPLOADS = {};
+let activeClientId = null;
+let currentAccessCode = null;
 
 /* ============================================================
-   STORAGE (window.storage, with graceful in-memory fallback)
+   FIREBASE — anonymous auth + data loading
    ============================================================ */
-async function loadStorage(){
-  try{
-    const r = await window.storage.get('bs-portal-clients');
-    if(r && r.value) CLIENTS = JSON.parse(r.value);
-  }catch(e){ /* no saved state yet — use defaults */ }
-  try{
-    const r = await window.storage.get('bs-portal-uploads');
-    if(r && r.value) UPLOADS = JSON.parse(r.value);
-  }catch(e){}
-  try{
-    const r = await window.storage.get('bs-portal-active');
-    if(r && r.value) activeClientId = r.value;
-  }catch(e){}
+async function ensureAnonAuth(){
+  if(auth.currentUser) return auth.currentUser;
+  const cred = await auth.signInAnonymously();
+  return cred.user;
 }
-async function saveClients(){ try{ await window.storage.set('bs-portal-clients', JSON.stringify(CLIENTS)); }catch(e){ console.error('save clients failed',e); } }
-async function saveUploads(){ try{ await window.storage.set('bs-portal-uploads', JSON.stringify(UPLOADS)); }catch(e){ console.error('save uploads failed',e); } }
-async function saveActive(){ try{ await window.storage.set('bs-portal-active', activeClientId); }catch(e){} }
 
-async function resetDemo(){
-  try{ await window.storage.delete('bs-portal-clients'); }catch(e){}
-  try{ await window.storage.delete('bs-portal-uploads'); }catch(e){}
-  try{ await window.storage.delete('bs-portal-active'); }catch(e){}
-  CLIENTS = clone(DEFAULT_CLIENTS);
-  UPLOADS = clone(DEFAULT_UPLOADS);
-  activeClientId = "fphs";
-  document.getElementById('clientSwitcher').value = activeClientId;
-  renderAll();
-  showToast('Demo data reset');
+async function loadClientData(clientId){
+  const profileSnap = await db.collection('clients').doc(clientId).get();
+  if(!profileSnap.exists) throw new Error('no-client');
+  const p = profileSnap.data();
+
+  const [leadsSnap, activitySnap, uploadsSnap] = await Promise.all([
+    db.collection('clients').doc(clientId).collection('leads').get(),
+    db.collection('clients').doc(clientId).collection('activity').orderBy('sortKey','desc').limit(300).get(),
+    db.collection('clients').doc(clientId).collection('uploads').orderBy('sortKey','desc').get()
+  ]);
+
+  CLIENTS[clientId] = {
+    name:p.name, initials:p.initials, sub:p.sub, adSpend:p.adSpend,
+    baselineRevenue:p.baselineRevenue, baselineClosedCount:p.baselineClosedCount, baselineAppointments:p.baselineAppointments,
+    weeklyAppts:p.weeklyAppts, weeklyDials:p.weeklyDials,
+    leads: leadsSnap.docs.map(d=>({id:d.id, ...d.data()})),
+    activity: activitySnap.docs.map(d=>({id:d.id, ...d.data()}))
+  };
+  UPLOADS[clientId] = uploadsSnap.docs.map(d=>({id:d.id, ...d.data()}));
 }
+
+async function updateLeadInFirestore(leadId, updates){
+  try{
+    await db.collection('clients').doc(activeClientId).collection('leads').doc(leadId).update(updates);
+  }catch(e){
+    console.error('Failed to save lead update', e);
+    showToast("Couldn't save that — check your connection and try again");
+  }
+}
+
+async function addUploadToFirestore(entry){
+  try{
+    await db.collection('clients').doc(activeClientId).collection('uploads').add({...entry, sortKey: Date.now()});
+  }catch(e){
+    console.error('Failed to save upload', e);
+    showToast("Couldn't save that — check your connection and try again");
+  }
+}
+
+/* ============================================================
+   ACCESS GATE
+   ============================================================ */
+function normalizeCode(raw){ return (raw||'').trim().toUpperCase().replace(/\s+/g,''); }
+function setGateLoading(isLoading){
+  document.getElementById('gateBtn').disabled = isLoading;
+  document.getElementById('gateBtnLabel').innerHTML = isLoading ? '<span class="gate-spinner"></span>' : 'Continue';
+}
+function setGateError(msg){
+  const el = document.getElementById('gateError');
+  el.textContent = msg;
+  el.classList.toggle('show', !!msg);
+}
+
+async function tryAccessCode(raw){
+  const code = normalizeCode(raw);
+  if(!code){ setGateError('Enter your access code to continue.'); return; }
+  setGateError('');
+  setGateLoading(true);
+  try{
+    await ensureAnonAuth();
+    const codeSnap = await db.collection('access_codes').doc(code).get();
+    if(!codeSnap.exists){
+      setGateError("That code doesn't look right — double check and try again.");
+      setGateLoading(false);
+      return;
+    }
+    const clientId = codeSnap.data().clientId;
+    await loadClientData(clientId);
+    activeClientId = clientId;
+    currentAccessCode = code;
+    localStorage.setItem('bs_portal_code', code);
+    unlockApp();
+  }catch(err){
+    console.error(err);
+    setGateError('Something went wrong loading your portal. Try again in a moment.');
+    setGateLoading(false);
+  }
+}
+
+function unlockApp(){
+  document.getElementById('accessGate').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  document.getElementById('clientNameDisplay').textContent = CLIENTS[activeClientId].name;
+  document.title = CLIENTS[activeClientId].name + ' — BuildSignals Portal';
+  renderOverview();
+  renderUploads();
+  setTimeout(positionIndicator, 60);
+}
+
+function logOut(){
+  localStorage.removeItem('bs_portal_code');
+  window.location.href = window.location.pathname;
+}
+
+document.getElementById('gateBtn').addEventListener('click', ()=>tryAccessCode(document.getElementById('gateInput').value));
+document.getElementById('gateInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') tryAccessCode(e.target.value); });
+document.getElementById('logoutBtn').addEventListener('click', logOut);
 
 /* ============================================================
    DERIVED STATS
@@ -894,20 +1020,6 @@ function computeStats(c){
 }
 
 /* ============================================================
-   RENDER — client switcher
-   ============================================================ */
-function renderSwitcher(){
-  const sel = document.getElementById('clientSwitcher');
-  sel.innerHTML = '';
-  Object.keys(CLIENTS).forEach(id=>{
-    const o = document.createElement('option');
-    o.value = id; o.textContent = CLIENTS[id].name;
-    if(id===activeClientId) o.selected = true;
-    sel.appendChild(o);
-  });
-}
-
-/* ============================================================
    RENDER — overview
    ============================================================ */
 function fmtMoney(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
@@ -917,7 +1029,6 @@ function renderOverview(){
   const s = computeStats(c);
   document.getElementById('ovClientName').textContent = c.name;
   document.getElementById('ovClientSub').textContent = c.sub;
-  document.getElementById('avatarInitials').textContent = c.initials;
 
   document.getElementById('statRevenue').textContent = fmtMoney(s.revenue);
   document.getElementById('statAppts').textContent = s.apptCount;
@@ -928,7 +1039,7 @@ function renderOverview(){
   renderActivity(c);
   renderLeads(c);
 
-  document.getElementById('uploadLink').textContent = 'portal.buildsignals.com/upload/'+UPLOAD_SLUGS[activeClientId];
+  document.getElementById('uploadLink').textContent = 'portal.buildsignals.com/home?code='+currentAccessCode;
 }
 
 function renderChart(c){
@@ -1101,7 +1212,7 @@ function handleStageMove(leadId, newStage){
   } else {
     lead.status = newStage;
     renderOverview();
-    saveClients();
+    updateLeadInFirestore(leadId, {status:newStage});
     showToast(`${lead.name} moved to ${newStage}`);
   }
 }
@@ -1133,7 +1244,7 @@ function openClosedValueModal(leadId){
     lead.status = 'Closed'; lead.value = val;
     overlay.remove();
     renderOverview();
-    await saveClients();
+    await updateLeadInFirestore(leadId, {status:'Closed', value:val});
     showToast(`Marked closed — added ${fmtMoney(val)} to the total`);
   });
   input.addEventListener('keydown',(e)=>{ if(e.key==='Enter') overlay.querySelector('.modal-confirm').click(); });
@@ -1324,20 +1435,6 @@ document.querySelectorAll('.accordion-toggle').forEach(btn=>{
 });
 
 /* ============================================================
-   CLIENT SWITCHER
-   ============================================================ */
-document.getElementById('clientSwitcher').addEventListener('change', async (e)=>{
-  activeClientId = e.target.value;
-  document.getElementById('leadSearchInput').value = '';
-  leadSearchQuery = '';
-  document.getElementById('leadSearchClear').style.display = 'none';
-  activityExpanded = false;
-  renderOverview();
-  renderUploads();
-  await saveActive();
-});
-
-/* ============================================================
    UPLOAD TAB
    ============================================================ */
 function fileKindIcon(kind){
@@ -1371,14 +1468,15 @@ function humanSize(bytes){
 async function handleFiles(fileList){
   if(!fileList || !fileList.length) return;
   const today = 'Just now';
-  Array.from(fileList).forEach(f=>{
+  const entries = Array.from(fileList).map(f=>{
     const kind = f.type.startsWith('video')?'video': f.type.startsWith('image')?'image':'file';
-    UPLOADS[activeClientId] = UPLOADS[activeClientId] || [];
-    UPLOADS[activeClientId].push({name:f.name, kind, size:humanSize(f.size), date:today});
+    return {name:f.name, kind, size:humanSize(f.size), date:today};
   });
+  UPLOADS[activeClientId] = UPLOADS[activeClientId] || [];
+  entries.forEach(e=>UPLOADS[activeClientId].push(e));
   renderUploads();
-  await saveUploads();
   showToast(fileList.length>1 ? `${fileList.length} files added` : `${fileList[0].name} added`);
+  for(const entry of entries){ await addUploadToFirestore(entry); }
 }
 
 const dz = document.getElementById('dropzone');
@@ -1412,11 +1510,14 @@ function showToast(msg){
    INIT
    ============================================================ */
 async function init(){
-  await loadStorage();
-  renderSwitcher();
-  renderOverview();
-  renderUploads();
-  setTimeout(positionIndicator, 60);
+  const params = new URLSearchParams(window.location.search);
+  const urlCode = params.get('code');
+  const savedCode = localStorage.getItem('bs_portal_code');
+  const startCode = urlCode || savedCode;
+  if(startCode){
+    document.getElementById('gateInput').value = startCode;
+    await tryAccessCode(startCode);
+  }
 }
 init();
 </script>
