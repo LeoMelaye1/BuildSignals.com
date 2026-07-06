@@ -10,6 +10,7 @@
 <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-storage-compat.js"></script>
 <style>
   :root{
     --bg:#FAFAFA; --surface:#FFFFFF; --surface-2:#F4F4F5;
@@ -135,6 +136,12 @@
   .page-sub{color:var(--ink-muted); font-size:14px; margin-bottom:22px;}
 
   /* stat cards */
+  .range-row{margin-bottom:16px;}
+  .range-selector{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;}
+  .range-pill{font-size:12.5px; font-weight:600; padding:7px 14px; border-radius:100px; background:var(--surface-2); color:var(--ink-muted); border:1px solid transparent;}
+  .range-pill:hover{background:var(--border-strong);}
+  .range-pill.active{background:var(--signal-deep); color:#fff;}
+  .range-caption{font-size:11.5px; color:var(--ink-faint); line-height:1.4;}
   .stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:28px;}
   @media(max-width:900px){ .stat-grid{grid-template-columns:repeat(2,1fr);} }
   @media(max-width:480px){ .stat-grid{grid-template-columns:1fr 1fr; gap:10px;} }
@@ -220,7 +227,28 @@
   .lead-search-clear{display:none; width:22px; height:22px; border-radius:50%; background:var(--border-strong); color:var(--surface); align-items:center; justify-content:center; flex-shrink:0; font-size:12px; line-height:1;}
 
   /* leads kanban board */
-  .kanban-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch; padding:2px 6px 20px;}
+  .kanban-pills{display:flex; flex-wrap:wrap; gap:7px; padding:0 16px 14px;}
+  .kanban-pill{font-size:12px; font-weight:600; padding:6px 13px; border-radius:100px; background:var(--surface-2); color:var(--ink-muted); border:1px solid var(--border); flex-shrink:0;}
+  .kanban-pill:hover{background:var(--border-strong);}
+  .kanban-pill.active{background:var(--signal-deep); color:#fff; border-color:var(--signal-deep);}
+  .kanban-wrap-outer{position:relative;}
+  .kanban-arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:5; width:38px; height:38px; border-radius:50%;
+    background:var(--surface); border:1px solid var(--border); box-shadow:var(--sh-2); color:var(--ink-2);
+    display:flex; align-items:center; justify-content:center; transition:opacity .15s, background .15s;
+  }
+  .kanban-arrow:hover{background:var(--surface-2);}
+  .kanban-arrow:disabled{opacity:0; pointer-events:none;}
+  .kanban-arrow-left{left:4px;}
+  .kanban-arrow-right{right:4px;}
+  .kanban-wrap{
+    overflow-x:auto; -webkit-overflow-scrolling:touch; padding:2px 6px 22px; scroll-behavior:smooth;
+    scrollbar-width:auto; scrollbar-color:var(--border-strong) transparent;
+  }
+  .kanban-wrap::-webkit-scrollbar{height:9px;}
+  .kanban-wrap::-webkit-scrollbar-track{background:var(--surface-2); border-radius:100px;}
+  .kanban-wrap::-webkit-scrollbar-thumb{background:var(--border-strong); border-radius:100px;}
+  .kanban-wrap::-webkit-scrollbar-thumb:hover{background:var(--ink-faint);}
   .kanban{display:flex; gap:12px; padding:0 16px; min-width:max-content;}
   .kanban-col{width:216px; flex-shrink:0;}
   .kanban-col-head{
@@ -244,6 +272,7 @@
   .kanban-card.dragging{box-shadow:var(--sh-3); cursor:grabbing; opacity:.96;}
   @media(max-width:720px){
     .lead-search{margin:2px 16px 14px;}
+    .kanban-arrow{display:none;}
     .kanban-wrap{padding:2px 0 20px; scroll-snap-type:x proximity;}
     .kanban{gap:14px; padding:0 16px;}
     .kanban-col{width:78vw; max-width:280px; scroll-snap-align:start;}
@@ -424,9 +453,13 @@
   }
   .file-icon svg{width:17px; height:17px;}
   .file-meta{flex:1; min-width:0;}
-  .file-name{font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .file-name{font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--ink);}
+  a.file-name{text-decoration:underline; text-decoration-color:var(--border-strong);}
+  a.file-name:hover{color:var(--signal-deep);}
   .file-sub{font-size:11.5px; color:var(--ink-faint);}
   .file-badge{font-size:10.5px; font-weight:700; color:var(--success); background:var(--success-dim); padding:4px 10px; border-radius:100px; white-space:nowrap;}
+  .file-badge.uploading{color:var(--signal-deep); background:var(--signal-dim);}
+  .file-badge.error{color:#a52d1c; background:var(--danger-dim);}
   .empty-state{padding:30px 10px; text-align:center; color:var(--ink-muted); font-size:13px;}
 
   footer.appfoot{max-width:1080px; margin:0 auto; padding:0 24px 40px; text-align:center;}
@@ -510,6 +543,16 @@
     <h1 class="page-title" id="ovClientName">First Priority Home Solutions</h1>
     <p class="page-sub" id="ovClientSub">Windows &amp; roofing campaign · client since Feb 2026</p>
 
+    <div class="range-row">
+      <div class="range-selector" id="rangeSelector">
+        <button type="button" class="range-pill active" data-range="all">All Time</button>
+        <button type="button" class="range-pill" data-range="30">Last 30 Days</button>
+        <button type="button" class="range-pill" data-range="90">Last 90 Days</button>
+        <button type="button" class="range-pill" data-range="month">This Month</button>
+      </div>
+      <div class="range-caption" id="rangeCaption">Showing all-time totals, including your starting numbers from before the portal began tracking.</div>
+    </div>
+
     <div class="stat-grid">
       <div class="stat-card money">
         <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 6.5c0-2-2.2-3.5-5-3.5s-5 1.6-5 3.6c0 4.4 10 2.2 10 6.6 0 2-2.2 3.6-5 3.6s-5-1.5-5-3.5"/></svg></div>
@@ -584,10 +627,20 @@
         <input type="text" id="leadSearchInput" placeholder="Search leads by name" autocomplete="off">
         <button class="lead-search-clear" id="leadSearchClear" type="button" aria-label="Clear search">✕</button>
       </div>
-      <div class="kanban-wrap">
-        <div class="kanban" id="kanbanBoard"></div>
+      <div class="kanban-pills" id="kanbanPills"></div>
+      <div class="kanban-wrap-outer">
+        <button type="button" class="kanban-arrow kanban-arrow-left" id="kanbanArrowLeft" aria-label="Scroll left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="kanban-wrap" id="kanbanWrap">
+          <div class="kanban" id="kanbanBoard"></div>
+        </div>
+        <button type="button" class="kanban-arrow kanban-arrow-right" id="kanbanArrowRight" aria-label="Scroll right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
     </div>
+
   </section>
 
   <!-- ================= REWARDS ================= -->
@@ -899,6 +952,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 let CLIENTS = {};
 let UPLOADS = {};
@@ -1017,12 +1071,30 @@ document.getElementById('logoutBtn').addEventListener('click', logOut);
    ============================================================ */
 function getClient(){ return CLIENTS[activeClientId]; }
 
-function computeStats(c){
-  const closedLeads = c.leads.filter(l=>l.status==='Closed');
-  const passedThrough = c.leads.filter(l=>['Booked','Showed','Closed','Dead'].includes(l.status));
-  const revenue = c.baselineRevenue + closedLeads.reduce((s,l)=>s+(l.value||0),0);
-  const closedCount = c.baselineClosedCount + closedLeads.length;
-  const apptCount = c.baselineAppointments + passedThrough.length;
+function isDateInRange(dateStr, range){
+  if(range === 'all') return true;
+  const d = new Date(dateStr);
+  if(isNaN(d)) return false; // leads with an unknown/unparseable date are excluded from filtered views
+  const now = new Date();
+  if(range === 'month') return d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth();
+  const days = parseInt(range, 10);
+  const cutoff = new Date(now.getTime() - days*24*60*60*1000);
+  return d >= cutoff;
+}
+
+function computeStats(c, range){
+  range = range || 'all';
+  const leads = range==='all' ? c.leads : c.leads.filter(l=>isDateInRange(l.date, range));
+  const closedLeads = leads.filter(l=>l.status==='Closed');
+  const passedThrough = leads.filter(l=>['Booked','Showed','Closed','Dead'].includes(l.status));
+  // Baseline numbers represent performance from before the portal existed, so they
+  // only belong in the all-time view - a filtered window can't attribute them to a date.
+  const baseRevenue = range==='all' ? c.baselineRevenue : 0;
+  const baseClosed = range==='all' ? c.baselineClosedCount : 0;
+  const baseAppts = range==='all' ? c.baselineAppointments : 0;
+  const revenue = baseRevenue + closedLeads.reduce((s,l)=>s+(l.value||0),0);
+  const closedCount = baseClosed + closedLeads.length;
+  const apptCount = baseAppts + passedThrough.length;
   const roi = c.adSpend ? (revenue / c.adSpend) : 0;
   return {revenue, closedCount, apptCount, roi};
 }
@@ -1032,17 +1104,38 @@ function computeStats(c){
    ============================================================ */
 function fmtMoney(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
 
-function renderOverview(){
-  const c = getClient();
-  const s = computeStats(c);
-  document.getElementById('ovClientName').textContent = c.name;
-  document.getElementById('ovClientSub').textContent = c.sub;
+let activeTimeRange = 'all';
+const RANGE_CAPTIONS = {
+  all: 'Showing all-time totals, including your starting numbers from before the portal began tracking.',
+  '30': 'Showing only leads and deals from the last 30 days - your starting baseline is not included in this view.',
+  '90': 'Showing only leads and deals from the last 90 days - your starting baseline is not included in this view.',
+  month: 'Showing only leads and deals from this calendar month - your starting baseline is not included in this view.'
+};
 
+function renderStats(){
+  const c = getClient();
+  const s = computeStats(c, activeTimeRange);
   document.getElementById('statRevenue').textContent = fmtMoney(s.revenue);
   document.getElementById('statAppts').textContent = s.apptCount;
   document.getElementById('statClosed').textContent = s.closedCount;
   document.getElementById('statRoi').innerHTML = s.roi.toFixed(1)+'<small>x</small>';
+  document.getElementById('rangeCaption').textContent = RANGE_CAPTIONS[activeTimeRange];
+}
 
+document.getElementById('rangeSelector').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.range-pill');
+  if(!btn) return;
+  activeTimeRange = btn.dataset.range;
+  document.querySelectorAll('.range-pill').forEach(p=>p.classList.toggle('active', p===btn));
+  renderStats();
+});
+
+function renderOverview(){
+  const c = getClient();
+  document.getElementById('ovClientName').textContent = c.name;
+  document.getElementById('ovClientSub').textContent = c.sub;
+
+  renderStats();
   renderChart(c);
   renderActivity(c);
   renderLeads(c);
@@ -1194,6 +1287,7 @@ function renderLeads(c){
       <div class="kanban-col-body" data-stage="${stage}">${cards}</div>
     </div>`;
   }).join('');
+  requestAnimationFrame(updateKanbanArrows);
 }
 
 function setLeadSearch(value){
@@ -1207,6 +1301,50 @@ document.getElementById('leadSearchClear').addEventListener('click', ()=>{
   setLeadSearch('');
   document.getElementById('leadSearchInput').focus();
 });
+
+/* ============================================================
+   KANBAN NAVIGATION — stage pills + scroll arrows
+   (so scrolling sideways is never the only way to reach a stage)
+   ============================================================ */
+function renderKanbanPills(){
+  const wrap = document.getElementById('kanbanPills');
+  wrap.innerHTML = STATUS_OPTIONS.map((stage, i)=>
+    `<button type="button" class="kanban-pill${i===0 ? ' active' : ''}" data-stage="${stage}">${stage}</button>`
+  ).join('');
+}
+
+function scrollToStage(stage){
+  const body = document.querySelector(`.kanban-col-body[data-stage="${CSS.escape(stage)}"]`);
+  const col = body && body.closest('.kanban-col');
+  const kwrap = document.getElementById('kanbanWrap');
+  if(!col || !kwrap) return;
+  kwrap.scrollTo({ left: col.offsetLeft - 16, behavior: 'smooth' });
+  document.querySelectorAll('.kanban-pill').forEach(p=>p.classList.toggle('active', p.dataset.stage===stage));
+}
+
+document.getElementById('kanbanPills').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.kanban-pill');
+  if(btn) scrollToStage(btn.dataset.stage);
+});
+
+function updateKanbanArrows(){
+  const kwrap = document.getElementById('kanbanWrap');
+  const leftBtn = document.getElementById('kanbanArrowLeft');
+  const rightBtn = document.getElementById('kanbanArrowRight');
+  if(!kwrap || !leftBtn || !rightBtn) return;
+  leftBtn.disabled = kwrap.scrollLeft <= 4;
+  rightBtn.disabled = kwrap.scrollLeft >= kwrap.scrollWidth - kwrap.clientWidth - 4;
+}
+
+document.getElementById('kanbanArrowLeft').addEventListener('click', ()=>{
+  document.getElementById('kanbanWrap').scrollBy({ left: -236, behavior: 'smooth' });
+});
+document.getElementById('kanbanArrowRight').addEventListener('click', ()=>{
+  document.getElementById('kanbanWrap').scrollBy({ left: 236, behavior: 'smooth' });
+});
+document.getElementById('kanbanWrap').addEventListener('scroll', updateKanbanArrows);
+window.addEventListener('resize', updateKanbanArrows);
+renderKanbanPills();
 
 /* ============================================================
    LEADS — stage transitions (shared by drag-and-drop + picker)
@@ -1455,16 +1593,23 @@ function renderUploads(){
   const list = document.getElementById('fileList');
   const files = UPLOADS[activeClientId] || [];
   if(!files.length){ list.innerHTML = '<div class="empty-state">No files yet — drag your first video or photo above to get started.</div>'; return; }
-  list.innerHTML = files.slice().reverse().map(f=>`
+  list.innerHTML = files.slice().reverse().map(f=>{
+    let badge = '<div class="file-badge">Received</div>';
+    if(f.error) badge = '<div class="file-badge error">Failed — try again</div>';
+    else if(typeof f.progress === 'number') badge = `<div class="file-badge uploading">Uploading… ${f.progress}%</div>`;
+    const nameEl = f.url
+      ? `<a class="file-name" href="${f.url}" target="_blank" rel="noopener">${f.name}</a>`
+      : `<div class="file-name">${f.name}</div>`;
+    return `
     <li class="file-row">
       <div class="file-icon">${fileKindIcon(f.kind)}</div>
       <div class="file-meta">
-        <div class="file-name">${f.name}</div>
+        ${nameEl}
         <div class="file-sub">${f.size} · ${f.date}</div>
       </div>
-      <div class="file-badge">Received</div>
-    </li>
-  `).join('');
+      ${badge}
+    </li>`;
+  }).join('');
 }
 
 function humanSize(bytes){
@@ -1475,16 +1620,44 @@ function humanSize(bytes){
 
 async function handleFiles(fileList){
   if(!fileList || !fileList.length) return;
-  const today = 'Just now';
-  const entries = Array.from(fileList).map(f=>{
-    const kind = f.type.startsWith('video')?'video': f.type.startsWith('image')?'image':'file';
-    return {name:f.name, kind, size:humanSize(f.size), date:today};
-  });
   UPLOADS[activeClientId] = UPLOADS[activeClientId] || [];
-  entries.forEach(e=>UPLOADS[activeClientId].push(e));
-  renderUploads();
-  showToast(fileList.length>1 ? `${fileList.length} files added` : `${fileList[0].name} added`);
-  for(const entry of entries){ await addUploadToFirestore(entry); }
+
+  Array.from(fileList).forEach(f => {
+    const kind = f.type.startsWith('video') ? 'video' : f.type.startsWith('image') ? 'image' : 'file';
+    const entry = { name: f.name, kind, size: humanSize(f.size), date: 'Just now', progress: 0 };
+    UPLOADS[activeClientId].push(entry);
+    renderUploads();
+
+    const storagePath = `uploads/${activeClientId}/${Date.now()}-${f.name}`;
+    const task = storage.ref(storagePath).put(f);
+
+    task.on('state_changed',
+      (snap) => {
+        entry.progress = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+        renderUploads();
+      },
+      (err) => {
+        console.error('Upload failed', err);
+        delete entry.progress;
+        entry.error = true;
+        renderUploads();
+        showToast(`Couldn't upload ${f.name} — check your connection and try again`);
+      },
+      async () => {
+        try {
+          entry.url = await task.snapshot.ref.getDownloadURL();
+          delete entry.progress;
+          renderUploads();
+          await addUploadToFirestore({ name: entry.name, kind: entry.kind, size: entry.size, date: entry.date, url: entry.url, storagePath });
+          showToast(`${entry.name} uploaded`);
+        } catch (err) {
+          console.error('Failed to finalize upload', err);
+          entry.error = true;
+          renderUploads();
+        }
+      }
+    );
+  });
 }
 
 const dz = document.getElementById('dropzone');
