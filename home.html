@@ -177,7 +177,9 @@
   /* activity */
   .activity-toggle{cursor:pointer; align-items:center; transition:background .15s; border-radius:var(--r-l) var(--r-l) 0 0;}
   .activity-toggle:hover{background:var(--surface-2);}
-  .activity-toggle .accordion-chevron{margin-left:12px;}
+  .activity-toggle .accordion-chevron{margin-left:0;}
+  .expand-hint{display:flex; align-items:center; gap:6px; flex-shrink:0; background:var(--signal-dim); color:var(--signal-deep); font-size:12px; font-weight:700; padding:7px 12px 7px 14px; border-radius:100px;}
+  .expand-hint .accordion-chevron{width:14px; height:14px; color:var(--signal-deep);}
   .activity-stats{display:flex; gap:10px; flex-wrap:wrap; padding:4px 22px 16px;}
   .a-stat{background:var(--surface-2); border-radius:14px; padding:11px 16px; flex:1; min-width:118px;}
   .a-stat b{display:block; font-size:19px; font-weight:700;}
@@ -578,7 +580,10 @@
           <div class="card-title">Activity Log</div>
           <div class="card-title-sub">Every call, text, and note — logged as it happens</div>
         </div>
-        <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        <div class="expand-hint">
+          <span id="activityExpandHint">View full log</span>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
       </button>
       <div class="activity-stats" id="activityStats"></div>
       <div class="accordion-body" id="activityAccordionBody">
@@ -1085,12 +1090,29 @@ function computeStats(c, range){
 function fmtMoney(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
 
 let activeTimeRange = 'all';
-const RANGE_CAPTIONS = {
-  all: 'Showing all-time totals, including your starting numbers from before the portal began tracking.',
-  '30': 'Showing only leads and deals from the last 30 days - your starting baseline is not included in this view.',
-  '90': 'Showing only leads and deals from the last 90 days - your starting baseline is not included in this view.',
-  month: 'Showing only leads and deals from this calendar month - your starting baseline is not included in this view.'
-};
+
+function fmtShortDate(d){
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+function getRangeCaption(c, range){
+  const now = new Date();
+  const todayText = fmtShortDate(now);
+
+  if(range === 'all'){
+    const dates = (c.leads||[]).map(l=>new Date(l.date)).filter(d=>!isNaN(d));
+    const earliestText = dates.length ? fmtShortDate(new Date(Math.min(...dates))) : 'your earliest synced lead';
+    return `Showing all-time totals from ${earliestText} through today (${todayText}), including your starting numbers from before the portal began tracking.`;
+  }
+  if(range === 'month'){
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    return `Showing ${fmtShortDate(start)} through today (${todayText}) - your starting baseline is not included in this view.`;
+  }
+  const days = parseInt(range, 10);
+  const start = new Date(now.getTime() - days*24*60*60*1000);
+  return `Showing ${fmtShortDate(start)} through today (${todayText}) - your starting baseline is not included in this view.`;
+}
 
 function renderStats(){
   const c = getClient();
@@ -1099,7 +1121,7 @@ function renderStats(){
   document.getElementById('statAppts').textContent = s.apptCount;
   document.getElementById('statClosed').textContent = s.closedCount;
   document.getElementById('statRoi').innerHTML = s.roi.toFixed(1)+'<small>x</small>';
-  document.getElementById('rangeCaption').textContent = RANGE_CAPTIONS[activeTimeRange];
+  document.getElementById('rangeCaption').textContent = getRangeCaption(c, activeTimeRange);
 }
 
 document.getElementById('rangeSelector').addEventListener('click', (e)=>{
@@ -1496,12 +1518,15 @@ document.querySelectorAll('.accordion-toggle').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     const body = document.getElementById(btn.dataset.target);
     const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    const hint = document.getElementById('activityExpandHint');
     if(isOpen){
       body.style.height = body.scrollHeight+'px';
       requestAnimationFrame(()=>{ body.style.height = '0px'; });
       btn.setAttribute('aria-expanded','false');
+      if(hint) hint.textContent = 'View full log';
     } else {
       btn.setAttribute('aria-expanded','true');
+      if(hint) hint.textContent = 'Hide log';
       const target = body.scrollHeight;
       body.style.height = '0px';
       requestAnimationFrame(()=>{ body.style.height = target+'px'; });
