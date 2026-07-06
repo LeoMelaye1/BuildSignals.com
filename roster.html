@@ -86,6 +86,8 @@
   .cr-name{font-size:14px; font-weight:700;}
   .cr-sub{font-size:12px; color:var(--ink-muted); margin-top:1px;}
   .cr-actions{display:flex; align-items:center; gap:8px; flex-shrink:0;}
+  .cr-edit{font-size:12px; font-weight:600; color:var(--ink-muted); padding:7px 12px; border-radius:100px; background:var(--surface-2);}
+  .cr-edit:hover{background:var(--border-strong);}
   .cr-code{font-family:'JetBrains Mono',monospace; font-size:11.5px; background:var(--surface-2); padding:6px 10px; border-radius:8px; color:var(--ink-2);}
   .cr-copy{font-size:12px; font-weight:700; color:var(--signal-deep); background:var(--signal-dim); padding:7px 14px; border-radius:100px;}
   .cr-nocode{font-size:12px; color:var(--danger); font-weight:600;}
@@ -99,6 +101,10 @@
   .modal-title{font-size:17px; font-weight:800; margin-bottom:4px;}
   .modal-sub{font-size:12.5px; color:var(--ink-muted); margin-bottom:20px; line-height:1.45;}
   .field-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 12px;}
+  .stage-map-hint{font-size:11.5px; color:var(--ink-muted); margin:-2px 0 10px; line-height:1.4;}
+  .stage-map-row{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  .stage-map-row span{width:78px; flex-shrink:0; font-size:12.5px; font-weight:600; color:var(--ink-2);}
+  .stage-map-row .sm-input{margin-bottom:0; padding:9px 12px; font-size:13px;}
   .modal-actions{display:flex; gap:10px; margin-top:6px;}
   .modal-actions button{flex:1; padding:13px; border-radius:100px; font-size:13px; font-weight:700; text-align:center;}
   .modal-cancel{background:var(--surface-2); color:var(--ink-2);}
@@ -156,7 +162,7 @@
 
 <div class="modal-overlay" id="addModal" style="display:none;">
   <div class="modal-card">
-    <div class="modal-title">Add a client</div>
+    <div class="modal-title" id="modalTitle">Add a client</div>
     <div class="modal-sub">Creates their profile and a private access code in one step. You can backfill real numbers later — 0 is fine to start.</div>
     <div class="add-error gate-error" id="addError"></div>
 
@@ -184,6 +190,19 @@
         <input class="text-input" id="newAppts" type="number" value="0">
       </div>
     </div>
+
+    <label class="field-label" style="margin-top:2px;">GoHighLevel pipeline ID</label>
+    <input class="text-input" id="newGhlPipeline" placeholder="From the URL when viewing the pipeline, e.g. tKQi2Fyy5NWH3Elpk2Ur">
+
+    <div class="field-label">Stage mapping</div>
+    <div class="stage-map-hint">What each portal stage is called in this client's GHL pipeline. Leave as-is if the names already match.</div>
+    <div class="stage-map-row"><span>New Lead</span><input class="text-input sm-input" id="sm_newlead" value="New Lead"></div>
+    <div class="stage-map-row"><span>Connecting</span><input class="text-input sm-input" id="sm_connecting" value="Connecting"></div>
+    <div class="stage-map-row"><span>Booked</span><input class="text-input sm-input" id="sm_booked" value="Booked"></div>
+    <div class="stage-map-row"><span>Showed</span><input class="text-input sm-input" id="sm_showed" value="Showed"></div>
+    <div class="stage-map-row"><span>Follow Up</span><input class="text-input sm-input" id="sm_followup" value="Follow Up"></div>
+    <div class="stage-map-row"><span>Closed</span><input class="text-input sm-input" id="sm_closed" value="Closed"></div>
+    <div class="stage-map-row"><span>Dead</span><input class="text-input sm-input" id="sm_dead" value="Dead"></div>
 
     <div class="modal-actions">
       <button type="button" class="modal-cancel" id="cancelAdd">Cancel</button>
@@ -323,6 +342,7 @@ async function loadClientList(){
           <div class="cr-sub">${c.sub||''}</div>
         </div>
         <div class="cr-actions">
+          <button type="button" class="cr-edit" data-id="${c.id}">Edit</button>
           ${c.code
             ? `<code class="cr-code">${c.code}</code><button type="button" class="cr-copy" data-link="https://buildsignals.com/home?code=${c.code}">Copy link</button>`
             : `<span class="cr-nocode">No code</span>`}
@@ -336,6 +356,8 @@ async function loadClientList(){
 }
 
 document.getElementById('clientList').addEventListener('click', (e)=>{
+  const editBtn = e.target.closest('.cr-edit');
+  if(editBtn){ openEditModal(editBtn.dataset.id); return; }
   const btn = e.target.closest('.cr-copy');
   if(!btn) return;
   const link = btn.dataset.link;
@@ -347,13 +369,63 @@ document.getElementById('clientList').addEventListener('click', (e)=>{
 /* ============================================================
    ADD CLIENT MODAL
    ============================================================ */
+const STAGE_MAP_FIELDS = [
+  ['sm_newlead', 'New Lead'],
+  ['sm_connecting', 'Connecting'],
+  ['sm_booked', 'Booked'],
+  ['sm_showed', 'Showed'],
+  ['sm_followup', 'Follow Up'],
+  ['sm_closed', 'Closed'],
+  ['sm_dead', 'Dead']
+];
+
+let editingClientId = null;
+
 function openAddModal(){
-  ['newName','newSub'].forEach(id=>document.getElementById(id).value='');
+  editingClientId = null;
+  document.getElementById('modalTitle').textContent = 'Add a client';
+  document.getElementById('confirmAdd').textContent = 'Create client';
+  ['newName','newSub','newGhlPipeline'].forEach(id=>document.getElementById(id).value='');
   ['newAdSpend','newRevenue','newClosed','newAppts'].forEach(id=>document.getElementById(id).value='0');
+  STAGE_MAP_FIELDS.forEach(([id, appStage])=>document.getElementById(id).value = appStage);
   document.getElementById('addError').classList.remove('show');
   document.getElementById('addModal').style.display = 'flex';
   document.getElementById('newName').focus();
 }
+
+async function openEditModal(clientId){
+  document.getElementById('addError').classList.remove('show');
+  try{
+    const doc = await db.collection('clients').doc(clientId).get();
+    if(!doc.exists){ showToast("Couldn't find that client"); return; }
+    const c = doc.data();
+
+    editingClientId = clientId;
+    document.getElementById('modalTitle').textContent = 'Edit client';
+    document.getElementById('confirmAdd').textContent = 'Save changes';
+
+    document.getElementById('newName').value = c.name || '';
+    document.getElementById('newSub').value = c.sub || '';
+    document.getElementById('newAdSpend').value = c.adSpend || 0;
+    document.getElementById('newRevenue').value = c.baselineRevenue || 0;
+    document.getElementById('newClosed').value = c.baselineClosedCount || 0;
+    document.getElementById('newAppts').value = c.baselineAppointments || 0;
+    document.getElementById('newGhlPipeline').value = c.ghlPipelineId || '';
+
+    // stored stageMap is {ghlName: appStage} - invert it back to one value per portal stage field
+    const inverted = {};
+    Object.entries(c.stageMap || {}).forEach(([ghlName, appStage])=>{ inverted[appStage] = ghlName; });
+    STAGE_MAP_FIELDS.forEach(([id, appStage])=>{
+      document.getElementById(id).value = inverted[appStage] || appStage;
+    });
+
+    document.getElementById('addModal').style.display = 'flex';
+  }catch(e){
+    console.error(e);
+    showToast("Couldn't load that client");
+  }
+}
+
 function closeAddModal(){ document.getElementById('addModal').style.display = 'none'; }
 
 document.getElementById('openAddModal').addEventListener('click', openAddModal);
@@ -372,34 +444,56 @@ document.getElementById('confirmAdd').addEventListener('click', async ()=>{
   const baselineClosedCount = parseInt(document.getElementById('newClosed').value) || 0;
   const baselineAppointments = parseInt(document.getElementById('newAppts').value) || 0;
   const initials = autoInitials(name);
+  const ghlPipelineId = document.getElementById('newGhlPipeline').value.trim();
+
+  // Build GHL stage name -> portal stage name lookup, e.g. {"Appt Booked":"Booked"}
+  const stageMap = {};
+  STAGE_MAP_FIELDS.forEach(([id, appStage])=>{
+    const ghlName = document.getElementById(id).value.trim();
+    if(ghlName) stageMap[ghlName] = appStage;
+  });
 
   const confirmBtn = document.getElementById('confirmAdd');
-  confirmBtn.disabled = true; confirmBtn.textContent = 'Creating...';
+  confirmBtn.disabled = true;
 
   try{
-    const slug = await uniqueSlug(name);
-    const code = generateAccessCode();
+    if(editingClientId){
+      confirmBtn.textContent = 'Saving...';
+      await db.collection('clients').doc(editingClientId).update({
+        name, initials, sub, adSpend, baselineRevenue, baselineClosedCount, baselineAppointments,
+        ghlPipelineId, stageMap
+      });
+      closeAddModal();
+      showToast('Client updated');
+      loadClientList();
+    } else {
+      confirmBtn.textContent = 'Creating...';
+      const slug = await uniqueSlug(name);
+      const code = generateAccessCode();
 
-    await db.collection('clients').doc(slug).set({
-      name, initials, sub, adSpend, baselineRevenue, baselineClosedCount, baselineAppointments,
-      weeklyAppts: [0,0,0,0,0,0,0,0],
-      weeklyDials: [0,0,0,0,0,0,0,0]
-    });
-    await db.collection('access_codes').doc(code).set({ clientId: slug });
+      await db.collection('clients').doc(slug).set({
+        name, initials, sub, adSpend, baselineRevenue, baselineClosedCount, baselineAppointments,
+        weeklyAppts: [0,0,0,0,0,0,0,0],
+        weeklyDials: [0,0,0,0,0,0,0,0],
+        ghlPipelineId,
+        stageMap
+      });
+      await db.collection('access_codes').doc(code).set({ clientId: slug });
 
-    closeAddModal();
-    showSuccess(name, code);
-    loadClientList();
+      closeAddModal();
+      showSuccess(name, code);
+      loadClientList();
+    }
   }catch(e){
     console.error(e);
     if(e.code === 'permission-denied'){
       errEl.textContent = "Your account isn't recognized as admin yet - check that your email matches exactly in both roster.html and the published Firestore rules.";
     } else {
-      errEl.textContent = "Couldn't create that client - check your connection and try again.";
+      errEl.textContent = "Couldn't save that - check your connection and try again.";
     }
     errEl.classList.add('show');
   }finally{
-    confirmBtn.disabled = false; confirmBtn.textContent = 'Create client';
+    confirmBtn.disabled = false; confirmBtn.textContent = editingClientId ? 'Save changes' : 'Create client';
   }
 });
 
