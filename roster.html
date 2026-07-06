@@ -218,7 +218,7 @@ const firebaseConfig = {
   messagingSenderId: "277233521844",
   appId: "1:277233521844:web:cbc25e0f43a7feb70833e1"
 };
-const ADMIN_EMAIL = "leo@buildsignals.com";
+const ADMIN_EMAIL = "YOUR_ADMIN_EMAIL";
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
@@ -392,7 +392,11 @@ document.getElementById('confirmAdd').addEventListener('click', async ()=>{
     loadClientList();
   }catch(e){
     console.error(e);
-    errEl.textContent = "Couldn't create that client - check your connection and try again.";
+    if(e.code === 'permission-denied'){
+      errEl.textContent = "Your account isn't recognized as admin yet - check that your email matches exactly in both roster.html and the published Firestore rules.";
+    } else {
+      errEl.textContent = "Couldn't create that client - check your connection and try again.";
+    }
     errEl.classList.add('show');
   }finally{
     confirmBtn.disabled = false; confirmBtn.textContent = 'Create client';
