@@ -588,7 +588,7 @@
         <span><i style="background:var(--ink-faint);"></i>Dials</span>
       </div>
       <div class="chart-wrap">
-        <svg id="perfChart" viewBox="0 0 700 200" width="100%" height="200" preserveAspectRatio="none"></svg>
+        <svg id="perfChart" viewBox="0 0 700 224" width="100%" height="224" preserveAspectRatio="none"></svg>
       </div>
     </div>
 
@@ -1143,12 +1143,46 @@ function renderOverview(){
   document.getElementById('uploadLink').textContent = 'portal.buildsignals.com/home?code='+currentAccessCode;
 }
 
+function computeWeeklyChartData(c){
+  // weeklyDials/weeklyAppts on the client doc are never populated for real
+  // GHL-synced clients - compute real weekly totals from the activity log instead.
+  const now = new Date();
+  const weeks = [];
+  for(let i=7;i>=0;i--){
+    const end = new Date(now);
+    end.setDate(now.getDate() - i*7);
+    end.setHours(23,59,59,999);
+    const start = new Date(end);
+    start.setDate(end.getDate()-6);
+    start.setHours(0,0,0,0);
+    weeks.push({start, end, dials:0, appts:0});
+  }
+
+  (c.activity||[]).forEach(a=>{
+    if(typeof a.sortKey !== 'number') return;
+    const d = new Date(a.sortKey);
+    const bucket = weeks.find(w => d >= w.start && d <= w.end);
+    if(!bucket) return;
+    if(a.type==='call-out' || a.type==='call-in') bucket.dials++;
+    if(a.type==='stage' && a.note && a.note.includes('Booked')) bucket.appts++;
+  });
+
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return {
+    dials: weeks.map(w=>w.dials),
+    appts: weeks.map(w=>w.appts),
+    labels: weeks.map(w=>`${months[w.end.getMonth()]} ${w.end.getDate()}`)
+  };
+}
+
 function renderChart(c){
   const svg = document.getElementById('perfChart');
   const W=700,H=200,pad=18;
-  const dials = c.weeklyDials, appts = c.weeklyAppts;
-  const maxDial = Math.max(...dials)*1.15;
-  const maxAppt = Math.max(...appts)*1.35;
+  const { dials, appts, labels } = computeWeeklyChartData(c);
+  // Floor of 1 avoids a divide-by-zero collapsing every point to the same
+  // spot when a client has no real activity yet - shows a flat baseline instead.
+  const maxDial = Math.max(...dials, 1)*1.15;
+  const maxAppt = Math.max(...appts, 1)*1.35;
   const n = dials.length;
   const stepX = (W-pad*2)/(n-1);
 
@@ -1174,8 +1208,13 @@ function renderChart(c){
 
   const apptDots = apptPath.pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="3.4" fill="#0B5FFF"/>`).join('');
 
+  const weekLabels = dialPath.pts.map((p,i)=>
+    `<text x="${p.x}" y="${H+16}" font-size="9.5" fill="var(--ink-faint)" text-anchor="middle">${labels[i]}</text>`
+  ).join('');
+
   svg.innerHTML = `
     ${gridLines}
+    ${weekLabels}
     <defs>
       <linearGradient id="fadeFill" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#0B5FFF" stop-opacity=".16"/>
