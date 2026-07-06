@@ -88,6 +88,8 @@
   .cr-actions{display:flex; align-items:center; gap:8px; flex-shrink:0;}
   .cr-edit{font-size:12px; font-weight:600; color:var(--ink-muted); padding:7px 12px; border-radius:100px; background:var(--surface-2);}
   .cr-edit:hover{background:var(--border-strong);}
+  .cr-uploads{font-size:12px; font-weight:600; color:var(--ink-muted); padding:7px 12px; border-radius:100px; background:var(--surface-2);}
+  .cr-uploads:hover{background:var(--border-strong);}
   .cr-code{font-family:'JetBrains Mono',monospace; font-size:11.5px; background:var(--surface-2); padding:6px 10px; border-radius:8px; color:var(--ink-2);}
   .cr-copy{font-size:12px; font-weight:700; color:var(--signal-deep); background:var(--signal-dim); padding:7px 14px; border-radius:100px;}
   .cr-nocode{font-size:12px; color:var(--danger); font-weight:600;}
@@ -120,6 +122,12 @@
   }
   .link-box code{flex:1; font-size:11.5px; font-family:'JetBrains Mono',monospace; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:left;}
   .link-box button{background:var(--ink); color:#fff; font-size:12px; font-weight:700; padding:8px 14px; border-radius:100px; flex-shrink:0;}
+
+  .uploads-list{max-height:360px; overflow-y:auto; margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+  .upload-row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 12px; background:var(--surface-2); border-radius:12px;}
+  .upload-row-name{font-size:13px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .upload-row-sub{font-size:11.5px; color:var(--ink-muted);}
+  .upload-row a{font-size:12px; font-weight:700; color:var(--signal-deep); flex-shrink:0;}
 
   .toast{
     position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(14px); opacity:0; pointer-events:none;
@@ -222,6 +230,17 @@
     </div>
     <div class="modal-actions" style="margin-top:16px;">
       <button type="button" class="modal-confirm" id="closeSuccess" style="width:100%;">Done</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="uploadsModal" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-title" id="uploadsModalTitle">Uploads</div>
+    <div class="modal-sub">Files this client has sent over.</div>
+    <div id="uploadsList" class="uploads-list"></div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button type="button" class="modal-confirm" id="closeUploads" style="width:100%;">Close</button>
     </div>
   </div>
 </div>
@@ -343,6 +362,7 @@ async function loadClientList(){
         </div>
         <div class="cr-actions">
           <button type="button" class="cr-edit" data-id="${c.id}">Edit</button>
+          <button type="button" class="cr-uploads" data-id="${c.id}" data-name="${c.name}">Uploads</button>
           ${c.code
             ? `<code class="cr-code">${c.code}</code><button type="button" class="cr-copy" data-link="https://buildsignals.com/home?code=${c.code}">Copy link</button>`
             : `<span class="cr-nocode">No code</span>`}
@@ -358,6 +378,8 @@ async function loadClientList(){
 document.getElementById('clientList').addEventListener('click', (e)=>{
   const editBtn = e.target.closest('.cr-edit');
   if(editBtn){ openEditModal(editBtn.dataset.id); return; }
+  const uploadsBtn = e.target.closest('.cr-uploads');
+  if(uploadsBtn){ openUploadsModal(uploadsBtn.dataset.id, uploadsBtn.dataset.name); return; }
   const btn = e.target.closest('.cr-copy');
   if(!btn) return;
   const link = btn.dataset.link;
@@ -427,6 +449,34 @@ async function openEditModal(clientId){
 }
 
 function closeAddModal(){ document.getElementById('addModal').style.display = 'none'; }
+
+async function openUploadsModal(clientId, clientName){
+  document.getElementById('uploadsModalTitle').textContent = `Uploads — ${clientName}`;
+  const list = document.getElementById('uploadsList');
+  list.innerHTML = '<div class="empty-state">Loading...</div>';
+  document.getElementById('uploadsModal').style.display = 'flex';
+
+  try{
+    const snap = await db.collection('clients').doc(clientId).collection('uploads').orderBy('sortKey', 'desc').get();
+    if(snap.empty){ list.innerHTML = '<div class="empty-state">No files yet.</div>'; return; }
+    list.innerHTML = snap.docs.map(d=>{
+      const f = d.data();
+      const linkHtml = f.url ? `<a href="${f.url}" target="_blank" rel="noopener">Download</a>` : '';
+      return `<div class="upload-row">
+        <div>
+          <div class="upload-row-name">${f.name || 'Untitled file'}</div>
+          <div class="upload-row-sub">${f.size || ''} · ${f.date || ''}</div>
+        </div>
+        ${linkHtml}
+      </div>`;
+    }).join('');
+  }catch(e){
+    console.error(e);
+    list.innerHTML = '<div class="empty-state">Could not load uploads - check your connection.</div>';
+  }
+}
+document.getElementById('closeUploads').addEventListener('click', ()=>{ document.getElementById('uploadsModal').style.display = 'none'; });
+document.getElementById('uploadsModal').addEventListener('click', (e)=>{ if(e.target.id==='uploadsModal') document.getElementById('uploadsModal').style.display = 'none'; });
 
 document.getElementById('openAddModal').addEventListener('click', openAddModal);
 document.getElementById('cancelAdd').addEventListener('click', closeAddModal);
