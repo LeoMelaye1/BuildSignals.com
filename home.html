@@ -1067,10 +1067,22 @@ function isDateInRange(dateStr, range){
   return d >= cutoff;
 }
 
+// Deals marked "Closed" before this date can't be trusted - the pagination
+// gap and stage-mapping bugs fixed earlier today could have caused wrong or
+// missed stage assignments in older synced data. Only counting closes with a
+// confirmed lastStageChangeAt on or after this date until older data is
+// separately verified. This also means Revenue (computed from this same
+// closed-leads set) only reflects these confirmed-accurate closes too.
+const CLOSED_DATA_ACCURATE_SINCE = new Date('2026-07-06T00:00:00');
+
 function computeStats(c, range){
   range = range || 'all';
   const leads = range==='all' ? c.leads : c.leads.filter(l=>isDateInRange(l.date, range));
-  const closedLeads = leads.filter(l=>l.status==='Closed');
+  const closedLeads = leads.filter(l=>{
+    if(l.status!=='Closed') return false;
+    const changed = l.lastStageChangeAt ? new Date(l.lastStageChangeAt) : null;
+    return changed && !isNaN(changed) && changed >= CLOSED_DATA_ACCURATE_SINCE;
+  });
   const passedThrough = leads.filter(l=>['Booked','Showed','Closed','Dead'].includes(l.status));
   // Baseline numbers represent performance from before the portal existed, so they
   // only belong in the all-time view - a filtered window can't attribute them to a date.
@@ -1099,19 +1111,20 @@ function fmtShortDate(d){
 function getRangeCaption(c, range){
   const now = new Date();
   const todayText = fmtShortDate(now);
+  const closedNote = ` Deals Closed only counts confirmed closes from Jul 6, 2026 onward while earlier data is verified.`;
 
   if(range === 'all'){
     const dates = (c.leads||[]).map(l=>new Date(l.date)).filter(d=>!isNaN(d));
     const earliestText = dates.length ? fmtShortDate(new Date(Math.min(...dates))) : 'your earliest synced lead';
-    return `Showing all-time totals from ${earliestText} through today (${todayText}), including your starting numbers from before the portal began tracking.`;
+    return `Showing all-time totals from ${earliestText} through today (${todayText}), including your starting numbers from before the portal began tracking.${closedNote}`;
   }
   if(range === 'month'){
     const start = new Date(now.getFullYear(), now.getMonth(), 1);
-    return `Showing ${fmtShortDate(start)} through today (${todayText}) - your starting baseline is not included in this view.`;
+    return `Showing ${fmtShortDate(start)} through today (${todayText}) - your starting baseline is not included in this view.${closedNote}`;
   }
   const days = parseInt(range, 10);
   const start = new Date(now.getTime() - days*24*60*60*1000);
-  return `Showing ${fmtShortDate(start)} through today (${todayText}) - your starting baseline is not included in this view.`;
+  return `Showing ${fmtShortDate(start)} through today (${todayText}) - your starting baseline is not included in this view.${closedNote}`;
 }
 
 function renderStats(){
