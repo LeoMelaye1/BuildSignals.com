@@ -349,7 +349,13 @@
   .no-timeshare svg{width:14px; height:14px; flex-shrink:0;}
 
   .resource-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .resource-grid.two-col{grid-template-columns:repeat(2,1fr);}
   @media(max-width:820px){ .resource-grid{grid-template-columns:1fr;} }
+  .booking-steps{background:var(--surface); border:1px solid var(--border); border-radius:var(--r-m); padding:18px 20px; margin-top:14px;}
+  .booking-steps-title{font-size:14px; font-weight:700; margin-bottom:8px;}
+  .booking-steps-body{font-size:12.5px; color:var(--ink-muted); line-height:1.55; margin-bottom:8px;}
+  .booking-steps-body:last-child{margin-bottom:0;}
+  .booking-steps-body strong{color:var(--ink-2); font-weight:700;}
   .resource-card{
     background:var(--surface); border:1px solid var(--border); border-radius:var(--r-m); padding:0; overflow:hidden;
     display:flex; flex-direction:column; transition:box-shadow .2s ease, transform .2s ease;
@@ -663,19 +669,21 @@
     </div>
 
     <div class="section-label">Resources</div>
-    <div class="resource-grid">
-      <a class="resource-card" href="#" onclick="return false;">
+    <div class="resource-grid two-col">
+      <a class="resource-card" href="https://drive.google.com/file/d/1rNi974D-87HxEOurvXaXJonDKxqgVd95/view?usp=sharing" target="_blank" rel="noopener">
         <div class="resource-thumb"><div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
-        <div class="resource-body"><div class="resource-title">How the program works</div><div class="resource-sub">3 min video · Leo Melaye</div></div>
+        <div class="resource-body"><div class="resource-title">How the program works</div><div class="resource-sub">Video · Leo Melaye</div></div>
       </a>
-      <a class="resource-card" href="#" onclick="return false;">
-        <div class="resource-thumb"><div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
-        <div class="resource-body"><div class="resource-title">How to book a stay</div><div class="resource-sub">2 min video · Step by step</div></div>
-      </a>
-      <a class="resource-card" href="#" onclick="return false;">
+      <a class="resource-card" href="https://docs.google.com/spreadsheets/d/11yPc2MZyOOK3p5n0Q7So7a8BtSUSpXGK/edit?usp=sharing&ouid=108692971035712881611&rtpof=true&sd=true" target="_blank" rel="noopener">
         <div class="resource-thumb doc"><div class="play"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M6 11l6 6 6-6M5 21h14"/></svg></div></div>
-        <div class="resource-body"><div class="resource-title">Full destination list</div><div class="resource-sub">All 134 destinations · 45 countries · .xlsx</div></div>
+        <div class="resource-body"><div class="resource-title">Full destination list</div><div class="resource-sub">Every location in the program · .xlsx</div></div>
       </a>
+    </div>
+
+    <div class="booking-steps">
+      <div class="booking-steps-title">How to book a stay</div>
+      <div class="booking-steps-body">Text Leo the homeowner's name, email, and which destination they'd like — that's the entire process on your end.</div>
+      <div class="booking-steps-body">Every stay carries a small tax/resort fee, typically <strong>$30&ndash;$250</strong> depending on length of stay. Let the homeowner cover that when they book, or cover it yourself so the stay is completely free for them — just tell Leo which one when you text.</div>
     </div>
 
     <div class="rewards-footer">
