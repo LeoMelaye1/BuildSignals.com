@@ -197,7 +197,7 @@
     <div class="field-label">Stage mapping</div>
     <div class="stage-map-hint">What each portal stage is called in this client's GHL pipeline. Leave as-is if the names already match.</div>
     <div class="stage-map-row"><span>New Lead</span><input class="text-input sm-input" id="sm_newlead" value="New Lead"></div>
-    <div class="stage-map-row"><span>Connecting</span><input class="text-input sm-input" id="sm_connecting" value="Connecting"></div>
+    <div class="stage-map-row"><span>Connecting</span><input class="text-input sm-input" id="sm_connecting" value="Connecting..."></div>
     <div class="stage-map-row"><span>Booked</span><input class="text-input sm-input" id="sm_booked" value="Booked"></div>
     <div class="stage-map-row"><span>Showed</span><input class="text-input sm-input" id="sm_showed" value="Showed"></div>
     <div class="stage-map-row"><span>Follow Up</span><input class="text-input sm-input" id="sm_followup" value="Follow Up"></div>
@@ -370,13 +370,13 @@ document.getElementById('clientList').addEventListener('click', (e)=>{
    ADD CLIENT MODAL
    ============================================================ */
 const STAGE_MAP_FIELDS = [
-  ['sm_newlead', 'New Lead'],
-  ['sm_connecting', 'Connecting'],
-  ['sm_booked', 'Booked'],
-  ['sm_showed', 'Showed'],
-  ['sm_followup', 'Follow Up'],
-  ['sm_closed', 'Closed'],
-  ['sm_dead', 'Dead']
+  ['sm_newlead', 'New Lead', 'New Lead'],
+  ['sm_connecting', 'Connecting', 'Connecting...'],
+  ['sm_booked', 'Booked', 'Booked'],
+  ['sm_showed', 'Showed', 'Showed'],
+  ['sm_followup', 'Follow Up', 'Follow Up'],
+  ['sm_closed', 'Closed', 'Closed'],
+  ['sm_dead', 'Dead', 'Dead']
 ];
 
 let editingClientId = null;
@@ -387,7 +387,7 @@ function openAddModal(){
   document.getElementById('confirmAdd').textContent = 'Create client';
   ['newName','newSub','newGhlPipeline'].forEach(id=>document.getElementById(id).value='');
   ['newAdSpend','newRevenue','newClosed','newAppts'].forEach(id=>document.getElementById(id).value='0');
-  STAGE_MAP_FIELDS.forEach(([id, appStage])=>document.getElementById(id).value = appStage);
+  STAGE_MAP_FIELDS.forEach(([id, appStage, ghlGuess])=>document.getElementById(id).value = ghlGuess);
   document.getElementById('addError').classList.remove('show');
   document.getElementById('addModal').style.display = 'flex';
   document.getElementById('newName').focus();
@@ -415,8 +415,8 @@ async function openEditModal(clientId){
     // stored stageMap is {ghlName: appStage} - invert it back to one value per portal stage field
     const inverted = {};
     Object.entries(c.stageMap || {}).forEach(([ghlName, appStage])=>{ inverted[appStage] = ghlName; });
-    STAGE_MAP_FIELDS.forEach(([id, appStage])=>{
-      document.getElementById(id).value = inverted[appStage] || appStage;
+    STAGE_MAP_FIELDS.forEach(([id, appStage, ghlGuess])=>{
+      document.getElementById(id).value = inverted[appStage] || ghlGuess;
     });
 
     document.getElementById('addModal').style.display = 'flex';
