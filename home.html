@@ -278,8 +278,18 @@
     .kc-name{font-size:14px;}
   }
   .kc-name{font-size:13px; font-weight:600; line-height:1.3;}
-  .kc-meta{font-size:11px; color:var(--ink-faint); margin-top:3px;}
+  .kc-meta{font-size:11px; color:var(--ink-faint); margin-top:5px; display:flex; align-items:center; justify-content:space-between; gap:6px;}
   .kc-value{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:var(--success); margin-top:7px;}
+  .source-badge{display:inline-flex; align-items:center; gap:3px; font-size:10px; font-weight:700; padding:3px 7px 3px 5px; border-radius:100px; white-space:nowrap; flex-shrink:0; max-width:118px;}
+  .source-badge svg{width:9px; height:9px; flex-shrink:0;}
+  .source-badge .sb-label{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .source-badge.src-facebook{background:var(--signal-dim); color:var(--signal-deep);}
+  .source-badge.src-google{background:var(--gold-dim); color:var(--gold-deep);}
+  .source-badge.src-website{background:#EFEFF1; color:#48484A;}
+  .source-badge.src-referral{background:var(--success-dim); color:#106b45;}
+  .source-badge.src-phone{background:#E3F3FB; color:#0A7EB5;}
+  .source-badge.src-text{background:#F1EDFB; color:#6B4FC7;}
+  .source-badge.src-other{background:var(--surface-2); color:var(--ink-muted);}
   .kanban-empty{font-size:11px; color:var(--ink-faint); text-align:center; padding:16px 6px; border:1.5px dashed var(--border); border-radius:10px;}
   .kanban-placeholder{border-radius:12px; background:rgba(0,0,0,.04); border:1.5px dashed var(--border-strong);}
 
@@ -287,7 +297,9 @@
     position:fixed; width:230px; background:var(--surface); border:1px solid var(--border); border-radius:16px;
     box-shadow:var(--sh-3); padding:14px; z-index:200;
   }
-  .sp-name{font-size:13px; font-weight:700; margin-bottom:10px;}
+  .sp-name{font-size:13px; font-weight:700; margin-bottom:6px;}
+  .sp-source-row{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:12px;}
+  .sp-date{font-size:11px; color:var(--ink-faint);}
   .sp-value-row{
     display:flex; align-items:center; justify-content:space-between; background:var(--success-dim); color:#106b45;
     border-radius:10px; padding:8px 12px; margin-bottom:12px; font-size:12px; font-weight:600;
@@ -777,6 +789,10 @@
 
 // SEED DATA — this is not read by the live app anymore. It's here so you can bulk-import
 // realistic starter records into Firestore for each client (see the setup guide).
+// For `source`, use values containing "Facebook", "Google", "Website", "Referral",
+// "Phone", or "Text" (case-insensitive, partial match ok) so leads get the right
+// badge — see normalizeSource()/SOURCE_PATTERNS below. Anything else still shows,
+// just in a neutral badge with the raw text.
 const SEED_CLIENTS = {
   fphs: {
     name:"First Priority Home Solutions", initials:"FP",
@@ -1167,6 +1183,67 @@ const ACTIVITY_ICONS = {
 };
 const ACTIVITY_LABELS = {'call-out':'Called','call-in':'Incoming call','text-out':'Texted','text-in':'Replied','note':'Note','stage':'Stage change'};
 
+/* ============================================================
+   LEAD SOURCE BADGES
+   `source` on a lead is whatever string comes in when it's synced (GHL
+   webhook/API, manual add, etc). This normalizes common variants into a
+   clean, color-coded badge so a client can see at a glance where each
+   lead came from. Anything that doesn't match a known pattern still
+   renders — in a neutral badge, showing the raw value — rather than
+   being hidden, so nothing silently disappears as new source strings
+   show up in real data. Add patterns to SOURCE_PATTERNS as needed.
+   ============================================================ */
+const SOURCE_ICONS = {
+  facebook:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 001 1h2l4 4V6l-4 4H4a1 1 0 00-1 1z"/><path d="M15 8a4 4 0 010 8M18 5a8 8 0 010 14"/></svg>',
+  google:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>',
+  website:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3c2.4 2.3 2.4 15.7 0 18M12 3c-2.4 2.3-2.4 15.7 0 18"/></svg>',
+  referral:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M15 3.13a4 4 0 010 7.75"/></svg>',
+  phone: ACTIVITY_ICONS['call-out'],
+  text: ACTIVITY_ICONS['text-out'],
+  other:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41L13.42 20.58a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.4" fill="currentColor" stroke="none"/></svg>'
+};
+const SOURCE_PATTERNS = {
+  facebook:/facebook|instagram|\bmeta\b|\bfb\b/i,
+  google:/google|gform|g[-\s]?form|g\s?ads|adwords/i,
+  website:/website|web\s?form|site\s?form|contact\s?form|landing\s?page/i,
+  referral:/referral|referred|word of mouth/i,
+  phone:/phone|\bcall\b|cold\s?call/i,
+  text:/\btext\b|\bsms\b/i
+};
+const SOURCE_META = {
+  facebook:{label:'Facebook', cls:'src-facebook', icon:SOURCE_ICONS.facebook},
+  google:{label:'Google', cls:'src-google', icon:SOURCE_ICONS.google},
+  website:{label:'Website', cls:'src-website', icon:SOURCE_ICONS.website},
+  referral:{label:'Referral', cls:'src-referral', icon:SOURCE_ICONS.referral},
+  phone:{label:'Phone', cls:'src-phone', icon:SOURCE_ICONS.phone},
+  text:{label:'Text', cls:'src-text', icon:SOURCE_ICONS.text},
+  other:{label:null, cls:'src-other', icon:SOURCE_ICONS.other}
+};
+// Explicit overrides — exact `source` strings that don't self-describe their
+// channel, but are confirmed (as of this date) to only be fed by one platform.
+// This is a stopgap until real UTM-based attribution is flowing from GHL (the
+// Attribution panel on a contact record, not the plain "Contact source" field)
+// — worth revisiting once that's live. If another client's site reuses this
+// same form name for a form that ISN'T Google-only, add a client-specific
+// check here rather than assuming this entry covers them too.
+const SOURCE_EXPLICIT_OVERRIDES = {
+  'website hero form': 'google' // MTR Baths — confirmed Google Ads only, Jul 2026
+};
+function normalizeSource(raw){
+  const s = (raw||'').toString();
+  const exact = SOURCE_EXPLICIT_OVERRIDES[s.trim().toLowerCase()];
+  if(exact) return exact;
+  for(const key of ['facebook','google','website','referral','phone','text']){
+    if(SOURCE_PATTERNS[key].test(s)) return key;
+  }
+  return 'other';
+}
+function sourceBadge(raw){
+  const meta = SOURCE_META[normalizeSource(raw)];
+  const label = meta.label || (raw ? String(raw) : 'Unknown');
+  return `<span class="source-badge ${meta.cls}" title="${label}">${meta.icon}<span class="sb-label">${label}</span></span>`;
+}
+
 let activityFilter = 'all';
 let activityExpanded = false;
 
@@ -1246,7 +1323,7 @@ function renderLeads(c){
       const valueLine = l.status==='Closed' ? `<div class="kc-value">${fmtMoney(l.value||0)}</div>` : '';
       return `<div class="kanban-card" data-lead="${l.id}" tabindex="0">
         <div class="kc-name">${l.name}</div>
-        <div class="kc-meta">${l.date} · ${l.source}</div>
+        <div class="kc-meta"><span>${l.date}</span>${sourceBadge(l.source)}</div>
         ${valueLine}
       </div>`;
     }).join('') || `<div class="kanban-empty">${q ? 'No matches' : 'No leads here'}</div>`;
@@ -1389,6 +1466,7 @@ function openStagePicker(leadId, cardEl){
     : '';
   pop.innerHTML = `
     <div class="sp-name">${lead.name}</div>
+    <div class="sp-source-row">${sourceBadge(lead.source)}<span class="sp-date">${lead.date}</span></div>
     ${valueRow}
     <div class="sp-label">Move to</div>
     <div class="sp-grid">${STATUS_OPTIONS.map(s=>`<button type="button" class="sp-stage ${s===lead.status?'current':''}" data-stage="${s}">${s}</button>`).join('')}</div>`;
