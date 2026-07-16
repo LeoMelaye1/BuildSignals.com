@@ -6,38 +6,45 @@
   <title>Growth Partner | BuildSignals</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --yellow:    #c8a800;
-      --yellow-bg: #fffdf0;
-      --ink:       #111111;
-      --ink-2:     #444444;
-      --ink-3:     #888888;
-      --border:    #e2e2e2;
-      --bg:        #f8f8f6;
-      --white:     #ffffff;
+      --paper:      #EFE6D2;
+      --sheet:      #FBF8F1;
+      --ink:        #221C13;
+      --ink-2:      #56503E;
+      --ink-3:      #8D8570;
+      --line:       #DBD0AF;
+      --line-2:     #C6B98C;
+      --stamp:      #A23624;
+      --stamp-wash: rgba(162, 54, 36, 0.08);
+      --good:       #3F7D4E;
     }
 
     html, body { height: 100%; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 15px;
       color: var(--ink);
-      background: var(--bg);
+      background: var(--paper);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--stamp);
+      outline-offset: 2px;
+    }
+
     /* NAV */
     nav {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
+      background: var(--sheet);
+      border-bottom: 3px double var(--ink);
       padding: 0 32px;
-      height: 52px;
+      height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -46,8 +53,11 @@
       z-index: 100;
     }
     .logo {
-      font-family: 'Instrument Serif', serif;
-      font-size: 17px;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
       color: var(--ink);
       text-decoration: none;
     }
@@ -55,140 +65,227 @@
       display: flex;
       align-items: center;
       gap: 7px;
-      font-size: 12px;
+      font-family: 'IBM Plex Mono', monospace;
       font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
       color: var(--ink-2);
     }
-    .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; flex-shrink: 0; }
+    .dot { width: 7px; height: 7px; background: var(--good); border-radius: 50%; flex-shrink: 0; }
 
     /* TWO-COL */
     .page {
       display: grid;
       grid-template-columns: 1fr 1.4fr;
-      min-height: calc(100vh - 52px);
+      min-height: calc(100vh - 56px);
       align-items: start;
     }
 
     /* LEFT */
     .left {
-      background: var(--white);
-      border-right: 1px solid var(--border);
+      background: var(--sheet);
+      border-right: 2px dashed var(--line-2);
       padding: 48px 44px;
       position: sticky;
-      top: 52px;
-      height: calc(100vh - 52px);
+      top: 56px;
+      height: calc(100vh - 56px);
       overflow-y: auto;
     }
 
     .eyebrow {
-      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'IBM Plex Mono', monospace;
       font-weight: 600;
-      letter-spacing: 0.09em;
+      font-size: 11px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--yellow);
-      margin-bottom: 12px;
-      display: block;
+      color: var(--stamp);
+      margin-bottom: 14px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 16px;
+      height: 1px;
+      background: var(--stamp);
+      flex-shrink: 0;
     }
 
     .left h1 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 44px;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 800;
+      font-size: 58px;
+      line-height: 0.94;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
       color: var(--ink);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
-    .left h1 em { font-style: italic; color: var(--yellow); }
+    .left h1 em { font-style: normal; color: var(--stamp); }
 
     .role-track {
-      font-size: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 12.5px;
+      letter-spacing: 0.02em;
+      color: var(--ink-2);
+      margin-bottom: 26px;
+      padding-bottom: 22px;
+      border-bottom: 1px dashed var(--line-2);
+    }
+
+    /* ledger stats */
+    .ledger { margin-bottom: 26px; }
+    .ledger-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 11px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .ledger-row:first-child { padding-top: 2px; }
+    .ledger-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .ledger-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       color: var(--ink-3);
-      margin-bottom: 24px;
+      white-space: nowrap;
     }
-
-    /* stats 2x2 */
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin-bottom: 24px;
+    .ledger-fill {
+      flex: 1;
+      border-bottom: 1px dotted var(--line-2);
+      margin-bottom: 5px;
+      min-width: 10px;
     }
-    .stat {
-      background: var(--bg);
-      padding: 12px 14px;
-    }
-    .stat-val {
-      font-size: 17px;
-      font-weight: 600;
+    .ledger-value {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 700;
+      font-size: 21px;
       color: var(--ink);
-      line-height: 1;
-      margin-bottom: 2px;
+      white-space: nowrap;
     }
-    .stat-lbl { font-size: 11px; color: var(--ink-3); }
+    .ledger-value small {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 10.5px;
+      color: var(--ink-3);
+      margin-left: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
 
-    .rule { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+    .rule { border: none; border-top: 1px dashed var(--line); margin: 22px 0; }
 
     .left h2 {
-      font-size: 12px;
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
       letter-spacing: 0.02em;
+      text-transform: uppercase;
       color: var(--ink);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .left h2::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--stamp);
+      flex-shrink: 0;
     }
 
     .left p {
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 14.5px;
       font-weight: 300;
       color: var(--ink-2);
       line-height: 1.7;
       margin-bottom: 10px;
     }
-    .left p strong { color: var(--ink); font-weight: 500; }
+    .left p strong { color: var(--ink); font-weight: 600; }
     .left p:last-child { margin-bottom: 0; }
 
-    .bullets {
-      list-style: none;
-    }
+    .bullets { list-style: none; }
     .bullets li {
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 14px;
       font-weight: 300;
       color: var(--ink-2);
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--line);
       display: flex;
       gap: 8px;
-      line-height: 1.45;
+      line-height: 1.5;
     }
     .bullets li:last-child { border-bottom: none; padding-bottom: 0; }
-    .bullets li b { color: var(--ink); font-weight: 500; white-space: nowrap; }
+    .bullets li b { color: var(--ink); font-weight: 600; white-space: nowrap; }
+
+    /* pay block + stamp */
+    .pay-block::after { content: ""; display: table; clear: both; }
+    .stamp-badge {
+      float: right;
+      margin: 0 0 12px 16px;
+      border: 2px solid var(--stamp);
+      border-radius: 8px;
+      padding: 8px 14px;
+      text-align: center;
+      color: var(--stamp);
+      background: var(--stamp-wash);
+      transform: rotate(-6deg);
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 1;
+    }
+    .stamp-badge span {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
 
     /* RIGHT */
     .right {
+      background: var(--paper);
       padding: 40px 48px 72px;
     }
 
     .form-hd { margin-bottom: 24px; }
     .form-hd h2 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 24px;
-      letter-spacing: -0.015em;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 800;
+      font-size: 30px;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
       color: var(--ink);
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
-    .form-hd p { font-size: 13px; color: var(--ink-3); font-weight: 300; }
+    .form-hd p { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--ink-2); font-weight: 300; }
 
     /* section labels */
     .slabel {
-      display: block;
-      font-size: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'IBM Plex Mono', monospace;
       font-weight: 600;
+      font-size: 10.5px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--ink-3);
-      margin: 22px 0 12px;
+      margin: 26px 0 14px;
     }
+    .slabel::after { content: ""; flex: 1; height: 1px; background: var(--line-2); }
     .slabel:first-of-type { margin-top: 0; }
 
     /* grid helpers */
@@ -197,7 +294,7 @@
     .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
     .field:last-child { margin-bottom: 0; }
 
-    label { font-size: 12px; font-weight: 500; color: var(--ink-2); }
+    label { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--ink-2); }
     .lopt { font-weight: 300; color: var(--ink-3); font-size: 11px; margin-left: 3px; }
 
     input[type="text"],
@@ -207,12 +304,12 @@
     input[type="url"],
     textarea {
       width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      background: var(--white);
-      font-family: 'Inter', sans-serif;
+      border: 1px solid var(--line-2);
+      border-radius: 4px;
+      background: var(--sheet);
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 13.5px;
-      font-weight: 300;
+      font-weight: 400;
       color: var(--ink);
       padding: 9px 11px;
       outline: none;
@@ -220,23 +317,23 @@
       -webkit-appearance: none;
     }
     input:focus, textarea:focus {
-      border-color: var(--yellow);
-      box-shadow: 0 0 0 3px rgba(200,168,0,0.1);
+      border-color: var(--stamp);
+      box-shadow: 0 0 0 3px var(--stamp-wash);
     }
-    input::placeholder, textarea::placeholder { color: #d2d2d2; }
+    input::placeholder, textarea::placeholder { color: #B7AD90; }
     textarea { resize: vertical; min-height: 84px; line-height: 1.6; }
-    .hint { font-size: 11px; color: var(--ink-3); font-weight: 300; line-height: 1.5; margin-top: 2px; }
+    .hint { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; color: var(--ink-3); font-weight: 300; line-height: 1.5; margin-top: 2px; }
 
     /* choice buttons */
     .choices { display: flex; flex-wrap: wrap; gap: 6px; }
     .choice {
-      font-family: 'Inter', sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 12.5px;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--ink-2);
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 5px;
+      background: var(--sheet);
+      border: 1px solid var(--line-2);
+      border-radius: 4px;
       padding: 7px 12px;
       cursor: pointer;
       display: inline-flex;
@@ -246,8 +343,8 @@
       user-select: none;
       line-height: 1;
     }
-    .choice:hover { border-color: var(--yellow); }
-    .choice.on { border-color: var(--yellow); background: var(--yellow-bg); color: var(--ink); }
+    .choice:hover { border-color: var(--stamp); }
+    .choice.on { border-color: var(--stamp); background: var(--stamp-wash); color: var(--ink); }
     .choice input { display: none; }
 
     /* submit */
@@ -256,36 +353,39 @@
     .submit-btn {
       width: 100%;
       background: var(--ink);
-      color: var(--white);
+      color: var(--sheet);
       border: none;
-      border-radius: 5px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 13px;
+      border-radius: 4px;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      padding: 14px;
       cursor: pointer;
       transition: background 0.15s;
-      letter-spacing: -0.01em;
     }
-    .submit-btn:hover { background: #2a2a2a; }
-    .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .submit-btn:hover { background: #000; }
+    .submit-btn:disabled { background: #B7AD90; cursor: not-allowed; }
 
     .ps {
       margin-top: 14px;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 12px;
       color: var(--ink-3);
       font-weight: 300;
       line-height: 1.7;
     }
-    .ps strong { color: var(--ink-2); font-weight: 500; }
+    .ps strong { color: var(--ink-2); font-weight: 600; }
 
     .err {
       display: none;
+      font-family: 'IBM Plex Sans', sans-serif;
       font-size: 12px;
-      color: #b91c1c;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 5px;
+      color: #8C2E22;
+      background: #F7E4DE;
+      border: 1px solid #E3B6A8;
+      border-radius: 4px;
       padding: 9px 12px;
       margin-top: 8px;
     }
@@ -297,21 +397,26 @@
       text-align: center;
     }
     #success h3 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 30px;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
+      text-transform: uppercase;
+      color: var(--ink);
       margin-bottom: 8px;
     }
-    #success p { font-size: 14px; color: var(--ink-3); font-weight: 300; line-height: 1.7; max-width: 340px; margin: 0 auto; }
+    #success p { font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; color: var(--ink-3); font-weight: 300; line-height: 1.7; max-width: 340px; margin: 0 auto; }
 
     /* footer */
     footer {
-      background: var(--white);
-      border-top: 1px solid var(--border);
+      background: var(--ink);
       padding: 14px 32px;
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
-      color: var(--ink-3);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #D8CDA8;
       grid-column: 1 / -1;
     }
 
@@ -324,11 +429,11 @@
         position: static;
         height: auto;
         border-right: none;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 2px dashed var(--line-2);
         padding: 32px 20px;
         overflow: visible;
       }
-      .left h1 { font-size: 30px; }
+      .left h1 { font-size: 42px; }
       .right { padding: 32px 20px 60px; }
       nav { padding: 0 20px; }
       footer { padding: 12px 20px; flex-direction: column; gap: 3px; }
@@ -336,7 +441,6 @@
 
     @media (max-width: 480px) {
       .g2 { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -351,43 +455,68 @@
 
   <!-- LEFT: PITCH -->
   <aside class="left">
-    <span class="eyebrow">We're hiring college students</span>
+    <div class="eyebrow">Req. GP-0426 · Now hiring nationwide</div>
     <h1>Growth<br><em>Partner</em></h1>
-    <p class="role-track">Appointment Setter → Sales Manager track</p>
+    <p class="role-track">Appointment Setter → Closer Track</p>
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-val">$9K/mo</div>
-        <div class="stat-lbl">Avg. setter earnings</div>
+    <div class="ledger">
+      <div class="ledger-row">
+        <span class="ledger-label">Avg. setter pay</span>
+        <span class="ledger-fill"></span>
+        <span class="ledger-value">$4,000<small>/mo</small></span>
       </div>
-      <div class="stat">
-        <div class="stat-val">No cap</div>
-        <div class="stat-lbl">Commission only</div>
+      <div class="ledger-row">
+        <span class="ledger-label">Per closed appt.</span>
+        <span class="ledger-fill"></span>
+        <span class="ledger-value">$750<small>/close</small></span>
       </div>
-      <div class="stat">
-        <div class="stat-val">100%</div>
-        <div class="stat-lbl">Remote</div>
+      <div class="ledger-row">
+        <span class="ledger-label">Avg. closer pay</span>
+        <span class="ledger-fill"></span>
+        <span class="ledger-value">$112,000<small>/yr</small></span>
       </div>
-      <div class="stat">
-        <div class="stat-val">Flexible</div>
-        <div class="stat-lbl">Work around class</div>
+      <div class="ledger-row">
+        <span class="ledger-label">Location</span>
+        <span class="ledger-fill"></span>
+        <span class="ledger-value">100% Remote</span>
       </div>
     </div>
 
     <h2>What this is</h2>
-    <p>Most college jobs pay $12/hr to stand at a register. This isn't that. BuildSignals books appointments for home remodeling contractors across the US — and we need students who are hungry enough to actually make real money while they're still in school.</p>
-    <p><strong>Our average setter earns $9,000 a month.</strong> You work your own hours, from your dorm or apartment, on a proven script we give you. No experience needed — just the drive to show up and make calls every day.</p>
-    <p>The long-term play: the best performers move into sales management and build their own team. We'd rather promote from within than hire outside.</p>
+    <p>Most phone sales jobs put you on a base salary, hand you a quota you don't control, and cap what you can earn. This isn't that.</p>
+    <p>BuildSignals books appointments for home remodeling contractors across the US, and we're looking for people who are hungry enough to turn real effort into real income. <strong>Our average setter earns $4,000 a month</strong> — commission only, no cap, working remote on a proven script we hand you from day one.</p>
+    <p>We promote from within. Every closer on our team started exactly where you'd be starting.</p>
+
+    <hr class="rule" />
+
+    <h2>What you'll actually do</h2>
+    <p>Your day is calls. You're working a list of homeowner leads, running our script, and booking qualified homeowners onto a contractor's calendar for a free estimate. That's the job.</p>
+    <p>It's a volume game — the more calls you make, the more appointments you set, and the more you get paid. No fluff, no busywork. Dial, talk, book, repeat.</p>
+
+    <hr class="rule" />
+
+    <div class="pay-block">
+      <div class="stamp-badge">$750<span>Per close</span></div>
+      <h2>How you get paid</h2>
+      <p>You're commission-only to start, with no cap on what you can make. Set an appointment, and once it closes into a signed job, <strong>you get $750 for it.</strong> No close, no commission on that one — so how well you set the appointment actually matters.</p>
+    </div>
+
+    <hr class="rule" />
+
+    <h2>Where this goes</h2>
+    <p>This role is a launchpad, not a landing spot. Once you've proven you can set appointments that close, you move into the closer seat — running the actual sales calls instead of just booking them.</p>
+    <p>Closers come onto our payroll, and <strong>our average closer earns $112,000 a year.</strong> For the right person, that jump can happen in months, not years — which is exactly why we need people who show up hungry and put in the reps.</p>
 
     <hr class="rule" />
 
     <h2>You're a fit if</h2>
     <ul class="bullets">
-      <li><b>You're hungry</b> You're tired of being broke in college and you're willing to do something about it.</li>
-      <li><b>You're consistent</b> You already do something daily — gym, sports, a side project. You don't need someone pushing you.</li>
-      <li><b>You're a talker</b> People naturally enjoy your energy. You're warm, easy to talk to, and confident on the phone.</li>
-      <li><b>You have time</b> You can carve out real hours around your schedule — this isn't a 20-min-a-day thing.</li>
-      <li><b>You're in the US</b> Must be based in the United States with strong English.</li>
+      <li><b>You're hungry</b> You want more than a paycheck, and you're willing to put in the work to get it.</li>
+      <li><b>You can take a no</b> Most calls end in rejection. That doesn't slow you down — you shake it off and dial the next number.</li>
+      <li><b>You're consistent</b> You already show up for something daily — a job, training, a routine. Nobody has to push you.</li>
+      <li><b>You're a talker</b> People like talking to you. You're warm, easy on the phone, and confident with strangers.</li>
+      <li><b>Background helps</b> Time in contracting or home services helps. Previous sales experience helps more. Neither is required, but both move you to the front of the line.</li>
+      <li><b>You're in the US</b> Must be based in the United States with strong spoken English.</li>
     </ul>
   </aside>
 
@@ -405,6 +534,7 @@
       <input type="number" name="age" /><input type="text" name="country" />
       <input type="text" name="english_fluency" /><input type="text" name="device" />
       <textarea name="current_situation"></textarea>
+      <input type="text" name="contracting_experience" /><input type="text" name="sales_experience" />
       <input type="text" name="income_goal" />
       <textarea name="why_you_want_this"></textarea>
       <input type="url" name="video_link" />
@@ -440,7 +570,7 @@
       <div class="g2">
         <div class="field">
           <label for="ag">Age</label>
-          <input type="number" id="ag" name="age" placeholder="26" min="18" max="65" required />
+          <input type="number" id="ag" name="age" placeholder="29" min="18" max="65" required />
         </div>
         <div class="field">
           <label for="co">Country</label>
@@ -457,7 +587,7 @@
           <label class="choice"><input type="radio" name="english_fluency" value="Conversational only" />Conversational only</label>
         </div>
       </div>
-      <div class="field" style="margin-top:8px;">
+      <div class="field" style="margin-top:10px;">
         <label>Device you'd work from</label>
         <div class="choices">
           <label class="choice"><input type="radio" name="device" value="MacBook" required />MacBook</label>
@@ -470,15 +600,31 @@
       <span class="slabel">Background</span>
       <div class="field">
         <label for="sit">Current situation</label>
-        <textarea id="sit" name="current_situation" placeholder="Year in school, major, current job if any, how many hours a week you realistically have." required></textarea>
+        <textarea id="sit" name="current_situation" placeholder="Current job or work situation, and how many hours a week you can realistically commit." required></textarea>
       </div>
-      <div class="field">
+      <div class="field" style="margin-top:2px;">
+        <label>Contracting industry experience</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="contracting_experience" value="Yes, worked in contracting/home services" required />Yes</label>
+          <label class="choice"><input type="radio" name="contracting_experience" value="Some familiarity, not direct experience" />Some familiarity</label>
+          <label class="choice"><input type="radio" name="contracting_experience" value="None" />None</label>
+        </div>
+      </div>
+      <div class="field" style="margin-top:10px;">
+        <label>Previous sales experience</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="sales_experience" value="Yes, closing or appointment setting" required />Yes, closing/setting</label>
+          <label class="choice"><input type="radio" name="sales_experience" value="Some, other sales roles" />Some, other sales</label>
+          <label class="choice"><input type="radio" name="sales_experience" value="None yet" />None yet</label>
+        </div>
+      </div>
+      <div class="field" style="margin-top:10px;">
         <label for="goal">Income goal and timeframe</label>
         <input type="text" id="goal" name="income_goal" placeholder="e.g. $5,000/month within 6 months" required />
       </div>
       <div class="field">
         <label for="why">Why do you want this? Be honest.</label>
-        <textarea id="why" name="why_you_want_this" placeholder="What's your actual reason? Tuition, rent, building something — be real about it." required style="min-height:96px;"></textarea>
+        <textarea id="why" name="why_you_want_this" placeholder="What's your actual reason — bills, a bigger goal, building toward something else? Be real about it." required style="min-height:96px;"></textarea>
       </div>
 
       <span class="slabel">60-Second Video</span>
@@ -510,7 +656,7 @@
 
   <footer>
     <span>© 2026 BuildSignals</span>
-    <span>Commission only · Remote · Full-time</span>
+    <span>Commission-based · Remote · Path to payroll</span>
   </footer>
 
 </div>
@@ -544,19 +690,21 @@
     errMsg.style.display = 'none';
 
     var data = {
-      first_name:        form.querySelector('[name="first_name"]').value,
-      last_name:         form.querySelector('[name="last_name"]').value,
-      email:             form.querySelector('[name="email"]').value,
-      phone:             form.querySelector('[name="phone"]').value,
-      age:               form.querySelector('[name="age"]').value,
-      country:           form.querySelector('[name="country"]').value,
-      english_fluency:   (form.querySelector('[name="english_fluency"]:checked') || {}).value || '',
-      device:            (form.querySelector('[name="device"]:checked') || {}).value || '',
-      current_situation: form.querySelector('[name="current_situation"]').value,
-      income_goal:       form.querySelector('[name="income_goal"]').value,
-      why_you_want_this: form.querySelector('[name="why_you_want_this"]').value,
-      video_link:        form.querySelector('[name="video_link"]').value,
-      anything_else:     form.querySelector('[name="anything_else"]').value
+      first_name:             form.querySelector('[name="first_name"]').value,
+      last_name:              form.querySelector('[name="last_name"]').value,
+      email:                  form.querySelector('[name="email"]').value,
+      phone:                  form.querySelector('[name="phone"]').value,
+      age:                    form.querySelector('[name="age"]').value,
+      country:                form.querySelector('[name="country"]').value,
+      english_fluency:        (form.querySelector('[name="english_fluency"]:checked') || {}).value || '',
+      device:                 (form.querySelector('[name="device"]:checked') || {}).value || '',
+      current_situation:      form.querySelector('[name="current_situation"]').value,
+      contracting_experience: (form.querySelector('[name="contracting_experience"]:checked') || {}).value || '',
+      sales_experience:       (form.querySelector('[name="sales_experience"]:checked') || {}).value || '',
+      income_goal:            form.querySelector('[name="income_goal"]').value,
+      why_you_want_this:      form.querySelector('[name="why_you_want_this"]').value,
+      video_link:             form.querySelector('[name="video_link"]').value,
+      anything_else:          form.querySelector('[name="anything_else"]').value
     };
 
     fetch('https://services.leadconnectorhq.com/hooks/IFtiovGmHoKETytJU9wy/webhook-trigger/ba4bc799-5165-4c6c-8fe5-8208e79aa826', {
