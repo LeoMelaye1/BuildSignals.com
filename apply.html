@@ -137,7 +137,7 @@
     }
 
     /* ledger stats */
-    .ledger { margin-bottom: 26px; }
+    .ledger { margin-bottom: 14px; }
     .ledger-row {
       display: flex;
       align-items: baseline;
@@ -177,6 +177,21 @@
       margin-left: 3px;
       text-transform: uppercase;
       letter-spacing: 0.02em;
+    }
+
+    .glance-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 28px; }
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 10.5px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      background: var(--paper);
+      border: 1px solid var(--line-2);
+      border-radius: 3px;
+      padding: 5px 9px;
+      white-space: nowrap;
     }
 
     .rule { border: none; border-top: 1px dashed var(--line); margin: 22px 0; }
@@ -455,10 +470,11 @@
 
   <!-- LEFT: PITCH -->
   <aside class="left">
-    <div class="eyebrow">Req. GP-0426 · Now hiring nationwide</div>
+    <div class="eyebrow">Req. GP0426, now hiring nationwide</div>
     <h1>Growth<br><em>Partner</em></h1>
     <p class="role-track">Appointment Setter → Closer Track</p>
 
+    <span class="slabel">At a Glance</span>
     <div class="ledger">
       <div class="ledger-row">
         <span class="ledger-label">Avg. setter pay</span>
@@ -475,47 +491,57 @@
         <span class="ledger-fill"></span>
         <span class="ledger-value">$112,000<small>/yr</small></span>
       </div>
-      <div class="ledger-row">
-        <span class="ledger-label">Location</span>
-        <span class="ledger-fill"></span>
-        <span class="ledger-value">100% Remote</span>
-      </div>
     </div>
+    <div class="glance-tags">
+      <span class="tag">100% Remote</span>
+      <span class="tag">Full-time</span>
+      <span class="tag">Commission to start</span>
+      <span class="tag">Training provided</span>
+      <span class="tag">Paid annual team trip</span>
+    </div>
+
+    <span class="slabel">Details</span>
 
     <h2>What this is</h2>
     <p>Most phone sales jobs put you on a base salary, hand you a quota you don't control, and cap what you can earn. This isn't that.</p>
-    <p>BuildSignals books appointments for home remodeling contractors across the US, and we're looking for people who are hungry enough to turn real effort into real income. <strong>Our average setter earns $4,000 a month</strong> — commission only, no cap, working remote on a proven script we hand you from day one.</p>
+    <p>BuildSignals helps home remodeling contractors land more booked jobs, and we're actively growing our own roster of contractor clients. Your job is getting contractors on the phone and onto a calendar for a call about what we do. <strong>Our average setter earns $4,000 a month.</strong> It's commission only, with no cap, and you work remote on a proven script we hand you from day one.</p>
     <p>We promote from within. Every closer on our team started exactly where you'd be starting.</p>
 
     <hr class="rule" />
 
     <h2>What you'll actually do</h2>
-    <p>Your day is calls. You're working a list of homeowner leads, running our script, and booking qualified homeowners onto a contractor's calendar for a free estimate. That's the job.</p>
-    <p>It's a volume game — the more calls you make, the more appointments you set, and the more you get paid. No fluff, no busywork. Dial, talk, book, repeat.</p>
+    <p>Your day is calls. You're working a list of contractor leads, running our script, and booking the interested ones onto a calendar for a call about growing their business with us. That's the job.</p>
+    <p>It's a volume game. The more calls you make, the more appointments you set, and the more you get paid. No fluff, no busywork. Dial, talk, book, repeat.</p>
 
     <hr class="rule" />
 
     <div class="pay-block">
       <div class="stamp-badge">$750<span>Per close</span></div>
       <h2>How you get paid</h2>
-      <p>You're commission-only to start, with no cap on what you can make. Set an appointment, and once it closes into a signed job, <strong>you get $750 for it.</strong> No close, no commission on that one — so how well you set the appointment actually matters.</p>
+      <p>You're commission-only to start, with no cap on what you can make. Set the appointment, and once that contractor signs on as a client, <strong>you get $750 for it.</strong> No sign-up, no commission on that one. So how well you set the appointment actually matters.</p>
     </div>
 
     <hr class="rule" />
 
+    <h2>How we set you up</h2>
+    <p>You're not handed a script and left on your own. We train you, get you set up on the system, and stay in your corner while you learn the calls. If something's not clicking, someone actually helps you fix it.</p>
+    <p>Once a year, the whole team goes somewhere on the company's dime. This year it was a week in Cancun.</p>
+
+    <hr class="rule" />
+
     <h2>Where this goes</h2>
-    <p>This role is a launchpad, not a landing spot. Once you've proven you can set appointments that close, you move into the closer seat — running the actual sales calls instead of just booking them.</p>
-    <p>Closers come onto our payroll, and <strong>our average closer earns $112,000 a year.</strong> For the right person, that jump can happen in months, not years — which is exactly why we need people who show up hungry and put in the reps.</p>
+    <p>This role is a launchpad, not a landing spot. Once you've proven you can set appointments that close, you move into the closer seat. Instead of just booking the call, you're the one getting on it and signing the contractor up.</p>
+    <p>Closers come onto our payroll, and <strong>our average closer earns $112,000 a year.</strong> For the right person, that jump can happen in months, not years. That's exactly why we need people who show up hungry and put in the reps.</p>
 
     <hr class="rule" />
 
     <h2>You're a fit if</h2>
     <ul class="bullets">
       <li><b>You're hungry</b> You want more than a paycheck, and you're willing to put in the work to get it.</li>
-      <li><b>You can take a no</b> Most calls end in rejection. That doesn't slow you down — you shake it off and dial the next number.</li>
-      <li><b>You're consistent</b> You already show up for something daily — a job, training, a routine. Nobody has to push you.</li>
+      <li><b>You can take a no</b> Most calls end in rejection. That doesn't slow you down. You shake it off and dial the next number.</li>
+      <li><b>You're consistent</b> You already show up for something daily, whether that's a job, training, or a routine. Nobody has to push you.</li>
       <li><b>You're a talker</b> People like talking to you. You're warm, easy on the phone, and confident with strangers.</li>
-      <li><b>Background helps</b> Time in contracting or home services helps. Previous sales experience helps more. Neither is required, but both move you to the front of the line.</li>
+      <li><b>Background helps</b> You'll be talking to contractors all day, so time in contracting or home services helps. Previous sales experience helps more. Neither is required, but both move you to the front of the line.</li>
       <li><b>You're in the US</b> Must be based in the United States with strong spoken English.</li>
     </ul>
   </aside>
@@ -624,12 +650,12 @@
       </div>
       <div class="field">
         <label for="why">Why do you want this? Be honest.</label>
-        <textarea id="why" name="why_you_want_this" placeholder="What's your actual reason — bills, a bigger goal, building toward something else? Be real about it." required style="min-height:96px;"></textarea>
+        <textarea id="why" name="why_you_want_this" placeholder="What's your actual reason? Bills, a bigger goal, something else you're building toward. Be real about it." required style="min-height:96px;"></textarea>
       </div>
 
       <span class="slabel">60-Second Video</span>
       <div class="field">
-        <label>Video link<span class="lopt">Loom / Google Drive / YouTube — optional but it moves you up</span></label>
+        <label>Video link<span class="lopt">Loom, Google Drive, or YouTube. Optional, but it moves you up.</span></label>
         <input type="url" name="video_link" placeholder="https://loom.com/share/..." />
         <p class="hint">Record 60 seconds max on something you've done consistently for 12+ months. How you make it is how you'll show up on calls.</p>
       </div>
@@ -641,8 +667,8 @@
 
       <div class="submit-wrap">
         <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
-        <div class="err" id="errMsg">Something went wrong — try again or email <span id="errEmail"></span>.</div>
-        <p class="ps"><strong>P.S.</strong> Email <strong><span id="psEmail"></span></strong> every day after submitting — subject: <strong>Follow Up — [Your Name]</strong>. Not required, but the people who do are the ones we notice.</p>
+        <div class="err" id="errMsg">Something went wrong. Try again, or email <span id="errEmail"></span>.</div>
+        <p class="ps"><strong>P.S.</strong> Email <strong><span id="psEmail"></span></strong> every day after submitting, with the subject line <strong>Follow Up: [Your Name]</strong>. Not required, but the people who do are the ones we notice.</p>
       </div>
 
     </form>
@@ -656,7 +682,7 @@
 
   <footer>
     <span>© 2026 BuildSignals</span>
-    <span>Commission-based · Remote · Path to payroll</span>
+    <span>Commission-based, remote, path to payroll</span>
   </footer>
 
 </div>
