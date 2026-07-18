@@ -1100,11 +1100,11 @@ function computeStats(c, range){
     const changed = l.lastStageChangeAt ? new Date(l.lastStageChangeAt) : null;
     return changed && !isNaN(changed) && changed >= CLOSED_DATA_ACCURATE_SINCE;
   });
-  // "Appointments Booked" reflects the live board: only leads currently sitting
-  // in the Booked stage right now, not everything that ever passed through it.
-  // This is intentionally the same filter the Booked kanban column uses, so the
-  // two numbers always match.
-  const currentlyBooked = leads.filter(l=>l.status==='Booked');
+  // "Appointments Booked" should count every lead that had an appointment take
+  // place — that's Booked, Showed, or Closed. Dead is excluded because a dead
+  // lead never actually had an appointment happen. (The old bug counted Dead
+  // too, which is what inflated this number.)
+  const hadAppointment = leads.filter(l=>['Booked','Showed','Closed'].includes(l.status));
   // Baseline numbers represent performance from before the portal existed, so they
   // only belong in the all-time view - a filtered window can't attribute them to a date.
   const baseRevenue = range==='all' ? c.baselineRevenue : 0;
@@ -1115,7 +1115,7 @@ function computeStats(c, range){
   const manualAppts = range==='all' ? (c.manualApptAdjustment || 0) : 0;
   const revenue = baseRevenue + closedLeads.reduce((s,l)=>s+(l.value||0),0);
   const closedCount = baseClosed + closedLeads.length;
-  const apptCount = currentlyBooked.length + manualAppts;
+  const apptCount = hadAppointment.length + manualAppts;
   const roi = c.adSpend ? (revenue / c.adSpend) : 0;
   return {revenue, closedCount, apptCount, roi};
 }
