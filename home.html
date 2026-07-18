@@ -983,6 +983,7 @@ async function loadClientData(clientId){
   CLIENTS[clientId] = {
     name:p.name, initials:p.initials, sub:p.sub, adSpend:p.adSpend,
     baselineRevenue:p.baselineRevenue, baselineClosedCount:p.baselineClosedCount, baselineAppointments:p.baselineAppointments,
+    manualApptAdjustment:p.manualApptAdjustment || 0,
     weeklyAppts:p.weeklyAppts, weeklyDials:p.weeklyDials,
     leads: leadsSnap.docs.map(d=>({id:d.id, ...d.data()})),
     activity: activitySnap.docs.map(d=>({id:d.id, ...d.data()}))
@@ -1099,15 +1100,22 @@ function computeStats(c, range){
     const changed = l.lastStageChangeAt ? new Date(l.lastStageChangeAt) : null;
     return changed && !isNaN(changed) && changed >= CLOSED_DATA_ACCURATE_SINCE;
   });
-  const passedThrough = leads.filter(l=>['Booked','Showed','Closed','Dead'].includes(l.status));
+  // "Appointments Booked" reflects the live board: only leads currently sitting
+  // in the Booked stage right now, not everything that ever passed through it.
+  // This is intentionally the same filter the Booked kanban column uses, so the
+  // two numbers always match.
+  const currentlyBooked = leads.filter(l=>l.status==='Booked');
   // Baseline numbers represent performance from before the portal existed, so they
   // only belong in the all-time view - a filtered window can't attribute them to a date.
   const baseRevenue = range==='all' ? c.baselineRevenue : 0;
   const baseClosed = range==='all' ? c.baselineClosedCount : 0;
-  const baseAppts = range==='all' ? c.baselineAppointments : 0;
+  // Manual adjustment covers appointments booked outside the lead system entirely
+  // (e.g. an external source with no lead card) - same "all-time only" treatment
+  // as baseline, since it has no associated date either.
+  const manualAppts = range==='all' ? (c.manualApptAdjustment || 0) : 0;
   const revenue = baseRevenue + closedLeads.reduce((s,l)=>s+(l.value||0),0);
   const closedCount = baseClosed + closedLeads.length;
-  const apptCount = baseAppts + passedThrough.length;
+  const apptCount = currentlyBooked.length + manualAppts;
   const roi = c.adSpend ? (revenue / c.adSpend) : 0;
   return {revenue, closedCount, apptCount, roi};
 }
