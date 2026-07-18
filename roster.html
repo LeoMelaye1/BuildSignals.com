@@ -199,6 +199,10 @@
       </div>
     </div>
 
+    <label class="field-label" style="margin-top:2px;">Manual appointment adjustment</label>
+    <input class="text-input" id="newManualAppts" type="number" value="0">
+    <div class="stage-map-hint" style="margin-top:-10px;">For appointments booked outside the lead system (no card here) - e.g. an external source. Added on top of the live Booked count in the all-time view. Use +1, +2... or a negative number to correct an over-count.</div>
+
     <label class="field-label" style="margin-top:2px;">GoHighLevel pipeline ID</label>
     <input class="text-input" id="newGhlPipeline" placeholder="From the URL when viewing the pipeline, e.g. tKQi2Fyy5NWH3Elpk2Ur">
 
@@ -408,7 +412,7 @@ function openAddModal(){
   document.getElementById('modalTitle').textContent = 'Add a client';
   document.getElementById('confirmAdd').textContent = 'Create client';
   ['newName','newSub','newGhlPipeline'].forEach(id=>document.getElementById(id).value='');
-  ['newAdSpend','newRevenue','newClosed','newAppts'].forEach(id=>document.getElementById(id).value='0');
+  ['newAdSpend','newRevenue','newClosed','newAppts','newManualAppts'].forEach(id=>document.getElementById(id).value='0');
   STAGE_MAP_FIELDS.forEach(([id, appStage, ghlGuess])=>document.getElementById(id).value = ghlGuess);
   document.getElementById('addError').classList.remove('show');
   document.getElementById('addModal').style.display = 'flex';
@@ -432,6 +436,7 @@ async function openEditModal(clientId){
     document.getElementById('newRevenue').value = c.baselineRevenue || 0;
     document.getElementById('newClosed').value = c.baselineClosedCount || 0;
     document.getElementById('newAppts').value = c.baselineAppointments || 0;
+    document.getElementById('newManualAppts').value = c.manualApptAdjustment || 0;
     document.getElementById('newGhlPipeline').value = c.ghlPipelineId || '';
 
     // stored stageMap is {ghlName: appStage} - invert it back to one value per portal stage field
@@ -493,6 +498,7 @@ document.getElementById('confirmAdd').addEventListener('click', async ()=>{
   const baselineRevenue = parseFloat(document.getElementById('newRevenue').value) || 0;
   const baselineClosedCount = parseInt(document.getElementById('newClosed').value) || 0;
   const baselineAppointments = parseInt(document.getElementById('newAppts').value) || 0;
+  const manualApptAdjustment = parseInt(document.getElementById('newManualAppts').value) || 0;
   const initials = autoInitials(name);
   const ghlPipelineId = document.getElementById('newGhlPipeline').value.trim();
 
@@ -511,7 +517,7 @@ document.getElementById('confirmAdd').addEventListener('click', async ()=>{
       confirmBtn.textContent = 'Saving...';
       await db.collection('clients').doc(editingClientId).update({
         name, initials, sub, adSpend, baselineRevenue, baselineClosedCount, baselineAppointments,
-        ghlPipelineId, stageMap
+        manualApptAdjustment, ghlPipelineId, stageMap
       });
       closeAddModal();
       showToast('Client updated');
@@ -523,6 +529,7 @@ document.getElementById('confirmAdd').addEventListener('click', async ()=>{
 
       await db.collection('clients').doc(slug).set({
         name, initials, sub, adSpend, baselineRevenue, baselineClosedCount, baselineAppointments,
+        manualApptAdjustment,
         weeklyAppts: [0,0,0,0,0,0,0,0],
         weeklyDials: [0,0,0,0,0,0,0,0],
         ghlPipelineId,
