@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Manual cold call tracker with per-call outcomes, day/week/month conversion metrics, Excel export, and Google Sheet sync.">
+<meta name="theme-color" content="#2A2723">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Cold Call Log">
 <title>Cold Call Log</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
@@ -452,32 +458,32 @@ const state = {
 let headerFlap = { dials: null, pickups: null, meetings: null };
 let keyFlap = {};
 
-async function loadState() {
+function loadState() {
   try {
-    const res = await window.storage.get(ENTRIES_KEY, false);
-    if (res && res.value) {
-      state.entries = JSON.parse(res.value);
+    const raw = localStorage.getItem(ENTRIES_KEY);
+    if (raw) {
+      state.entries = JSON.parse(raw);
       if (state.entries.length > 0) state.lastLogged = state.entries[0];
     }
-  } catch (e) { /* nothing stored yet */ }
+  } catch (e) { console.error('Could not read saved call log', e); }
   try {
-    const res2 = await window.storage.get(SETTINGS_KEY, false);
-    if (res2 && res2.value) {
-      const s = JSON.parse(res2.value);
+    const raw2 = localStorage.getItem(SETTINGS_KEY);
+    if (raw2) {
+      const s = JSON.parse(raw2);
       state.caller = s.caller || '';
       state.campaign = s.campaign || '';
       state.sheetUrl = s.sheetUrl || '';
     }
-  } catch (e) { /* nothing stored yet */ }
+  } catch (e) { console.error('Could not read saved settings', e); }
 }
 
-async function persistEntries(next) {
+function persistEntries(next) {
   state.entries = next;
-  try { await window.storage.set(ENTRIES_KEY, JSON.stringify(next), false); }
+  try { localStorage.setItem(ENTRIES_KEY, JSON.stringify(next)); }
   catch (e) { console.error('Failed to save call log', e); }
 }
-async function persistSettings() {
-  try { await window.storage.set(SETTINGS_KEY, JSON.stringify({ caller: state.caller, campaign: state.campaign, sheetUrl: state.sheetUrl }), false); }
+function persistSettings() {
+  try { localStorage.setItem(SETTINGS_KEY, JSON.stringify({ caller: state.caller, campaign: state.campaign, sheetUrl: state.sheetUrl })); }
   catch (e) { console.error('Failed to save settings', e); }
 }
 function markSynced(id) {
