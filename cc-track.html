@@ -1,10 +1,184 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Legend,
-} from 'recharts';
-import * as XLSX from 'xlsx';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cold Call Log</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
+* { box-sizing: border-box; }
+
+:root {
+  --chassis: #2A2723;
+  --chassis-well: #201D19;
+  --chassis-raised: #3C372F;
+  --flap-bg: #121110;
+  --flap-ink: #EDE6D3;
+  --ink: #EDE6D3;
+  --ink-soft: #A79E8C;
+  --ink-faint: #6E6759;
+  --paper: #E3DBC6;
+  --paper-alt: #D9D0B4;
+  --paper-line: #B9AE92;
+  --paper-ink: #2A2620;
+  --accent: #D6A548;
+  --sig-neutral: #9A937F;
+  --sig-negative: #BD5138;
+  --sig-pending: #CE9E3E;
+  --sig-info: #4C85A8;
+  --sig-positive: #4F9260;
+  --font-numeral: 'Archivo Black', sans-serif;
+  --font-label: 'Oswald', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+
+html, body { margin: 0; padding: 0; background: #171512; }
+body { font-family: var(--font-label); }
+
+button, input { font: inherit; }
+
+.key-focus:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+#app { padding: 14px; min-height: 100vh; }
+
+.loading-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 70px 0; gap: 14px; }
+.loading-text { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.12em; font-weight: 500; }
+
+.chassis { background: var(--chassis); max-width: 640px; margin: 0 auto; padding: 14px; box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 30px rgba(0,0,0,0.35); }
+
+.nameplate { background: var(--chassis-well); padding: 12px 14px; margin-bottom: 10px; }
+.nameplate-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.nameplate-title { font-family: var(--font-label); font-weight: 700; font-size: 15px; letter-spacing: 0.14em; color: var(--ink); }
+.settings-toggle { background: var(--chassis-raised); border: none; color: var(--ink-soft); font-family: var(--font-label); font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; padding: 6px 10px; cursor: pointer; }
+.nameplate-stats { display: flex; gap: 20px; }
+.nameplate-stat-block { display: inline-flex; flex-direction: column; gap: 4px; }
+.nameplate-stat-label { font-size: 9px; letter-spacing: 0.1em; color: var(--ink-faint); font-weight: 600; }
+
+.settings-panel { background: var(--chassis-well); padding: 14px; margin-bottom: 10px; }
+.settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.settings-field { display: flex; flex-direction: column; gap: 5px; }
+.settings-label { font-size: 9.5px; letter-spacing: 0.1em; color: var(--ink-faint); font-weight: 600; }
+.settings-input { background: var(--flap-bg); border: 1px solid var(--chassis-raised); color: var(--flap-ink); font-family: var(--font-mono); font-size: 12.5px; padding: 8px 9px; width: 100%; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip { font-size: 10.5px; padding: 4px 9px; border: 1px solid var(--chassis-raised); background: transparent; color: var(--ink-soft); cursor: pointer; font-family: var(--font-label); letter-spacing: 0.04em; }
+.sheet-status { display: flex; align-items: center; gap: 7px; margin-top: 10px; font-size: 10px; letter-spacing: 0.04em; color: var(--ink-faint); }
+.sheet-status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+
+.mode-selector { display: flex; gap: 2px; margin-bottom: 2px; }
+.mode-btn { flex: 1; background: var(--chassis-raised); border: none; color: var(--ink-soft); font-family: var(--font-label); font-weight: 600; font-size: 11.5px; letter-spacing: 0.08em; padding: 11px 6px; cursor: pointer; }
+.mode-btn-active { background: var(--accent); color: var(--chassis-well); }
+
+.panel { background: var(--chassis-well); padding: 14px; }
+
+.key-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.key-btn { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; background: var(--chassis-raised); border: none; border-bottom: 3px solid rgba(0,0,0,0.35); padding: 12px 12px 10px; cursor: pointer; text-align: left; min-height: 88px; width: 100%; transition: transform .05s ease; }
+.key-btn:active { transform: translateY(2px); }
+.key-stripe { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.key-code { font-family: var(--font-numeral); font-size: 15px; letter-spacing: 0.02em; }
+.key-label { font-family: var(--font-label); font-size: 11px; font-weight: 500; color: var(--ink-soft); letter-spacing: 0.02em; line-height: 1.25; }
+.key-readout { margin-top: auto; align-self: flex-end; }
+
+.status-line { display: flex; align-items: center; gap: 8px; background: var(--chassis-well); border-top: 1px solid var(--chassis-raised); padding-top: 12px; }
+.status-line-label { font-size: 9.5px; letter-spacing: 0.1em; color: var(--ink-faint); font-weight: 600; }
+.status-line-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+.status-line-text { flex: 1; font-size: 11.5px; letter-spacing: 0.03em; color: var(--ink); font-weight: 500; }
+.status-line-time { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); }
+.undo-btn { background: transparent; border: 1px solid var(--chassis-raised); color: var(--ink-soft); font-family: var(--font-label); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; padding: 5px 10px; cursor: pointer; }
+
+.range-switch { display: flex; gap: 2px; margin-bottom: 12px; flex-wrap: wrap; }
+.range-btn { font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; padding: 7px 12px; border: 1px solid var(--chassis-raised); background: transparent; color: var(--ink-soft); cursor: pointer; font-family: var(--font-label); }
+.range-btn-active { background: var(--accent); border-color: var(--accent); color: var(--chassis-well); }
+
+.readout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.readout-card { background: var(--chassis-raised); padding: 10px 12px; }
+.readout-label { font-size: 9.5px; letter-spacing: 0.1em; color: var(--ink-faint); font-weight: 600; margin-bottom: 6px; }
+.readout-static { font-family: var(--font-numeral); font-size: 24px; color: var(--ink); }
+.readout-pct { font-size: 14px; margin-left: 2px; color: var(--ink-soft); }
+.readout-sub { font-size: 9.5px; color: var(--ink-faint); margin-top: 4px; letter-spacing: 0.04em; }
+
+.panel-box { background: var(--chassis-raised); padding: 14px; margin-bottom: 10px; }
+.panel-box-title { font-size: 9.5px; letter-spacing: 0.1em; color: var(--ink-faint); font-weight: 600; margin-bottom: 12px; }
+
+.compare-items { display: flex; gap: 24px; flex-wrap: wrap; }
+.compare-item { display: flex; flex-direction: column; gap: 3px; }
+.compare-label { font-size: 9.5px; letter-spacing: 0.06em; color: var(--ink-faint); }
+.compare-value { font-family: var(--font-numeral); font-size: 16px; color: var(--ink); }
+.compare-delta { font-size: 10.5px; font-family: var(--font-mono); font-weight: 600; }
+
+.chart-frame { background: var(--paper); padding: 10px 6px 4px; }
+.chart-legend { display: flex; gap: 14px; justify-content: flex-end; padding: 0 6px 6px; font-size: 9.5px; letter-spacing: 0.06em; color: var(--paper-ink); }
+.legend-swatch { display: inline-block; width: 8px; height: 8px; margin-right: 4px; vertical-align: middle; }
+
+.breakdown-row { margin-bottom: 10px; }
+.breakdown-label-row { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
+.breakdown-swatch { width: 8px; height: 8px; flex-shrink: 0; display: inline-block; }
+.breakdown-label { font-size: 10.5px; letter-spacing: 0.04em; flex: 1; color: var(--ink-soft); }
+.breakdown-value { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--ink); }
+.breakdown-track { height: 4px; background: var(--chassis-well); }
+.breakdown-fill { height: 100%; }
+
+.history-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.toolbar-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.tool-btn { background: transparent; border: 1px solid var(--chassis-raised); color: var(--ink-soft); font-family: var(--font-label); font-size: 10px; font-weight: 600; letter-spacing: 0.06em; padding: 8px 11px; cursor: pointer; }
+.tool-btn-primary { background: var(--accent); border-color: var(--accent); color: var(--chassis-well); }
+.tool-btn:disabled { opacity: 0.4; cursor: default; }
+
+.ledger { background: var(--paper); }
+table.log-table { width: 100%; border-collapse: collapse; font-size: 11.5px; font-family: var(--font-label); }
+.log-table th { text-align: left; font-size: 9.5px; letter-spacing: 0.06em; color: var(--paper-ink); opacity: 0.65; font-weight: 700; padding: 9px 10px; border-bottom: 2px solid var(--paper-line); }
+.log-table th.th-action { width: 30px; }
+.log-table tr.tr-row { border-bottom: 1px solid var(--paper-line); }
+.log-table td { padding: 8px 10px; color: var(--paper-ink); vertical-align: middle; }
+.log-table td.td-action { padding: 8px 6px; text-align: center; }
+.outcome-dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; }
+.delete-btn { background: transparent; border: none; color: var(--paper-ink); opacity: 0.5; cursor: pointer; font-size: 15px; line-height: 1; padding: 2px; }
+.load-more-btn { width: 100%; padding: 9px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; color: var(--paper-ink); background: var(--paper-alt); border: none; border-top: 1px solid var(--paper-line); cursor: pointer; font-family: var(--font-label); }
+
+.empty-state { font-size: 11px; letter-spacing: 0.05em; color: var(--ink-faint); padding: 20px 4px; text-align: center; }
+.clear-all-btn { display: block; margin-top: 12px; font-size: 10px; letter-spacing: 0.06em; color: var(--ink-faint); background: transparent; border: none; cursor: pointer; font-family: var(--font-label); }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(10,9,8,0.6); display: flex; align-items: center; justify-content: center; z-index: 60; padding: 20px; }
+.modal-card { background: var(--chassis-raised); padding: 22px; max-width: 320px; width: 100%; border-top: 3px solid var(--sig-negative); }
+.modal-title { font-family: var(--font-label); font-weight: 700; font-size: 13.5px; letter-spacing: 0.1em; color: var(--ink); margin-bottom: 10px; }
+.modal-body { font-size: 12px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 18px; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.modal-cancel { padding: 8px 14px; border: 1px solid var(--chassis); background: transparent; color: var(--ink-soft); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; font-family: var(--font-label); }
+.modal-confirm { padding: 8px 14px; border: none; background: var(--sig-negative); color: var(--ink); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; font-family: var(--font-label); }
+
+.flap-row { display: inline-flex; gap: 1px; perspective: 300px; }
+.flap-cell { position: relative; display: inline-block; background: var(--flap-bg); overflow: hidden; text-align: center; }
+.flap-cell::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0,0,0,0.55); }
+.flap-cell-inner { display: block; color: var(--flap-ink); font-family: var(--font-numeral); backface-visibility: hidden; }
+.flap-cell-inner.flap-out { animation: flapOut .12s ease-in forwards; }
+.flap-cell-inner.flap-in { animation: flapIn .17s ease-out forwards; }
+@keyframes flapOut { to { transform: rotateX(-85deg); opacity: .25; } }
+@keyframes flapIn { from { transform: rotateX(85deg); opacity: .25; } to { transform: rotateX(0deg); opacity: 1; } }
+.flap-sm .flap-cell { width: 12px; height: 16px; font-size: 12px; line-height: 16px; }
+.flap-lg .flap-cell { width: 20px; height: 30px; font-size: 24px; line-height: 30px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key-btn, .flap-cell-inner { animation: none !important; transition: none !important; }
+}
+@media (max-width: 420px) {
+  .key-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="chassis">
+    <div class="nameplate" id="nameplate"></div>
+    <div class="settings-panel" id="settings-panel" hidden></div>
+    <div class="mode-selector" id="mode-selector"></div>
+    <div class="panel" id="panel"></div>
+  </div>
+</div>
+<div id="modal-root"></div>
+
+<script>
 /* =========================================================================
    CONSTANTS
    ========================================================================= */
@@ -20,8 +194,17 @@ const OUTCOME_MAP = Object.fromEntries(OUTCOMES.map((o) => [o.id, o]));
 
 const ENTRIES_KEY = 'cold_call_entries_v2';
 const SETTINGS_KEY = 'cold_call_settings_v2';
-
 const RANGE_LABEL = { today: 'TODAY', week: 'WEEK', month: 'MONTH', all: 'ALL TIME' };
+
+/* =========================================================================
+   UTIL
+   ========================================================================= */
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = String(str ?? '');
+  return d.innerHTML;
+}
 
 /* =========================================================================
    DATE HELPERS  (weeks start Monday)
@@ -52,9 +235,7 @@ function formatDateLabel(input) {
 function formatTimeLabel(input) {
   return new Date(input).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
 }
-function pct(n) {
-  return `${Math.round(n * 100)}`;
-}
+function pct(n) { return `${Math.round(n * 100)}`; }
 
 /* =========================================================================
    STATS HELPERS
@@ -114,7 +295,7 @@ function computeDailySeries(entries, numDays) {
 }
 
 /* =========================================================================
-   EXCEL EXPORT
+   EXCEL EXPORT  (needs XLSX from the cdnjs script tag)
    ========================================================================= */
 
 function buildSummaryRows(entries, granularity) {
@@ -130,77 +311,55 @@ function buildSummaryRows(entries, granularity) {
     const c = computeCounts(groups[key]);
     return {
       Period: granularity === 'week' ? `Week of ${key}` : key,
-      Dials: c.dials,
-      Pickups: c.pickups,
-      'Pickup Rate': `${pct(c.pickupRate)}%`,
-      'Not Interested': c.pickupNo,
-      'Follow Up': c.followUp,
-      'Emails Sent': c.emailSent,
-      'Meetings Booked': c.meetings,
-      'Meeting Rate': `${pct(c.meetingRate)}%`,
+      Dials: c.dials, Pickups: c.pickups, 'Pickup Rate': `${pct(c.pickupRate)}%`,
+      'Not Interested': c.pickupNo, 'Follow Up': c.followUp, 'Emails Sent': c.emailSent,
+      'Meetings Booked': c.meetings, 'Meeting Rate': `${pct(c.meetingRate)}%`,
     };
   });
 }
 
 function exportToExcel(entries) {
+  if (typeof XLSX === 'undefined') {
+    alert('The Excel library did not load. Check your internet connection and try again.');
+    return;
+  }
   const wb = XLSX.utils.book_new();
-
-  const rawRows = [...entries]
-    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-    .map((e) => ({
-      Date: toLocalDateKey(e.timestamp),
-      Time: formatTimeLabel(e.timestamp),
-      'Day of Week': new Date(e.timestamp).toLocaleDateString(undefined, { weekday: 'long' }),
-      Outcome: OUTCOME_MAP[e.outcome]?.label || e.outcome,
-      Campaign: e.campaign || '',
-      Caller: e.caller || '',
-      'Synced to Sheet': e.sheetSynced ? 'Yes' : 'No',
-    }));
+  const rawRows = [...entries].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).map((e) => ({
+    Date: toLocalDateKey(e.timestamp), Time: formatTimeLabel(e.timestamp),
+    'Day of Week': new Date(e.timestamp).toLocaleDateString(undefined, { weekday: 'long' }),
+    Outcome: OUTCOME_MAP[e.outcome]?.label || e.outcome, Campaign: e.campaign || '', Caller: e.caller || '',
+    'Synced to Sheet': e.sheetSynced ? 'Yes' : 'No',
+  }));
   const rawSheet = XLSX.utils.json_to_sheet(rawRows);
   rawSheet['!cols'] = [{ wch: 12 }, { wch: 10 }, { wch: 12 }, { wch: 28 }, { wch: 20 }, { wch: 16 }, { wch: 14 }];
   XLSX.utils.book_append_sheet(wb, rawSheet, 'Call Log');
 
   const summaryCols = [{ wch: 16 }, { wch: 8 }, { wch: 9 }, { wch: 12 }, { wch: 15 }, { wch: 10 }, { wch: 12 }, { wch: 16 }, { wch: 13 }];
-
-  const dailySheet = XLSX.utils.json_to_sheet(buildSummaryRows(entries, 'day'));
-  dailySheet['!cols'] = summaryCols;
-  XLSX.utils.book_append_sheet(wb, dailySheet, 'Daily Summary');
-
-  const weeklySheet = XLSX.utils.json_to_sheet(buildSummaryRows(entries, 'week'));
-  weeklySheet['!cols'] = summaryCols;
-  XLSX.utils.book_append_sheet(wb, weeklySheet, 'Weekly Summary');
-
-  const monthlySheet = XLSX.utils.json_to_sheet(buildSummaryRows(entries, 'month'));
-  monthlySheet['!cols'] = summaryCols;
-  XLSX.utils.book_append_sheet(wb, monthlySheet, 'Monthly Summary');
-
+  ['day', 'week', 'month'].forEach((g) => {
+    const sheet = XLSX.utils.json_to_sheet(buildSummaryRows(entries, g));
+    sheet['!cols'] = summaryCols;
+    XLSX.utils.book_append_sheet(wb, sheet, g === 'day' ? 'Daily Summary' : g === 'week' ? 'Weekly Summary' : 'Monthly Summary');
+  });
   XLSX.writeFile(wb, `cold-call-log-${toLocalDateKey(new Date())}.xlsx`);
 }
 
 /* =========================================================================
    GOOGLE SHEET SYNC
-   A Google Apps Script Web App (see chat for setup) receives a plain-text
-   POST containing JSON. text/plain avoids a CORS preflight, which Apps
-   Script web apps don't handle. no-cors means we can't read a response
-   back, so this is fire-and-forget: it will not throw on CORS, only on
-   real network failure (bad URL, offline, etc).
+   text/plain avoids a CORS preflight, which Apps Script web apps don't
+   handle. no-cors means no response can be read back, so this is
+   fire-and-forget: it only throws on a real network failure.
    ========================================================================= */
 
 async function syncEntryToSheet(sheetUrl, entry) {
   if (!sheetUrl) return false;
   try {
     await fetch(sheetUrl, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({
-        date: toLocalDateKey(entry.timestamp),
-        time: formatTimeLabel(entry.timestamp),
+        date: toLocalDateKey(entry.timestamp), time: formatTimeLabel(entry.timestamp),
         dayOfWeek: new Date(entry.timestamp).toLocaleDateString(undefined, { weekday: 'long' }),
         outcome: OUTCOME_MAP[entry.outcome]?.label || entry.outcome,
-        campaign: entry.campaign || '',
-        caller: entry.caller || '',
-        timestamp: entry.timestamp,
+        campaign: entry.campaign || '', caller: entry.caller || '', timestamp: entry.timestamp,
       }),
     });
     return true;
@@ -211,743 +370,528 @@ async function syncEntryToSheet(sheetUrl, entry) {
 }
 
 /* =========================================================================
-   FLAP DIGIT COUNTER  (split-flap / odometer style number readout)
+   FLAP COUNTER  (split-flap / odometer style readout)
    ========================================================================= */
 
-function FlapDigits({ value, pad = 3, size = 'sm' }) {
-  const str = String(Math.max(0, Math.floor(value || 0))).padStart(pad, '0');
-  const [display, setDisplay] = useState(str);
-  const [phase, setPhase] = useState('idle');
-  const prevRef = useRef(str);
-  const timersRef = useRef([]);
+function createFlapCounter(container, initialValue, pad, size) {
+  if (!container) return { setValue() {}, destroy() {} };
+  let current = String(Math.max(0, Math.floor(initialValue || 0))).padStart(pad, '0');
+  container.classList.add('flap-row', `flap-${size}`);
+  container.innerHTML = current.split('').map((ch) => `<span class="flap-cell"><span class="flap-cell-inner">${ch}</span></span>`).join('');
+  let timers = [];
 
-  useEffect(() => {
-    if (str !== prevRef.current) {
-      timersRef.current.forEach(clearTimeout);
-      setPhase('out');
-      const t1 = setTimeout(() => {
-        setDisplay(str);
-        setPhase('in');
-        const t2 = setTimeout(() => setPhase('idle'), 170);
-        timersRef.current.push(t2);
-      }, 120);
-      timersRef.current.push(t1);
-      prevRef.current = str;
-    }
-  }, [str]);
-
-  useEffect(() => () => timersRef.current.forEach(clearTimeout), []);
-
-  return (
-    <span className={`flap-row flap-${size}`}>
-      {display.split('').map((ch, i) => (
-        <span key={i} className="flap-cell">
-          <span className={`flap-cell-inner flap-${phase}`}>{ch}</span>
-        </span>
-      ))}
-    </span>
-  );
+  function setValue(raw) {
+    const next = String(Math.max(0, Math.floor(raw || 0))).padStart(pad, '0');
+    if (next === current) return;
+    timers.forEach(clearTimeout);
+    timers = [];
+    const cells = container.querySelectorAll('.flap-cell-inner');
+    cells.forEach((c) => c.classList.add('flap-out'));
+    const t1 = setTimeout(() => {
+      current = next;
+      container.innerHTML = current.split('').map((ch) => `<span class="flap-cell"><span class="flap-cell-inner flap-in">${ch}</span></span>`).join('');
+      const t2 = setTimeout(() => {
+        container.querySelectorAll('.flap-cell-inner').forEach((c) => c.classList.remove('flap-in'));
+      }, 170);
+      timers.push(t2);
+    }, 120);
+    timers.push(t1);
+  }
+  function destroy() { timers.forEach(clearTimeout); }
+  return { setValue, destroy };
 }
 
 /* =========================================================================
-   ROOT COMPONENT
+   HAND-DRAWN SVG BAR CHART  (no charting library dependency)
    ========================================================================= */
 
-export default function ColdCallTracker() {
-  const [entries, setEntries] = useState([]);
-  const [caller, setCaller] = useState('');
-  const [campaign, setCampaign] = useState('');
-  const [sheetUrl, setSheetUrl] = useState('');
-  const [loaded, setLoaded] = useState(false);
-  const [view, setView] = useState('log');
-  const [lastLogged, setLastLogged] = useState(null);
-  const [flashId, setFlashId] = useState(null);
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [dashRange, setDashRange] = useState('today');
-  const [historyRange, setHistoryRange] = useState('all');
-  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
-  const [confirmClear, setConfirmClear] = useState(false);
-  const [syncing, setSyncing] = useState(false);
-  const flashTimer = useRef(null);
-  const entriesRef = useRef(entries);
+function renderBarChartSvg(data, width, height) {
+  const pad = { top: 8, right: 6, bottom: 18, left: 22 };
+  const chartW = width - pad.left - pad.right;
+  const chartH = height - pad.top - pad.bottom;
+  const maxVal = Math.max(1, ...data.map((d) => Math.max(d.Dials, d.Meetings)));
+  const groupW = chartW / data.length;
+  const barW = Math.max(2, Math.min(9, groupW / 3));
 
-  useEffect(() => { entriesRef.current = entries; }, [entries]);
+  let gridLines = '';
+  [0, 0.5, 1].forEach((frac) => {
+    const y = pad.top + chartH * (1 - frac);
+    const val = Math.round(maxVal * frac);
+    gridLines += `<line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="var(--paper-line)" stroke-width="1" stroke-dasharray="2,3" />`;
+    gridLines += `<text x="${pad.left - 4}" y="${y + 3}" text-anchor="end" font-size="8" fill="var(--paper-ink)" font-family="var(--font-mono)">${val}</text>`;
+  });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await window.storage.get(ENTRIES_KEY, false);
-        if (res && res.value) {
-          const loadedEntries = JSON.parse(res.value);
-          setEntries(loadedEntries);
-          if (loadedEntries.length > 0) setLastLogged(loadedEntries[0]);
-        }
-      } catch (e) { /* nothing stored yet */ }
-      try {
-        const res2 = await window.storage.get(SETTINGS_KEY, false);
-        if (res2 && res2.value) {
-          const s = JSON.parse(res2.value);
-          setCaller(s.caller || '');
-          setCampaign(s.campaign || '');
-          setSheetUrl(s.sheetUrl || '');
-        }
-      } catch (e) { /* nothing stored yet */ }
-      setLoaded(true);
-    })();
-  }, []);
+  let bars = '';
+  data.forEach((d, i) => {
+    const groupX = pad.left + i * groupW;
+    const dialsH = (d.Dials / maxVal) * chartH;
+    const meetingsH = (d.Meetings / maxVal) * chartH;
+    const dialsX = groupX + groupW / 2 - barW - 1;
+    const meetingsX = groupX + groupW / 2 + 1;
+    bars += `<rect x="${dialsX.toFixed(1)}" y="${(pad.top + chartH - dialsH).toFixed(1)}" width="${barW.toFixed(1)}" height="${dialsH.toFixed(1)}" fill="var(--sig-neutral)"><title>${escapeHtml(d.date)}: ${d.Dials} dials</title></rect>`;
+    bars += `<rect x="${meetingsX.toFixed(1)}" y="${(pad.top + chartH - meetingsH).toFixed(1)}" width="${barW.toFixed(1)}" height="${meetingsH.toFixed(1)}" fill="var(--sig-positive)"><title>${escapeHtml(d.date)}: ${d.Meetings} meetings</title></rect>`;
+    if (i % 2 === 1 || data.length <= 7) {
+      bars += `<text x="${(groupX + groupW / 2).toFixed(1)}" y="${height - 4}" text-anchor="middle" font-size="8" fill="var(--paper-ink)" font-family="var(--font-mono)">${escapeHtml(d.date)}</text>`;
+    }
+  });
 
-  const persistEntries = useCallback(async (next) => {
-    setEntries(next);
-    entriesRef.current = next;
-    try { await window.storage.set(ENTRIES_KEY, JSON.stringify(next), false); }
-    catch (e) { console.error('Failed to save call log', e); }
-  }, []);
+  return `<svg viewBox="0 0 ${width} ${height}" style="width:100%;height:${height}px;display:block;">${gridLines}${bars}</svg>`;
+}
 
-  const persistSettings = useCallback(async (nextCaller, nextCampaign, nextSheetUrl) => {
-    try { await window.storage.set(SETTINGS_KEY, JSON.stringify({ caller: nextCaller, campaign: nextCampaign, sheetUrl: nextSheetUrl }), false); }
-    catch (e) { console.error('Failed to save settings', e); }
-  }, []);
+/* =========================================================================
+   PERSISTED STATE
+   ========================================================================= */
 
-  const markSynced = useCallback((id) => {
-    const next = entriesRef.current.map((e) => (e.id === id ? { ...e, sheetSynced: true } : e));
-    persistEntries(next);
-  }, [persistEntries]);
+const state = {
+  entries: [], caller: '', campaign: '', sheetUrl: '',
+  view: 'log', dashRange: 'today', historyRange: 'all',
+  settingsOpen: false, lastLogged: null,
+  confirmDeleteId: null, confirmClear: false, syncing: false,
+  historyVisibleCount: 50,
+};
+let headerFlap = { dials: null, pickups: null, meetings: null };
+let keyFlap = {};
 
-  const logCall = (outcomeId) => {
-    const entry = {
-      id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      timestamp: new Date().toISOString(),
-      outcome: outcomeId,
-      campaign: campaign.trim(),
-      caller: caller.trim(),
-      sheetSynced: false,
+async function loadState() {
+  try {
+    const res = await window.storage.get(ENTRIES_KEY, false);
+    if (res && res.value) {
+      state.entries = JSON.parse(res.value);
+      if (state.entries.length > 0) state.lastLogged = state.entries[0];
+    }
+  } catch (e) { /* nothing stored yet */ }
+  try {
+    const res2 = await window.storage.get(SETTINGS_KEY, false);
+    if (res2 && res2.value) {
+      const s = JSON.parse(res2.value);
+      state.caller = s.caller || '';
+      state.campaign = s.campaign || '';
+      state.sheetUrl = s.sheetUrl || '';
+    }
+  } catch (e) { /* nothing stored yet */ }
+}
+
+async function persistEntries(next) {
+  state.entries = next;
+  try { await window.storage.set(ENTRIES_KEY, JSON.stringify(next), false); }
+  catch (e) { console.error('Failed to save call log', e); }
+}
+async function persistSettings() {
+  try { await window.storage.set(SETTINGS_KEY, JSON.stringify({ caller: state.caller, campaign: state.campaign, sheetUrl: state.sheetUrl }), false); }
+  catch (e) { console.error('Failed to save settings', e); }
+}
+function markSynced(id) {
+  const next = state.entries.map((e) => (e.id === id ? { ...e, sheetSynced: true } : e));
+  persistEntries(next);
+}
+
+/* =========================================================================
+   ACTIONS
+   ========================================================================= */
+
+function logCall(outcomeId) {
+  const entry = {
+    id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    timestamp: new Date().toISOString(), outcome: outcomeId,
+    campaign: state.campaign.trim(), caller: state.caller.trim(), sheetSynced: false,
+  };
+  persistEntries([entry, ...state.entries]);
+  state.lastLogged = entry;
+  updateStatusLine();
+
+  const today = computeCounts(filterByRange(state.entries, 'today'));
+  if (headerFlap.dials) headerFlap.dials.setValue(today.dials);
+  if (headerFlap.pickups) headerFlap.pickups.setValue(today.pickups);
+  if (headerFlap.meetings) headerFlap.meetings.setValue(today.meetings);
+  if (keyFlap[outcomeId]) {
+    const todayOutcomeCounts = {
+      no_pickup: today.noPickup, pickup_no: today.pickupNo, pickup_follow_up: today.followUp,
+      pickup_email: today.emailSent, pickup_meeting: today.meetings,
     };
-    persistEntries([entry, ...entries]);
-    setLastLogged(entry);
-    setFlashId(outcomeId);
-    if (flashTimer.current) clearTimeout(flashTimer.current);
-    flashTimer.current = setTimeout(() => setFlashId(null), 350);
-
-    if (sheetUrl) {
-      syncEntryToSheet(sheetUrl, entry).then((ok) => { if (ok) markSynced(entry.id); });
-    }
-  };
-
-  const undoLast = () => {
-    if (entries.length === 0) return;
-    const next = entries.slice(1);
-    persistEntries(next);
-    setLastLogged(next[0] || null);
-  };
-
-  const deleteEntry = (id) => {
-    persistEntries(entries.filter((e) => e.id !== id));
-    setConfirmDeleteId(null);
-  };
-
-  const clearAll = () => {
-    persistEntries([]);
-    setLastLogged(null);
-    setConfirmClear(false);
-  };
-
-  const resyncUnsent = async () => {
-    if (!sheetUrl || syncing) return;
-    setSyncing(true);
-    const unsent = entriesRef.current.filter((e) => !e.sheetSynced);
-    for (const e of unsent) {
-      const ok = await syncEntryToSheet(sheetUrl, e);
-      if (ok) markSynced(e.id);
-    }
-    setSyncing(false);
-  };
-
-  const recentCampaigns = useMemo(() => {
-    const set = new Set();
-    entries.forEach((e) => { if (e.campaign) set.add(e.campaign); });
-    return Array.from(set).slice(0, 6);
-  }, [entries]);
-
-  const unsyncedCount = useMemo(() => entries.filter((e) => !e.sheetSynced).length, [entries]);
-
-  const todayStats = useMemo(() => computeCounts(filterByRange(entries, 'today')), [entries]);
-  const weekStats = useMemo(() => computeCounts(filterByRange(entries, 'week')), [entries]);
-  const lastWeekStats = useMemo(() => computeCounts(filterByRange(entries, 'lastWeek')), [entries]);
-  const monthStats = useMemo(() => computeCounts(filterByRange(entries, 'month')), [entries]);
-  const allTimeStats = useMemo(() => computeCounts(entries), [entries]);
-  const chartData = useMemo(() => computeDailySeries(entries, 14), [entries]);
-
-  const dashStatsMap = { today: todayStats, week: weekStats, month: monthStats, all: allTimeStats };
-  const activeDashStats = dashStatsMap[dashRange];
-
-  const todayOutcomeCounts = {
-    no_pickup: todayStats.noPickup,
-    pickup_no: todayStats.pickupNo,
-    pickup_follow_up: todayStats.followUp,
-    pickup_email: todayStats.emailSent,
-    pickup_meeting: todayStats.meetings,
-  };
-
-  const historyEntries = useMemo(() => {
-    const filtered = historyRange === 'all' ? entries : filterByRange(entries, historyRange);
-    return [...filtered].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-  }, [entries, historyRange]);
-
-  if (!loaded) {
-    return (
-      <div className="coldcall-root" style={styles.app}>
-        <style>{globalCss}</style>
-        <div style={styles.loadingWrap}>
-          <span className="flap-row flap-lg">
-            {['0', '0', '0'].map((c, i) => <span key={i} className="flap-cell"><span className="flap-cell-inner">{c}</span></span>)}
-          </span>
-          <div style={styles.loadingText}>WARMING UP</div>
-        </div>
-      </div>
-    );
+    keyFlap[outcomeId].setValue(todayOutcomeCounts[outcomeId]);
   }
 
-  return (
-    <div className="coldcall-root" style={styles.app}>
-      <style>{globalCss}</style>
+  if (state.sheetUrl) {
+    syncEntryToSheet(state.sheetUrl, entry).then((ok) => { if (ok) markSynced(entry.id); });
+  }
+}
 
-      <div style={styles.chassis}>
-        <div style={styles.nameplate}>
-          <div style={styles.nameplateRow}>
-            <div style={styles.nameplateTitle}>COLD CALL LOG</div>
-            <button className="key-focus" style={styles.settingsToggle} onClick={() => setSettingsOpen((v) => !v)}>
-              {settingsOpen ? '\u25B4' : '\u25BE'} SETUP
-            </button>
-          </div>
-          <div style={styles.nameplateStats}>
-            <span style={styles.nameplateStatBlock}>
-              <FlapDigits value={todayStats.dials} pad={2} size="sm" />
-              <span style={styles.nameplateStatLabel}>DIALS</span>
-            </span>
-            <span style={styles.nameplateStatBlock}>
-              <FlapDigits value={todayStats.pickups} pad={2} size="sm" />
-              <span style={styles.nameplateStatLabel}>PICKUPS</span>
-            </span>
-            <span style={styles.nameplateStatBlock}>
-              <FlapDigits value={todayStats.meetings} pad={2} size="sm" />
-              <span style={styles.nameplateStatLabel}>MEETINGS</span>
-            </span>
-          </div>
-        </div>
+function undoLast() {
+  if (state.entries.length === 0) return;
+  const next = state.entries.slice(1);
+  persistEntries(next);
+  state.lastLogged = next[0] || null;
+  renderShell();
+  renderPanel();
+}
 
-        {settingsOpen && (
-          <SettingsPanel
-            caller={caller} campaign={campaign} sheetUrl={sheetUrl}
-            recentCampaigns={recentCampaigns}
-            onCaller={(v) => { setCaller(v); persistSettings(v, campaign, sheetUrl); }}
-            onCampaign={(v) => { setCampaign(v); persistSettings(caller, v, sheetUrl); }}
-            onSheetUrl={(v) => { setSheetUrl(v); persistSettings(caller, campaign, v); }}
-          />
-        )}
+function deleteEntry(id) {
+  persistEntries(state.entries.filter((e) => e.id !== id));
+  state.confirmDeleteId = null;
+  closeModal();
+  renderShell();
+  renderPanel();
+}
 
-        <div style={styles.modeSelector}>
-          <ModeButton active={view === 'log'} onClick={() => setView('log')} label="LOG CALL" />
-          <ModeButton active={view === 'dashboard'} onClick={() => setView('dashboard')} label="DASHBOARD" />
-          <ModeButton active={view === 'history'} onClick={() => setView('history')} label="HISTORY" />
-        </div>
+function clearAll() {
+  persistEntries([]);
+  state.lastLogged = null;
+  state.confirmClear = false;
+  closeModal();
+  renderShell();
+  renderPanel();
+}
 
-        <div style={styles.panel}>
-          {view === 'log' && (
-            <LogView onLog={logCall} onUndo={undoLast} todayOutcomeCounts={todayOutcomeCounts} flashId={flashId} lastLogged={lastLogged} hasEntries={entries.length > 0} />
-          )}
-          {view === 'dashboard' && (
-            <DashboardView
-              dashRange={dashRange} setDashRange={setDashRange}
-              stats={activeDashStats} weekStats={weekStats} lastWeekStats={lastWeekStats}
-              chartData={chartData}
-            />
-          )}
-          {view === 'history' && (
-            <HistoryView
-              historyRange={historyRange} setHistoryRange={setHistoryRange}
-              entries={historyEntries} totalCount={entries.length}
-              onDelete={(id) => setConfirmDeleteId(id)}
-              onExport={() => exportToExcel(entries)}
-              sheetConnected={!!sheetUrl} unsyncedCount={unsyncedCount} syncing={syncing}
-              onResync={resyncUnsent}
-              onClearAll={() => setConfirmClear(true)}
-            />
-          )}
-        </div>
-      </div>
-
-      {confirmDeleteId && (
-        <ConfirmModal title="DELETE ENTRY" body="This removes it from the log for good." onCancel={() => setConfirmDeleteId(null)} onConfirm={() => deleteEntry(confirmDeleteId)} />
-      )}
-      {confirmClear && (
-        <ConfirmModal title="CLEAR ALL DATA" body={`This permanently deletes all ${entries.length} logged calls. Export first if you want a copy.`} onCancel={() => setConfirmClear(false)} onConfirm={clearAll} />
-      )}
-    </div>
-  );
+async function resyncUnsent() {
+  if (!state.sheetUrl || state.syncing) return;
+  state.syncing = true;
+  renderPanel();
+  const unsent = state.entries.filter((e) => !e.sheetSynced);
+  for (const e of unsent) {
+    const ok = await syncEntryToSheet(state.sheetUrl, e);
+    if (ok) markSynced(e.id);
+  }
+  state.syncing = false;
+  renderPanel();
 }
 
 /* =========================================================================
-   SETTINGS PANEL
+   RENDER: SHELL (nameplate, settings, mode selector)
    ========================================================================= */
 
-function SettingsPanel({ caller, campaign, sheetUrl, recentCampaigns, onCaller, onCampaign, onSheetUrl }) {
-  return (
-    <div style={styles.settingsPanel}>
-      <div style={styles.settingsGrid}>
-        <label style={styles.settingsField}>
-          <span style={styles.settingsLabel}>CALLER</span>
-          <input className="key-focus" style={styles.settingsInput} value={caller} placeholder="Leo" onChange={(e) => onCaller(e.target.value)} />
+function renderShell() {
+  const today = computeCounts(filterByRange(state.entries, 'today'));
+
+  const nameplateEl = document.getElementById('nameplate');
+  nameplateEl.innerHTML = `
+    <div class="nameplate-row">
+      <div class="nameplate-title">COLD CALL LOG</div>
+      <button class="key-focus settings-toggle" id="settings-toggle-btn">${state.settingsOpen ? '\u25B4' : '\u25BE'} SETUP</button>
+    </div>
+    <div class="nameplate-stats">
+      <span class="nameplate-stat-block"><span id="header-flap-dials"></span><span class="nameplate-stat-label">DIALS</span></span>
+      <span class="nameplate-stat-block"><span id="header-flap-pickups"></span><span class="nameplate-stat-label">PICKUPS</span></span>
+      <span class="nameplate-stat-block"><span id="header-flap-meetings"></span><span class="nameplate-stat-label">MEETINGS</span></span>
+    </div>`;
+  document.getElementById('settings-toggle-btn').addEventListener('click', () => {
+    state.settingsOpen = !state.settingsOpen;
+    renderShell();
+  });
+  headerFlap.dials = createFlapCounter(document.getElementById('header-flap-dials'), today.dials, 2, 'sm');
+  headerFlap.pickups = createFlapCounter(document.getElementById('header-flap-pickups'), today.pickups, 2, 'sm');
+  headerFlap.meetings = createFlapCounter(document.getElementById('header-flap-meetings'), today.meetings, 2, 'sm');
+
+  const settingsEl = document.getElementById('settings-panel');
+  if (state.settingsOpen) {
+    settingsEl.hidden = false;
+    const recentCampaigns = [...new Set(state.entries.map((e) => e.campaign).filter(Boolean))].slice(0, 6);
+    settingsEl.innerHTML = `
+      <div class="settings-grid">
+        <label class="settings-field">
+          <span class="settings-label">CALLER</span>
+          <input class="key-focus settings-input" id="input-caller" value="${escapeHtml(state.caller)}" placeholder="Leo">
         </label>
-        <label style={styles.settingsField}>
-          <span style={styles.settingsLabel}>CAMPAIGN / CLIENT</span>
-          <input className="key-focus" style={styles.settingsInput} value={campaign} placeholder="Contractor 2.0" list="campaign-suggestions" onChange={(e) => onCampaign(e.target.value)} />
-          <datalist id="campaign-suggestions">
-            {recentCampaigns.map((c) => <option key={c} value={c} />)}
-          </datalist>
+        <label class="settings-field">
+          <span class="settings-label">CAMPAIGN / CLIENT</span>
+          <input class="key-focus settings-input" id="input-campaign" value="${escapeHtml(state.campaign)}" placeholder="Contractor 2.0" list="campaign-suggestions">
+          <datalist id="campaign-suggestions">${recentCampaigns.map((c) => `<option value="${escapeHtml(c)}"></option>`).join('')}</datalist>
         </label>
       </div>
-      {recentCampaigns.length > 0 && (
-        <div style={styles.chipRow}>
-          {recentCampaigns.map((c) => (
-            <button key={c} className="key-focus" style={styles.chip} onClick={() => onCampaign(c)}>{c}</button>
-          ))}
-        </div>
-      )}
-      <label style={{ ...styles.settingsField, marginTop: 10 }}>
-        <span style={styles.settingsLabel}>GOOGLE SHEET SYNC URL</span>
-        <input className="key-focus" style={styles.settingsInput} value={sheetUrl} placeholder="https://script.google.com/macros/s/.../exec" onChange={(e) => onSheetUrl(e.target.value)} />
+      ${recentCampaigns.length ? `<div class="chip-row">${recentCampaigns.map((c) => `<button class="key-focus chip" data-campaign="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join('')}</div>` : ''}
+      <label class="settings-field" style="margin-top:10px;">
+        <span class="settings-label">GOOGLE SHEET SYNC URL</span>
+        <input class="key-focus settings-input" id="input-sheet-url" value="${escapeHtml(state.sheetUrl)}" placeholder="https://script.google.com/macros/s/.../exec">
       </label>
-      <div style={styles.sheetStatus}>
-        <span style={{ ...styles.sheetStatusDot, background: sheetUrl ? 'var(--sig-positive)' : 'var(--ink-faint)' }} />
-        {sheetUrl ? 'SHEET SYNC ON, EACH LOGGED CALL POSTS A ROW' : 'SHEET SYNC OFF, PASTE YOUR APPS SCRIPT URL ABOVE'}
-      </div>
-    </div>
-  );
+      <div class="sheet-status">
+        <span class="sheet-status-dot" style="background:${state.sheetUrl ? 'var(--sig-positive)' : 'var(--ink-faint)'}"></span>
+        ${state.sheetUrl ? 'SHEET SYNC ON, EACH LOGGED CALL POSTS A ROW' : 'SHEET SYNC OFF, PASTE YOUR APPS SCRIPT URL ABOVE'}
+      </div>`;
+    document.getElementById('input-caller').addEventListener('input', (e) => { state.caller = e.target.value; persistSettings(); });
+    document.getElementById('input-campaign').addEventListener('input', (e) => { state.campaign = e.target.value; persistSettings(); });
+    document.getElementById('input-sheet-url').addEventListener('input', (e) => {
+      state.sheetUrl = e.target.value.trim();
+      persistSettings();
+      document.querySelector('.sheet-status').innerHTML = `<span class="sheet-status-dot" style="background:${state.sheetUrl ? 'var(--sig-positive)' : 'var(--ink-faint)'}"></span>${state.sheetUrl ? 'SHEET SYNC ON, EACH LOGGED CALL POSTS A ROW' : 'SHEET SYNC OFF, PASTE YOUR APPS SCRIPT URL ABOVE'}`;
+    });
+    settingsEl.querySelectorAll('[data-campaign]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.campaign = btn.dataset.campaign;
+        document.getElementById('input-campaign').value = state.campaign;
+        persistSettings();
+      });
+    });
+  } else {
+    settingsEl.hidden = true;
+    settingsEl.innerHTML = '';
+  }
+
+  const modeEl = document.getElementById('mode-selector');
+  modeEl.innerHTML = ['log', 'dashboard', 'history'].map((v) =>
+    `<button class="key-focus mode-btn${state.view === v ? ' mode-btn-active' : ''}" data-view="${v}">${v === 'log' ? 'LOG CALL' : v.toUpperCase()}</button>`
+  ).join('');
+  modeEl.querySelectorAll('[data-view]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.view = btn.dataset.view;
+      renderShell();
+      renderPanel();
+    });
+  });
+}
+
+function updateStatusLine() {
+  const el = document.getElementById('status-line');
+  if (!el) return;
+  el.innerHTML = renderStatusLineInner();
+  const undoBtn = el.querySelector('[data-action="undo"]');
+  if (undoBtn) undoBtn.addEventListener('click', () => undoLast());
+}
+
+function renderStatusLineInner() {
+  const hasEntries = state.entries.length > 0;
+  const body = state.lastLogged
+    ? `<span class="status-line-label">LAST</span>
+       <span class="status-line-dot" style="background:${OUTCOME_MAP[state.lastLogged.outcome].color}"></span>
+       <span class="status-line-text">${escapeHtml(OUTCOME_MAP[state.lastLogged.outcome].short.toUpperCase())}</span>
+       <span class="status-line-time">${formatTimeLabel(state.lastLogged.timestamp)}</span>`
+    : `<span class="status-line-text">NO CALLS LOGGED YET, TAP A KEY TO START</span>`;
+  return body + (hasEntries ? `<button class="key-focus undo-btn" data-action="undo">UNDO</button>` : '');
 }
 
 /* =========================================================================
-   LOG VIEW
+   RENDER: PANEL (view router)
    ========================================================================= */
 
-function LogView({ onLog, onUndo, todayOutcomeCounts, flashId, lastLogged, hasEntries }) {
-  return (
-    <div>
-      <div style={styles.keyGrid} className="coldcall-key-grid">
-        {OUTCOMES.map((o) => {
-          const count = todayOutcomeCounts[o.id] || 0;
-          return (
-            <button
-              key={o.id}
-              className={`key-btn key-focus${flashId === o.id ? ' key-btn-press' : ''}`}
-              style={{ ...styles.key, '--key-color': o.color }}
-              onClick={() => onLog(o.id)}
-            >
-              <span style={styles.keyStripe} />
-              <span style={styles.keyCode}>{o.code}</span>
-              <span style={styles.keyLabel}>{o.label}</span>
-              <span style={styles.keyReadout}>
-                <FlapDigits value={count} pad={3} size="sm" />
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      <div style={styles.statusLine}>
-        {lastLogged ? (
-          <>
-            <span style={styles.statusLineLabel}>LAST</span>
-            <span style={{ ...styles.statusLineDot, background: OUTCOME_MAP[lastLogged.outcome].color }} />
-            <span style={styles.statusLineText}>{OUTCOME_MAP[lastLogged.outcome].short.toUpperCase()}</span>
-            <span style={styles.statusLineTime}>{formatTimeLabel(lastLogged.timestamp)}</span>
-          </>
-        ) : (
-          <span style={styles.statusLineText}>NO CALLS LOGGED YET, TAP A KEY TO START</span>
-        )}
-        {hasEntries && (
-          <button className="key-focus" style={styles.undoBtn} onClick={onUndo}>UNDO</button>
-        )}
-      </div>
-    </div>
-  );
+function renderPanel() {
+  const panelEl = document.getElementById('panel');
+  keyFlap = {};
+  if (state.view === 'log') { panelEl.innerHTML = renderLogViewHtml(); mountLogView(); }
+  else if (state.view === 'dashboard') { panelEl.innerHTML = renderDashboardHtml(); mountDashboardView(); }
+  else { panelEl.innerHTML = renderHistoryHtml(); mountHistoryView(); }
 }
 
-/* =========================================================================
-   DASHBOARD VIEW
-   ========================================================================= */
+/* ---- LOG VIEW ---- */
 
-function DashboardView({ dashRange, setDashRange, stats, weekStats, lastWeekStats, chartData }) {
+function renderLogViewHtml() {
+  const keys = OUTCOMES.map((o) => `
+    <button class="key-focus key-btn" data-outcome="${o.id}" style="--key-color:${o.color}">
+      <span class="key-stripe" style="background:${o.color}"></span>
+      <span class="key-code" style="color:${o.color}">${o.code}</span>
+      <span class="key-label">${escapeHtml(o.label)}</span>
+      <span class="key-readout" id="key-flap-${o.id}"></span>
+    </button>`).join('');
+  return `
+    <div class="key-grid">${keys}</div>
+    <div class="status-line" id="status-line">${renderStatusLineInner()}</div>`;
+}
+
+function mountLogView() {
+  const today = computeCounts(filterByRange(state.entries, 'today'));
+  const todayOutcomeCounts = {
+    no_pickup: today.noPickup, pickup_no: today.pickupNo, pickup_follow_up: today.followUp,
+    pickup_email: today.emailSent, pickup_meeting: today.meetings,
+  };
+  OUTCOMES.forEach((o) => {
+    keyFlap[o.id] = createFlapCounter(document.getElementById(`key-flap-${o.id}`), todayOutcomeCounts[o.id], 3, 'sm');
+  });
+  document.querySelectorAll('[data-outcome]').forEach((btn) => {
+    btn.addEventListener('click', () => logCall(btn.dataset.outcome));
+  });
+  const undoBtn = document.querySelector('[data-action="undo"]');
+  if (undoBtn) undoBtn.addEventListener('click', () => undoLast());
+}
+
+/* ---- DASHBOARD VIEW ---- */
+
+function renderDashboardHtml() {
+  const stats = computeCounts(filterByRange(state.entries, state.dashRange === 'all' ? 'all' : state.dashRange));
+  const weekStats = computeCounts(filterByRange(state.entries, 'week'));
+  const lastWeekStats = computeCounts(filterByRange(state.entries, 'lastWeek'));
+  const chartData = computeDailySeries(state.entries, 14);
+
   const pickupDelta = Math.round(weekStats.pickupRate * 100) - Math.round(lastWeekStats.pickupRate * 100);
   const meetingDelta = Math.round(weekStats.meetingRate * 100) - Math.round(lastWeekStats.meetingRate * 100);
+  const deltaChip = (delta) => {
+    const isUp = delta > 0, isDown = delta < 0;
+    const arrow = isUp ? '\u25B2' : isDown ? '\u25BC' : '\u2013';
+    const color = isUp ? 'var(--sig-positive)' : isDown ? 'var(--sig-negative)' : 'var(--ink-soft)';
+    return `<span class="compare-delta" style="color:${color}">${arrow} ${isUp ? '+' : ''}${delta}pt</span>`;
+  };
 
-  return (
-    <div>
-      <RangeSwitch value={dashRange} onChange={setDashRange} />
-
-      <div style={styles.readoutGrid}>
-        <div style={styles.readoutCard}>
-          <div style={styles.readoutLabel}>DIALS</div>
-          <FlapDigits value={stats.dials} pad={3} size="lg" />
-        </div>
-        <div style={styles.readoutCard}>
-          <div style={styles.readoutLabel}>MEETINGS BOOKED</div>
-          <FlapDigits value={stats.meetings} pad={3} size="lg" />
-        </div>
-        <div style={styles.readoutCard}>
-          <div style={styles.readoutLabel}>PICKUP RATE</div>
-          <div style={styles.readoutStatic}>{pct(stats.pickupRate)}<span style={styles.readoutPct}>%</span></div>
-          <div style={styles.readoutSub}>{stats.pickups} OF {stats.dials}</div>
-        </div>
-        <div style={styles.readoutCard}>
-          <div style={styles.readoutLabel}>MEETING RATE</div>
-          <div style={styles.readoutStatic}>{pct(stats.meetingRate)}<span style={styles.readoutPct}>%</span></div>
-          <div style={styles.readoutSub}>OF ALL DIALS</div>
-        </div>
-      </div>
-
-      <div style={styles.panelBox}>
-        <div style={styles.panelBoxTitle}>THIS WEEK VS LAST WEEK</div>
-        <div style={styles.compareItems}>
-          <CompareItem label="PICKUP RATE" delta={pickupDelta} current={`${pct(weekStats.pickupRate)}%`} />
-          <CompareItem label="MEETING RATE" delta={meetingDelta} current={`${pct(weekStats.meetingRate)}%`} />
-        </div>
-      </div>
-
-      <div style={styles.panelBox}>
-        <div style={styles.panelBoxTitle}>LAST 14 DAYS</div>
-        <div style={styles.chartFrame}>
-          <ResponsiveContainer width="100%" height={190}>
-            <BarChart data={chartData} margin={{ top: 4, right: 4, left: -28, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="2 3" stroke="var(--paper-line)" vertical={false} />
-              <XAxis dataKey="date" tick={{ fontSize: 9, fill: 'var(--paper-ink)', fontFamily: 'var(--font-mono)' }} axisLine={{ stroke: 'var(--paper-line)' }} tickLine={false} interval={1} />
-              <YAxis tick={{ fontSize: 9, fill: 'var(--paper-ink)', fontFamily: 'var(--font-mono)' }} axisLine={false} tickLine={false} allowDecimals={false} width={24} />
-              <Tooltip contentStyle={{ fontSize: 11, borderRadius: 0, border: '1px solid var(--paper-line)', fontFamily: 'var(--font-mono)', background: 'var(--paper)' }} />
-              <Legend wrapperStyle={{ fontSize: 10, fontFamily: 'var(--font-label)', letterSpacing: '0.04em' }} />
-              <Bar dataKey="Dials" fill="var(--sig-neutral)" radius={[0, 0, 0, 0]} />
-              <Bar dataKey="Meetings" fill="var(--sig-positive)" radius={[0, 0, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      <div style={styles.panelBox}>
-        <div style={styles.panelBoxTitle}>BREAKDOWN, {RANGE_LABEL[dashRange]}</div>
-        <BreakdownRow label="NO PICKUP" value={stats.noPickup} total={stats.dials} color="var(--sig-neutral)" />
-        <BreakdownRow label="NOT INTERESTED" value={stats.pickupNo} total={stats.dials} color="var(--sig-negative)" />
-        <BreakdownRow label="FOLLOW UP" value={stats.followUp} total={stats.dials} color="var(--sig-pending)" />
-        <BreakdownRow label="EMAIL SENT" value={stats.emailSent} total={stats.dials} color="var(--sig-info)" />
-        <BreakdownRow label="MEETING BOOKED" value={stats.meetings} total={stats.dials} color="var(--sig-positive)" />
+  return `
+    <div class="range-switch" id="dash-range-switch">
+      ${['today', 'week', 'month', 'all'].map((r) => `<button class="key-focus range-btn${state.dashRange === r ? ' range-btn-active' : ''}" data-range="${r}">${RANGE_LABEL[r]}</button>`).join('')}
+    </div>
+    <div class="readout-grid">
+      <div class="readout-card"><div class="readout-label">DIALS</div><div class="readout-static">${stats.dials}</div></div>
+      <div class="readout-card"><div class="readout-label">MEETINGS BOOKED</div><div class="readout-static">${stats.meetings}</div></div>
+      <div class="readout-card"><div class="readout-label">PICKUP RATE</div><div class="readout-static">${pct(stats.pickupRate)}<span class="readout-pct">%</span></div><div class="readout-sub">${stats.pickups} OF ${stats.dials}</div></div>
+      <div class="readout-card"><div class="readout-label">MEETING RATE</div><div class="readout-static">${pct(stats.meetingRate)}<span class="readout-pct">%</span></div><div class="readout-sub">OF ALL DIALS</div></div>
+    </div>
+    <div class="panel-box">
+      <div class="panel-box-title">THIS WEEK VS LAST WEEK</div>
+      <div class="compare-items">
+        <div class="compare-item"><span class="compare-label">PICKUP RATE</span><span class="compare-value">${pct(weekStats.pickupRate)}%</span>${deltaChip(pickupDelta)}</div>
+        <div class="compare-item"><span class="compare-label">MEETING RATE</span><span class="compare-value">${pct(weekStats.meetingRate)}%</span>${deltaChip(meetingDelta)}</div>
       </div>
     </div>
-  );
-}
-
-function RangeSwitch({ value, onChange }) {
-  return (
-    <div style={styles.rangeSwitch}>
-      {['today', 'week', 'month', 'all'].map((r) => (
-        <button key={r} className="key-focus" style={{ ...styles.rangeBtn, ...(value === r ? styles.rangeBtnActive : {}) }} onClick={() => onChange(r)}>
-          {RANGE_LABEL[r]}
-        </button>
-      ))}
+    <div class="panel-box">
+      <div class="panel-box-title">LAST 14 DAYS</div>
+      <div class="chart-frame">
+        ${renderBarChartSvg(chartData, 560, 170)}
+        <div class="chart-legend"><span><span class="legend-swatch" style="background:var(--sig-neutral)"></span>DIALS</span><span><span class="legend-swatch" style="background:var(--sig-positive)"></span>MEETINGS</span></div>
+      </div>
     </div>
-  );
+    <div class="panel-box">
+      <div class="panel-box-title">BREAKDOWN, ${RANGE_LABEL[state.dashRange]}</div>
+      ${breakdownRowHtml('NO PICKUP', stats.noPickup, stats.dials, 'var(--sig-neutral)')}
+      ${breakdownRowHtml('NOT INTERESTED', stats.pickupNo, stats.dials, 'var(--sig-negative)')}
+      ${breakdownRowHtml('FOLLOW UP', stats.followUp, stats.dials, 'var(--sig-pending)')}
+      ${breakdownRowHtml('EMAIL SENT', stats.emailSent, stats.dials, 'var(--sig-info)')}
+      ${breakdownRowHtml('MEETING BOOKED', stats.meetings, stats.dials, 'var(--sig-positive)')}
+    </div>`;
 }
 
-function CompareItem({ label, delta, current }) {
-  const isUp = delta > 0;
-  const isDown = delta < 0;
-  const arrow = isUp ? '\u25B2' : isDown ? '\u25BC' : '\u2013';
-  const color = isUp ? 'var(--sig-positive)' : isDown ? 'var(--sig-negative)' : 'var(--ink-soft)';
-  return (
-    <div style={styles.compareItem}>
-      <span style={styles.compareLabel}>{label}</span>
-      <span style={styles.compareValue}>{current}</span>
-      <span style={{ ...styles.compareDelta, color }}>{arrow} {isUp ? '+' : ''}{delta}pt</span>
-    </div>
-  );
-}
-
-function BreakdownRow({ label, value, total, color }) {
+function breakdownRowHtml(label, value, total, color) {
   const width = total ? Math.max((value / total) * 100, value > 0 ? 2 : 0) : 0;
-  return (
-    <div style={styles.breakdownRow}>
-      <div style={styles.breakdownLabelRow}>
-        <span style={{ ...styles.breakdownSwatch, background: color }} />
-        <span style={styles.breakdownLabel}>{label}</span>
-        <span style={styles.breakdownValue}>{value}</span>
+  return `
+    <div class="breakdown-row">
+      <div class="breakdown-label-row">
+        <span class="breakdown-swatch" style="background:${color}"></span>
+        <span class="breakdown-label">${label}</span>
+        <span class="breakdown-value">${value}</span>
       </div>
-      <div style={styles.breakdownTrack}>
-        <div style={{ ...styles.breakdownFill, width: `${width}%`, background: color }} />
-      </div>
-    </div>
-  );
+      <div class="breakdown-track"><div class="breakdown-fill" style="width:${width}%;background:${color}"></div></div>
+    </div>`;
+}
+
+function mountDashboardView() {
+  document.querySelectorAll('#dash-range-switch [data-range]').forEach((btn) => {
+    btn.addEventListener('click', () => { state.dashRange = btn.dataset.range; renderPanel(); });
+  });
+}
+
+/* ---- HISTORY VIEW ---- */
+
+function renderHistoryHtml() {
+  const filtered = state.historyRange === 'all' ? state.entries : filterByRange(state.entries, state.historyRange);
+  const sorted = [...filtered].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const visible = sorted.slice(0, state.historyVisibleCount);
+  const unsyncedCount = state.entries.filter((e) => !e.sheetSynced).length;
+
+  const rangeSwitch = `<div class="range-switch" id="hist-range-switch">${['today', 'week', 'month', 'all'].map((r) => `<button class="key-focus range-btn${state.historyRange === r ? ' range-btn-active' : ''}" data-range="${r}">${RANGE_LABEL[r]}</button>`).join('')}</div>`;
+
+  const toolbarBtns = `
+    <div class="toolbar-btns">
+      ${state.sheetUrl ? `<button class="key-focus tool-btn" id="resync-btn" ${state.syncing || unsyncedCount === 0 ? 'disabled' : ''}>${state.syncing ? 'SYNCING\u2026' : unsyncedCount > 0 ? `SYNC ${unsyncedCount} TO SHEET` : 'SHEET UP TO DATE'}</button>` : ''}
+      <button class="key-focus tool-btn tool-btn-primary" id="export-btn" ${state.entries.length === 0 ? 'disabled' : ''}>EXPORT EXCEL</button>
+    </div>`;
+
+  const table = sorted.length === 0 ? `<div class="empty-state">NO CALLS IN THIS RANGE</div>` : `
+    <div class="ledger">
+      <table class="log-table">
+        <thead><tr><th>DATE</th><th>TIME</th><th>OUTCOME</th><th>TAG</th><th class="th-action"></th></tr></thead>
+        <tbody>
+          ${visible.map((e, i) => `
+            <tr class="tr-row" style="background:${i % 2 === 1 ? 'var(--paper-alt)' : 'transparent'}">
+              <td>${formatDateLabel(e.timestamp)}</td>
+              <td style="font-family:var(--font-mono)">${formatTimeLabel(e.timestamp)}</td>
+              <td><span class="outcome-dot" style="background:${OUTCOME_MAP[e.outcome].color}"></span>${escapeHtml(OUTCOME_MAP[e.outcome].short.toUpperCase())}</td>
+              <td>${escapeHtml(e.campaign) || '-'}</td>
+              <td class="td-action"><button class="key-focus delete-btn" data-delete-id="${e.id}" aria-label="Delete entry">\u00D7</button></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+      ${sorted.length > state.historyVisibleCount ? `<button class="key-focus load-more-btn" id="load-more-btn">LOAD MORE (${sorted.length - state.historyVisibleCount} REMAINING)</button>` : ''}
+    </div>`;
+
+  const clearBtn = state.entries.length > 0 ? `<button class="key-focus clear-all-btn" id="clear-all-btn">CLEAR ALL DATA</button>` : '';
+
+  return `<div class="history-toolbar">${rangeSwitch}${toolbarBtns}</div>${table}${clearBtn}`;
+}
+
+function mountHistoryView() {
+  document.querySelectorAll('#hist-range-switch [data-range]').forEach((btn) => {
+    btn.addEventListener('click', () => { state.historyRange = btn.dataset.range; state.historyVisibleCount = 50; renderPanel(); });
+  });
+  const exportBtn = document.getElementById('export-btn');
+  if (exportBtn) exportBtn.addEventListener('click', () => exportToExcel(state.entries));
+  const resyncBtn = document.getElementById('resync-btn');
+  if (resyncBtn) resyncBtn.addEventListener('click', () => resyncUnsent());
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  if (loadMoreBtn) loadMoreBtn.addEventListener('click', () => { state.historyVisibleCount += 50; renderPanel(); });
+  document.querySelectorAll('[data-delete-id]').forEach((btn) => {
+    btn.addEventListener('click', () => { state.confirmDeleteId = btn.dataset.deleteId; openModal(); });
+  });
+  const clearAllBtn = document.getElementById('clear-all-btn');
+  if (clearAllBtn) clearAllBtn.addEventListener('click', () => { state.confirmClear = true; openModal(); });
 }
 
 /* =========================================================================
-   HISTORY VIEW
+   MODAL
    ========================================================================= */
 
-function HistoryView({ historyRange, setHistoryRange, entries, totalCount, onDelete, onExport, sheetConnected, unsyncedCount, syncing, onResync, onClearAll }) {
-  const [visibleCount, setVisibleCount] = useState(50);
-  useEffect(() => { setVisibleCount(50); }, [historyRange]);
-  const visible = entries.slice(0, visibleCount);
-
-  return (
-    <div>
-      <div style={styles.historyToolbar}>
-        <RangeSwitch value={historyRange} onChange={setHistoryRange} />
-        <div style={styles.toolbarBtns}>
-          {sheetConnected && (
-            <button className="key-focus" style={styles.toolBtn} onClick={onResync} disabled={syncing || unsyncedCount === 0}>
-              {syncing ? 'SYNCING\u2026' : unsyncedCount > 0 ? `SYNC ${unsyncedCount} TO SHEET` : 'SHEET UP TO DATE'}
-            </button>
-          )}
-          <button className="key-focus" style={{ ...styles.toolBtn, ...styles.toolBtnPrimary }} onClick={onExport} disabled={totalCount === 0}>
-            EXPORT EXCEL
-          </button>
+function openModal() {
+  const root = document.getElementById('modal-root');
+  if (state.confirmDeleteId) {
+    root.innerHTML = modalHtml('DELETE ENTRY', 'This removes it from the log for good.');
+  } else if (state.confirmClear) {
+    root.innerHTML = modalHtml('CLEAR ALL DATA', `This permanently deletes all ${state.entries.length} logged calls. Export first if you want a copy.`);
+  }
+  const overlay = root.querySelector('.modal-overlay');
+  if (!overlay) return;
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) { closeModal(); } });
+  root.querySelector('[data-action="modal-cancel"]').addEventListener('click', closeModal);
+  root.querySelector('[data-action="modal-confirm"]').addEventListener('click', () => {
+    if (state.confirmDeleteId) deleteEntry(state.confirmDeleteId);
+    else if (state.confirmClear) clearAll();
+  });
+}
+function closeModal() {
+  state.confirmDeleteId = null;
+  state.confirmClear = false;
+  document.getElementById('modal-root').innerHTML = '';
+}
+function modalHtml(title, body) {
+  return `
+    <div class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-title">${title}</div>
+        <div class="modal-body">${body}</div>
+        <div class="modal-actions">
+          <button class="key-focus modal-cancel" data-action="modal-cancel">CANCEL</button>
+          <button class="key-focus modal-confirm" data-action="modal-confirm">CONFIRM</button>
         </div>
       </div>
-
-      {entries.length === 0 ? (
-        <div style={styles.emptyState}>NO CALLS IN THIS RANGE</div>
-      ) : (
-        <div style={styles.ledger}>
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.th}>DATE</th>
-                <th style={styles.th}>TIME</th>
-                <th style={styles.th}>OUTCOME</th>
-                <th style={styles.th}>TAG</th>
-                <th style={styles.thAction} />
-              </tr>
-            </thead>
-            <tbody>
-              {visible.map((e, i) => (
-                <tr key={e.id} style={{ ...styles.tr, background: i % 2 === 1 ? 'var(--paper-alt)' : 'transparent' }}>
-                  <td style={styles.td}>{formatDateLabel(e.timestamp)}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{formatTimeLabel(e.timestamp)}</td>
-                  <td style={styles.td}>
-                    <span style={{ ...styles.outcomeDot, background: OUTCOME_MAP[e.outcome].color }} />
-                    {OUTCOME_MAP[e.outcome].short.toUpperCase()}
-                  </td>
-                  <td style={styles.td}>{e.campaign || '-'}</td>
-                  <td style={styles.tdAction}>
-                    <button className="key-focus" style={styles.deleteBtn} onClick={() => onDelete(e.id)} aria-label="Delete entry">×</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {entries.length > visibleCount && (
-            <button className="key-focus" style={styles.loadMoreBtn} onClick={() => setVisibleCount((v) => v + 50)}>
-              LOAD MORE ({entries.length - visibleCount} REMAINING)
-            </button>
-          )}
-        </div>
-      )}
-
-      {totalCount > 0 && (
-        <button className="key-focus" style={styles.clearAllBtn} onClick={onClearAll}>CLEAR ALL DATA</button>
-      )}
-    </div>
-  );
+    </div>`;
 }
 
 /* =========================================================================
-   SHARED SMALL COMPONENTS
+   INIT
    ========================================================================= */
 
-function ModeButton({ active, onClick, label }) {
-  return (
-    <button onClick={onClick} className="key-focus" style={{ ...styles.modeBtn, ...(active ? styles.modeBtnActive : {}) }}>
-      {label}
-    </button>
-  );
+async function init() {
+  const app = document.getElementById('app');
+  app.innerHTML = `<div class="loading-wrap"><span class="flap-row flap-lg" id="boot-flap"></span><div class="loading-text">WARMING UP</div></div>`;
+  createFlapCounter(document.getElementById('boot-flap'), 0, 3, 'lg');
+
+  await loadState();
+
+  app.innerHTML = `
+    <div class="chassis">
+      <div class="nameplate" id="nameplate"></div>
+      <div class="settings-panel" id="settings-panel" hidden></div>
+      <div class="mode-selector" id="mode-selector"></div>
+      <div class="panel" id="panel"></div>
+    </div>`;
+  renderShell();
+  renderPanel();
 }
 
-function ConfirmModal({ title, body, onCancel, onConfirm }) {
-  return (
-    <div style={styles.modalOverlay} onClick={onCancel}>
-      <div style={styles.modalCard} onClick={(e) => e.stopPropagation()}>
-        <div style={styles.modalTitle}>{title}</div>
-        <div style={styles.modalBody}>{body}</div>
-        <div style={styles.modalActions}>
-          <button className="key-focus" style={styles.modalCancel} onClick={onCancel}>CANCEL</button>
-          <button className="key-focus" style={styles.modalConfirm} onClick={onConfirm}>CONFIRM</button>
-        </div>
-      </div>
-    </div>
-  );
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
 }
-
-/* =========================================================================
-   STYLE TOKENS
-   ========================================================================= */
-
-const globalCss = `
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
-
-.coldcall-root, .coldcall-root * { box-sizing: border-box; }
-
-:root {
-  --chassis: #2A2723;
-  --chassis-well: #201D19;
-  --chassis-raised: #3C372F;
-  --flap-bg: #121110;
-  --flap-ink: #EDE6D3;
-  --ink: #EDE6D3;
-  --ink-soft: #A79E8C;
-  --ink-faint: #6E6759;
-  --paper: #E3DBC6;
-  --paper-alt: #D9D0B4;
-  --paper-line: #B9AE92;
-  --paper-ink: #2A2620;
-  --accent: #D6A548;
-  --sig-neutral: #9A937F;
-  --sig-negative: #BD5138;
-  --sig-pending: #CE9E3E;
-  --sig-info: #4C85A8;
-  --sig-positive: #4F9260;
-  --font-numeral: 'Archivo Black', sans-serif;
-  --font-label: 'Oswald', sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
-}
-
-.key-focus:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-.key-btn { transition: transform .05s ease; }
-.key-btn:active, .key-btn-press { transform: translateY(2px); }
-
-.flap-row { display: inline-flex; gap: 1px; perspective: 300px; }
-.flap-cell { position: relative; display: inline-block; background: var(--flap-bg); overflow: hidden; text-align: center; }
-.flap-cell::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0,0,0,0.55); }
-.flap-cell-inner { display: block; color: var(--flap-ink); font-family: var(--font-numeral); backface-visibility: hidden; }
-.flap-cell-inner.flap-out { animation: flapOut .12s ease-in forwards; }
-.flap-cell-inner.flap-in { animation: flapIn .17s ease-out forwards; }
-@keyframes flapOut { to { transform: rotateX(-85deg); opacity: .25; } }
-@keyframes flapIn { from { transform: rotateX(85deg); opacity: .25; } to { transform: rotateX(0deg); opacity: 1; } }
-
-.flap-sm .flap-cell { width: 12px; height: 16px; font-size: 12px; line-height: 16px; }
-.flap-lg .flap-cell { width: 20px; height: 30px; font-size: 24px; line-height: 30px; }
-
-@media (prefers-reduced-motion: reduce) {
-  .key-btn, .flap-cell-inner { animation: none !important; transition: none !important; }
-}
-
-@media (max-width: 420px) {
-  .coldcall-key-grid { grid-template-columns: repeat(2, 1fr) !important; }
-}
-`;
-
-/* =========================================================================
-   INLINE STYLE OBJECTS
-   ========================================================================= */
-
-const styles = {
-  app: { fontFamily: 'var(--font-label)', background: '#171512', minHeight: '100%', padding: 14 },
-  loadingWrap: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '70px 0', gap: 14 },
-  loadingText: { fontSize: 11, color: 'var(--ink-faint)', letterSpacing: '0.12em', fontWeight: 500 },
-
-  chassis: { background: 'var(--chassis)', maxWidth: 640, margin: '0 auto', padding: 14, boxShadow: '0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 30px rgba(0,0,0,0.35)' },
-
-  nameplate: { background: 'var(--chassis-well)', padding: '12px 14px', marginBottom: 10 },
-  nameplateRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
-  nameplateTitle: { fontFamily: 'var(--font-label)', fontWeight: 700, fontSize: 15, letterSpacing: '0.14em', color: 'var(--ink)' },
-  settingsToggle: { background: 'var(--chassis-raised)', border: 'none', color: 'var(--ink-soft)', fontFamily: 'var(--font-label)', fontSize: 10.5, fontWeight: 600, letterSpacing: '0.08em', padding: '6px 10px', cursor: 'pointer' },
-  nameplateStats: { display: 'flex', gap: 20 },
-  nameplateStatBlock: { display: 'flex', flexDirection: 'column', gap: 4 },
-  nameplateStatLabel: { fontSize: 9, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600 },
-
-  settingsPanel: { background: 'var(--chassis-well)', padding: 14, marginBottom: 10 },
-  settingsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10 },
-  settingsField: { display: 'flex', flexDirection: 'column', gap: 5 },
-  settingsLabel: { fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600 },
-  settingsInput: { background: 'var(--flap-bg)', border: '1px solid var(--chassis-raised)', color: 'var(--flap-ink)', fontFamily: 'var(--font-mono)', fontSize: 12.5, padding: '8px 9px' },
-  chipRow: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 10 },
-  chip: { fontSize: 10.5, padding: '4px 9px', border: '1px solid var(--chassis-raised)', background: 'transparent', color: 'var(--ink-soft)', cursor: 'pointer', fontFamily: 'var(--font-label)', letterSpacing: '0.04em' },
-  sheetStatus: { display: 'flex', alignItems: 'center', gap: 7, marginTop: 10, fontSize: 10, letterSpacing: '0.04em', color: 'var(--ink-faint)' },
-  sheetStatusDot: { width: 6, height: 6, borderRadius: '50%', flexShrink: 0 },
-
-  modeSelector: { display: 'flex', gap: 2, marginBottom: 2 },
-  modeBtn: { flex: 1, background: 'var(--chassis-raised)', border: 'none', color: 'var(--ink-soft)', fontFamily: 'var(--font-label)', fontWeight: 600, fontSize: 11.5, letterSpacing: '0.08em', padding: '11px 6px', cursor: 'pointer' },
-  modeBtnActive: { background: 'var(--accent)', color: 'var(--chassis-well)' },
-
-  panel: { background: 'var(--chassis-well)', padding: 14 },
-
-  keyGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8, marginBottom: 14 },
-  key: {
-    position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4,
-    background: 'var(--chassis-raised)', border: 'none', borderBottom: '3px solid rgba(0,0,0,0.35)',
-    padding: '12px 12px 10px', cursor: 'pointer', textAlign: 'left', minHeight: 88,
-  },
-  keyStripe: { position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'var(--key-color)' },
-  keyCode: { fontFamily: 'var(--font-numeral)', fontSize: 15, color: 'var(--key-color)', letterSpacing: '0.02em' },
-  keyLabel: { fontFamily: 'var(--font-label)', fontSize: 11, fontWeight: 500, color: 'var(--ink-soft)', letterSpacing: '0.02em', lineHeight: 1.25 },
-  keyReadout: { marginTop: 'auto', alignSelf: 'flex-end' },
-
-  statusLine: { display: 'flex', alignItems: 'center', gap: 8, background: 'var(--chassis-well)', borderTop: '1px solid var(--chassis-raised)', paddingTop: 12 },
-  statusLineLabel: { fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600 },
-  statusLineDot: { width: 7, height: 7, borderRadius: '50%', flexShrink: 0 },
-  statusLineText: { flex: 1, fontSize: 11.5, letterSpacing: '0.03em', color: 'var(--ink)', fontWeight: 500 },
-  statusLineTime: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-faint)' },
-  undoBtn: { background: 'transparent', border: '1px solid var(--chassis-raised)', color: 'var(--ink-soft)', fontFamily: 'var(--font-label)', fontSize: 10, fontWeight: 600, letterSpacing: '0.08em', padding: '5px 10px', cursor: 'pointer' },
-
-  rangeSwitch: { display: 'flex', gap: 2, marginBottom: 12, flexWrap: 'wrap' },
-  rangeBtn: { fontSize: 10.5, fontWeight: 600, letterSpacing: '0.06em', padding: '7px 12px', border: '1px solid var(--chassis-raised)', background: 'transparent', color: 'var(--ink-soft)', cursor: 'pointer', fontFamily: 'var(--font-label)' },
-  rangeBtnActive: { background: 'var(--accent)', borderColor: 'var(--accent)', color: 'var(--chassis-well)' },
-
-  readoutGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8, marginBottom: 10 },
-  readoutCard: { background: 'var(--chassis-raised)', padding: '10px 12px' },
-  readoutLabel: { fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600, marginBottom: 6 },
-  readoutStatic: { fontFamily: 'var(--font-numeral)', fontSize: 24, color: 'var(--ink)' },
-  readoutPct: { fontSize: 14, marginLeft: 2, color: 'var(--ink-soft)' },
-  readoutSub: { fontSize: 9.5, color: 'var(--ink-faint)', marginTop: 4, letterSpacing: '0.04em' },
-
-  panelBox: { background: 'var(--chassis-raised)', padding: 14, marginBottom: 10 },
-  panelBoxTitle: { fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600, marginBottom: 12 },
-
-  compareItems: { display: 'flex', gap: 24, flexWrap: 'wrap' },
-  compareItem: { display: 'flex', flexDirection: 'column', gap: 3 },
-  compareLabel: { fontSize: 9.5, letterSpacing: '0.06em', color: 'var(--ink-faint)' },
-  compareValue: { fontFamily: 'var(--font-numeral)', fontSize: 16, color: 'var(--ink)' },
-  compareDelta: { fontSize: 10.5, fontFamily: 'var(--font-mono)', fontWeight: 600 },
-
-  chartFrame: { background: 'var(--paper)', padding: '10px 6px 4px' },
-
-  breakdownRow: { marginBottom: 10 },
-  breakdownLabelRow: { display: 'flex', alignItems: 'center', gap: 7, marginBottom: 4 },
-  breakdownSwatch: { width: 8, height: 8, flexShrink: 0 },
-  breakdownLabel: { fontSize: 10.5, letterSpacing: '0.04em', flex: 1, color: 'var(--ink-soft)' },
-  breakdownValue: { fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--ink)' },
-  breakdownTrack: { height: 4, background: 'var(--chassis-well)' },
-  breakdownFill: { height: '100%' },
-
-  historyToolbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' },
-  toolbarBtns: { display: 'flex', gap: 6, flexWrap: 'wrap' },
-  toolBtn: { background: 'transparent', border: '1px solid var(--chassis-raised)', color: 'var(--ink-soft)', fontFamily: 'var(--font-label)', fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', padding: '8px 11px', cursor: 'pointer' },
-  toolBtnPrimary: { background: 'var(--accent)', borderColor: 'var(--accent)', color: 'var(--chassis-well)' },
-
-  ledger: { background: 'var(--paper)' },
-  table: { width: '100%', borderCollapse: 'collapse', fontSize: 11.5, fontFamily: 'var(--font-label)' },
-  th: { textAlign: 'left', fontSize: 9.5, letterSpacing: '0.06em', color: 'var(--paper-ink)', opacity: 0.65, fontWeight: 700, padding: '9px 10px', borderBottom: '2px solid var(--paper-line)' },
-  thAction: { width: 30, borderBottom: '2px solid var(--paper-line)' },
-  tr: { borderBottom: '1px solid var(--paper-line)' },
-  td: { padding: '8px 10px', color: 'var(--paper-ink)', verticalAlign: 'middle' },
-  tdAction: { padding: '8px 6px', textAlign: 'center' },
-  outcomeDot: { display: 'inline-block', width: 7, height: 7, marginRight: 6 },
-  deleteBtn: { background: 'transparent', border: 'none', color: 'var(--paper-ink)', opacity: 0.5, cursor: 'pointer', fontSize: 15, lineHeight: 1, padding: 2 },
-  loadMoreBtn: { width: '100%', padding: '9px', fontSize: 10.5, fontWeight: 600, letterSpacing: '0.06em', color: 'var(--paper-ink)', background: 'var(--paper-alt)', border: 'none', borderTop: '1px solid var(--paper-line)', cursor: 'pointer', fontFamily: 'var(--font-label)' },
-
-  emptyState: { fontSize: 11, letterSpacing: '0.05em', color: 'var(--ink-faint)', padding: '20px 4px', textAlign: 'center' },
-  clearAllBtn: { display: 'block', marginTop: 12, fontSize: 10, letterSpacing: '0.06em', color: 'var(--ink-faint)', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-label)' },
-
-  modalOverlay: { position: 'fixed', inset: 0, background: 'rgba(10,9,8,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 60, padding: 20 },
-  modalCard: { background: 'var(--chassis-raised)', padding: 22, maxWidth: 320, width: '100%', borderTop: '3px solid var(--sig-negative)' },
-  modalTitle: { fontFamily: 'var(--font-label)', fontWeight: 700, fontSize: 13.5, letterSpacing: '0.1em', color: 'var(--ink)', marginBottom: 10 },
-  modalBody: { fontSize: 12, color: 'var(--ink-soft)', lineHeight: 1.5, marginBottom: 18 },
-  modalActions: { display: 'flex', gap: 8, justifyContent: 'flex-end' },
-  modalCancel: { padding: '8px 14px', border: '1px solid var(--chassis)', background: 'transparent', color: 'var(--ink-soft)', fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', cursor: 'pointer', fontFamily: 'var(--font-label)' },
-  modalConfirm: { padding: '8px 14px', border: 'none', background: 'var(--sig-negative)', color: 'var(--ink)', fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', cursor: 'pointer', fontFamily: 'var(--font-label)' },
-};
+</script>
+</body>
+</html>
