@@ -1,0 +1,953 @@
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, Legend,
+} from 'recharts';
+import * as XLSX from 'xlsx';
+
+/* =========================================================================
+   CONSTANTS
+   ========================================================================= */
+
+const OUTCOMES = [
+  { id: 'no_pickup', label: 'No Pickup', short: 'No Pickup', code: 'NP', color: 'var(--sig-neutral)' },
+  { id: 'pickup_no', label: 'Picked Up, Not Interested', short: 'Not Interested', code: 'NI', color: 'var(--sig-negative)' },
+  { id: 'pickup_follow_up', label: 'Picked Up, Follow Up Later', short: 'Follow Up', code: 'FU', color: 'var(--sig-pending)' },
+  { id: 'pickup_email', label: 'Picked Up, Send Email', short: 'Email Sent', code: 'EM', color: 'var(--sig-info)' },
+  { id: 'pickup_meeting', label: 'Picked Up, Meeting Booked', short: 'Meeting Booked', code: 'MB', color: 'var(--sig-positive)' },
+];
+const OUTCOME_MAP = Object.fromEntries(OUTCOMES.map((o) => [o.id, o]));
+
+const ENTRIES_KEY = 'cold_call_entries_v2';
+const SETTINGS_KEY = 'cold_call_settings_v2';
+
+const RANGE_LABEL = { today: 'TODAY', week: 'WEEK', month: 'MONTH', all: 'ALL TIME' };
+
+/* =========================================================================
+   DATE HELPERS  (weeks start Monday)
+   ========================================================================= */
+
+function toLocalDateKey(input) {
+  const d = new Date(input);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+function toLocalMonthKey(input) {
+  const d = new Date(input);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+function getWeekStart(input) {
+  const d = new Date(input);
+  d.setHours(0, 0, 0, 0);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  return d;
+}
+function formatDateLabel(input) {
+  return new Date(input).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+}
+function formatTimeLabel(input) {
+  return new Date(input).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+}
+function pct(n) {
+  return `${Math.round(n * 100)}`;
+}
+
+/* =========================================================================
+   STATS HELPERS
+   ========================================================================= */
+
+function computeCounts(list) {
+  const dials = list.length;
+  const noPickup = list.filter((e) => e.outcome === 'no_pickup').length;
+  const pickupNo = list.filter((e) => e.outcome === 'pickup_no').length;
+  const followUp = list.filter((e) => e.outcome === 'pickup_follow_up').length;
+  const emailSent = list.filter((e) => e.outcome === 'pickup_email').length;
+  const meetings = list.filter((e) => e.outcome === 'pickup_meeting').length;
+  const pickups = dials - noPickup;
+  const interested = followUp + emailSent + meetings;
+  return {
+    dials, noPickup, pickupNo, followUp, emailSent, meetings, pickups, interested,
+    pickupRate: dials ? pickups / dials : 0,
+    interestRate: pickups ? interested / pickups : 0,
+    meetingRate: dials ? meetings / dials : 0,
+  };
+}
+
+function filterByRange(entries, range) {
+  const now = new Date();
+  if (range === 'today') {
+    const key = toLocalDateKey(now);
+    return entries.filter((e) => toLocalDateKey(e.timestamp) === key);
+  }
+  if (range === 'week') {
+    const key = toLocalDateKey(getWeekStart(now));
+    return entries.filter((e) => toLocalDateKey(getWeekStart(e.timestamp)) === key);
+  }
+  if (range === 'lastWeek') {
+    const ref = new Date(now);
+    ref.setDate(ref.getDate() - 7);
+    const key = toLocalDateKey(getWeekStart(ref));
+    return entries.filter((e) => toLocalDateKey(getWeekStart(e.timestamp)) === key);
+  }
+  if (range === 'month') {
+    const key = toLocalMonthKey(now);
+    return entries.filter((e) => toLocalMonthKey(e.timestamp) === key);
+  }
+  return entries;
+}
+
+function computeDailySeries(entries, numDays) {
+  const now = new Date();
+  const out = [];
+  for (let i = numDays - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const key = toLocalDateKey(d);
+    const c = computeCounts(entries.filter((e) => toLocalDateKey(e.timestamp) === key));
+    out.push({ date: d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }), Dials: c.dials, Meetings: c.meetings });
+  }
+  return out;
+}
+
+/* =========================================================================
+   EXCEL EXPORT
+   ========================================================================= */
+
+function buildSummaryRows(entries, granularity) {
+  const groups = {};
+  entries.forEach((e) => {
+    let key;
+    if (granularity === 'day') key = toLocalDateKey(e.timestamp);
+    else if (granularity === 'week') key = toLocalDateKey(getWeekStart(e.timestamp));
+    else key = toLocalMonthKey(e.timestamp);
+    (groups[key] = groups[key] || []).push(e);
+  });
+  return Object.keys(groups).sort().map((key) => {
+    const c = computeCounts(groups[key]);
+    return {
+      Period: granularity === 'week' ? `Week of ${key}` : key,
+      Dials: c.dials,
+      Pickups: c.pickups,
+      'Pickup Rate': `${pct(c.pickupRate)}%`,
+      'Not Interested': c.pickupNo,
+      'Follow Up': c.followUp,
+      'Emails Sent': c.emailSent,
+      'Meetings Booked': c.meetings,
+      'Meeting Rate': `${pct(c.meetingRate)}%`,
+    };
+  });
+}
+
+function exportToExcel(entries) {
+  const wb = XLSX.utils.book_new();
+
+  const rawRows = [...entries]
+    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+    .map((e) => ({
+      Date: toLocalDateKey(e.timestamp),
+      Time: formatTimeLabel(e.timestamp),
+      'Day of Week': new Date(e.timestamp).toLocaleDateString(undefined, { weekday: 'long' }),
+      Outcome: OUTCOME_MAP[e.outcome]?.label || e.outcome,
+      Campaign: e.campaign || '',
+      Caller: e.caller || '',
+      'Synced to Sheet': e.sheetSynced ? 'Yes' : 'No',
+    }));
+  const rawSheet = XLSX.utils.json_to_sheet(rawRows);
+  rawSheet['!cols'] = [{ wch: 12 }, { wch: 10 }, { wch: 12 }, { wch: 28 }, { wch: 20 }, { wch: 16 }, { wch: 14 }];
+  XLSX.utils.book_append_sheet(wb, rawSheet, 'Call Log');
+
+  const summaryCols = [{ wch: 16 }, { wch: 8 }, { wch: 9 }, { wch: 12 }, { wch: 15 }, { wch: 10 }, { wch: 12 }, { wch: 16 }, { wch: 13 }];
+
+  const dailySheet = XLSX.utils.json_to_sheet(buildSummaryRows(entries, 'day'));
+  dailySheet['!cols'] = summaryCols;
+  XLSX.utils.book_append_sheet(wb, dailySheet, 'Daily Summary');
+
+  const weeklySheet = XLSX.utils.json_to_sheet(buildSummaryRows(entries, 'week'));
+  weeklySheet['!cols'] = summaryCols;
+  XLSX.utils.book_append_sheet(wb, weeklySheet, 'Weekly Summary');
+
+  const monthlySheet = XLSX.utils.json_to_sheet(buildSummaryRows(entries, 'month'));
+  monthlySheet['!cols'] = summaryCols;
+  XLSX.utils.book_append_sheet(wb, monthlySheet, 'Monthly Summary');
+
+  XLSX.writeFile(wb, `cold-call-log-${toLocalDateKey(new Date())}.xlsx`);
+}
+
+/* =========================================================================
+   GOOGLE SHEET SYNC
+   A Google Apps Script Web App (see chat for setup) receives a plain-text
+   POST containing JSON. text/plain avoids a CORS preflight, which Apps
+   Script web apps don't handle. no-cors means we can't read a response
+   back, so this is fire-and-forget: it will not throw on CORS, only on
+   real network failure (bad URL, offline, etc).
+   ========================================================================= */
+
+async function syncEntryToSheet(sheetUrl, entry) {
+  if (!sheetUrl) return false;
+  try {
+    await fetch(sheetUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        date: toLocalDateKey(entry.timestamp),
+        time: formatTimeLabel(entry.timestamp),
+        dayOfWeek: new Date(entry.timestamp).toLocaleDateString(undefined, { weekday: 'long' }),
+        outcome: OUTCOME_MAP[entry.outcome]?.label || entry.outcome,
+        campaign: entry.campaign || '',
+        caller: entry.caller || '',
+        timestamp: entry.timestamp,
+      }),
+    });
+    return true;
+  } catch (err) {
+    console.error('Sheet sync failed', err);
+    return false;
+  }
+}
+
+/* =========================================================================
+   FLAP DIGIT COUNTER  (split-flap / odometer style number readout)
+   ========================================================================= */
+
+function FlapDigits({ value, pad = 3, size = 'sm' }) {
+  const str = String(Math.max(0, Math.floor(value || 0))).padStart(pad, '0');
+  const [display, setDisplay] = useState(str);
+  const [phase, setPhase] = useState('idle');
+  const prevRef = useRef(str);
+  const timersRef = useRef([]);
+
+  useEffect(() => {
+    if (str !== prevRef.current) {
+      timersRef.current.forEach(clearTimeout);
+      setPhase('out');
+      const t1 = setTimeout(() => {
+        setDisplay(str);
+        setPhase('in');
+        const t2 = setTimeout(() => setPhase('idle'), 170);
+        timersRef.current.push(t2);
+      }, 120);
+      timersRef.current.push(t1);
+      prevRef.current = str;
+    }
+  }, [str]);
+
+  useEffect(() => () => timersRef.current.forEach(clearTimeout), []);
+
+  return (
+    <span className={`flap-row flap-${size}`}>
+      {display.split('').map((ch, i) => (
+        <span key={i} className="flap-cell">
+          <span className={`flap-cell-inner flap-${phase}`}>{ch}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/* =========================================================================
+   ROOT COMPONENT
+   ========================================================================= */
+
+export default function ColdCallTracker() {
+  const [entries, setEntries] = useState([]);
+  const [caller, setCaller] = useState('');
+  const [campaign, setCampaign] = useState('');
+  const [sheetUrl, setSheetUrl] = useState('');
+  const [loaded, setLoaded] = useState(false);
+  const [view, setView] = useState('log');
+  const [lastLogged, setLastLogged] = useState(null);
+  const [flashId, setFlashId] = useState(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [dashRange, setDashRange] = useState('today');
+  const [historyRange, setHistoryRange] = useState('all');
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [confirmClear, setConfirmClear] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const flashTimer = useRef(null);
+  const entriesRef = useRef(entries);
+
+  useEffect(() => { entriesRef.current = entries; }, [entries]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await window.storage.get(ENTRIES_KEY, false);
+        if (res && res.value) {
+          const loadedEntries = JSON.parse(res.value);
+          setEntries(loadedEntries);
+          if (loadedEntries.length > 0) setLastLogged(loadedEntries[0]);
+        }
+      } catch (e) { /* nothing stored yet */ }
+      try {
+        const res2 = await window.storage.get(SETTINGS_KEY, false);
+        if (res2 && res2.value) {
+          const s = JSON.parse(res2.value);
+          setCaller(s.caller || '');
+          setCampaign(s.campaign || '');
+          setSheetUrl(s.sheetUrl || '');
+        }
+      } catch (e) { /* nothing stored yet */ }
+      setLoaded(true);
+    })();
+  }, []);
+
+  const persistEntries = useCallback(async (next) => {
+    setEntries(next);
+    entriesRef.current = next;
+    try { await window.storage.set(ENTRIES_KEY, JSON.stringify(next), false); }
+    catch (e) { console.error('Failed to save call log', e); }
+  }, []);
+
+  const persistSettings = useCallback(async (nextCaller, nextCampaign, nextSheetUrl) => {
+    try { await window.storage.set(SETTINGS_KEY, JSON.stringify({ caller: nextCaller, campaign: nextCampaign, sheetUrl: nextSheetUrl }), false); }
+    catch (e) { console.error('Failed to save settings', e); }
+  }, []);
+
+  const markSynced = useCallback((id) => {
+    const next = entriesRef.current.map((e) => (e.id === id ? { ...e, sheetSynced: true } : e));
+    persistEntries(next);
+  }, [persistEntries]);
+
+  const logCall = (outcomeId) => {
+    const entry = {
+      id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+      timestamp: new Date().toISOString(),
+      outcome: outcomeId,
+      campaign: campaign.trim(),
+      caller: caller.trim(),
+      sheetSynced: false,
+    };
+    persistEntries([entry, ...entries]);
+    setLastLogged(entry);
+    setFlashId(outcomeId);
+    if (flashTimer.current) clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setFlashId(null), 350);
+
+    if (sheetUrl) {
+      syncEntryToSheet(sheetUrl, entry).then((ok) => { if (ok) markSynced(entry.id); });
+    }
+  };
+
+  const undoLast = () => {
+    if (entries.length === 0) return;
+    const next = entries.slice(1);
+    persistEntries(next);
+    setLastLogged(next[0] || null);
+  };
+
+  const deleteEntry = (id) => {
+    persistEntries(entries.filter((e) => e.id !== id));
+    setConfirmDeleteId(null);
+  };
+
+  const clearAll = () => {
+    persistEntries([]);
+    setLastLogged(null);
+    setConfirmClear(false);
+  };
+
+  const resyncUnsent = async () => {
+    if (!sheetUrl || syncing) return;
+    setSyncing(true);
+    const unsent = entriesRef.current.filter((e) => !e.sheetSynced);
+    for (const e of unsent) {
+      const ok = await syncEntryToSheet(sheetUrl, e);
+      if (ok) markSynced(e.id);
+    }
+    setSyncing(false);
+  };
+
+  const recentCampaigns = useMemo(() => {
+    const set = new Set();
+    entries.forEach((e) => { if (e.campaign) set.add(e.campaign); });
+    return Array.from(set).slice(0, 6);
+  }, [entries]);
+
+  const unsyncedCount = useMemo(() => entries.filter((e) => !e.sheetSynced).length, [entries]);
+
+  const todayStats = useMemo(() => computeCounts(filterByRange(entries, 'today')), [entries]);
+  const weekStats = useMemo(() => computeCounts(filterByRange(entries, 'week')), [entries]);
+  const lastWeekStats = useMemo(() => computeCounts(filterByRange(entries, 'lastWeek')), [entries]);
+  const monthStats = useMemo(() => computeCounts(filterByRange(entries, 'month')), [entries]);
+  const allTimeStats = useMemo(() => computeCounts(entries), [entries]);
+  const chartData = useMemo(() => computeDailySeries(entries, 14), [entries]);
+
+  const dashStatsMap = { today: todayStats, week: weekStats, month: monthStats, all: allTimeStats };
+  const activeDashStats = dashStatsMap[dashRange];
+
+  const todayOutcomeCounts = {
+    no_pickup: todayStats.noPickup,
+    pickup_no: todayStats.pickupNo,
+    pickup_follow_up: todayStats.followUp,
+    pickup_email: todayStats.emailSent,
+    pickup_meeting: todayStats.meetings,
+  };
+
+  const historyEntries = useMemo(() => {
+    const filtered = historyRange === 'all' ? entries : filterByRange(entries, historyRange);
+    return [...filtered].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  }, [entries, historyRange]);
+
+  if (!loaded) {
+    return (
+      <div className="coldcall-root" style={styles.app}>
+        <style>{globalCss}</style>
+        <div style={styles.loadingWrap}>
+          <span className="flap-row flap-lg">
+            {['0', '0', '0'].map((c, i) => <span key={i} className="flap-cell"><span className="flap-cell-inner">{c}</span></span>)}
+          </span>
+          <div style={styles.loadingText}>WARMING UP</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="coldcall-root" style={styles.app}>
+      <style>{globalCss}</style>
+
+      <div style={styles.chassis}>
+        <div style={styles.nameplate}>
+          <div style={styles.nameplateRow}>
+            <div style={styles.nameplateTitle}>COLD CALL LOG</div>
+            <button className="key-focus" style={styles.settingsToggle} onClick={() => setSettingsOpen((v) => !v)}>
+              {settingsOpen ? '\u25B4' : '\u25BE'} SETUP
+            </button>
+          </div>
+          <div style={styles.nameplateStats}>
+            <span style={styles.nameplateStatBlock}>
+              <FlapDigits value={todayStats.dials} pad={2} size="sm" />
+              <span style={styles.nameplateStatLabel}>DIALS</span>
+            </span>
+            <span style={styles.nameplateStatBlock}>
+              <FlapDigits value={todayStats.pickups} pad={2} size="sm" />
+              <span style={styles.nameplateStatLabel}>PICKUPS</span>
+            </span>
+            <span style={styles.nameplateStatBlock}>
+              <FlapDigits value={todayStats.meetings} pad={2} size="sm" />
+              <span style={styles.nameplateStatLabel}>MEETINGS</span>
+            </span>
+          </div>
+        </div>
+
+        {settingsOpen && (
+          <SettingsPanel
+            caller={caller} campaign={campaign} sheetUrl={sheetUrl}
+            recentCampaigns={recentCampaigns}
+            onCaller={(v) => { setCaller(v); persistSettings(v, campaign, sheetUrl); }}
+            onCampaign={(v) => { setCampaign(v); persistSettings(caller, v, sheetUrl); }}
+            onSheetUrl={(v) => { setSheetUrl(v); persistSettings(caller, campaign, v); }}
+          />
+        )}
+
+        <div style={styles.modeSelector}>
+          <ModeButton active={view === 'log'} onClick={() => setView('log')} label="LOG CALL" />
+          <ModeButton active={view === 'dashboard'} onClick={() => setView('dashboard')} label="DASHBOARD" />
+          <ModeButton active={view === 'history'} onClick={() => setView('history')} label="HISTORY" />
+        </div>
+
+        <div style={styles.panel}>
+          {view === 'log' && (
+            <LogView onLog={logCall} onUndo={undoLast} todayOutcomeCounts={todayOutcomeCounts} flashId={flashId} lastLogged={lastLogged} hasEntries={entries.length > 0} />
+          )}
+          {view === 'dashboard' && (
+            <DashboardView
+              dashRange={dashRange} setDashRange={setDashRange}
+              stats={activeDashStats} weekStats={weekStats} lastWeekStats={lastWeekStats}
+              chartData={chartData}
+            />
+          )}
+          {view === 'history' && (
+            <HistoryView
+              historyRange={historyRange} setHistoryRange={setHistoryRange}
+              entries={historyEntries} totalCount={entries.length}
+              onDelete={(id) => setConfirmDeleteId(id)}
+              onExport={() => exportToExcel(entries)}
+              sheetConnected={!!sheetUrl} unsyncedCount={unsyncedCount} syncing={syncing}
+              onResync={resyncUnsent}
+              onClearAll={() => setConfirmClear(true)}
+            />
+          )}
+        </div>
+      </div>
+
+      {confirmDeleteId && (
+        <ConfirmModal title="DELETE ENTRY" body="This removes it from the log for good." onCancel={() => setConfirmDeleteId(null)} onConfirm={() => deleteEntry(confirmDeleteId)} />
+      )}
+      {confirmClear && (
+        <ConfirmModal title="CLEAR ALL DATA" body={`This permanently deletes all ${entries.length} logged calls. Export first if you want a copy.`} onCancel={() => setConfirmClear(false)} onConfirm={clearAll} />
+      )}
+    </div>
+  );
+}
+
+/* =========================================================================
+   SETTINGS PANEL
+   ========================================================================= */
+
+function SettingsPanel({ caller, campaign, sheetUrl, recentCampaigns, onCaller, onCampaign, onSheetUrl }) {
+  return (
+    <div style={styles.settingsPanel}>
+      <div style={styles.settingsGrid}>
+        <label style={styles.settingsField}>
+          <span style={styles.settingsLabel}>CALLER</span>
+          <input className="key-focus" style={styles.settingsInput} value={caller} placeholder="Leo" onChange={(e) => onCaller(e.target.value)} />
+        </label>
+        <label style={styles.settingsField}>
+          <span style={styles.settingsLabel}>CAMPAIGN / CLIENT</span>
+          <input className="key-focus" style={styles.settingsInput} value={campaign} placeholder="Contractor 2.0" list="campaign-suggestions" onChange={(e) => onCampaign(e.target.value)} />
+          <datalist id="campaign-suggestions">
+            {recentCampaigns.map((c) => <option key={c} value={c} />)}
+          </datalist>
+        </label>
+      </div>
+      {recentCampaigns.length > 0 && (
+        <div style={styles.chipRow}>
+          {recentCampaigns.map((c) => (
+            <button key={c} className="key-focus" style={styles.chip} onClick={() => onCampaign(c)}>{c}</button>
+          ))}
+        </div>
+      )}
+      <label style={{ ...styles.settingsField, marginTop: 10 }}>
+        <span style={styles.settingsLabel}>GOOGLE SHEET SYNC URL</span>
+        <input className="key-focus" style={styles.settingsInput} value={sheetUrl} placeholder="https://script.google.com/macros/s/.../exec" onChange={(e) => onSheetUrl(e.target.value)} />
+      </label>
+      <div style={styles.sheetStatus}>
+        <span style={{ ...styles.sheetStatusDot, background: sheetUrl ? 'var(--sig-positive)' : 'var(--ink-faint)' }} />
+        {sheetUrl ? 'SHEET SYNC ON, EACH LOGGED CALL POSTS A ROW' : 'SHEET SYNC OFF, PASTE YOUR APPS SCRIPT URL ABOVE'}
+      </div>
+    </div>
+  );
+}
+
+/* =========================================================================
+   LOG VIEW
+   ========================================================================= */
+
+function LogView({ onLog, onUndo, todayOutcomeCounts, flashId, lastLogged, hasEntries }) {
+  return (
+    <div>
+      <div style={styles.keyGrid} className="coldcall-key-grid">
+        {OUTCOMES.map((o) => {
+          const count = todayOutcomeCounts[o.id] || 0;
+          return (
+            <button
+              key={o.id}
+              className={`key-btn key-focus${flashId === o.id ? ' key-btn-press' : ''}`}
+              style={{ ...styles.key, '--key-color': o.color }}
+              onClick={() => onLog(o.id)}
+            >
+              <span style={styles.keyStripe} />
+              <span style={styles.keyCode}>{o.code}</span>
+              <span style={styles.keyLabel}>{o.label}</span>
+              <span style={styles.keyReadout}>
+                <FlapDigits value={count} pad={3} size="sm" />
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div style={styles.statusLine}>
+        {lastLogged ? (
+          <>
+            <span style={styles.statusLineLabel}>LAST</span>
+            <span style={{ ...styles.statusLineDot, background: OUTCOME_MAP[lastLogged.outcome].color }} />
+            <span style={styles.statusLineText}>{OUTCOME_MAP[lastLogged.outcome].short.toUpperCase()}</span>
+            <span style={styles.statusLineTime}>{formatTimeLabel(lastLogged.timestamp)}</span>
+          </>
+        ) : (
+          <span style={styles.statusLineText}>NO CALLS LOGGED YET, TAP A KEY TO START</span>
+        )}
+        {hasEntries && (
+          <button className="key-focus" style={styles.undoBtn} onClick={onUndo}>UNDO</button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* =========================================================================
+   DASHBOARD VIEW
+   ========================================================================= */
+
+function DashboardView({ dashRange, setDashRange, stats, weekStats, lastWeekStats, chartData }) {
+  const pickupDelta = Math.round(weekStats.pickupRate * 100) - Math.round(lastWeekStats.pickupRate * 100);
+  const meetingDelta = Math.round(weekStats.meetingRate * 100) - Math.round(lastWeekStats.meetingRate * 100);
+
+  return (
+    <div>
+      <RangeSwitch value={dashRange} onChange={setDashRange} />
+
+      <div style={styles.readoutGrid}>
+        <div style={styles.readoutCard}>
+          <div style={styles.readoutLabel}>DIALS</div>
+          <FlapDigits value={stats.dials} pad={3} size="lg" />
+        </div>
+        <div style={styles.readoutCard}>
+          <div style={styles.readoutLabel}>MEETINGS BOOKED</div>
+          <FlapDigits value={stats.meetings} pad={3} size="lg" />
+        </div>
+        <div style={styles.readoutCard}>
+          <div style={styles.readoutLabel}>PICKUP RATE</div>
+          <div style={styles.readoutStatic}>{pct(stats.pickupRate)}<span style={styles.readoutPct}>%</span></div>
+          <div style={styles.readoutSub}>{stats.pickups} OF {stats.dials}</div>
+        </div>
+        <div style={styles.readoutCard}>
+          <div style={styles.readoutLabel}>MEETING RATE</div>
+          <div style={styles.readoutStatic}>{pct(stats.meetingRate)}<span style={styles.readoutPct}>%</span></div>
+          <div style={styles.readoutSub}>OF ALL DIALS</div>
+        </div>
+      </div>
+
+      <div style={styles.panelBox}>
+        <div style={styles.panelBoxTitle}>THIS WEEK VS LAST WEEK</div>
+        <div style={styles.compareItems}>
+          <CompareItem label="PICKUP RATE" delta={pickupDelta} current={`${pct(weekStats.pickupRate)}%`} />
+          <CompareItem label="MEETING RATE" delta={meetingDelta} current={`${pct(weekStats.meetingRate)}%`} />
+        </div>
+      </div>
+
+      <div style={styles.panelBox}>
+        <div style={styles.panelBoxTitle}>LAST 14 DAYS</div>
+        <div style={styles.chartFrame}>
+          <ResponsiveContainer width="100%" height={190}>
+            <BarChart data={chartData} margin={{ top: 4, right: 4, left: -28, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="2 3" stroke="var(--paper-line)" vertical={false} />
+              <XAxis dataKey="date" tick={{ fontSize: 9, fill: 'var(--paper-ink)', fontFamily: 'var(--font-mono)' }} axisLine={{ stroke: 'var(--paper-line)' }} tickLine={false} interval={1} />
+              <YAxis tick={{ fontSize: 9, fill: 'var(--paper-ink)', fontFamily: 'var(--font-mono)' }} axisLine={false} tickLine={false} allowDecimals={false} width={24} />
+              <Tooltip contentStyle={{ fontSize: 11, borderRadius: 0, border: '1px solid var(--paper-line)', fontFamily: 'var(--font-mono)', background: 'var(--paper)' }} />
+              <Legend wrapperStyle={{ fontSize: 10, fontFamily: 'var(--font-label)', letterSpacing: '0.04em' }} />
+              <Bar dataKey="Dials" fill="var(--sig-neutral)" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="Meetings" fill="var(--sig-positive)" radius={[0, 0, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div style={styles.panelBox}>
+        <div style={styles.panelBoxTitle}>BREAKDOWN, {RANGE_LABEL[dashRange]}</div>
+        <BreakdownRow label="NO PICKUP" value={stats.noPickup} total={stats.dials} color="var(--sig-neutral)" />
+        <BreakdownRow label="NOT INTERESTED" value={stats.pickupNo} total={stats.dials} color="var(--sig-negative)" />
+        <BreakdownRow label="FOLLOW UP" value={stats.followUp} total={stats.dials} color="var(--sig-pending)" />
+        <BreakdownRow label="EMAIL SENT" value={stats.emailSent} total={stats.dials} color="var(--sig-info)" />
+        <BreakdownRow label="MEETING BOOKED" value={stats.meetings} total={stats.dials} color="var(--sig-positive)" />
+      </div>
+    </div>
+  );
+}
+
+function RangeSwitch({ value, onChange }) {
+  return (
+    <div style={styles.rangeSwitch}>
+      {['today', 'week', 'month', 'all'].map((r) => (
+        <button key={r} className="key-focus" style={{ ...styles.rangeBtn, ...(value === r ? styles.rangeBtnActive : {}) }} onClick={() => onChange(r)}>
+          {RANGE_LABEL[r]}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function CompareItem({ label, delta, current }) {
+  const isUp = delta > 0;
+  const isDown = delta < 0;
+  const arrow = isUp ? '\u25B2' : isDown ? '\u25BC' : '\u2013';
+  const color = isUp ? 'var(--sig-positive)' : isDown ? 'var(--sig-negative)' : 'var(--ink-soft)';
+  return (
+    <div style={styles.compareItem}>
+      <span style={styles.compareLabel}>{label}</span>
+      <span style={styles.compareValue}>{current}</span>
+      <span style={{ ...styles.compareDelta, color }}>{arrow} {isUp ? '+' : ''}{delta}pt</span>
+    </div>
+  );
+}
+
+function BreakdownRow({ label, value, total, color }) {
+  const width = total ? Math.max((value / total) * 100, value > 0 ? 2 : 0) : 0;
+  return (
+    <div style={styles.breakdownRow}>
+      <div style={styles.breakdownLabelRow}>
+        <span style={{ ...styles.breakdownSwatch, background: color }} />
+        <span style={styles.breakdownLabel}>{label}</span>
+        <span style={styles.breakdownValue}>{value}</span>
+      </div>
+      <div style={styles.breakdownTrack}>
+        <div style={{ ...styles.breakdownFill, width: `${width}%`, background: color }} />
+      </div>
+    </div>
+  );
+}
+
+/* =========================================================================
+   HISTORY VIEW
+   ========================================================================= */
+
+function HistoryView({ historyRange, setHistoryRange, entries, totalCount, onDelete, onExport, sheetConnected, unsyncedCount, syncing, onResync, onClearAll }) {
+  const [visibleCount, setVisibleCount] = useState(50);
+  useEffect(() => { setVisibleCount(50); }, [historyRange]);
+  const visible = entries.slice(0, visibleCount);
+
+  return (
+    <div>
+      <div style={styles.historyToolbar}>
+        <RangeSwitch value={historyRange} onChange={setHistoryRange} />
+        <div style={styles.toolbarBtns}>
+          {sheetConnected && (
+            <button className="key-focus" style={styles.toolBtn} onClick={onResync} disabled={syncing || unsyncedCount === 0}>
+              {syncing ? 'SYNCING\u2026' : unsyncedCount > 0 ? `SYNC ${unsyncedCount} TO SHEET` : 'SHEET UP TO DATE'}
+            </button>
+          )}
+          <button className="key-focus" style={{ ...styles.toolBtn, ...styles.toolBtnPrimary }} onClick={onExport} disabled={totalCount === 0}>
+            EXPORT EXCEL
+          </button>
+        </div>
+      </div>
+
+      {entries.length === 0 ? (
+        <div style={styles.emptyState}>NO CALLS IN THIS RANGE</div>
+      ) : (
+        <div style={styles.ledger}>
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th style={styles.th}>DATE</th>
+                <th style={styles.th}>TIME</th>
+                <th style={styles.th}>OUTCOME</th>
+                <th style={styles.th}>TAG</th>
+                <th style={styles.thAction} />
+              </tr>
+            </thead>
+            <tbody>
+              {visible.map((e, i) => (
+                <tr key={e.id} style={{ ...styles.tr, background: i % 2 === 1 ? 'var(--paper-alt)' : 'transparent' }}>
+                  <td style={styles.td}>{formatDateLabel(e.timestamp)}</td>
+                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{formatTimeLabel(e.timestamp)}</td>
+                  <td style={styles.td}>
+                    <span style={{ ...styles.outcomeDot, background: OUTCOME_MAP[e.outcome].color }} />
+                    {OUTCOME_MAP[e.outcome].short.toUpperCase()}
+                  </td>
+                  <td style={styles.td}>{e.campaign || '-'}</td>
+                  <td style={styles.tdAction}>
+                    <button className="key-focus" style={styles.deleteBtn} onClick={() => onDelete(e.id)} aria-label="Delete entry">×</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {entries.length > visibleCount && (
+            <button className="key-focus" style={styles.loadMoreBtn} onClick={() => setVisibleCount((v) => v + 50)}>
+              LOAD MORE ({entries.length - visibleCount} REMAINING)
+            </button>
+          )}
+        </div>
+      )}
+
+      {totalCount > 0 && (
+        <button className="key-focus" style={styles.clearAllBtn} onClick={onClearAll}>CLEAR ALL DATA</button>
+      )}
+    </div>
+  );
+}
+
+/* =========================================================================
+   SHARED SMALL COMPONENTS
+   ========================================================================= */
+
+function ModeButton({ active, onClick, label }) {
+  return (
+    <button onClick={onClick} className="key-focus" style={{ ...styles.modeBtn, ...(active ? styles.modeBtnActive : {}) }}>
+      {label}
+    </button>
+  );
+}
+
+function ConfirmModal({ title, body, onCancel, onConfirm }) {
+  return (
+    <div style={styles.modalOverlay} onClick={onCancel}>
+      <div style={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+        <div style={styles.modalTitle}>{title}</div>
+        <div style={styles.modalBody}>{body}</div>
+        <div style={styles.modalActions}>
+          <button className="key-focus" style={styles.modalCancel} onClick={onCancel}>CANCEL</button>
+          <button className="key-focus" style={styles.modalConfirm} onClick={onConfirm}>CONFIRM</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* =========================================================================
+   STYLE TOKENS
+   ========================================================================= */
+
+const globalCss = `
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+.coldcall-root, .coldcall-root * { box-sizing: border-box; }
+
+:root {
+  --chassis: #2A2723;
+  --chassis-well: #201D19;
+  --chassis-raised: #3C372F;
+  --flap-bg: #121110;
+  --flap-ink: #EDE6D3;
+  --ink: #EDE6D3;
+  --ink-soft: #A79E8C;
+  --ink-faint: #6E6759;
+  --paper: #E3DBC6;
+  --paper-alt: #D9D0B4;
+  --paper-line: #B9AE92;
+  --paper-ink: #2A2620;
+  --accent: #D6A548;
+  --sig-neutral: #9A937F;
+  --sig-negative: #BD5138;
+  --sig-pending: #CE9E3E;
+  --sig-info: #4C85A8;
+  --sig-positive: #4F9260;
+  --font-numeral: 'Archivo Black', sans-serif;
+  --font-label: 'Oswald', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+
+.key-focus:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.key-btn { transition: transform .05s ease; }
+.key-btn:active, .key-btn-press { transform: translateY(2px); }
+
+.flap-row { display: inline-flex; gap: 1px; perspective: 300px; }
+.flap-cell { position: relative; display: inline-block; background: var(--flap-bg); overflow: hidden; text-align: center; }
+.flap-cell::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0,0,0,0.55); }
+.flap-cell-inner { display: block; color: var(--flap-ink); font-family: var(--font-numeral); backface-visibility: hidden; }
+.flap-cell-inner.flap-out { animation: flapOut .12s ease-in forwards; }
+.flap-cell-inner.flap-in { animation: flapIn .17s ease-out forwards; }
+@keyframes flapOut { to { transform: rotateX(-85deg); opacity: .25; } }
+@keyframes flapIn { from { transform: rotateX(85deg); opacity: .25; } to { transform: rotateX(0deg); opacity: 1; } }
+
+.flap-sm .flap-cell { width: 12px; height: 16px; font-size: 12px; line-height: 16px; }
+.flap-lg .flap-cell { width: 20px; height: 30px; font-size: 24px; line-height: 30px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key-btn, .flap-cell-inner { animation: none !important; transition: none !important; }
+}
+
+@media (max-width: 420px) {
+  .coldcall-key-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+`;
+
+/* =========================================================================
+   INLINE STYLE OBJECTS
+   ========================================================================= */
+
+const styles = {
+  app: { fontFamily: 'var(--font-label)', background: '#171512', minHeight: '100%', padding: 14 },
+  loadingWrap: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '70px 0', gap: 14 },
+  loadingText: { fontSize: 11, color: 'var(--ink-faint)', letterSpacing: '0.12em', fontWeight: 500 },
+
+  chassis: { background: 'var(--chassis)', maxWidth: 640, margin: '0 auto', padding: 14, boxShadow: '0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 30px rgba(0,0,0,0.35)' },
+
+  nameplate: { background: 'var(--chassis-well)', padding: '12px 14px', marginBottom: 10 },
+  nameplateRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
+  nameplateTitle: { fontFamily: 'var(--font-label)', fontWeight: 700, fontSize: 15, letterSpacing: '0.14em', color: 'var(--ink)' },
+  settingsToggle: { background: 'var(--chassis-raised)', border: 'none', color: 'var(--ink-soft)', fontFamily: 'var(--font-label)', fontSize: 10.5, fontWeight: 600, letterSpacing: '0.08em', padding: '6px 10px', cursor: 'pointer' },
+  nameplateStats: { display: 'flex', gap: 20 },
+  nameplateStatBlock: { display: 'flex', flexDirection: 'column', gap: 4 },
+  nameplateStatLabel: { fontSize: 9, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600 },
+
+  settingsPanel: { background: 'var(--chassis-well)', padding: 14, marginBottom: 10 },
+  settingsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10 },
+  settingsField: { display: 'flex', flexDirection: 'column', gap: 5 },
+  settingsLabel: { fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600 },
+  settingsInput: { background: 'var(--flap-bg)', border: '1px solid var(--chassis-raised)', color: 'var(--flap-ink)', fontFamily: 'var(--font-mono)', fontSize: 12.5, padding: '8px 9px' },
+  chipRow: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 10 },
+  chip: { fontSize: 10.5, padding: '4px 9px', border: '1px solid var(--chassis-raised)', background: 'transparent', color: 'var(--ink-soft)', cursor: 'pointer', fontFamily: 'var(--font-label)', letterSpacing: '0.04em' },
+  sheetStatus: { display: 'flex', alignItems: 'center', gap: 7, marginTop: 10, fontSize: 10, letterSpacing: '0.04em', color: 'var(--ink-faint)' },
+  sheetStatusDot: { width: 6, height: 6, borderRadius: '50%', flexShrink: 0 },
+
+  modeSelector: { display: 'flex', gap: 2, marginBottom: 2 },
+  modeBtn: { flex: 1, background: 'var(--chassis-raised)', border: 'none', color: 'var(--ink-soft)', fontFamily: 'var(--font-label)', fontWeight: 600, fontSize: 11.5, letterSpacing: '0.08em', padding: '11px 6px', cursor: 'pointer' },
+  modeBtnActive: { background: 'var(--accent)', color: 'var(--chassis-well)' },
+
+  panel: { background: 'var(--chassis-well)', padding: 14 },
+
+  keyGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8, marginBottom: 14 },
+  key: {
+    position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4,
+    background: 'var(--chassis-raised)', border: 'none', borderBottom: '3px solid rgba(0,0,0,0.35)',
+    padding: '12px 12px 10px', cursor: 'pointer', textAlign: 'left', minHeight: 88,
+  },
+  keyStripe: { position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'var(--key-color)' },
+  keyCode: { fontFamily: 'var(--font-numeral)', fontSize: 15, color: 'var(--key-color)', letterSpacing: '0.02em' },
+  keyLabel: { fontFamily: 'var(--font-label)', fontSize: 11, fontWeight: 500, color: 'var(--ink-soft)', letterSpacing: '0.02em', lineHeight: 1.25 },
+  keyReadout: { marginTop: 'auto', alignSelf: 'flex-end' },
+
+  statusLine: { display: 'flex', alignItems: 'center', gap: 8, background: 'var(--chassis-well)', borderTop: '1px solid var(--chassis-raised)', paddingTop: 12 },
+  statusLineLabel: { fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600 },
+  statusLineDot: { width: 7, height: 7, borderRadius: '50%', flexShrink: 0 },
+  statusLineText: { flex: 1, fontSize: 11.5, letterSpacing: '0.03em', color: 'var(--ink)', fontWeight: 500 },
+  statusLineTime: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-faint)' },
+  undoBtn: { background: 'transparent', border: '1px solid var(--chassis-raised)', color: 'var(--ink-soft)', fontFamily: 'var(--font-label)', fontSize: 10, fontWeight: 600, letterSpacing: '0.08em', padding: '5px 10px', cursor: 'pointer' },
+
+  rangeSwitch: { display: 'flex', gap: 2, marginBottom: 12, flexWrap: 'wrap' },
+  rangeBtn: { fontSize: 10.5, fontWeight: 600, letterSpacing: '0.06em', padding: '7px 12px', border: '1px solid var(--chassis-raised)', background: 'transparent', color: 'var(--ink-soft)', cursor: 'pointer', fontFamily: 'var(--font-label)' },
+  rangeBtnActive: { background: 'var(--accent)', borderColor: 'var(--accent)', color: 'var(--chassis-well)' },
+
+  readoutGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 8, marginBottom: 10 },
+  readoutCard: { background: 'var(--chassis-raised)', padding: '10px 12px' },
+  readoutLabel: { fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600, marginBottom: 6 },
+  readoutStatic: { fontFamily: 'var(--font-numeral)', fontSize: 24, color: 'var(--ink)' },
+  readoutPct: { fontSize: 14, marginLeft: 2, color: 'var(--ink-soft)' },
+  readoutSub: { fontSize: 9.5, color: 'var(--ink-faint)', marginTop: 4, letterSpacing: '0.04em' },
+
+  panelBox: { background: 'var(--chassis-raised)', padding: 14, marginBottom: 10 },
+  panelBoxTitle: { fontSize: 9.5, letterSpacing: '0.1em', color: 'var(--ink-faint)', fontWeight: 600, marginBottom: 12 },
+
+  compareItems: { display: 'flex', gap: 24, flexWrap: 'wrap' },
+  compareItem: { display: 'flex', flexDirection: 'column', gap: 3 },
+  compareLabel: { fontSize: 9.5, letterSpacing: '0.06em', color: 'var(--ink-faint)' },
+  compareValue: { fontFamily: 'var(--font-numeral)', fontSize: 16, color: 'var(--ink)' },
+  compareDelta: { fontSize: 10.5, fontFamily: 'var(--font-mono)', fontWeight: 600 },
+
+  chartFrame: { background: 'var(--paper)', padding: '10px 6px 4px' },
+
+  breakdownRow: { marginBottom: 10 },
+  breakdownLabelRow: { display: 'flex', alignItems: 'center', gap: 7, marginBottom: 4 },
+  breakdownSwatch: { width: 8, height: 8, flexShrink: 0 },
+  breakdownLabel: { fontSize: 10.5, letterSpacing: '0.04em', flex: 1, color: 'var(--ink-soft)' },
+  breakdownValue: { fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--ink)' },
+  breakdownTrack: { height: 4, background: 'var(--chassis-well)' },
+  breakdownFill: { height: '100%' },
+
+  historyToolbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' },
+  toolbarBtns: { display: 'flex', gap: 6, flexWrap: 'wrap' },
+  toolBtn: { background: 'transparent', border: '1px solid var(--chassis-raised)', color: 'var(--ink-soft)', fontFamily: 'var(--font-label)', fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', padding: '8px 11px', cursor: 'pointer' },
+  toolBtnPrimary: { background: 'var(--accent)', borderColor: 'var(--accent)', color: 'var(--chassis-well)' },
+
+  ledger: { background: 'var(--paper)' },
+  table: { width: '100%', borderCollapse: 'collapse', fontSize: 11.5, fontFamily: 'var(--font-label)' },
+  th: { textAlign: 'left', fontSize: 9.5, letterSpacing: '0.06em', color: 'var(--paper-ink)', opacity: 0.65, fontWeight: 700, padding: '9px 10px', borderBottom: '2px solid var(--paper-line)' },
+  thAction: { width: 30, borderBottom: '2px solid var(--paper-line)' },
+  tr: { borderBottom: '1px solid var(--paper-line)' },
+  td: { padding: '8px 10px', color: 'var(--paper-ink)', verticalAlign: 'middle' },
+  tdAction: { padding: '8px 6px', textAlign: 'center' },
+  outcomeDot: { display: 'inline-block', width: 7, height: 7, marginRight: 6 },
+  deleteBtn: { background: 'transparent', border: 'none', color: 'var(--paper-ink)', opacity: 0.5, cursor: 'pointer', fontSize: 15, lineHeight: 1, padding: 2 },
+  loadMoreBtn: { width: '100%', padding: '9px', fontSize: 10.5, fontWeight: 600, letterSpacing: '0.06em', color: 'var(--paper-ink)', background: 'var(--paper-alt)', border: 'none', borderTop: '1px solid var(--paper-line)', cursor: 'pointer', fontFamily: 'var(--font-label)' },
+
+  emptyState: { fontSize: 11, letterSpacing: '0.05em', color: 'var(--ink-faint)', padding: '20px 4px', textAlign: 'center' },
+  clearAllBtn: { display: 'block', marginTop: 12, fontSize: 10, letterSpacing: '0.06em', color: 'var(--ink-faint)', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-label)' },
+
+  modalOverlay: { position: 'fixed', inset: 0, background: 'rgba(10,9,8,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 60, padding: 20 },
+  modalCard: { background: 'var(--chassis-raised)', padding: 22, maxWidth: 320, width: '100%', borderTop: '3px solid var(--sig-negative)' },
+  modalTitle: { fontFamily: 'var(--font-label)', fontWeight: 700, fontSize: 13.5, letterSpacing: '0.1em', color: 'var(--ink)', marginBottom: 10 },
+  modalBody: { fontSize: 12, color: 'var(--ink-soft)', lineHeight: 1.5, marginBottom: 18 },
+  modalActions: { display: 'flex', gap: 8, justifyContent: 'flex-end' },
+  modalCancel: { padding: '8px 14px', border: '1px solid var(--chassis)', background: 'transparent', color: 'var(--ink-soft)', fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', cursor: 'pointer', fontFamily: 'var(--font-label)' },
+  modalConfirm: { padding: '8px 14px', border: 'none', background: 'var(--sig-negative)', color: 'var(--ink)', fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', cursor: 'pointer', fontFamily: 'var(--font-label)' },
+};
