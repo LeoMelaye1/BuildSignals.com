@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Caveat:wght@700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --paper: #F2F5FA;
@@ -168,7 +168,35 @@
     margin-bottom: 8px;
   }
 
-  /* Video / founder frame */
+  /* Founder photo frame */
+  .media-frame-wrap { position: relative; }
+  .face-tag {
+    position: absolute;
+    top: -22px;
+    right: 4%;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    pointer-events: none;
+  }
+  .face-tag__label {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--blue);
+    transform: rotate(-5deg);
+    white-space: nowrap;
+  }
+  .face-tag__arrow { width: 54px; height: 68px; margin-top: -4px; }
+  .face-tag__arrow path { fill: none; stroke: var(--blue); }
+  @media (max-width: 480px) {
+    .face-tag { top: -18px; right: 3%; }
+    .face-tag__label { font-size: 26px; }
+    .face-tag__arrow { width: 44px; height: 56px; }
+  }
+
   .media-frame {
     background: var(--ink);
     overflow: hidden;
@@ -176,32 +204,11 @@
     aspect-ratio: 4 / 5;
     border-radius: 4px;
   }
-  .media-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .play-btn {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 70px; height: 70px; border-radius: 50%;
-    background: rgba(255,255,255,0.95); border: none;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-  }
-  .play-btn svg { width: 24px; height: 24px; fill: var(--blue); margin-left: 4px; }
-  .play-btn.is-hidden { display: none; }
-  .sound-btn {
-    position: absolute; bottom: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%;
-    background: rgba(15,23,42,0.55); border: none; color: #fff; font-size: 15px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .sound-btn.is-hidden { display: none; }
+  .media-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .media-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 16px;
     background: linear-gradient(0deg, rgba(0,0,0,0.65), rgba(0,0,0,0)); color: #fff; }
   .media-caption .name { font-family: var(--font-display); font-weight: 800; font-size: 14px; }
   .media-caption .role { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; opacity: 0.85; margin-top: 2px; }
-  .media-badge {
-    position: absolute; top: 14px; left: 14px;
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase;
-    background: rgba(255,255,255,0.14); color: #fff; border: 1px solid rgba(255,255,255,0.35);
-    padding: 5px 9px; border-radius: 3px;
-  }
 
   /* Form panel */
   .form-panel { background: var(--white); border: 1px solid var(--line); border-radius: 4px; padding: 24px 20px; }
@@ -302,6 +309,38 @@
   .wins-grid img { aspect-ratio: 3/4; object-fit: cover; width: 100%; }
   .wins-caption { font-size: 12.5px; color: var(--ink-muted); margin-top: 16px; }
 
+  /* Proof slots: placeholders for screenshots you haven't taken yet.
+     Once you have a screenshot, replace a .proof-slot div with, for example:
+     <a href="your-file.jpg" target="_blank" rel="noopener"><img src="your-file.jpg" alt="Describe what this shows" loading="lazy"></a>
+     (the <a> is optional, drop it if you don't want the image to open full size on tap) */
+  .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .proof-grid--wide { grid-template-columns: 1fr; }
+  @media (min-width: 720px) {
+    .proof-grid--wide { grid-template-columns: repeat(3, 1fr); }
+    .proof-grid--tall { grid-template-columns: repeat(3, 1fr); }
+  }
+  .proof-slot {
+    border: 2px dashed var(--line);
+    border-radius: 4px;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+  }
+  .proof-slot--wide { aspect-ratio: 16/10; }
+  .proof-slot--tall { aspect-ratio: 3/4; }
+  .proof-slot-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
   /* Offer box */
   .offer-box { border: 1px solid var(--line); background: var(--white); padding: 28px 24px; }
   .offer-list { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
@@ -367,23 +406,25 @@
     <div class="hero__grid">
       <div class="reveal">
         <div class="fig-caption">Fig. 01 / Founder</div>
-        <div class="media-frame bp-frame" id="mediaFrame">
-          <span class="bp-corner bp-corner--tl"></span>
-          <span class="bp-corner bp-corner--tr"></span>
-          <span class="bp-corner bp-corner--bl"></span>
-          <span class="bp-corner bp-corner--br"></span>
-          <span class="media-badge" id="mediaBadge">Video coming soon</span>
-          <video id="vslVideo" muted loop playsinline webkit-playsinline preload="metadata" poster="https://buildsignals.com/LEOMELAYEPRES.PNG">
-            <!-- Drop your VSL in once it's shot: <source src="your-video.mp4" type="video/mp4"> -->
-            <!-- Add captions once you have them: <track kind="captions" src="captions.vtt" srclang="en" label="English" default> -->
-          </video>
-          <button class="play-btn is-hidden" id="playBtn" aria-label="Play video">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-          <button class="sound-btn is-hidden" id="soundBtn" aria-label="Unmute video">🔇</button>
-          <div class="media-caption">
-            <div class="name">Leo Melaye</div>
-            <div class="role">Founder, BuildSignals</div>
+        <div class="media-frame-wrap">
+          <div class="media-frame bp-frame" id="mediaFrame">
+            <span class="bp-corner bp-corner--tl"></span>
+            <span class="bp-corner bp-corner--tr"></span>
+            <span class="bp-corner bp-corner--bl"></span>
+            <span class="bp-corner bp-corner--br"></span>
+            <!-- Swap this src for a candid, smiling photo once you have one -->
+            <img src="https://buildsignals.com/LEOMELAYEPRES.PNG" alt="Leo Melaye, founder of BuildSignals" loading="eager">
+            <div class="media-caption">
+              <div class="name">Leo Melaye</div>
+              <div class="role">Founder, BuildSignals</div>
+            </div>
+          </div>
+          <div class="face-tag" aria-hidden="true">
+            <span class="face-tag__label">this guy!</span>
+            <svg class="face-tag__arrow" viewBox="0 0 90 110" xmlns="http://www.w3.org/2000/svg">
+              <path d="M78 14C60 10 40 22 30 45C22 63 24 80 20 96" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M8 83L20 97L34 87" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -540,7 +581,7 @@
         <div class="stat-label">Generated for contractor clients</div>
       </div>
       <div class="stat-cell">
-        <div class="stat-num">187</div>
+        <div class="stat-num">73</div>
         <div class="stat-tick"></div>
         <div class="stat-label">Appointments booked last month</div>
       </div>
@@ -548,6 +589,28 @@
         <div class="stat-num">$76</div>
         <div class="stat-tick"></div>
         <div class="stat-label">Average cost per booked appointment</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AD MANAGER PROOF ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="sheet-tag reveal">Sheet 02B / Straight From The Ad Account</div>
+    <div class="section-head reveal">
+      <h2 class="section-title">No cherry-picked stats. Here's the account.</h2>
+      <p class="section-sub">Real Ads Manager screenshots. Cost per lead and cost per booked appointment, not just a number we typed in.</p>
+    </div>
+    <div class="proof-grid proof-grid--wide reveal">
+      <div class="proof-slot proof-slot--wide">
+        <div class="proof-slot-label">Add screenshot 01<br>Campaign results, CPL column visible</div>
+      </div>
+      <div class="proof-slot proof-slot--wide">
+        <div class="proof-slot-label">Add screenshot 02<br>Cost per booked appointment</div>
+      </div>
+      <div class="proof-slot proof-slot--wide">
+        <div class="proof-slot-label">Add screenshot 03<br>A different client, same result</div>
       </div>
     </div>
   </div>
@@ -649,6 +712,29 @@
       <a href="https://buildsignals.com/IMG_3951.jpg" target="_blank" rel="noopener"><img src="https://buildsignals.com/IMG_3951.jpg" alt="Recent client appointment booked through BuildSignals" loading="lazy"></a>
     </div>
     <div class="wins-caption reveal">Kitchen, bath, and home remodelers across the United States. Tap any screenshot to view full size.</div>
+  </div>
+</section>
+
+<!-- ============ CLOSED DEALS ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="sheet-tag reveal">Sheet 05B / Closed Deals</div>
+    <div class="section-head reveal">
+      <h2 class="section-title">It doesn't stop at the appointment</h2>
+      <p class="section-sub">Real texts from real clients after the job sold.</p>
+    </div>
+    <div class="proof-grid proof-grid--tall reveal">
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 01</div></div>
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 02</div></div>
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 03</div></div>
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 04</div></div>
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 05</div></div>
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 06</div></div>
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 07</div></div>
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 08</div></div>
+      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 09</div></div>
+    </div>
+    <div class="wins-caption reveal">Swap each slot for an &lt;img&gt; tag once you've got the screenshot. See the comment in the code for the exact markup to copy.</div>
   </div>
 </section>
 
@@ -852,28 +938,6 @@
       document.getElementById('formPanel').scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   });
-
-  var vslVideo = document.getElementById('vslVideo');
-  var playBtn = document.getElementById('playBtn');
-  var soundBtn = document.getElementById('soundBtn');
-  var mediaBadge = document.getElementById('mediaBadge');
-
-  if (!!vslVideo.currentSrc) {
-    mediaBadge.style.display = 'none';
-    playBtn.classList.remove('is-hidden');
-    soundBtn.classList.remove('is-hidden');
-    vslVideo.play().catch(function () {});
-    playBtn.addEventListener('click', function () {
-      if (vslVideo.paused) { vslVideo.play(); playBtn.style.display = 'none'; }
-    });
-    vslVideo.addEventListener('click', function () {
-      if (!vslVideo.paused) { vslVideo.pause(); playBtn.style.display = 'flex'; }
-    });
-    soundBtn.addEventListener('click', function () {
-      vslVideo.muted = !vslVideo.muted;
-      soundBtn.textContent = vslVideo.muted ? '🔇' : '🔊';
-    });
-  }
 
   if ('IntersectionObserver' in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
