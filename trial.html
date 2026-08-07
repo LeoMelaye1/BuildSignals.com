@@ -316,7 +316,7 @@
      Once you have a screenshot, replace a .proof-slot div with, for example:
      <a href="your-file.jpg" target="_blank" rel="noopener"><img src="your-file.jpg" alt="Describe what this shows" loading="lazy"></a>
      (the <a> is optional, drop it if you don't want the image to open full size on tap) */
-  .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; align-items: start; }
   .proof-grid--wide { grid-template-columns: 1fr; }
   @media (min-width: 720px) {
     .proof-grid--wide { grid-template-columns: repeat(3, 1fr); }
@@ -711,20 +711,31 @@
     <div class="sheet-tag reveal">Sheet 05B / Closed Deals</div>
     <div class="section-head reveal">
       <h2 class="section-title">It doesn't stop at the appointment</h2>
-      <p class="section-sub">Real texts from real clients after the job sold.</p>
+      <p class="section-sub">Real texts and posts from real clients after the job sold. Unedited, straight from their own group chats and social pages.</p>
     </div>
     <div class="proof-grid proof-grid--tall reveal">
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 01</div></div>
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 02</div></div>
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 03</div></div>
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 04</div></div>
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 05</div></div>
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 06</div></div>
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 07</div></div>
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 08</div></div>
-      <div class="proof-slot proof-slot--tall"><div class="proof-slot-label">Add<br>screenshot 09</div></div>
+      <figure class="proof-shot">
+        <img src="mtr-baths-135k-ytd.jpg" alt="MTR Baths Instagram story reporting over 135,000 dollars in generated revenue from 14,000 dollars in ad spend since the start of the year" loading="lazy">
+        <figcaption>MTR Baths <span>&middot; Instagram Story, 3 weeks ago</span></figcaption>
+      </figure>
+      <figure class="proof-shot">
+        <img src="mtr-baths-4-bathrooms-week.jpg" alt="MTR Baths Instagram story announcing 4 more bathrooms closed in a single week" loading="lazy">
+        <figcaption>MTR Baths <span>&middot; Instagram Story, 2 weeks ago</span></figcaption>
+      </figure>
+      <figure class="proof-shot">
+        <img src="mtr-baths-140k-month.jpg" alt="MTR Baths Instagram story reporting over 140,000 dollars in revenue in a single month" loading="lazy">
+        <figcaption>MTR Baths <span>&middot; Instagram Story, 1 week ago</span></figcaption>
+      </figure>
+      <figure class="proof-shot">
+        <img src="valencia-44k-closed-deals.jpg" alt="Text thread with Valencia Construction Pro reporting 44,000 dollars in closed deals 12 days into the campaign" loading="lazy">
+        <figcaption>Valencia Construction Pro <span>&middot; Group text, day 12 of trial</span></figcaption>
+      </figure>
+      <figure class="proof-shot">
+        <img src="hflores-16k-first-deal.jpg" alt="H. Flores Construction Instagram story announcing a 16,000 dollar job closed within 3 weeks of launch" loading="lazy">
+        <figcaption>H. Flores Construction <span>&middot; Instagram Story, 1 day ago</span></figcaption>
+      </figure>
     </div>
-    <div class="wins-caption reveal">Swap each slot for an &lt;img&gt; tag once you've got the screenshot. See the comment in the code for the exact markup to copy.</div>
+    <div class="wins-caption reveal">Names blurred for client privacy.</div>
   </div>
 </section>
 
