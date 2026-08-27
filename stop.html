@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1c3d5a">
+<title>Outreach paused · BuildSignals</title>
+<style>
+  :root {
+    --blueprint: #1c3d5a;
+    --blueprint-wash: #eef3f7;
+    --amber: #c97e1f;
+    --amber-wash: #fbf0dd;
+    --muted: #64748b;
+    --border: #e2e8ee;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blueprint-wash);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--blueprint);
+    padding: 24px;
+    overflow-x: hidden;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 28px 28px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    animation: rise 0.4s ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card {
+      animation: none;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: var(--amber-wash);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon svg rect {
+    fill: var(--amber);
+  }
+
+  h1 {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 0 0 26px;
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  .wordmark {
+    font-weight: 600;
+    color: var(--blueprint);
+  }
+
+  .timestamp {
+    font-family: "SF Mono", "Roboto Mono", Consolas, monospace;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="28" height="28">
+      <rect x="7" y="5" width="4" height="14" rx="1.5"></rect>
+      <rect x="14" y="5" width="4" height="14" rx="1.5"></rect>
+    </svg>
+  </div>
+  <h1>Outreach paused</h1>
+  <p>We'll hold off on follow-up calls for this lead. Reach out directly if that changes.</p>
+  <footer>
+    <span class="wordmark">BuildSignals</span>
+    <span class="timestamp" id="timestamp">confirmed just now</span>
+  </footer>
+</main>
+<script>
+  (function () {
+    var el = document.getElementById('timestamp');
+    if (!el) return;
+
+    var now = new Date();
+    var date = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    var time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+    el.textContent = 'confirmed ' + date + ', ' + time;
+  })();
+</script>
+</body>
+</html>
