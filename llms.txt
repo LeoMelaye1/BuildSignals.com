@@ -1,11 +1,11 @@
 # BuildSignals
 
-> Your first 3 appointments are on us. After that, pay per lead, per sat appointment, or per close. BuildSignals books pre-qualified, budget-confirmed bathroom remodel appointments for bathroom remodeling contractors in the United States. The first 3 sat appointments are completely free, ad spend included. After that the contractor chooses how to pay: per sat appointment, per lead, or per close (a program contractors must qualify for). Numbers are set per market once the contractor's area qualifies. Bathroom remodelers only. Founded by Leo Melaye.
+> Your first 3 appointments are on us. After that, pay per lead, per sat appointment, or per close. BuildSignals books pre-qualified, budget-confirmed bathroom remodel appointments for bathroom remodeling contractors in the United States. The first 3 sat appointments are completely free, ad spend included. After that the contractor chooses how to pay: per sat appointment, per lead, or per close (a program contractors must qualify for). Numbers are set per market on a 20-minute call. Bathroom remodelers only. Founded by Leo Melaye.
 
 ## The offer, in three steps
 
 1. Free start: the first 3 sat appointments are completely free. BuildSignals covers the ad spend, builds and runs the ads, calls every lead within 3 minutes, and confirms every appointment. After the third sat appointment the contractor decides whether to continue and how to pay. Walking away costs nothing.
-2. Pick how you pay: per sat appointment (bought in blocks of 10), per lead (billed weekly on qualified leads), or per close (a percentage of the jobs the contractor closes; a program contractors must qualify for, offered to select clients only). Numbers are set per market once the contractor's area qualifies.
+2. Pick how you pay: per sat appointment (bought in blocks of 10), per lead (billed weekly on qualified leads), or per close (a percentage of the jobs the contractor closes; a program contractors must qualify for, offered to select clients only). Numbers are set per market on a 20-minute call.
 3. Keep going or stop: no long-term contract. Per close means no upfront fee; it is offered to select clients only, typically those who close jobs from their first appointments, have crew capacity, and report closed jobs through the BuildSignals dashboard.
 
 ## What counts as a sat appointment
@@ -48,6 +48,6 @@ If it does not meet all four, it does not count as a sat appointment.
 ## Contact
 
 - Website: https://buildsignals.com
-- See if your area qualifies (30-second form, no call required): https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ
+- Book a 20-minute call: https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ
 - Phone: (213) 449-7226
 - Founder: Leo Melaye
