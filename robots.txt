@@ -13,7 +13,6 @@ Disallow: /ready.html
 Disallow: /start.html
 Disallow: /potential.html
 Disallow: /internal-booking.html
-Disallow: /qualify.html
 
 # Course modules - paid/private content
 Disallow: /module1-1.html
