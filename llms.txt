@@ -49,4 +49,5 @@ If it does not meet all four, it does not count as a sat appointment.
 
 - Website: https://buildsignals.com
 - See if your area qualifies (30-second form, no call required): https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ
+- Phone: (213) 449-7226
 - Founder: Leo Melaye
