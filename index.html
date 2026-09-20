@@ -289,16 +289,18 @@ header {
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
-.marquee-track { display: flex; align-items: center; gap: 72px; width: max-content; animation: marquee-scroll 40s linear infinite; padding: 0 36px; }
+.marquee-track { display: flex; align-items: center; gap: 88px; width: max-content; animation: marquee-scroll 45s linear infinite; padding: 0 44px; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 .logo-item {
-  height: 34px; width: auto; max-width: 150px; object-fit: contain; flex-shrink: 0;
-  filter: grayscale(1) contrast(1.05); opacity: 0.62; transition: opacity 0.2s ease;
+  height: 42px; width: auto; max-width: 180px; object-fit: contain; flex-shrink: 0;
+  filter: grayscale(1) brightness(0.42) contrast(1.35); opacity: 0.92; transition: filter 0.2s ease, opacity 0.2s ease;
 }
 /* white/reversed marks get flipped so they read as dark ink on the light row */
-.logo-item--reversed { filter: invert(1) grayscale(1) contrast(1.05); opacity: 0.5; }
-.logo-item:hover { opacity: 1; }
-@keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.logo-item--reversed { filter: invert(1) grayscale(1) brightness(0.42) contrast(1.35); }
+.logo-item:hover { opacity: 1; filter: grayscale(0) brightness(1) contrast(1); }
+.logo-item--reversed:hover { filter: invert(1) grayscale(1) brightness(0.2) contrast(1.35); }
+/* three copies of the logo set, so the track is always wider than the screen */
+@keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-33.3333%); } }
 
 /* Hero */
 .hero { padding: 80px 0 72px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 56px; align-items: center; }
@@ -395,7 +397,7 @@ footer a:hover { color: var(--ink-1); }
   .clients { padding: 20px 0 22px; }
   .clients-label { margin-bottom: 14px; }
   .marquee-track { gap: 48px; }
-  .logo-item { height: 26px; max-width: 120px; }
+  .logo-item { height: 30px; max-width: 130px; }
   .hero { grid-template-columns: 1fr; gap: 36px; padding: 52px 0 56px; }
   .hero-text { text-align: center; }
   .hero p.sub { font-size: 17px; margin-left: auto; margin-right: auto; }
@@ -471,7 +473,13 @@ footer a:hover { color: var(--ink-1); }
         <img class="logo-item logo-item--reversed" src="/watkinson_construction_logo_-_Moises_Abarca-removebg-preview-1.png" alt="Watkinson Construction" loading="lazy">
         <img class="logo-item" src="/contractor2.png" alt="Contractor 2.0" loading="lazy">
         <img class="logo-item" src="/hfloresconstruction.png" alt="H. Flores Construction" loading="lazy">
-        <!-- To add a logo: copy one line above. Use class "logo-item logo-item--reversed" for white or light logos, plain "logo-item" for dark or colored ones. Add it to BOTH sets so the loop stays seamless. -->
+        <!-- To add a logo: copy one line above. Use class "logo-item logo-item--reversed" for white or light logos, plain "logo-item" for dark or colored ones. Add it to ALL THREE sets so the loop stays seamless. -->
+        <img class="logo-item logo-item--reversed" src="/Valencia-logo.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="logo-item" src="/MTR_Baths__19_-removebg-preview (1).webp" alt="" aria-hidden="true" loading="lazy">
+        <img class="logo-item" src="/DRH_Logo_Half_Size-removebg-preview (1).png" alt="" aria-hidden="true" loading="lazy">
+        <img class="logo-item logo-item--reversed" src="/watkinson_construction_logo_-_Moises_Abarca-removebg-preview-1.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="logo-item" src="/contractor2.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="logo-item" src="/hfloresconstruction.png" alt="" aria-hidden="true" loading="lazy">
         <img class="logo-item logo-item--reversed" src="/Valencia-logo.png" alt="" aria-hidden="true" loading="lazy">
         <img class="logo-item" src="/MTR_Baths__19_-removebg-preview (1).webp" alt="" aria-hidden="true" loading="lazy">
         <img class="logo-item" src="/DRH_Logo_Half_Size-removebg-preview (1).png" alt="" aria-hidden="true" loading="lazy">
