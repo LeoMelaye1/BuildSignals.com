@@ -124,6 +124,14 @@
         "@type": "ReserveAction",
         "target": "https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ",
         "name": "See if your area qualifies (30-second form)"
+      },
+      "telephone": "+1-213-449-7226",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-213-449-7226",
+        "contactType": "sales",
+        "areaServed": "US",
+        "availableLanguage": "English"
       }
     },
     {
@@ -259,6 +267,14 @@ header {
 }
 .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
 .btn-small { padding: 10px 16px; font-size: 14px; border-radius: 10px; }
+.header-actions { display: flex; align-items: center; gap: 22px; }
+.phone-link { font-size: 15px; font-weight: 600; color: var(--ink-1); text-decoration: none; letter-spacing: -0.005em; white-space: nowrap; }
+.phone-link:hover { color: var(--accent); }
+.or-call { margin-top: 18px; font-size: 15px; color: var(--ink-2); }
+.or-call a { color: var(--ink-1); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--rule); }
+.or-call a:hover { color: var(--accent); border-color: var(--accent); }
+.final .or-call { margin-top: 22px; }
+.footer-phone { margin-left: 0; }
 .btn-arrow { font-weight: 500; transition: transform 0.18s ease; }
 .btn:hover .btn-arrow { transform: translateX(2px); }
 
@@ -391,6 +407,7 @@ footer a:hover { color: var(--ink-1); }
   .shots-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .steps { grid-template-columns: 1fr; gap: 16px; }
   .header-inner .btn { padding: 10px 14px; font-size: 13px; }
+  .header-actions { gap: 14px; }
   .final { padding: 64px 0; }
   footer { padding: 24px 0; }
 }
@@ -414,6 +431,7 @@ footer a:hover { color: var(--ink-1); }
   footer { text-align: center; font-size: 13px; }
   .footer-inner { justify-content: center; }
   .footer-inner a { margin: 0 10px; }
+  .phone-link { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -430,9 +448,12 @@ footer a:hover { color: var(--ink-1); }
       <img src="/buildsignals.png" alt="BuildSignals logo">
       BuildSignals
     </a>
-    <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn btn-small">
-      See if you qualify <span class="btn-arrow">→</span>
-    </a>
+    <div class="header-actions">
+      <a href="tel:+12134497226" class="phone-link">(213) 449-7226</a>
+      <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn btn-small">
+        See if you qualify <span class="btn-arrow">→</span>
+      </a>
+    </div>
   </div>
 </header>
 
@@ -471,8 +492,9 @@ footer a:hover { color: var(--ink-1); }
         <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn">
           See if your area qualifies <span class="btn-arrow">→</span>
         </a>
-        <span class="cta-note">Takes 30 seconds. No call required.</span>
+        <span class="cta-note">Takes 30 seconds.</span>
       </div>
+      <p class="or-call">Or just call Leo: <a href="tel:+12134497226">(213) 449-7226</a></p>
     </div>
 
     <div class="hero-photo">
@@ -618,13 +640,14 @@ footer a:hover { color: var(--ink-1); }
       <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn">
         See if your area qualifies <span class="btn-arrow">→</span>
       </a>
+      <p class="or-call">Or just call Leo: <a href="tel:+12134497226">(213) 449-7226</a></p>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="container footer-inner">
-    <div>© 2026 BuildSignals · Founded by Leo Melaye</div>
+    <div>© 2026 BuildSignals · Founded by Leo Melaye · <a href="tel:+12134497226" class="footer-phone">(213) 449-7226</a></div>
     <div>
       <a href="/privacy.html">Privacy</a>
       <a href="/terms.html">Terms</a>
