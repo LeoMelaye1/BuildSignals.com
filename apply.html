@@ -35,7 +35,7 @@ body{font-family:'Barlow',system-ui,-apple-system,sans-serif;-webkit-font-smooth
 /* Dark top bar with the logo, like the reference */
 .topbar{background:var(--bar);padding:26px 20px;display:flex;justify-content:center}
 .brand{display:flex;align-items:center;gap:10px;color:#FFFFFF;font-family:'Poppins',system-ui,sans-serif;font-weight:500;font-size:22px;text-decoration:none}
-.brand img{display:block;height:44px;width:auto}
+.brand img{display:block;height:30px;width:auto}
 
 .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
 
@@ -59,30 +59,46 @@ h1 .a{color:var(--accent)}
 .trust .line2{font-weight:700;letter-spacing:.14em;font-size:14px;color:var(--accent);text-transform:uppercase}
 
 .proof{border-top:1px solid var(--line);padding:30px 0 34px;text-align:center}
-.trusted{font-family:'Courier New',monospace;letter-spacing:.32em;font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:18px}
-.logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:20px 30px;margin:0 auto 26px;max-width:1000px}
-.logos img{height:34px;width:auto;filter:grayscale(1);opacity:.75}
+.trusted{font-family:'Courier New',monospace;letter-spacing:.32em;font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.marquee{overflow:hidden;margin:0 auto 26px;max-width:1000px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;align-items:center;gap:48px;width:max-content;animation:slide 38s linear infinite}
+.track img{height:34px;width:auto;filter:grayscale(1);opacity:.75}
+.track img.sq{height:58px}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){.track{animation:none;flex-wrap:wrap;justify-content:center;width:auto}}
+.proof-h{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);line-height:1.15;margin:8px 0 6px}
 .shots-intro{font-size:15px;color:var(--muted);margin:0 0 6px}
 .results{display:flex;flex-direction:column;max-width:980px;margin:0 auto 22px;text-align:left}
-.result{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:center;padding:24px 0;border-top:1px solid var(--line)}
+.result{display:grid;grid-template-columns:240px 1fr;gap:26px;align-items:center;padding:22px 0;border-top:1px solid var(--line)}
+.shotlink{display:block}
+.shots2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .result .shot{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
 .result .who{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.result h3{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:24px;line-height:1.2;margin:0 0 8px}
-.result p{margin:0 0 12px;font-size:16px;line-height:1.45;color:var(--body)}
-.result .call{display:block;width:100%;max-width:380px;border-radius:8px;border:1px solid var(--line)}
+.result h3{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:22px;line-height:1.2;margin:0 0 8px}
+.result p{margin:0 0 10px;font-size:16px;line-height:1.45;color:var(--body)}
+.result .call{display:block;width:100%;max-width:360px;border-radius:8px;border:1px solid var(--line)}
 .result .callcap{font-size:13px;color:var(--muted);margin-top:6px}
-.logos img.sq{height:60px}
+.peek{display:none;font-size:13px;font-weight:600;color:var(--accent)}
 .reviews{font-weight:700;font-size:15px;margin:0 0 20px}
-@media (max-width:720px){.result{grid-template-columns:1fr;gap:14px}.result .shot{max-width:320px;margin:0 auto}.result h3{font-size:21px}.logos img{height:26px}.logos img.sq{height:48px}}
+@media (max-width:720px){
+  .result{grid-template-columns:1fr 104px;gap:14px;align-items:start;padding:18px 0}
+  .result .shotlink,.result .shots2{order:2}.result > div{order:1}
+  .shots2{grid-template-columns:1fr;gap:6px}
+  .result h3{font-size:18px}.result p{font-size:14px;margin-bottom:8px}
+  .result .call{max-width:220px}
+  .peek{display:block}
+  .track img{height:26px}.track img.sq{height:46px}.track{gap:32px}
+}
 .back{display:inline-block;padding:14px 22px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;text-decoration:none}
 footer{border-top:1px solid var(--line);padding:18px 20px 28px;text-align:center;font-size:13px;color:var(--muted)}
 footer a{color:var(--muted)}
-@media (max-width:480px){.topbar{padding:20px}.brand img{height:40px}.hero{padding:30px 0 6px}.rule{margin:20px auto 18px}.scheduler{margin-top:22px}}
+@media (max-width:480px){.topbar{padding:18px}.brand img{height:26px}.hero{padding:30px 0 6px}.rule{margin:20px auto 18px}.scheduler{margin-top:22px}}
 </style>
 </head>
 <body>
 
-<div class="topbar"><a class="brand" href="/"><img src="buildsignals-horizontal-white.png" alt="BuildSignals" height="44"></a></div>
+<div class="topbar"><a class="brand" href="/"><img src="buildsignals-horizontal-white.png" alt="BuildSignals" height="30"></a></div>
 
 <main class="wrap">
   <section class="hero">
@@ -117,7 +133,8 @@ footer a{color:var(--muted)}
   <!-- Proof, for the reader who scrolled past the form. Swap the logo file names for the ones on your main site. -->
   <section class="proof">
     <div class="trusted">Trusted by</div>
-    <div class="logos">
+    <div class="marquee" aria-label="Clients we book for">
+      <div class="track">
       <img src="/Valencia-logo.png" alt="Valencia Construction Pros" loading="lazy">
       <img src="/MTR_Baths__19_-removebg-preview%20(1).webp" alt="MTR Baths" loading="lazy">
       <img src="/hfloresconstruction.png" alt="H. Flores Construction" loading="lazy">
@@ -128,65 +145,69 @@ footer a{color:var(--muted)}
       <img src="/sakura-cucina.png" alt="Sakura Cucina" class="sq" loading="lazy">
       <img src="/dream-bath.png" alt="Dream Bath" loading="lazy">
       <img src="/first-priority-home-solutions.png" alt="First Priority Home Solutions" loading="lazy">
+      <img src="/Valencia-logo.png" alt="Valencia Construction Pros" loading="lazy">
+      <img src="/MTR_Baths__19_-removebg-preview%20(1).webp" alt="MTR Baths" loading="lazy">
+      <img src="/hfloresconstruction.png" alt="H. Flores Construction" loading="lazy">
+      <img src="/contractor2.png" alt="Contractor 2.0" loading="lazy">
+      <img src="/DRH_Logo_Half_Size-removebg-preview%20(1).png" alt="DRH Construction Services" loading="lazy">
+      <img src="/watkinson_construction_logo_-_Moises_Abarca-removebg-preview-1.png" alt="Watkinson Construction" loading="lazy">
+      <img src="/bath-by-tomorrow.png" alt="Bath By Tomorrow" class="sq" loading="lazy">
+      <img src="/sakura-cucina.png" alt="Sakura Cucina" class="sq" loading="lazy">
+      <img src="/dream-bath.png" alt="Dream Bath" loading="lazy">
+      <img src="/first-priority-home-solutions.png" alt="First Priority Home Solutions" loading="lazy">
+      </div>
     </div>
-    <div class="shots-intro">Straight from their texts and ad accounts.</div>
+    <h2 class="proof-h">Don't take our word for it.</h2>
+    <div class="shots-intro">Results, straight from our clients' phones and ad accounts.</div>
     <div class="results">
 
       <div class="result">
-        <img class="shot" src="/results-mtr-3.jpg" alt="MTR Baths: over $140k closed in a month" loading="lazy">
-        <div>
-          <div class="who">MTR Baths</div>
-          <h3>Over $140k closed in a month.</h3>
-          <p>Walk-in tubs and showers. One month of sat appointments turned into over $140k of signed work. Same standard on every one: both spouses home, budget confirmed before the drive.</p>
+        <div class="shots2">
+          <a class="shotlink" href="/results-hflores-1.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-hflores-1.jpg" alt="H. Flores Construction: 6 appointments, $120k scheduled, from $361 in ads" loading="lazy"></a>
+          <a class="shotlink" href="/results-hflores-3.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-hflores-3.jpg" alt="H. Flores Construction: 3 jobs, $44k, from $1,186 in ads" loading="lazy"></a>
         </div>
-      </div>
-
-      <div class="result">
-        <img class="shot" src="/results-hflores-1.jpg" alt="H. Flores Construction: 6 appointments, $120k scheduled, from $361 in ads" loading="lazy">
         <div>
           <div class="who">H. Flores Construction</div>
-          <h3>6 appointments and $120k scheduled, five days after launch.</h3>
-          <p>Five days in, six appointments had sat and $120k was on the estimate board, from $361 in ad spend.</p>
+          <h3>Five days in: 6 appointments sat, $120k on the board.</h3>
+          <p>Huver's ads went live and five days later six appointments had sat, with $120k in scheduled work, from $361 in ad spend. By day 30 he'd signed three of them, $44k in remodels on $1,186 of ads. The $13k job landed the day he sent the second screenshot.</p>
+          <div class="peek">His exact words are in the screenshots &rarr;</div>
           <img class="call" src="/call-hflores.jpg" alt="Leo Melaye on a call with Huver Flores" loading="lazy">
           <div class="callcap">Leo on a call with Huver Flores, owner.</div>
         </div>
       </div>
 
       <div class="result">
-        <img class="shot" src="/results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy">
+        <div class="shots2">
+          <a class="shotlink" href="/results-mtr-3.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-mtr-3.jpg" alt="MTR Baths: over $140k closed in a month" loading="lazy"></a>
+          <a class="shotlink" href="/results-mtr-1.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-mtr-1.jpg" alt="MTR Baths: $135,000 from $14,000 in ads" loading="lazy"></a>
+        </div>
+        <div>
+          <div class="who">MTR Baths</div>
+          <h3>$140k closed. Then $140k again the next month.</h3>
+          <p>Walk-in tubs and showers. The first month off our appointments closed over $140k. We audited the account, changed a few things in their offer, and the next month closed another $140k. Year to date that's $135,000 in revenue on $14,000 of ad spend, and that ratio is his text, not our math.</p>
+          <div class="peek">His exact words are in the screenshots &rarr;</div>
+        </div>
+      </div>
+
+      <div class="result">
+        <a class="shotlink" href="/results-valencia-1.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"></a>
         <div>
           <div class="who">Valencia Construction Pros</div>
-          <h3>$44,000 closed in 12 days.</h3>
-          <p>Sat the first three, closed $44,000 by day twelve, then two $30k jobs and a $16k job in the first month. Renewed for three more months.</p>
+          <h3>$44,000 closed in 12 days. Then he renewed.</h3>
+          <p>Ricardo sat his first three, closed $44,000 by day twelve, and finished the first month with two $30k jobs and a $16k job. He signed on for three more months.</p>
+          <div class="peek">His exact words are in the screenshot &rarr;</div>
           <img class="call" src="/call-valencia.jpg" alt="Leo Melaye on a call with Ricardo Valencia" loading="lazy">
           <div class="callcap">Kickoff call with Ricardo Valencia.</div>
         </div>
       </div>
 
       <div class="result">
-        <img class="shot" src="/results-mtr-1.jpg" alt="MTR Baths: $135,000 from $14,000 in ads" loading="lazy">
-        <div>
-          <div class="who">MTR Baths</div>
-          <h3>$135,000 from $14,000 in ads.</h3>
-          <p>Year to date: $135,000 in revenue on $14,000 of ad spend. That's the ratio a remodeler actually cares about, in his own words.</p>
-        </div>
-      </div>
-
-      <div class="result">
-        <img class="shot" src="/results-contractor2-3.jpg" alt="Contractor 2.0: $22,000 job closed in 10 days" loading="lazy">
+        <a class="shotlink" href="/results-contractor2-3.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-contractor2-3.jpg" alt="Contractor 2.0: $22,000 job closed in 10 days" loading="lazy"></a>
         <div>
           <div class="who">Contractor 2.0</div>
-          <h3>$22,000 job closed in 10 days.</h3>
-          <p>First appointment 15 minutes after launch. Second inside 12 hours. A $22,000 job signed on day ten.</p>
-        </div>
-      </div>
-
-      <div class="result">
-        <img class="shot" src="/results-hflores-3.jpg" alt="H. Flores Construction: 3 jobs, $44k, from $1,186 in ads" loading="lazy">
-        <div>
-          <div class="who">H. Flores Construction</div>
-          <h3>3 jobs, $44k, from $1,186 in ads.</h3>
-          <p>Three remodels and $44k in signed work from $1,186 in ads, inside 30 days. The $13k job came in the day he sent this.</p>
+          <h3>First appointment 15 minutes after launch.</h3>
+          <p>The first appointment booked 15 minutes after the ads went live, the second inside 12 hours, and a $22,000 job was signed on day ten.</p>
+          <div class="peek">His exact words are in the screenshot &rarr;</div>
         </div>
       </div>
 
