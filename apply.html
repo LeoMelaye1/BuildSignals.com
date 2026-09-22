@@ -81,20 +81,21 @@ h1 .a{color:var(--accent)}
 .result p{margin:0 0 10px;font-size:16px;line-height:1.45;color:var(--body)}
 .result .call{display:block;width:100%;max-width:360px;border-radius:8px;border:1px solid var(--line)}
 .result .callcap{font-size:13px;color:var(--muted);margin-top:6px}
-.peek{font-size:13px;font-weight:600;color:var(--accent)}
-.peek::after{content:" \2192"}
 .reviews{font-weight:700;font-size:15px;margin:0 0 20px}
 @media (max-width:720px){
-  .result{grid-template-columns:1fr;gap:12px;padding:18px 0}
-  .result > div:not(.shots2):not(.callwrap){order:1}
-  .result > .shotlink,.result > .shots2{order:2;grid-row:auto}
-  .callwrap{order:3;grid-column:auto}
+  .results{margin-bottom:8px}
+  .result{grid-template-columns:1fr;gap:14px;padding:28px 0}
+  .result > .shotlink,.result > .shots2{order:1;grid-row:auto}
+  .result > div:not(.shots2):not(.callwrap){order:2}
+  .callwrap{order:3;grid-column:auto;margin-top:2px}
   .shots2{grid-template-columns:1fr 1fr;gap:10px}
-  .result > .shotlink{max-width:70%}
-  .result h3{font-size:19px}.result p{font-size:15px;margin-bottom:8px}
-  .peek{margin-bottom:2px}.peek::after{content:" \2193"}
-  .result .call{max-width:260px}
+  .result > .shotlink{max-width:78%;margin:0 auto}
+  .result .who{margin-bottom:4px}
+  .result h3{font-size:21px;margin-bottom:4px}.result p{font-size:15px;margin:0}
+  .result .call{max-width:280px}.result .callcap{margin-top:4px}
+  .proof{padding:26px 0 30px}
   .track img{height:26px}.track img.sq{height:46px}.track{gap:32px}
+}
 }
 }
 .back{display:inline-block;padding:14px 22px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;text-decoration:none}
@@ -175,9 +176,8 @@ footer a{color:var(--muted)}
         </div>
         <div>
           <div class="who">H. Flores Construction</div>
-          <h3>Five days in: 6 appointments sat, $120k on the board.</h3>
-          <p>Huver's ads went live and five days later six appointments had sat, with $120k in scheduled work, from $361 in ad spend. By day 30 he'd signed three of them, $44k in remodels on $1,186 of ads. The $13k job landed the day he sent the second screenshot.</p>
-          <div class="peek">His exact words are in the screenshots</div>
+          <h3>6 appointments and $120k on the board, 5 days in.</h3>
+          <p>$361 in ads. By day 30: 3 jobs signed, $44k.</p>
         </div>
         <div class="callwrap">
           <img class="call" src="/call-hflores.jpg" alt="Leo Melaye on a call with Huver Flores" loading="lazy">
@@ -193,8 +193,7 @@ footer a{color:var(--muted)}
         <div>
           <div class="who">MTR Baths</div>
           <h3>$140k closed. Then $140k again the next month.</h3>
-          <p>Walk-in tubs and showers. The first month off our appointments closed over $140k. We audited the account, changed a few things in their offer, and the next month closed another $140k. Year to date that's $135,000 in revenue on $14,000 of ad spend, and that ratio is his text, not our math.</p>
-          <div class="peek">His exact words are in the screenshots</div>
+          <p>We audited the account, tightened the offer, and it repeated. $135k on $14k of ads, in his own text.</p>
         </div>
       </div>
 
@@ -202,9 +201,8 @@ footer a{color:var(--muted)}
         <a class="shotlink" href="/results-valencia-1.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"></a>
         <div>
           <div class="who">Valencia Construction Pros</div>
-          <h3>$44,000 closed in 12 days. Then he renewed.</h3>
-          <p>Ricardo sat his first three, closed $44,000 by day twelve, and finished the first month with two $30k jobs and a $16k job. He signed on for three more months.</p>
-          <div class="peek">His exact words are in the screenshot</div>
+          <h3>$44,000 closed in 12 days.</h3>
+          <p>Two $30k jobs and a $16k job in month one. Renewed for three more.</p>
         </div>
         <div class="callwrap">
           <img class="call" src="/call-valencia.jpg" alt="Leo Melaye on a call with Ricardo Valencia" loading="lazy">
@@ -217,8 +215,7 @@ footer a{color:var(--muted)}
         <div>
           <div class="who">Contractor 2.0</div>
           <h3>First appointment 15 minutes after launch.</h3>
-          <p>The first appointment booked 15 minutes after the ads went live, the second inside 12 hours, and a $22,000 job was signed on day ten.</p>
-          <div class="peek">His exact words are in the screenshot</div>
+          <p>Second inside 12 hours. $22,000 job signed on day 10.</p>
         </div>
         <div class="callwrap">
           <img class="call" src="/call-esteban.jpg" alt="Leo Melaye on a call with Esteban Molina" loading="lazy">
