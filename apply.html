@@ -53,11 +53,10 @@ h1 .a{color:var(--accent)}
 .claim .a{color:var(--accent)}
 
 /* Two small lines under the scheduler, like the reference */
-.trust{text-align:center;padding:26px 0 40px}
-.trust .line1{font-family:'Courier New',monospace;letter-spacing:.32em;font-size:12px;color:var(--muted);text-transform:uppercase}
-.trust hr{border:0;height:1px;background:var(--line);max-width:560px;margin:22px auto}
-.trust .line2{font-weight:700;letter-spacing:.14em;font-size:14px;color:var(--accent);text-transform:uppercase}
-
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1000px;margin:0 auto;padding:26px 0 30px;text-align:center}
+.fact{display:flex;flex-direction:column;gap:6px;padding:0 10px}
+.fact .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fact .val{font-size:15px;font-weight:700;line-height:1.4}
 .proof{border-top:1px solid var(--line);padding:30px 0 34px;text-align:center}
 .trusted{font-family:'Courier New',monospace;letter-spacing:.32em;font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
 .marquee{overflow:hidden;margin:0 auto 26px;max-width:1000px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
@@ -70,31 +69,30 @@ h1 .a{color:var(--accent)}
 .proof-h{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);line-height:1.15;margin:8px 0 6px}
 .shots-intro{font-size:15px;color:var(--muted);margin:0 0 6px}
 .results{display:flex;flex-direction:column;max-width:980px;margin:0 auto 22px;text-align:left}
-.result{display:grid;grid-template-columns:240px 1fr;gap:14px 26px;align-items:start;padding:22px 0;border-top:1px solid var(--line)}
-.result > .shotlink,.result > .shots2{grid-row:1 / span 2}
-.callwrap{grid-column:2}
+.result{display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start;padding:26px 0;border-top:1px solid var(--line)}
+.story{display:flex;flex-direction:column;gap:12px}
+.result .who{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:24px;line-height:1.15;color:var(--ink)}
+.callwrap{display:flex;flex-direction:column;gap:6px}
+.result .call{display:block;width:100%;max-width:340px;border-radius:8px;border:1px solid var(--line)}
+.result .callcap{font-size:13px;color:var(--muted)}
+.result p{margin:0;font-size:16px;line-height:1.45;color:var(--body)}
+.peek{font-size:14px;font-weight:700;color:var(--accent)}
+.peek::after{content:" \2192"}
 .shotlink{display:block}
-.shots2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.shots2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .result .shot{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
-.result .who{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.result h3{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:22px;line-height:1.2;margin:0 0 8px}
-.result p{margin:0 0 10px;font-size:16px;line-height:1.45;color:var(--body)}
-.result .call{display:block;width:100%;max-width:360px;border-radius:8px;border:1px solid var(--line)}
-.result .callcap{font-size:13px;color:var(--muted);margin-top:6px}
 .reviews{font-weight:700;font-size:15px;margin:0 0 20px}
 @media (max-width:720px){
-  .results{margin-bottom:8px}
-  .result{grid-template-columns:1fr;gap:14px;padding:28px 0}
-  .result > .shotlink,.result > .shots2{order:1;grid-row:auto}
-  .result > div:not(.shots2):not(.callwrap){order:2}
-  .callwrap{order:3;grid-column:auto;margin-top:2px}
+  .trust{grid-template-columns:1fr;gap:16px;padding:22px 0 26px}
+  .result{grid-template-columns:1fr;gap:12px;padding:26px 0}
+  .result .who{font-size:22px}
+  .result .call{max-width:300px}
+  .result p{font-size:15px}
+  .peek::after{content:" \2193"}
   .shots2{grid-template-columns:1fr 1fr;gap:10px}
-  .result > .shotlink{max-width:78%;margin:0 auto}
-  .result .who{margin-bottom:4px}
-  .result h3{font-size:21px;margin-bottom:4px}.result p{font-size:15px;margin:0}
-  .result .call{max-width:280px}.result .callcap{margin-top:4px}
-  .proof{padding:26px 0 30px}
+  .shotlink.single{max-width:78%}
   .track img{height:26px}.track img.sq{height:46px}.track{gap:32px}
+}
 }
 }
 }
@@ -132,10 +130,9 @@ footer a{color:var(--muted)}
   </section>
 
   <section class="trust">
-    <div class="line1">Both Spouses Home / $10k+ Confirmed / One Remodeler Per Area</div>
-    <div class="line1" style="margin-top:10px">Free Call / 15 Minutes / No Obligation</div>
-    <hr>
-    <div class="line2">For Bathroom Remodelers Doing $500K+/Year</div>
+    <div class="fact"><span class="lbl">Every appointment we send you</span><span class="val">Both spouses home. $10k+ budget confirmed. One remodeler per area.</span></div>
+    <div class="fact"><span class="lbl">The call</span><span class="val">Free. 15 minutes. No obligation.</span></div>
+    <div class="fact"><span class="lbl">Who this is for</span><span class="val">Bathroom remodelers doing $500K+ a year.</span></div>
   </section>
 
   <!-- Proof, for the reader who scrolled past the form. Swap the logo file names for the ones on your main site. -->
@@ -170,57 +167,57 @@ footer a{color:var(--muted)}
     <div class="results">
 
       <div class="result">
+        <div class="story">
+          <div class="who">H. Flores Construction</div>
+          <div class="callwrap">
+            <img class="call" src="/call-hflores.jpg" alt="Leo Melaye on a call with Huver Flores" loading="lazy">
+            <div class="callcap">Leo with Huver Flores, owner</div>
+          </div>
+          <p>6 appointments and $120k on the board in his first 5 days, from $361 in ads. By day 30: 3 jobs signed, $44k.</p>
+          <div class="peek">In his own words</div>
+        </div>
         <div class="shots2">
           <a class="shotlink" href="/results-hflores-1.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-hflores-1.jpg" alt="H. Flores Construction: 6 appointments, $120k scheduled, from $361 in ads" loading="lazy"></a>
           <a class="shotlink" href="/results-hflores-3.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-hflores-3.jpg" alt="H. Flores Construction: 3 jobs, $44k, from $1,186 in ads" loading="lazy"></a>
         </div>
-        <div>
-          <div class="who">H. Flores Construction</div>
-          <h3>6 appointments and $120k on the board, 5 days in.</h3>
-          <p>$361 in ads. By day 30: 3 jobs signed, $44k.</p>
-        </div>
-        <div class="callwrap">
-          <img class="call" src="/call-hflores.jpg" alt="Leo Melaye on a call with Huver Flores" loading="lazy">
-          <div class="callcap">Leo on a call with Huver Flores, owner.</div>
-        </div>
       </div>
 
       <div class="result">
+        <div class="story">
+          <div class="who">MTR Baths</div>
+          <p>$140k closed in a month. We audited the account, tightened the offer, and the next month closed another $140k. $135k on $14k of ads, in his own text.</p>
+          <div class="peek">In his own words</div>
+        </div>
         <div class="shots2">
           <a class="shotlink" href="/results-mtr-3.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-mtr-3.jpg" alt="MTR Baths: over $140k closed in a month" loading="lazy"></a>
           <a class="shotlink" href="/results-mtr-1.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-mtr-1.jpg" alt="MTR Baths: $135,000 from $14,000 in ads" loading="lazy"></a>
         </div>
-        <div>
-          <div class="who">MTR Baths</div>
-          <h3>$140k closed. Then $140k again the next month.</h3>
-          <p>We audited the account, tightened the offer, and it repeated. $135k on $14k of ads, in his own text.</p>
-        </div>
       </div>
 
       <div class="result">
-        <a class="shotlink" href="/results-valencia-1.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"></a>
-        <div>
+        <div class="story">
           <div class="who">Valencia Construction Pros</div>
-          <h3>$44,000 closed in 12 days.</h3>
-          <p>Two $30k jobs and a $16k job in month one. Renewed for three more.</p>
+          <div class="callwrap">
+            <img class="call" src="/call-valencia.jpg" alt="Leo Melaye on a call with Ricardo Valencia" loading="lazy">
+            <div class="callcap">Kickoff call with Ricardo Valencia</div>
+          </div>
+          <p>$44,000 closed in 12 days. Two $30k jobs and a $16k job in month one. Renewed for three more.</p>
+          <div class="peek">In his own words</div>
         </div>
-        <div class="callwrap">
-          <img class="call" src="/call-valencia.jpg" alt="Leo Melaye on a call with Ricardo Valencia" loading="lazy">
-          <div class="callcap">Kickoff call with Ricardo Valencia.</div>
-        </div>
+        <a class="shotlink single" href="/results-valencia-1.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"></a>
       </div>
 
       <div class="result">
-        <a class="shotlink" href="/results-contractor2-3.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-contractor2-3.jpg" alt="Contractor 2.0: $22,000 job closed in 10 days" loading="lazy"></a>
-        <div>
+        <div class="story">
           <div class="who">Contractor 2.0</div>
-          <h3>First appointment 15 minutes after launch.</h3>
-          <p>Second inside 12 hours. $22,000 job signed on day 10.</p>
+          <div class="callwrap">
+            <img class="call" src="/call-esteban.jpg" alt="Leo Melaye on a call with Esteban Molina" loading="lazy">
+            <div class="callcap">Leo with Esteban Molina, owner</div>
+          </div>
+          <p>First appointment 15 minutes after launch, second inside 12 hours, $22,000 job signed on day 10.</p>
+          <div class="peek">In his own words</div>
         </div>
-        <div class="callwrap">
-          <img class="call" src="/call-esteban.jpg" alt="Leo Melaye on a call with Esteban Molina" loading="lazy">
-          <div class="callcap">Leo on a call with Esteban Molina, owner.</div>
-        </div>
+        <a class="shotlink single" href="/results-contractor2-3.jpg" target="_blank" rel="noopener"><img class="shot" src="/results-contractor2-3.jpg" alt="Contractor 2.0: $22,000 job closed in 10 days" loading="lazy"></a>
       </div>
 
     </div>
