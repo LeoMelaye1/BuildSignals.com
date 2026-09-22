@@ -58,6 +58,19 @@ h1 .a{color:var(--accent)}
 .trust hr{border:0;height:1px;background:var(--line);max-width:560px;margin:22px auto}
 .trust .line2{font-weight:700;letter-spacing:.14em;font-size:14px;color:var(--accent);text-transform:uppercase}
 
+.proof{border-top:1px solid var(--line);padding:30px 0 34px;text-align:center}
+.trusted{font-family:'Courier New',monospace;letter-spacing:.32em;font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:18px}
+.logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:20px 30px;margin:0 auto 26px;max-width:1000px}
+.logos img{height:34px;width:auto;filter:grayscale(1);opacity:.75}
+.shots-intro{font-size:15px;color:var(--muted);margin:0 0 14px}
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;margin:0 auto 18px;text-align:left}
+.shots a{display:block;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;text-decoration:none;color:var(--ink)}
+.shots img{display:block;width:100%;height:220px;object-fit:cover;object-position:top}
+.shots span{display:block;padding:10px 12px;font-size:14px;line-height:1.35;color:var(--body)}
+.shots span b{display:block;color:var(--ink)}
+.reviews{font-weight:700;font-size:15px;margin:0 0 20px}
+@media (max-width:720px){.shots{grid-template-columns:repeat(2,1fr);gap:10px}.shots img{height:160px}.logos img{height:26px}}
+.back{display:inline-block;padding:14px 22px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;text-decoration:none}
 footer{border-top:1px solid var(--line);padding:18px 20px 28px;text-align:center;font-size:13px;color:var(--muted)}
 footer a{color:var(--muted)}
 @media (max-width:480px){.topbar{padding:20px}.brand img{height:40px}.hero{padding:30px 0 6px}.rule{margin:20px auto 18px}.scheduler{margin-top:22px}}
@@ -74,7 +87,7 @@ footer a{color:var(--muted)}
     <p class="sub">Access the same system that's generated <span class="a">over $2.8M</span> for our clients this year. <span class="a">Your first 3 sat appointments are free.</span></p>
   </section>
 
-  <section class="scheduler">
+  <section class="scheduler" id="check">
     <p class="claim">Book your area check below and <span class="a">claim your first 3</span>.</p>
     <!-- iClosed inline widget begin -->
     <div class="iclosed-widget" data-url="https://app.iclosed.io/e/buildsignals/strategy-call" title="Strategy call" style="width: 100%; height: 620px"></div>
@@ -95,6 +108,35 @@ footer a{color:var(--muted)}
     <div class="line1" style="margin-top:10px">Free Call / 15 Minutes / No Obligation</div>
     <hr>
     <div class="line2">For Bathroom Remodelers Doing $500K+/Year</div>
+  </section>
+
+  <!-- Proof, for the reader who scrolled past the form. Swap the logo file names for the ones on your main site. -->
+  <section class="proof">
+    <div class="trusted">Trusted by</div>
+    <div class="logos">
+      <img src="/Valencia-logo.png" alt="Valencia Construction Pros" loading="lazy">
+      <img src="/MTR_Baths__19_-removebg-preview%20(1).webp" alt="MTR Baths" loading="lazy">
+      <img src="/hfloresconstruction.png" alt="H. Flores Construction" loading="lazy">
+      <img src="/contractor2.png" alt="Contractor 2.0" loading="lazy">
+      <img src="/DRH_Logo_Half_Size-removebg-preview%20(1).png" alt="DRH Construction Services" loading="lazy">
+      <img src="/watkinson_construction_logo_-_Moises_Abarca-removebg-preview-1.png" alt="Watkinson Construction" loading="lazy">
+      <!-- These four aren't on the main site yet. Upload the logos and fix the file names, or delete the lines. -->
+      <img src="/bath-by-tomorrow.png" alt="Bath By Tomorrow" loading="lazy">
+      <img src="/sukina-cuccina.png" alt="Sukina Cuccina" loading="lazy">
+      <img src="/dream-bath.png" alt="Dream Bath" loading="lazy">
+      <img src="/maddox-construction.png" alt="Maddox Construction" loading="lazy">
+    </div>
+    <div class="shots-intro">Straight from their texts and ad accounts.</div>
+    <div class="shots">
+      <a href="/results-mtr-3.jpg" target="_blank" rel="noopener"><img src="/results-mtr-3.jpg" alt="MTR Baths: over $140k closed in a month" loading="lazy"><span><b>MTR Baths</b> Over $140k closed in a month</span></a>
+      <a href="/results-hflores-1.jpg" target="_blank" rel="noopener"><img src="/results-hflores-1.jpg" alt="H. Flores Construction: 6 appointments, $120k scheduled, from $361 in ads" loading="lazy"><span><b>H. Flores Construction</b> 6 appointments, $120k scheduled, from $361 in ads</span></a>
+      <a href="/results-valencia-1.jpg" target="_blank" rel="noopener"><img src="/results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"><span><b>Valencia Construction Pros</b> $44,000 closed in 12 days</span></a>
+      <a href="/results-mtr-1.jpg" target="_blank" rel="noopener"><img src="/results-mtr-1.jpg" alt="MTR Baths: $135,000 from $14,000 in ads" loading="lazy"><span><b>MTR Baths</b> $135,000 from $14,000 in ads</span></a>
+      <a href="/results-contractor2-3.jpg" target="_blank" rel="noopener"><img src="/results-contractor2-3.jpg" alt="Contractor 2.0: $22,000 job closed in 10 days" loading="lazy"><span><b>Contractor 2.0</b> $22,000 job closed in 10 days</span></a>
+      <a href="/results-hflores-3.jpg" target="_blank" rel="noopener"><img src="/results-hflores-3.jpg" alt="H. Flores Construction: 3 jobs, $44k, from $1,186 in ads" loading="lazy"><span><b>H. Flores Construction</b> 3 jobs, $44k, from $1,186 in ads</span></a>
+    </div>
+    <div class="reviews">★★★★★ 23 five-star reviews on Google</div>
+    <a class="back" href="#check">Book your area check</a>
   </section>
 </main>
 
