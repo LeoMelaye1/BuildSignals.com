@@ -70,7 +70,9 @@ h1 .a{color:var(--accent)}
 .proof-h{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:clamp(24px,3vw,34px);line-height:1.15;margin:8px 0 6px}
 .shots-intro{font-size:15px;color:var(--muted);margin:0 0 6px}
 .results{display:flex;flex-direction:column;max-width:980px;margin:0 auto 22px;text-align:left}
-.result{display:grid;grid-template-columns:240px 1fr;gap:26px;align-items:center;padding:22px 0;border-top:1px solid var(--line)}
+.result{display:grid;grid-template-columns:240px 1fr;gap:14px 26px;align-items:start;padding:22px 0;border-top:1px solid var(--line)}
+.result > .shotlink,.result > .shots2{grid-row:1 / span 2}
+.callwrap{grid-column:2}
 .shotlink{display:block}
 .shots2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .result .shot{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
@@ -79,16 +81,21 @@ h1 .a{color:var(--accent)}
 .result p{margin:0 0 10px;font-size:16px;line-height:1.45;color:var(--body)}
 .result .call{display:block;width:100%;max-width:360px;border-radius:8px;border:1px solid var(--line)}
 .result .callcap{font-size:13px;color:var(--muted);margin-top:6px}
-.peek{display:none;font-size:13px;font-weight:600;color:var(--accent)}
+.peek{font-size:13px;font-weight:600;color:var(--accent)}
+.peek::after{content:" \2192"}
 .reviews{font-weight:700;font-size:15px;margin:0 0 20px}
 @media (max-width:720px){
-  .result{grid-template-columns:1fr 104px;gap:14px;align-items:start;padding:18px 0}
-  .result .shotlink,.result .shots2{order:2}.result > div{order:1}
-  .shots2{grid-template-columns:1fr;gap:6px}
-  .result h3{font-size:18px}.result p{font-size:14px;margin-bottom:8px}
-  .result .call{max-width:220px}
-  .peek{display:block}
+  .result{grid-template-columns:1fr;gap:12px;padding:18px 0}
+  .result > div:not(.shots2):not(.callwrap){order:1}
+  .result > .shotlink,.result > .shots2{order:2;grid-row:auto}
+  .callwrap{order:3;grid-column:auto}
+  .shots2{grid-template-columns:1fr 1fr;gap:10px}
+  .result > .shotlink{max-width:70%}
+  .result h3{font-size:19px}.result p{font-size:15px;margin-bottom:8px}
+  .peek{margin-bottom:2px}.peek::after{content:" \2193"}
+  .result .call{max-width:260px}
   .track img{height:26px}.track img.sq{height:46px}.track{gap:32px}
+}
 }
 .back{display:inline-block;padding:14px 22px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;text-decoration:none}
 footer{border-top:1px solid var(--line);padding:18px 20px 28px;text-align:center;font-size:13px;color:var(--muted)}
@@ -170,7 +177,9 @@ footer a{color:var(--muted)}
           <div class="who">H. Flores Construction</div>
           <h3>Five days in: 6 appointments sat, $120k on the board.</h3>
           <p>Huver's ads went live and five days later six appointments had sat, with $120k in scheduled work, from $361 in ad spend. By day 30 he'd signed three of them, $44k in remodels on $1,186 of ads. The $13k job landed the day he sent the second screenshot.</p>
-          <div class="peek">His exact words are in the screenshots &rarr;</div>
+          <div class="peek">His exact words are in the screenshots</div>
+        </div>
+        <div class="callwrap">
           <img class="call" src="/call-hflores.jpg" alt="Leo Melaye on a call with Huver Flores" loading="lazy">
           <div class="callcap">Leo on a call with Huver Flores, owner.</div>
         </div>
@@ -185,7 +194,7 @@ footer a{color:var(--muted)}
           <div class="who">MTR Baths</div>
           <h3>$140k closed. Then $140k again the next month.</h3>
           <p>Walk-in tubs and showers. The first month off our appointments closed over $140k. We audited the account, changed a few things in their offer, and the next month closed another $140k. Year to date that's $135,000 in revenue on $14,000 of ad spend, and that ratio is his text, not our math.</p>
-          <div class="peek">His exact words are in the screenshots &rarr;</div>
+          <div class="peek">His exact words are in the screenshots</div>
         </div>
       </div>
 
@@ -195,7 +204,9 @@ footer a{color:var(--muted)}
           <div class="who">Valencia Construction Pros</div>
           <h3>$44,000 closed in 12 days. Then he renewed.</h3>
           <p>Ricardo sat his first three, closed $44,000 by day twelve, and finished the first month with two $30k jobs and a $16k job. He signed on for three more months.</p>
-          <div class="peek">His exact words are in the screenshot &rarr;</div>
+          <div class="peek">His exact words are in the screenshot</div>
+        </div>
+        <div class="callwrap">
           <img class="call" src="/call-valencia.jpg" alt="Leo Melaye on a call with Ricardo Valencia" loading="lazy">
           <div class="callcap">Kickoff call with Ricardo Valencia.</div>
         </div>
@@ -207,7 +218,11 @@ footer a{color:var(--muted)}
           <div class="who">Contractor 2.0</div>
           <h3>First appointment 15 minutes after launch.</h3>
           <p>The first appointment booked 15 minutes after the ads went live, the second inside 12 hours, and a $22,000 job was signed on day ten.</p>
-          <div class="peek">His exact words are in the screenshot &rarr;</div>
+          <div class="peek">His exact words are in the screenshot</div>
+        </div>
+        <div class="callwrap">
+          <img class="call" src="/call-esteban.jpg" alt="Leo Melaye on a call with Esteban Molina" loading="lazy">
+          <div class="callcap">Leo on a call with Esteban Molina, owner.</div>
         </div>
       </div>
 
