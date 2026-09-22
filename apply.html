@@ -62,14 +62,18 @@ h1 .a{color:var(--accent)}
 .trusted{font-family:'Courier New',monospace;letter-spacing:.32em;font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:18px}
 .logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:20px 30px;margin:0 auto 26px;max-width:1000px}
 .logos img{height:34px;width:auto;filter:grayscale(1);opacity:.75}
-.shots-intro{font-size:15px;color:var(--muted);margin:0 0 14px}
-.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;margin:0 auto 18px;text-align:left}
-.shots a{display:block;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;text-decoration:none;color:var(--ink)}
-.shots img{display:block;width:100%;height:220px;object-fit:cover;object-position:top}
-.shots span{display:block;padding:10px 12px;font-size:14px;line-height:1.35;color:var(--body)}
-.shots span b{display:block;color:var(--ink)}
+.shots-intro{font-size:15px;color:var(--muted);margin:0 0 6px}
+.results{display:flex;flex-direction:column;max-width:980px;margin:0 auto 22px;text-align:left}
+.result{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:center;padding:24px 0;border-top:1px solid var(--line)}
+.result .shot{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
+.result .who{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.result h3{font-family:'Poppins',system-ui,sans-serif;font-weight:600;font-size:24px;line-height:1.2;margin:0 0 8px}
+.result p{margin:0 0 12px;font-size:16px;line-height:1.45;color:var(--body)}
+.result .call{display:block;width:100%;max-width:380px;border-radius:8px;border:1px solid var(--line)}
+.result .callcap{font-size:13px;color:var(--muted);margin-top:6px}
+.logos img.sq{height:60px}
 .reviews{font-weight:700;font-size:15px;margin:0 0 20px}
-@media (max-width:720px){.shots{grid-template-columns:repeat(2,1fr);gap:10px}.shots img{height:160px}.logos img{height:26px}}
+@media (max-width:720px){.result{grid-template-columns:1fr;gap:14px}.result .shot{max-width:320px;margin:0 auto}.result h3{font-size:21px}.logos img{height:26px}.logos img.sq{height:48px}}
 .back{display:inline-block;padding:14px 22px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;text-decoration:none}
 footer{border-top:1px solid var(--line);padding:18px 20px 28px;text-align:center;font-size:13px;color:var(--muted)}
 footer a{color:var(--muted)}
@@ -120,20 +124,72 @@ footer a{color:var(--muted)}
       <img src="/contractor2.png" alt="Contractor 2.0" loading="lazy">
       <img src="/DRH_Logo_Half_Size-removebg-preview%20(1).png" alt="DRH Construction Services" loading="lazy">
       <img src="/watkinson_construction_logo_-_Moises_Abarca-removebg-preview-1.png" alt="Watkinson Construction" loading="lazy">
-      <!-- These four aren't on the main site yet. Upload the logos and fix the file names, or delete the lines. -->
-      <img src="/bath-by-tomorrow.png" alt="Bath By Tomorrow" loading="lazy">
-      <img src="/sukina-cuccina.png" alt="Sukina Cuccina" loading="lazy">
+      <img src="/bath-by-tomorrow.png" alt="Bath By Tomorrow" class="sq" loading="lazy">
+      <img src="/sakura-cucina.png" alt="Sakura Cucina" class="sq" loading="lazy">
       <img src="/dream-bath.png" alt="Dream Bath" loading="lazy">
-      <img src="/maddox-construction.png" alt="Maddox Construction" loading="lazy">
+      <img src="/first-priority-home-solutions.png" alt="First Priority Home Solutions" loading="lazy">
     </div>
     <div class="shots-intro">Straight from their texts and ad accounts.</div>
-    <div class="shots">
-      <a href="/results-mtr-3.jpg" target="_blank" rel="noopener"><img src="/results-mtr-3.jpg" alt="MTR Baths: over $140k closed in a month" loading="lazy"><span><b>MTR Baths</b> Over $140k closed in a month</span></a>
-      <a href="/results-hflores-1.jpg" target="_blank" rel="noopener"><img src="/results-hflores-1.jpg" alt="H. Flores Construction: 6 appointments, $120k scheduled, from $361 in ads" loading="lazy"><span><b>H. Flores Construction</b> 6 appointments, $120k scheduled, from $361 in ads</span></a>
-      <a href="/results-valencia-1.jpg" target="_blank" rel="noopener"><img src="/results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"><span><b>Valencia Construction Pros</b> $44,000 closed in 12 days</span></a>
-      <a href="/results-mtr-1.jpg" target="_blank" rel="noopener"><img src="/results-mtr-1.jpg" alt="MTR Baths: $135,000 from $14,000 in ads" loading="lazy"><span><b>MTR Baths</b> $135,000 from $14,000 in ads</span></a>
-      <a href="/results-contractor2-3.jpg" target="_blank" rel="noopener"><img src="/results-contractor2-3.jpg" alt="Contractor 2.0: $22,000 job closed in 10 days" loading="lazy"><span><b>Contractor 2.0</b> $22,000 job closed in 10 days</span></a>
-      <a href="/results-hflores-3.jpg" target="_blank" rel="noopener"><img src="/results-hflores-3.jpg" alt="H. Flores Construction: 3 jobs, $44k, from $1,186 in ads" loading="lazy"><span><b>H. Flores Construction</b> 3 jobs, $44k, from $1,186 in ads</span></a>
+    <div class="results">
+
+      <div class="result">
+        <img class="shot" src="/results-mtr-3.jpg" alt="MTR Baths: over $140k closed in a month" loading="lazy">
+        <div>
+          <div class="who">MTR Baths</div>
+          <h3>Over $140k closed in a month.</h3>
+          <p>Walk-in tubs and showers. One month of sat appointments turned into over $140k of signed work. Same standard on every one: both spouses home, budget confirmed before the drive.</p>
+        </div>
+      </div>
+
+      <div class="result">
+        <img class="shot" src="/results-hflores-1.jpg" alt="H. Flores Construction: 6 appointments, $120k scheduled, from $361 in ads" loading="lazy">
+        <div>
+          <div class="who">H. Flores Construction</div>
+          <h3>6 appointments and $120k scheduled, five days after launch.</h3>
+          <p>Five days in, six appointments had sat and $120k was on the estimate board, from $361 in ad spend.</p>
+          <img class="call" src="/call-hflores.jpg" alt="Leo Melaye on a call with Huver Flores" loading="lazy">
+          <div class="callcap">Leo on a call with Huver Flores, owner.</div>
+        </div>
+      </div>
+
+      <div class="result">
+        <img class="shot" src="/results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy">
+        <div>
+          <div class="who">Valencia Construction Pros</div>
+          <h3>$44,000 closed in 12 days.</h3>
+          <p>Sat the first three, closed $44,000 by day twelve, then two $30k jobs and a $16k job in the first month. Renewed for three more months.</p>
+          <img class="call" src="/call-valencia.jpg" alt="Leo Melaye on a call with Ricardo Valencia" loading="lazy">
+          <div class="callcap">Kickoff call with Ricardo Valencia.</div>
+        </div>
+      </div>
+
+      <div class="result">
+        <img class="shot" src="/results-mtr-1.jpg" alt="MTR Baths: $135,000 from $14,000 in ads" loading="lazy">
+        <div>
+          <div class="who">MTR Baths</div>
+          <h3>$135,000 from $14,000 in ads.</h3>
+          <p>Year to date: $135,000 in revenue on $14,000 of ad spend. That's the ratio a remodeler actually cares about, in his own words.</p>
+        </div>
+      </div>
+
+      <div class="result">
+        <img class="shot" src="/results-contractor2-3.jpg" alt="Contractor 2.0: $22,000 job closed in 10 days" loading="lazy">
+        <div>
+          <div class="who">Contractor 2.0</div>
+          <h3>$22,000 job closed in 10 days.</h3>
+          <p>First appointment 15 minutes after launch. Second inside 12 hours. A $22,000 job signed on day ten.</p>
+        </div>
+      </div>
+
+      <div class="result">
+        <img class="shot" src="/results-hflores-3.jpg" alt="H. Flores Construction: 3 jobs, $44k, from $1,186 in ads" loading="lazy">
+        <div>
+          <div class="who">H. Flores Construction</div>
+          <h3>3 jobs, $44k, from $1,186 in ads.</h3>
+          <p>Three remodels and $44k in signed work from $1,186 in ads, inside 30 days. The $13k job came in the day he sent this.</p>
+        </div>
+      </div>
+
     </div>
     <div class="reviews">★★★★★ 23 five-star reviews on Google</div>
     <a class="back" href="#check">Book your area check</a>
