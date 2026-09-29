@@ -442,9 +442,8 @@ function render(d, sample) {
   document.getElementById('raw').href = PROOF_URL;
   document.getElementById('raw').hidden = !!sample;
 
-  const last30 = d.windows[d.windows.length - 1];
-  document.getElementById('hs-appts').textContent = count(last30.appts);
-  document.getElementById('hs-appts-label').textContent = 'appointments booked for clients in the last 30 days (live)';
+  document.getElementById('hs-appts').textContent = count(t.appts);
+  document.getElementById('hs-appts-label').textContent = 'appointments booked for clients in the last 90 days (live)';
 }
 
 const SAMPLE = {
