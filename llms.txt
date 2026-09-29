@@ -15,6 +15,7 @@
 - Every lead called within 3 minutes, qualified, and booked
 - Appointment confirmation with all decision-makers the day before
 - A live dashboard showing every lead, appointment, and closed job
+- Ad spend is paid by the contractor directly to Meta from their own ad account, which they own
 - 5 new clients per month
 
 ## Who it is for
