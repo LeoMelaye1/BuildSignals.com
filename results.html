@@ -57,29 +57,6 @@
   .sec-head h2 { font-size: clamp(26px, 4vw, 34px); font-weight: 600; }
   .sec-head p { margin: 10px 0 0; color: var(--muted); }
 
-  /* Live dashboard */
-  .live { background: var(--bar); color: #C9CED0; }
-  .live h2, .live b { color: #fff; }
-  .live .sec-head p { color: #9AA3A6; }
-  .pill { display: inline-flex; align-items: center; gap: 8px; font: 600 12px/1 Barlow, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); padding: 7px 12px; border-radius: 999px; margin-bottom: 16px; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: #3DDC84; box-shadow: 0 0 0 0 rgba(61,220,132,.6); animation: pulse 2s infinite; }
-  @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(61,220,132,0); } 100% { box-shadow: 0 0 0 0 rgba(61,220,132,0); } }
-  .sample-tag { display: none; background: #F5A623; color: #111; font: 700 12px/1 Barlow, sans-serif; padding: 6px 10px; border-radius: 6px; margin-left: 8px; letter-spacing: .06em; }
-  .is-sample .sample-tag { display: inline-block; }
-  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .tile { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 18px; }
-  .tile b { display: block; font: 600 clamp(26px, 3.6vw, 34px)/1.1 Poppins, sans-serif; }
-  .tile small { display: block; margin-top: 6px; font-size: 14px; color: #9AA3A6; }
-  .trend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
-  .trend .tile { display: flex; flex-direction: column; }
-  .trend h3 { color: #fff; font: 500 14px/1.2 Barlow, sans-serif; color: #9AA3A6; margin-bottom: 12px; }
-  .bar-track { height: 110px; display: flex; align-items: flex-end; margin-bottom: 12px; }
-  .bar { width: 100%; background: linear-gradient(180deg, #E0322B, #A8231E); border-radius: 6px 6px 2px 2px; min-height: 6px; transition: height .8s ease; }
-  .trend b { font-size: 24px; }
-  .synced { margin-top: 18px; font-size: 14px; color: #7E878A; }
-  .fine { font-size: 13px; color: #7E878A; margin-top: 6px; }
-  .synced a { color: #C9CED0; }
-
   /* Case studies */
   .case { display: grid; grid-template-columns: 340px 1fr; gap: 36px; padding: 40px 0; border-top: 1px solid var(--line); }
   .case:first-of-type { border-top: 0; padding-top: 0; }
@@ -131,7 +108,6 @@
     .case .who { position: static; display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: center; }
     .case .who img.call { aspect-ratio: 1; }
     .case .who img.logo { margin: 0 0 6px; height: 34px; }
-    .tiles { grid-template-columns: repeat(2, 1fr); }
     .promise-grid { grid-template-columns: 1fr; }
     .ref { grid-template-columns: 1fr; padding: 24px; }
   }
@@ -139,10 +115,6 @@
     body { font-size: 16px; }
     section { padding: 48px 0; }
     .headline-stats { grid-template-columns: 1fr; }
-    .trend { grid-template-columns: 1fr; }
-    .trend .tile { flex-direction: row; align-items: center; gap: 14px; }
-    .trend h3 { margin: 0; min-width: 110px; }
-    .bar-track { display: none; }
     .shots { grid-template-columns: repeat(2, 1fr); }
     .btn { width: 100%; text-align: center; }
   }
@@ -168,26 +140,6 @@
   <div class="marquee" id="marquee"></div>
 </div>
 
-<!-- Live numbers from the BuildSignals portal (Firestore public/proof). Hidden if they can't load. -->
-<section class="live" id="live" hidden>
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="pill"><span class="dot"></span> Live data<span class="sample-tag">SAMPLE NUMBERS</span></div>
-      <h2>What's happening across our client accounts right now</h2>
-      <p>These numbers aren't typed into this page. They load, the moment you open it, straight from the portal we use to track every client's ad spend and booked appointments. The portal refreshes them from Meta and our CRM every 2 hours. Every active client is counted, the good weeks and the slow ones.</p>
-    </div>
-    <div class="tiles">
-      <div class="tile"><b class="num" id="t-appts">–</b><small>appointments booked, last 90 days</small></div>
-      <div class="tile" id="t-cpa-tile"><b class="num" id="t-cpa">–</b><small>average cost per booked appointment</small></div>
-      <div class="tile"><b class="num" id="t-leads">–</b><small>homeowner leads, last 90 days</small></div>
-      <div class="tile"><b class="num" id="t-spend">–</b><small>ad spend we're managing, last 90 days</small></div>
-    </div>
-    <div class="trend" id="trend"></div>
-    <div class="synced"><span id="synced"></span> &nbsp;·&nbsp; <a id="raw" href="#" target="_blank" rel="noopener">See the raw data feed</a></div>
-    <div class="fine">Appointments are counted on the day the lead came in, so the most recent 30 days keep climbing as newer leads book.</div>
-    
-  </div>
-</section>
 
 <section class="wrap" id="cases">
   <div class="sec-head">
@@ -341,8 +293,6 @@
 // ─── Settings ─────────────────────────────────────────────────────────
 // Leo's number for the "Talk to a client" text (digits only). Your client's number never goes on this page.
 const LEO_SMS = '12134497226';
-// Hide the cost-per-appointment tile if the live number is ever above this.
-const MAX_CPA_TO_SHOW = 250;
 // Where the live numbers live (written by the portal's sync every 2 hours, readable by anyone).
 const PROOF_URL = 'https://firestore.googleapis.com/v1/projects/buildsignals-portal/databases/(default)/documents/public/proof';
 
@@ -374,96 +324,18 @@ document.querySelectorAll('.shot').forEach(b => b.addEventListener('click', () =
 }));
 box.addEventListener('click', () => box.close());
 
-// ─── Live numbers ─────────────────────────────────────────────────────
-// Firestore REST returns typed values ({integerValue: "3"}); flatten them.
-function fsValue(v) {
-  if ('mapValue' in v) return Object.fromEntries(Object.entries(v.mapValue.fields || {}).map(([k, x]) => [k, fsValue(x)]));
-  if ('arrayValue' in v) return (v.arrayValue.values || []).map(fsValue);
-  if ('integerValue' in v) return Number(v.integerValue);
-  if ('doubleValue' in v) return v.doubleValue;
-  if ('nullValue' in v) return null;
-  return Object.values(v)[0];
-}
-
-function ago(ms) {
-  const m = Math.round((Date.now() - ms) / 60000);
-  if (m < 2) return 'just now';
-  if (m < 60) return `${m} minutes ago`;
-  const h = Math.round(m / 60);
-  if (h < 36) return `${h} hour${h === 1 ? '' : 's'} ago`;
-  return `${Math.round(h / 24)} days ago`;
-}
-
-const money = n => '$' + Math.round(n).toLocaleString('en-US');
-const moneyK = n => n >= 10000 ? '$' + Math.round(n / 1000) + 'k' : money(n);
-const count = n => Math.round(n).toLocaleString('en-US');
-
-function countUp(el, to, fmt) {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = fmt(to); return; }
-  const t0 = performance.now(), dur = 1200;
-  const step = t => { const p = Math.min(1, (t - t0) / dur); el.textContent = fmt(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
-  requestAnimationFrame(step);
-}
-
-function render(d, sample) {
-  const live = document.getElementById('live');
-  const t = d.total;
-  if (!t || !t.appts) return; // nothing worth showing: keep the section hidden
-  live.hidden = false;
-  live.classList.toggle('is-sample', !!sample);
-  const showCpa = t.cpa > 0 && t.cpa <= MAX_CPA_TO_SHOW;
-  document.getElementById('t-cpa-tile').hidden = !showCpa;
-  if (!showCpa) document.querySelector('.tiles').style.gridTemplateColumns = 'repeat(3, 1fr)';
-
-  const io = new IntersectionObserver(es => {
-    if (!es.some(e => e.isIntersecting)) return;
-    io.disconnect();
-    countUp(document.getElementById('t-appts'), t.appts, count);
-    if (showCpa) countUp(document.getElementById('t-cpa'), t.cpa, money);
-    countUp(document.getElementById('t-leads'), t.leads, count);
-    countUp(document.getElementById('t-spend'), t.spend, moneyK);
-    const max = Math.max(...d.windows.map(w => w.appts), 1);
-    document.querySelectorAll('.bar').forEach((b, i) => { b.style.height = (d.windows[i].appts / max * 100) + '%'; });
-  }, { threshold: .25 });
-  io.observe(live);
-
-  document.getElementById('trend').innerHTML = d.windows.map(w => `
-    <div class="tile">
-      <h3>${w.label}</h3>
-      <div class="bar-track"><div class="bar" style="height:0"></div></div>
-      <div><b class="num">${count(w.appts)} appts</b>
-      <small>${w.cpa > 0 && w.cpa <= MAX_CPA_TO_SHOW ? money(w.cpa) + ' per appointment · ' : ''}${w.clients} active client${w.clients === 1 ? '' : 's'}</small></div>
-    </div>`).join('');
-
-  document.getElementById('synced').textContent = sample
-    ? 'Sample numbers for preview only.'
-    : `Last synced from the portal ${ago(d.updatedAt)}`;
-  if (!sample) setInterval(() => { document.getElementById('synced').textContent = `Last synced from the portal ${ago(d.updatedAt)}`; }, 60000);
-  document.getElementById('raw').href = PROOF_URL;
-  document.getElementById('raw').hidden = !!sample;
-
-  document.getElementById('hs-appts').textContent = count(t.appts);
-  document.getElementById('hs-appts-label').textContent = 'appointments booked for clients in the last 90 days (live)';
-}
-
-const SAMPLE = {
-  updatedAt: Date.now() - 47 * 60000,
-  total: { appts: 212, cpa: 118, leads: 689, spend: 25016 },
-  windows: [
-    { label: 'Jul 1 – Jul 30', appts: 61, cpa: 131, clients: 8 },
-    { label: 'Jul 31 – Aug 29', appts: 72, cpa: 117, clients: 9 },
-    { label: 'Aug 30 – Sep 28', appts: 79, cpa: 109, clients: 10 },
-  ],
-};
-
-if (new URLSearchParams(location.search).has('sample')) {
-  render(SAMPLE, true);
-} else {
-  fetch(PROOF_URL)
-    .then(r => (r.ok ? r.json() : Promise.reject(r.status)))
-    .then(doc => render(fsValue({ mapValue: doc }), false))
-    .catch(() => {}); // not published yet or offline: the section just stays hidden
-}
+// ─── Live 90-day appointments (headline stat) ─────────────────────────
+// Firestore REST returns typed values ({integerValue: "3"}); read the one we need.
+// If it can't load, the static stat in the HTML stays.
+fetch(PROOF_URL)
+  .then(r => (r.ok ? r.json() : Promise.reject(r.status)))
+  .then(doc => {
+    const appts = Number(doc.fields.total.mapValue.fields.appts.integerValue);
+    if (!appts) return;
+    document.getElementById('hs-appts').textContent = appts.toLocaleString('en-US');
+    document.getElementById('hs-appts-label').textContent = 'appointments booked for clients in the last 90 days (live)';
+  })
+  .catch(() => {});
 </script>
 </body>
 </html>
