@@ -266,9 +266,8 @@ header {
 /* three copies of the logo set, so the track is always wider than the screen */
 @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-33.3333%); } }
 
-/* Hero: the offer, nothing else */
-.hero { padding-top: 76px; padding-bottom: 84px; display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; }
-.hero-fold { border-bottom: 1px solid var(--rule); background: radial-gradient(900px 420px at 85% 20%, rgba(29, 78, 216, 0.07), transparent 70%); }
+/* Hero */
+.hero { padding-top: 80px; padding-bottom: 72px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 56px; align-items: center; }
 .eyebrow {
   font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px;
@@ -288,40 +287,6 @@ h1 em { font-style: normal; color: var(--accent); }
 .photo-caption { margin-top: 18px; padding: 0 4px; }
 .photo-caption strong { display: block; font-weight: 600; color: var(--ink-1); font-size: 15px; letter-spacing: -0.005em; }
 .photo-caption span { font-size: 14px; color: var(--ink-2); }
-
-/* Offer card */
-.offer-card {
-  background: var(--bg); border: 1px solid var(--rule); border-radius: 16px; padding: 26px 26px 22px;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 18px 40px rgba(15, 23, 42, 0.07);
-}
-.offer-k {
-  font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px;
-}
-.do-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 9px 14px; margin-bottom: 18px; }
-.do-list.outcomes { grid-template-columns: 1fr; gap: 11px; }
-.do-list.outcomes li { align-items: flex-start; line-height: 1.4; }
-.do-list.outcomes li::before { margin-top: 1px; }
-.do-list li { display: flex; align-items: center; gap: 9px; font-size: 15.5px; font-weight: 500; color: var(--ink-1); }
-.do-list li::before {
-  content: ""; flex: 0 0 18px; height: 18px; border-radius: 50%; background: var(--accent)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;
-}
-.you-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; background: var(--bg-alt); border: 1px dashed var(--rule); margin-bottom: 4px; }
-.you-row span { font-size: 14px; color: var(--ink-2); }
-.you-row strong { font-size: 15.5px; font-weight: 600; }
-.price-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-top: 1px solid var(--rule); }
-.price-row .label { font-size: 15px; color: var(--ink-2); }
-.price-row .label small { display: block; font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
-.price-row .amt { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
-.price-row.big .amt { font-size: 40px; color: var(--accent); line-height: 1; }
-.price-row.big .label { color: var(--ink-1); font-weight: 600; }
-.price-row.top { border-top: 0; padding: 0 0 16px; margin-bottom: 16px; border-bottom: 1px solid var(--rule); }
-.spots { margin-top: 14px; font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 8px; }
-.spots::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #16A34A; box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15); flex-shrink: 0; }
-
-/* Leo, in the About section */
-.about-grid { display: grid; grid-template-columns: 1fr 260px; gap: 48px; align-items: center; }
 
 /* Trust strip */
 .trust-strip { background: var(--bg-alt); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 16px 0; }
@@ -402,9 +367,7 @@ footer a:hover { color: var(--ink-1); }
   .hero .or-call { text-align: center; }
   .hero p.sub { font-size: 17px; margin-left: auto; margin-right: auto; }
   .cta-row { justify-content: center; }
-  .offer-card { max-width: 480px; margin: 0 auto; width: 100%; }
-  .about-grid { grid-template-columns: 1fr; gap: 28px; }
-  .about-grid .photo-frame { max-width: 280px; }
+  .hero-photo { max-width: 360px; margin: 0 auto; width: 100%; }
   .trust-strip { padding: 12px 0; }
   .trust-row span { font-size: 12px; padding: 4px 16px; }
   .section { padding: 60px 0; }
@@ -424,10 +387,7 @@ footer a:hover { color: var(--ink-1); }
   .hero p.sub { font-size: 16px; margin-bottom: 26px; }
   .cta-row { gap: 12px; }
   .btn { padding: 13px 20px; font-size: 14px; }
-  .do-list li { font-size: 14px; }
-  .do-list { gap: 8px 10px; }
-  .price-row.big .amt { font-size: 34px; }
-  .offer-card { padding: 20px 18px 18px; }
+  .hero-photo { max-width: 280px; }
   .trust-row { flex-direction: column; gap: 8px; }
   .trust-row span { padding: 0; text-align: center; }
   .trust-row span + span { border-left: none; }
@@ -466,38 +426,6 @@ footer a:hover { color: var(--ink-1); }
 </header>
 
 <main>
-  <div class="hero-fold">
-  <section class="hero container" id="offer">
-    <div class="hero-text">
-      <div class="eyebrow">For bathroom remodelers</div>
-      <h1>More closed bathroom jobs. <br><em>We get paid when you close.</em></h1>
-      <p class="sub">
-        Qualified homeowners booked on your calendar, confirmed and ready for your estimate. You show up and close. That's when we get paid.
-      </p>
-      <div class="cta-row">
-        <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn">
-          See if your area is open <span class="btn-arrow">→</span>
-        </a>
-        <span class="cta-note">20-minute call with Leo</span>
-      </div>
-      <p class="or-call">Or just call Leo: <a href="tel:+12134497226">(213) 449-7226</a></p>
-    </div>
-
-    <aside class="offer-card" aria-label="The offer">
-      <div class="price-row big top"><span class="label">Closed for our clients so far</span><span class="amt">$2.8M+</span></div>
-      <p class="offer-k">What you get</p>
-      <ul class="do-list outcomes">
-        <li>Qualified homeowners booked on your calendar</li>
-        <li>Every decision-maker confirmed before you drive out</li>
-        <li>Every lead called within 3 minutes, so none go cold</li>
-        <li>More closed jobs, without running ads yourself</li>
-      </ul>
-      <div class="you-row"><span>How we get paid</span><strong>Per closed job</strong></div>
-      <p class="spots">Taking on 5 new clients a month</p>
-    </aside>
-  </section>
-  </div>
-
   <section class="clients">
     <div class="container">
       <p class="clients-label">Trusted by</p>
@@ -524,6 +452,41 @@ footer a:hover { color: var(--ink-1); }
         <img class="logo-item" src="/contractor2.png" alt="" aria-hidden="true" loading="lazy">
         <img class="logo-item" src="/hfloresconstruction.png" alt="" aria-hidden="true" loading="lazy">
       </div>
+    </div>
+  </section>
+
+  <section class="hero container" id="offer">
+    <div class="hero-text">
+      <div class="eyebrow">For bathroom remodelers only</div>
+      <h1>More closed jobs. <br><em>We get paid <br>when you close.</em></h1>
+      <p class="sub">
+        We book qualified homeowners on your calendar. You close.
+      </p>
+      <div class="cta-row">
+        <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn">
+          Book a 20-minute call <span class="btn-arrow">→</span>
+        </a>
+        <span class="cta-note">See if your area is open.</span>
+      </div>
+      <p class="or-call">Or just call Leo: <a href="tel:+12134497226">(213) 449-7226</a></p>
+    </div>
+
+    <div class="hero-photo">
+      <div class="photo-frame">
+        <img src="/LEOMELAYEPRES.PNG" alt="Leo Melaye, founder of BuildSignals">
+        <div class="photo-caption">
+          <strong>Leo Melaye</strong>
+          <span>Founder, BuildSignals</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-strip">
+    <div class="container trust-row">
+      <span>Pay per close</span>
+      <span>Every lead called within 3 minutes</span>
+      <span>Bathroom remodelers only, nationwide</span>
     </div>
   </section>
 
@@ -632,21 +595,12 @@ footer a:hover { color: var(--ink-1); }
   </section>
 
   <section class="section about" id="about">
-    <div class="container about-grid">
-      <div>
-        <p class="section-label">About</p>
-        <h2>BuildSignals, in one breath</h2>
-        <p>
+    <div class="container">
+      <p class="section-label">About</p>
+      <h2>BuildSignals, in one breath</h2>
+      <p>
           BuildSignals is a pay-per-close marketing agency founded by Leo Melaye for bathroom remodelers across the United States. We script, shoot, and edit the ads, run them, call and qualify every lead, and book the appointments. We get paid per closed job. $2.8M+ in remodeling work generated for clients so far.
         </p>
-      </div>
-      <div class="photo-frame">
-        <img src="/LEOMELAYEPRES.PNG" alt="Leo Melaye, founder of BuildSignals" loading="lazy">
-        <div class="photo-caption">
-          <strong>Leo Melaye</strong>
-          <span>Founder, BuildSignals</span>
-        </div>
-      </div>
     </div>
   </section>
 
