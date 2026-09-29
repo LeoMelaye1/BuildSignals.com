@@ -110,6 +110,9 @@
   .ref { border: 2px solid var(--ink); border-radius: 16px; padding: 32px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
   .ref h2 { font-size: 26px; }
   .ref p { margin: 8px 0 0; color: var(--muted); }
+  .ref-cta { text-align: center; }
+  .ref-num { margin-top: 10px; font-size: 15px; color: var(--muted); }
+  .ref-num a { color: var(--ink); font-weight: 600; }
   .btn { display: inline-block; background: var(--accent); color: #fff; font: 600 17px/1 Poppins, sans-serif; text-decoration: none; padding: 17px 26px; border-radius: 10px; white-space: nowrap; }
   .btn:hover { background: #C22A24; }
 
@@ -155,7 +158,7 @@
   <p>No pitch on this page. Just results, screenshots from our clients' phones, and live numbers from the dashboard we run the business on.</p>
   <div class="headline-stats">
     <div><b class="num">$2.8M+</b><small>generated for clients this year</small></div>
-    <div><b class="num" id="hs-appts">11</b><small id="hs-appts-label">remodelers we run appointments for</small></div>
+    <div><b class="num" id="hs-appts">$275k</b><small id="hs-appts-label">closed by one client this year, on $16k in ads</small></div>
     <div><b><span class="stars">★★★★★</span></b><small>23 five-star reviews on Google</small></div>
   </div>
 </header>
@@ -254,14 +257,14 @@
       </div>
     </div>
     <div>
-      <div class="big">$44,000 closed in 12 days</div>
-      <div class="big-sub">Then renewed for three more months.</div>
+      <div class="big">$76,000 closed in month one</div>
+      <div class="big-sub">$44,000 of it in the first 12 days.</div>
       <ul class="facts">
-        <li>3 jobs signed</li>
-        <li>$44k in 12 days</li>
+        <li>$44k closed in 12 days</li>
+        <li>$76k by end of month one</li>
         <li>Renewed for 3 more months</li>
       </ul>
-      <p class="story">Three signed jobs in the first month, $44k closed inside 12 days of launch. They renewed for three more months.</p>
+      <p class="story">Three booked appointments in under two days on less than $100 of ads. $44k closed inside the first 12 days, $76k by the end of month one. They renewed for three more months.</p>
       <div class="shots">
         <button class="shot" data-cap="3 booked appointments in under 2 days, less than $100 spent"><img src="valencia-dashboard-appointments.jpg" alt="Valencia Construction Pros: 3 booked appointments in under 2 days on less than $100" loading="lazy"></button>
         <button class="shot" data-cap="$44,000 closed in 12 days"><img src="results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"></button>
@@ -316,7 +319,10 @@
       <h2>Want to hear it from one of them?</h2>
       <p>Happy to connect you with a remodeler we work with so you can ask them anything, without us on the line. Send me a text and I'll set it up before our call.</p>
     </div>
-    <a class="btn" id="ref-btn" href="#">Talk to a client</a>
+    <div class="ref-cta">
+      <a class="btn" id="ref-btn" href="sms:+12134497226">Text Leo to connect</a>
+      <div class="ref-num">or text <a href="sms:+12134497226">(213) 449-7226</a></div>
+    </div>
   </div>
 </section>
 
@@ -333,10 +339,8 @@
 
 <script>
 // ─── Settings ─────────────────────────────────────────────────────────
-// Leo's number for the "Talk to a client" text. Digits only, e.g. '15551234567'.
-// Leave blank to fall back to email. Your client's number never goes on this page.
-const LEO_SMS = '';
-const LEO_EMAIL = 'leo@buildsignals.com';
+// Leo's number for the "Talk to a client" text (digits only). Your client's number never goes on this page.
+const LEO_SMS = '12134497226';
 // Hide the cost-per-appointment tile if the live number is ever above this.
 const MAX_CPA_TO_SHOW = 250;
 // Where the live numbers live (written by the portal's sync every 2 hours, readable by anyone).
@@ -355,9 +359,9 @@ document.getElementById('marquee').innerHTML = [...LOGOS, ...LOGOS]
 
 // ─── Talk to a client ─────────────────────────────────────────────────
 const refMsg = "Hey Leo, I'd like to talk to one of your clients before our call.";
-document.getElementById('ref-btn').href = LEO_SMS
-  ? `sms:+${LEO_SMS}${/iPhone|iPad|Mac/.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(refMsg)}`
-  : `mailto:${LEO_EMAIL}?subject=${encodeURIComponent('Client reference')}&body=${encodeURIComponent(refMsg)}`;
+// iOS/macOS Messages want "&body=", Android wants "?body=".
+document.getElementById('ref-btn').href =
+  `sms:+${LEO_SMS}${/iPhone|iPad|Mac/.test(navigator.userAgent) ? '&' : '?'}body=${encodeURIComponent(refMsg)}`;
 
 // ─── Lightbox ─────────────────────────────────────────────────────────
 const box = document.getElementById('lightbox');
@@ -438,8 +442,9 @@ function render(d, sample) {
   document.getElementById('raw').href = PROOF_URL;
   document.getElementById('raw').hidden = !!sample;
 
-  document.getElementById('hs-appts').textContent = count(t.appts);
-  document.getElementById('hs-appts-label').textContent = 'appointments booked for clients in the last 90 days';
+  const last30 = d.windows[d.windows.length - 1];
+  document.getElementById('hs-appts').textContent = count(last30.appts);
+  document.getElementById('hs-appts-label').textContent = 'appointments booked for clients in the last 30 days (live)';
 }
 
 const SAMPLE = {
