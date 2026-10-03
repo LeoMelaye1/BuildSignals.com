@@ -1,6 +1,6 @@
 # BuildSignals
 
-> BuildSignals is a lead generation and appointment-setting agency for residential kitchen and bath remodelers across the United States. New clients try BuildSignals free for 2 weeks, then choose how to pay: pay per appointment or pay per close. No long-term contracts. $2.8M+ in remodeling work generated for contractor clients. Founded by Leo Melaye.
+> BuildSignals is a lead generation and appointment-setting agency for residential kitchen and bath remodelers across the United States. New clients try BuildSignals free for 2 weeks, then choose how to pay: pay per appointment or pay per close. No long-term contracts. $2.8M+ in remodeling work generated for contractor clients. Founded by Leo Melaye in 2016; based in Davis, California; serves clients nationwide.
 
 ## The offer
 
@@ -47,3 +47,6 @@
 - Book a 20-minute call: https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ
 - Phone: (213) 449-7226
 - Founder: Leo Melaye
+- Founded: 2016
+- Headquarters: Davis, California
+- LinkedIn: https://www.linkedin.com/company/build-signals1/
