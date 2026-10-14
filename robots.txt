@@ -8,7 +8,9 @@ Allow: /
 Disallow: /interview.html
 Disallow: /complete.html
 Disallow: /success.html
-Disallow: /thankyou.html
+Disallow: /thank-you.html
+Disallow: /stop.html
+Disallow: /delay.html
 Disallow: /ready.html
 Disallow: /start.html
 Disallow: /potential.html
