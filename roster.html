@@ -207,6 +207,10 @@
     <label class="field-label" style="margin-top:2px;">GoHighLevel pipeline ID</label>
     <input class="text-input" id="newGhlPipeline" placeholder="From the URL when viewing the pipeline, e.g. tKQi2Fyy5NWH3Elpk2Ur">
 
+    <label class="field-label" style="margin-top:2px;">Google Drive upload folder link</label>
+    <input class="text-input" id="newDriveFolder" placeholder="https://drive.google.com/drive/folders/...">
+    <div class="stage-map-hint" style="margin-top:-10px;">If set, the portal's Upload tab sends the client to this folder instead of the built-in uploader. Share the folder with their email so they can add files.</div>
+
     <div class="field-label">Stage mapping</div>
     <div class="stage-map-hint">What each portal stage is called in this client's GHL pipeline. Leave as-is if the names already match.</div>
     <div class="stage-map-row"><span>New Lead</span><input class="text-input sm-input" id="sm_newlead" value="New Lead"></div>
@@ -415,7 +419,7 @@ function openAddModal(){
   document.getElementById('modalTitle').textContent = 'Add a client';
   document.getElementById('confirmAdd').textContent = 'Create client';
   document.getElementById('removeClient').style.display = 'none';
-  ['newName','newSub','newGhlPipeline'].forEach(id=>document.getElementById(id).value='');
+  ['newName','newSub','newGhlPipeline','newDriveFolder'].forEach(id=>document.getElementById(id).value='');
   ['newAdSpend','newRevenue','newClosed','newAppts','newManualAppts'].forEach(id=>document.getElementById(id).value='0');
   STAGE_MAP_FIELDS.forEach(([id, appStage, ghlGuess])=>document.getElementById(id).value = ghlGuess);
   document.getElementById('addError').classList.remove('show');
@@ -443,6 +447,7 @@ async function openEditModal(clientId){
     document.getElementById('newAppts').value = c.baselineAppointments || 0;
     document.getElementById('newManualAppts').value = c.manualApptAdjustment || 0;
     document.getElementById('newGhlPipeline').value = c.ghlPipelineId || '';
+    document.getElementById('newDriveFolder').value = c.driveFolderUrl || '';
 
     // stored stageMap is {ghlName: appStage} - invert it back to one value per portal stage field
     const inverted = {};
@@ -540,6 +545,7 @@ document.getElementById('confirmAdd').addEventListener('click', async ()=>{
   const manualApptAdjustment = parseInt(document.getElementById('newManualAppts').value) || 0;
   const initials = autoInitials(name);
   const ghlPipelineId = document.getElementById('newGhlPipeline').value.trim();
+  const driveFolderUrl = document.getElementById('newDriveFolder').value.trim();
 
   // Build GHL stage name -> portal stage name lookup, e.g. {"Appt Booked":"Booked"}
   const stageMap = {};
@@ -556,7 +562,7 @@ document.getElementById('confirmAdd').addEventListener('click', async ()=>{
       confirmBtn.textContent = 'Saving...';
       await db.collection('clients').doc(editingClientId).update({
         name, initials, sub, adSpend, baselineRevenue, baselineClosedCount, baselineAppointments,
-        manualApptAdjustment, ghlPipelineId, stageMap
+        manualApptAdjustment, ghlPipelineId, stageMap, driveFolderUrl
       });
       closeAddModal();
       showToast('Client updated');
@@ -572,7 +578,8 @@ document.getElementById('confirmAdd').addEventListener('click', async ()=>{
         weeklyAppts: [0,0,0,0,0,0,0,0],
         weeklyDials: [0,0,0,0,0,0,0,0],
         ghlPipelineId,
-        stageMap
+        stageMap,
+        driveFolderUrl
       });
       await db.collection('access_codes').doc(code).set({ clientId: slug });
 

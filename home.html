@@ -745,6 +745,19 @@
   <!-- ================= UPLOAD ================= -->
   <section class="tab" id="tab-upload">
     <h1 class="page-title">Upload Files</h1>
+
+    <!-- Shown when the client has a Google Drive folder set in the roster: files go straight to our shared drive -->
+    <div id="driveUpload" style="display:none;">
+      <p class="page-sub upload-intro">Send over videos, photos, or job site footage you'd like us to use in your ads. Everything you add goes straight into your folder on our team drive.</p>
+      <div class="dropzone">
+        <div class="dz-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/><path d="M7 9l5-5 5 5"/><path d="M12 4v13"/></svg></div>
+        <div class="dz-title">Your upload folder</div>
+        <div class="dz-sub">Open it and drag in your photos and videos. Before/afters, progress shots and crew clips all work great.</div>
+        <a class="dz-btn" id="driveFolderBtn" href="#" target="_blank" rel="noopener">Open my folder</a>
+      </div>
+    </div>
+
+    <div id="portalUpload">
     <p class="page-sub upload-intro">Send over videos, photos, or job site footage you'd like us to edit. This link is unique to you — no login or password needed, just don't share it publicly.</p>
 
     <div class="link-box">
@@ -769,6 +782,7 @@
     <div class="card">
       <div class="card-head"><div class="card-title">Uploaded so far</div></div>
       <ul class="file-list" id="fileList"></ul>
+    </div>
     </div>
   </section>
 
@@ -984,6 +998,7 @@ async function loadClientData(clientId){
     name:p.name, initials:p.initials, sub:p.sub, adSpend:p.adSpend,
     baselineRevenue:p.baselineRevenue, baselineClosedCount:p.baselineClosedCount, baselineAppointments:p.baselineAppointments,
     manualApptAdjustment:p.manualApptAdjustment || 0,
+    driveFolderUrl:p.driveFolderUrl || '',
     weeklyAppts:p.weeklyAppts, weeklyDials:p.weeklyDials,
     leads: leadsSnap.docs.map(d=>({id:d.id, ...d.data()})),
     activity: activitySnap.docs.map(d=>({id:d.id, ...d.data()}))
@@ -1179,6 +1194,12 @@ function renderOverview(){
   renderLeads(c);
 
   document.getElementById('uploadLink').textContent = 'portal.buildsignals.com/home?code='+currentAccessCode;
+
+  // Clients with a Drive folder upload there; the rest keep the built-in uploader.
+  const hasDrive = /^https:\/\/drive\.google\.com\//.test(c.driveFolderUrl || '');
+  document.getElementById('driveUpload').style.display = hasDrive ? 'block' : 'none';
+  document.getElementById('portalUpload').style.display = hasDrive ? 'none' : 'block';
+  if(hasDrive) document.getElementById('driveFolderBtn').href = c.driveFolderUrl;
 }
 
 const ACTIVITY_ICONS = {
