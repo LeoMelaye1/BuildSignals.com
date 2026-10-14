@@ -52,3 +52,11 @@
 - Founded: 2016
 - Headquarters: Davis, California
 - LinkedIn: https://www.linkedin.com/company/build-signals1/
+
+<!-- solutions -->
+## Lead generation by service
+
+- [Lead generation by service](https://buildsignals.com/solutions/)
+- [Pay Per Appointment Leads for Remodelers | BuildSignals](https://buildsignals.com/solutions/pay-per-appointment-leads.html)
+
+<!-- /solutions -->
