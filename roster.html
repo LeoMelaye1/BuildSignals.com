@@ -111,6 +111,7 @@
   .modal-actions button{flex:1; padding:13px; border-radius:100px; font-size:13px; font-weight:700; text-align:center;}
   .modal-cancel{background:var(--surface-2); color:var(--ink-2);}
   .modal-confirm{background:var(--signal); color:#fff;}
+  .modal-remove{display:block; width:100%; margin-top:12px; padding:8px; background:none; color:#c0392b; font-size:12.5px; font-weight:700; text-align:center;}
 
   .success-card{text-align:center;}
   .success-icon{width:52px; height:52px; border-radius:50%; background:var(--success-dim); color:var(--success);
@@ -220,6 +221,7 @@
       <button type="button" class="modal-cancel" id="cancelAdd">Cancel</button>
       <button type="button" class="modal-confirm" id="confirmAdd">Create client</button>
     </div>
+    <button type="button" class="modal-remove" id="removeClient" style="display:none;">Remove client</button>
   </div>
 </div>
 
@@ -349,9 +351,10 @@ async function loadClientList(){
   listEl.innerHTML = '<div class="empty-state">Loading...</div>';
   try{
     const snap = await db.collection('clients').orderBy('name').get();
-    if(snap.empty){ listEl.innerHTML = '<div class="empty-state">No clients yet - add your first one above.</div>'; return; }
+    const activeDocs = snap.docs.filter(doc=>!doc.data().archived);
+    if(!activeDocs.length){ listEl.innerHTML = '<div class="empty-state">No clients yet - add your first one above.</div>'; return; }
 
-    const rows = await Promise.all(snap.docs.map(async doc=>{
+    const rows = await Promise.all(activeDocs.map(async doc=>{
       const codeSnap = await db.collection('access_codes').where('clientId','==',doc.id).limit(1).get();
       const code = codeSnap.empty ? null : codeSnap.docs[0].id;
       return {id:doc.id, ...doc.data(), code};
@@ -411,6 +414,7 @@ function openAddModal(){
   editingClientId = null;
   document.getElementById('modalTitle').textContent = 'Add a client';
   document.getElementById('confirmAdd').textContent = 'Create client';
+  document.getElementById('removeClient').style.display = 'none';
   ['newName','newSub','newGhlPipeline'].forEach(id=>document.getElementById(id).value='');
   ['newAdSpend','newRevenue','newClosed','newAppts','newManualAppts'].forEach(id=>document.getElementById(id).value='0');
   STAGE_MAP_FIELDS.forEach(([id, appStage, ghlGuess])=>document.getElementById(id).value = ghlGuess);
@@ -429,6 +433,7 @@ async function openEditModal(clientId){
     editingClientId = clientId;
     document.getElementById('modalTitle').textContent = 'Edit client';
     document.getElementById('confirmAdd').textContent = 'Save changes';
+    document.getElementById('removeClient').style.display = 'block';
 
     document.getElementById('newName').value = c.name || '';
     document.getElementById('newSub').value = c.sub || '';
@@ -486,6 +491,40 @@ document.getElementById('uploadsModal').addEventListener('click', (e)=>{ if(e.ta
 document.getElementById('openAddModal').addEventListener('click', openAddModal);
 document.getElementById('cancelAdd').addEventListener('click', closeAddModal);
 document.getElementById('addModal').addEventListener('click', (e)=>{ if(e.target.id==='addModal') closeAddModal(); });
+
+// Remove = archive: hides the client from the roster and turns off their portal login,
+// but keeps their profile and data (and the old code on the doc) so it can be restored.
+document.getElementById('removeClient').addEventListener('click', async ()=>{
+  if(!editingClientId) return;
+  const name = document.getElementById('newName').value.trim() || 'this client';
+  if(!confirm(`Remove ${name} from the roster? Their portal link will stop working. Their data is kept.`)) return;
+
+  const btn = document.getElementById('removeClient');
+  btn.disabled = true; btn.textContent = 'Removing...';
+  try{
+    const codeSnap = await db.collection('access_codes').where('clientId','==',editingClientId).get();
+    const codes = codeSnap.docs.map(d=>d.id);
+    await db.collection('clients').doc(editingClientId).update({
+      archived: true,
+      archivedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      archivedCodes: codes
+    });
+    await Promise.all(codeSnap.docs.map(d=>d.ref.delete()));
+    closeAddModal();
+    showToast(`${name} removed`);
+    loadClientList();
+  }catch(e){
+    console.error(e);
+    const errEl = document.getElementById('addError');
+    errEl.textContent = e.code === 'permission-denied'
+      ? "Your Firestore rules don't allow this yet - the client may be hidden but their portal code is still active."
+      : "Couldn't remove that client - check your connection and try again.";
+    errEl.classList.add('show');
+    loadClientList();
+  }finally{
+    btn.disabled = false; btn.textContent = 'Remove client';
+  }
+});
 
 document.getElementById('confirmAdd').addEventListener('click', async ()=>{
   const name = document.getElementById('newName').value.trim();
