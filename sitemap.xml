@@ -7,13 +7,13 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/how-it-works.html</loc>
+    <loc>https://buildsignals.com/how-it-works</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/results.html</loc>
+    <loc>https://buildsignals.com/results</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -25,28 +25,16 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/apply.html</loc>
+    <loc>https://buildsignals.com/apply</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/commercial.html</loc>
+    <loc>https://buildsignals.com/commercial</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://buildsignals.com/career-path.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://buildsignals.com/join-team.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://buildsignals.com/llms.txt</loc>
@@ -55,13 +43,13 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/privacy.html</loc>
+    <loc>https://buildsignals.com/privacy</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/terms.html</loc>
+    <loc>https://buildsignals.com/terms</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
@@ -73,43 +61,43 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/solutions/pay-per-appointment-leads.html</loc>
+    <loc>https://buildsignals.com/solutions/pay-per-appointment-leads</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/blog/exclusive-vs-shared-remodeling-leads.html</loc>
+    <loc>https://buildsignals.com/blog/exclusive-vs-shared-remodeling-leads</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/blog/how-to-reduce-no-shows-for-in-home-remodeling-estimates.html</loc>
+    <loc>https://buildsignals.com/blog/how-to-reduce-no-shows-for-in-home-remodeling-estimates</loc>
     <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/blog/what-is-pay-per-appointment-lead-generation.html</loc>
+    <loc>https://buildsignals.com/blog/what-is-pay-per-appointment-lead-generation</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/blog/speed-to-lead-for-remodeling-contractors.html</loc>
+    <loc>https://buildsignals.com/blog/speed-to-lead-for-remodeling-contractors</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/blog/pay-per-appointment-vs-pay-per-close.html</loc>
+    <loc>https://buildsignals.com/blog/pay-per-appointment-vs-pay-per-close</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://buildsignals.com/blog/how-to-get-more-kitchen-and-bathroom-remodel-leads.html</loc>
+    <loc>https://buildsignals.com/blog/how-to-get-more-kitchen-and-bathroom-remodel-leads</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

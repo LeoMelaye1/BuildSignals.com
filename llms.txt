@@ -33,15 +33,15 @@
 ## Key pages
 
 - [Home](https://buildsignals.com/): the offer at a glance
-- [How it works and pricing](https://buildsignals.com/how-it-works.html): free trial, pay per appointment vs. pay per close, FAQ
-- [Results](https://buildsignals.com/results.html): client results
+- [How it works and pricing](https://buildsignals.com/how-it-works): free trial, pay per appointment vs. pay per close, FAQ
+- [Results](https://buildsignals.com/results): client results
 - [Blog](https://buildsignals.com/blog/): guides for remodelers
-- [Exclusive vs. Shared Remodeling Leads: Which Is Better for Kitchen and Bath Contractors?](https://buildsignals.com/blog/exclusive-vs-shared-remodeling-leads.html)
-- [How to Reduce No-Shows for In-Home Remodeling Estimates](https://buildsignals.com/blog/how-to-reduce-no-shows-for-in-home-remodeling-estimates.html)
-- [What Is Pay-Per-Appointment Lead Generation? A Guide for Kitchen and Bath Remodelers](https://buildsignals.com/blog/what-is-pay-per-appointment-lead-generation.html)
-- [Speed to Lead for Remodeling Contractors: Why the First 5 Minutes Decide the Job](https://buildsignals.com/blog/speed-to-lead-for-remodeling-contractors.html)
-- [Pay Per Appointment vs. Pay Per Close: Which Lead Model Is Right for Your Remodeling Business?](https://buildsignals.com/blog/pay-per-appointment-vs-pay-per-close.html)
-- [How to Get More Kitchen and Bathroom Remodel Leads (That Actually Turn Into Appointments)](https://buildsignals.com/blog/how-to-get-more-kitchen-and-bathroom-remodel-leads.html)
+- [Exclusive vs. Shared Remodeling Leads: Which Is Better for Kitchen and Bath Contractors?](https://buildsignals.com/blog/exclusive-vs-shared-remodeling-leads)
+- [How to Reduce No-Shows for In-Home Remodeling Estimates](https://buildsignals.com/blog/how-to-reduce-no-shows-for-in-home-remodeling-estimates)
+- [What Is Pay-Per-Appointment Lead Generation? A Guide for Kitchen and Bath Remodelers](https://buildsignals.com/blog/what-is-pay-per-appointment-lead-generation)
+- [Speed to Lead for Remodeling Contractors: Why the First 5 Minutes Decide the Job](https://buildsignals.com/blog/speed-to-lead-for-remodeling-contractors)
+- [Pay Per Appointment vs. Pay Per Close: Which Lead Model Is Right for Your Remodeling Business?](https://buildsignals.com/blog/pay-per-appointment-vs-pay-per-close)
+- [How to Get More Kitchen and Bathroom Remodel Leads (That Actually Turn Into Appointments)](https://buildsignals.com/blog/how-to-get-more-kitchen-and-bathroom-remodel-leads)
 
 ## Contact
 
@@ -57,6 +57,6 @@
 ## Lead generation by service
 
 - [Lead generation by service](https://buildsignals.com/solutions/)
-- [Pay Per Appointment Leads for Remodelers | BuildSignals](https://buildsignals.com/solutions/pay-per-appointment-leads.html)
+- [Pay Per Appointment Leads for Remodelers | BuildSignals](https://buildsignals.com/solutions/pay-per-appointment-leads)
 
 <!-- /solutions -->
