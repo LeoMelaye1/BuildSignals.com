@@ -802,15 +802,14 @@ footer a:hover {
 
 /* Booking calendar in the hero */
 .hero-book { scroll-margin-top: 84px; }
-.book-title { font-weight: 600; font-size: 15px; color: var(--ink-1); margin-bottom: 10px; }
+/* GHL's widget starts with its own logo, title and details card. The frame hides that
+   header (the iframe is shifted up by --book-crop) so the card opens on the dates and times. */
 .book-frame {
-  background: var(--bg);
-  border: 1px solid var(--rule);
+  --book-crop: 360px;
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
 }
-.book-frame iframe { display: block; width: 100%; min-height: 640px; border: none; overflow: hidden; }
+.book-frame iframe { display: block; width: 100%; min-height: 1000px; border: none; overflow: hidden; margin-top: calc(-1 * var(--book-crop)); }
 .book-fallback { margin-top: 12px; font-size: 13px; color: var(--ink-3); }
 .book-fallback a { color: var(--accent); }
 .hero-points { list-style: none; margin: 0 0 24px; display: grid; gap: 12px; }
@@ -835,7 +834,7 @@ footer a:hover {
   .hero-proof { max-width: 440px; margin-left: auto; margin-right: auto; }
   /* Phones: the three points say what the paragraph says, and $2.8M+ is repeated further down, so the calendar stays on the first screen */
   .hero p.sub, .hero-proof { display: none; }
-  .book-title, .book-fallback { text-align: center; }
+  .book-fallback { text-align: center; }
   .mobile-bar {
     display: flex;
     gap: 10px;
@@ -918,7 +917,6 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     </div>
 
     <div class="hero-book" id="book">
-      <p class="book-title">Pick a time for your call</p>
       <div class="book-frame">
         <iframe src="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" title="Book a call with Leo" scrolling="no" id="KGpXKzKABemmVF1LZvIQ_book"></iframe>
       </div>
