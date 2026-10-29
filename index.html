@@ -817,6 +817,14 @@ footer a:hover {
 .leo-chip strong { display: block; font-size: 15px; font-weight: 600; color: var(--ink-1); }
 .leo-chip span { font-size: 14px; color: var(--ink-2); }
 
+/* What counts as a sat appointment */
+.sit-checks { padding: 8px 0 56px; text-align: center; }
+.sit-checks h2 { font-size: 26px; letter-spacing: -0.02em; margin-bottom: 6px; }
+.sit-lead { color: var(--ink-2); margin-bottom: 22px; }
+.sit-list { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 0 auto; }
+.sit-list li { padding: 10px 16px; border: 1px solid var(--rule); border-radius: 999px; background: var(--bg-alt); font-size: 15px; color: var(--ink-1); }
+.sit-list li::before { content: "✓"; color: var(--accent); font-weight: 700; margin-right: 8px; }
+
 /* Sticky booking bar on phones */
 .mobile-bar { display: none; }
 @media (max-width: 820px) {
@@ -884,8 +892,8 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <section class="hero container">
     <div class="hero-text">
       <div class="eyebrow">For residential remodeling contractors</div>
-      <h1>Try us free for 2 weeks. <em>Then pay per appointment or per close.</em></h1>
-      <p class="sub">Booked appointments for kitchen and bath remodelers.</p>
+      <h1>Try us free for 2 weeks. <em>Then pay per sat appointment or per close.</em></h1>
+      <p class="sub">Sat, double-legged appointments for kitchen and bath remodelers. Both decision-makers at the table.</p>
       <div class="leo-chip">
         <img src="/LEOMELAYEPRES.PNG" alt="Leo Melaye, founder of BuildSignals">
         <div>
@@ -903,10 +911,24 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     </div>
   </section>
 
+  <section class="sit-checks">
+    <div class="container">
+      <h2>What counts as a sat appointment</h2>
+      <p class="sit-lead">If any of these is false when you show up, you don't pay.</p>
+      <ul class="sit-list">
+        <li>Both decision-makers home</li>
+        <li>Wants it done within 3 months</li>
+        <li>Heard your price range and is OK with it</li>
+        <li>Inside your service area</li>
+        <li>Work you actually do</li>
+      </ul>
+    </div>
+  </section>
+
   <section class="trust-strip">
     <div class="container trust-row">
       <span>No long-term contracts</span>
-      <span>Pay per appointment or pay per close</span>
+      <span>Pay per sat appointment or per close</span>
       <span>Kitchen &amp; bath specialists, nationwide</span>
     </div>
   </section>
