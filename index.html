@@ -178,7 +178,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
@@ -798,6 +798,53 @@ footer a:hover {
 @media (prefers-reduced-motion: reduce) {
   *, .marquee-track { animation: none !important; transition: none !important; }
 }
+
+/* Booking calendar on the page */
+.book {
+  background: var(--bg-alt);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 64px 0;
+  scroll-margin-top: 72px;
+}
+.book-head { max-width: 640px; margin: 0 auto 28px; text-align: center; }
+.book-head h2 { font-size: 32px; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 10px; }
+.book-head p { color: var(--ink-2); }
+.book-frame {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.book-frame iframe { display: block; width: 100%; min-height: 720px; border: none; overflow: hidden; }
+.book-fallback { text-align: center; margin-top: 14px; font-size: 14px; color: var(--ink-3); }
+.book-fallback a { color: var(--accent); }
+
+/* Sticky booking bar on phones */
+.mobile-bar { display: none; }
+@media (max-width: 820px) {
+  .book { padding: 44px 0; }
+  .book-head h2 { font-size: 26px; }
+  .mobile-bar {
+    display: flex;
+    gap: 10px;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,0.96);
+    border-top: 1px solid var(--rule);
+    box-shadow: 0 -6px 20px rgba(15,23,42,0.08);
+    transition: transform 0.2s ease;
+  }
+  .mobile-bar.is-hidden { transform: translateY(110%); }
+  .mobile-bar .btn { flex: 1; justify-content: center; padding: 14px 12px; }
+  .btn-ghost { background: var(--bg); color: var(--ink-1); border: 1px solid var(--rule); }
+  .btn-ghost:hover { background: var(--bg-alt); }
+  body { padding-bottom: 76px; }
+}
 </style>
 <!-- Meta Pixel Code (BuildSignals ads pixel) -->
 <script>
@@ -808,10 +855,11 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2609465719513721');
 fbq('track', 'PageView');
-// Clicking any "book a call" link or the phone number counts as Contact. The booking itself is tracked by the GHL calendar's own pixel setting.
+// Clicking a booking link, the phone number or Text Leo counts as Contact; a Book button that scrolls to the calendar is OpenCalendar. The booking itself is tracked by the GHL calendar's own pixel setting.
 document.addEventListener('click', function (e) {
-  var a = e.target.closest && e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"]');
-  if (a) fbq('track', 'Contact');
+  if (!e.target.closest) return;
+  if (e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"], a[href^="sms:"]')) fbq('track', 'Contact');
+  else if (e.target.closest('a[href="#book"]')) fbq('trackCustom', 'OpenCalendar');
 });
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2609465719513721&ev=PageView&noscript=1"/></noscript>
@@ -831,7 +879,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
       <img src="/buildsignals.png" alt="BuildSignals logo">
       BuildSignals
     </a>
-    <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn btn-small">
+    <a href="#book" class="btn btn-small">
       Book a call <span class="btn-arrow">→</span>
     </a>
   </div>
@@ -846,10 +894,10 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
         BuildSignals delivers pre-qualified, budget-confirmed appointments for kitchen and bath remodelers — nationwide. After the free trial: pay per appointment, or pay per close. Your call.
       </p>
       <div class="cta-row">
-        <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn">
+        <a href="#book" class="btn">
           Book a 20-minute call <span class="btn-arrow">→</span>
         </a>
-        <span class="cta-note">Set up your trial. No card required.</span>
+        <span class="cta-note">Pick a time right on this page. No card required.</span>
       </div>
     </div>
     
@@ -910,6 +958,19 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     </div>
   </section>
 
+  <section class="book" id="book">
+    <div class="container">
+      <div class="book-head">
+        <h2>Pick a time that works for you</h2>
+        <p>20 minutes with Leo. We'll look at your market, what an appointment costs there, and set up your 2-week free trial.</p>
+      </div>
+      <div class="book-frame">
+        <iframe src="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" title="Book a call with Leo" scrolling="no" id="KGpXKzKABemmVF1LZvIQ_book"></iframe>
+      </div>
+      <p class="book-fallback">Calendar not loading? <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Open it in a new tab</a> or call <a href="tel:+12134497226">(213) 449-7226</a>.</p>
+    </div>
+  </section>
+
   <section class="wins">
     <div class="container">
       <div class="wins-header">
@@ -943,6 +1004,22 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     </div>
   </div>
 </footer>
+
+<div class="mobile-bar" id="mobile-bar">
+  <a href="#book" class="btn">Book a call</a>
+  <a href="sms:+12134497226" class="btn btn-ghost">Text Leo</a>
+</div>
+<script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+<script>
+// Hide the phone booking bar while the calendar itself is on screen.
+(function () {
+  var bar = document.getElementById('mobile-bar'), book = document.getElementById('book');
+  if (!bar || !book || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function (entries) {
+    bar.classList.toggle('is-hidden', entries[0].isIntersecting);
+  }, { threshold: 0.15 }).observe(book);
+})();
+</script>
 
 </body>
 </html>
