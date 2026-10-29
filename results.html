@@ -129,9 +129,9 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2609465719513721');
 fbq('track', 'PageView');
-// Clicking any "book a call" link counts as Contact. The booking itself is tracked by the GHL calendar's own pixel setting.
+// Clicking any "book a call" link or the phone number counts as Contact. The booking itself is tracked by the GHL calendar's own pixel setting.
 document.addEventListener('click', function (e) {
-  var a = e.target.closest && e.target.closest('a[href*="widget/booking/"]');
+  var a = e.target.closest && e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"]');
   if (a) fbq('track', 'Contact');
 });
 </script>

@@ -104,7 +104,7 @@
       ],
       "potentialAction": {
         "@type": "ReserveAction",
-        "target": "https://app.iclosed.io/e/buildsignals/strategy-call?utm_source=buildsignals.com&utm_medium=website",
+        "target": "https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ",
         "name": "Book a 20-minute call"
       },
       "telephone": "+1-213-449-7226",
@@ -808,9 +808,9 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2609465719513721');
 fbq('track', 'PageView');
-// Clicking any "book a call" link counts as Contact. The booking itself is tracked by the GHL calendar's own pixel setting.
+// Clicking any "book a call" link or the phone number counts as Contact. The booking itself is tracked by the GHL calendar's own pixel setting.
 document.addEventListener('click', function (e) {
-  var a = e.target.closest && e.target.closest('a[href*="widget/booking/"]');
+  var a = e.target.closest && e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"]');
   if (a) fbq('track', 'Contact');
 });
 </script>
@@ -831,7 +831,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
       <img src="/buildsignals.png" alt="BuildSignals logo">
       BuildSignals
     </a>
-    <a href="https://app.iclosed.io/e/buildsignals/strategy-call?utm_source=buildsignals.com&utm_medium=website" target="_blank" rel="noopener" class="btn btn-small">
+    <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn btn-small">
       Book a call <span class="btn-arrow">→</span>
     </a>
   </div>
@@ -846,7 +846,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
         BuildSignals delivers pre-qualified, budget-confirmed appointments for kitchen and bath remodelers — nationwide. After the free trial: pay per appointment, or pay per close. Your call.
       </p>
       <div class="cta-row">
-        <a href="https://app.iclosed.io/e/buildsignals/strategy-call?utm_source=buildsignals.com&utm_medium=website" target="_blank" rel="noopener" class="btn">
+        <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener" class="btn">
           Book a 20-minute call <span class="btn-arrow">→</span>
         </a>
         <span class="cta-note">Set up your trial. No card required.</span>
