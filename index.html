@@ -266,10 +266,11 @@ header {
   padding-top: 56px;
   padding-bottom: 64px;
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr);
   gap: 48px;
   align-items: start;
 }
+@media (min-width: 821px) { .hero.container, header .container { max-width: 1320px; } }
 
 .eyebrow {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -297,7 +298,7 @@ h1 em {
 .hero p.sub {
   font-size: 19px;
   color: var(--ink-2);
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   max-width: 560px;
   line-height: 1.5;
 }
@@ -812,8 +813,17 @@ footer a:hover {
 .book-frame iframe { display: block; width: 100%; min-height: 640px; border: none; overflow: hidden; }
 .book-fallback { margin-top: 12px; font-size: 13px; color: var(--ink-3); }
 .book-fallback a { color: var(--accent); }
+.hero-points { list-style: none; margin: 0 0 24px; display: grid; gap: 12px; }
+.hero-points li { position: relative; padding-left: 30px; color: var(--ink-1); font-size: 16px; line-height: 1.45; }
+.hero-points li::before {
+  content: ""; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 20px no-repeat;
+}
+.hero-proof { font-size: 15px; color: var(--ink-2); padding: 14px 16px; background: var(--bg-alt); border: 1px solid var(--rule); border-radius: var(--radius); margin-bottom: 24px; }
+.hero-proof strong { color: var(--accent); font-size: 18px; font-weight: 700; margin-right: 4px; }
+@media (min-width: 821px) { .hero-text { position: sticky; top: 96px; } }
 .leo-chip { display: flex; align-items: center; gap: 14px; }
-.leo-chip img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: top center; border: 1px solid var(--rule); }
+.leo-chip img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; object-position: top center; border: 1px solid var(--rule); }
 .leo-chip strong { display: block; font-size: 15px; font-weight: 600; color: var(--ink-1); }
 .leo-chip span { font-size: 14px; color: var(--ink-2); }
 
@@ -821,6 +831,10 @@ footer a:hover {
 .mobile-bar { display: none; }
 @media (max-width: 820px) {
   .leo-chip { justify-content: center; text-align: left; }
+  .hero-points { text-align: left; max-width: 440px; margin-left: auto; margin-right: auto; }
+  .hero-proof { max-width: 440px; margin-left: auto; margin-right: auto; }
+  /* Phones: the three points say what the paragraph says, and $2.8M+ is repeated further down, so the calendar stays on the first screen */
+  .hero p.sub, .hero-proof { display: none; }
   .book-title, .book-fallback { text-align: center; }
   .mobile-bar {
     display: flex;
@@ -888,6 +902,12 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
       <p class="sub">
         BuildSignals delivers pre-qualified, budget-confirmed appointments for kitchen and bath remodelers — nationwide. After the free trial: pay per appointment, or pay per close. Your call.
       </p>
+      <ul class="hero-points">
+        <li>Pre-qualified, budget-confirmed homeowners booked straight onto your calendar</li>
+        <li>We run the ads, call every lead within minutes, and confirm each appointment</li>
+        <li>2 weeks free, then pay per appointment or per close. No long-term contract</li>
+      </ul>
+      <p class="hero-proof"><strong>$2.8M+</strong> in remodeling work generated for our contractor clients</p>
       <div class="leo-chip">
         <img src="/LEOMELAYEPRES.PNG" alt="Leo Melaye, founder of BuildSignals">
         <div>
