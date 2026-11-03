@@ -103,7 +103,9 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   aside{position:sticky;height:auto;padding:12px 16px 0;border-right:0;border-bottom:1px solid var(--line);z-index:5}
   .logo{padding:0 0 10px}
   .navhead,.side-rules{display:none}
-  nav{display:flex;overflow-x:auto;gap:4px;padding-bottom:10px;scrollbar-width:none}
+  .navs{display:flex;gap:4px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+  .navs::-webkit-scrollbar{display:none}
+  nav{display:flex;gap:4px}
   nav button{white-space:nowrap;padding:7px 10px}
   main{padding:24px 16px 80px}
   h1{font-size:24px}
@@ -120,6 +122,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 <div class="app">
 <aside>
   <a href="/" class="logo"><img src="/buildsignals.png" alt=""><span>BuildSignals<small>Call Desk</small></span></a>
+  <div class="navs">
   <div class="navhead">On the call</div>
   <nav id="tabs">
       <button data-tab="script"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Call script</button>
@@ -133,6 +136,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <button data-tab="reschedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Rescheduling</button>
       <button data-tab="clients"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>Clients</button>
   </nav>
+  </div>
   <div class="side-rules"><b>Every call</b><span>Double dial</span><span>Quick hang-up: call a 3rd time</span><span>Client's number, 8am–8pm</span><span class="r">No prices on the phone</span></div>
 </aside>
 <main>
