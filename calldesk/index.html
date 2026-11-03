@@ -262,6 +262,9 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   <div>
     <h2>Not booked yet</h2>
     <div class="flow">
+      <div class="stage"><div><h3>A robot answers</h3><p class="note">"Record your name and why you're calling" or "transcription unavailable"</p></div>
+        <div class="body"><p><b>Goal:</b> get put through. Don't explain the whole reason you called. Say only your name and the appointment.</p><blockquote>"Hi, it's Uriel, calling about your appointment."</blockquote><p>That's it. Wait for them to pick up. If it hangs up or goes to voicemail, treat it like no answer.</p></div></div>
+
       <div class="stage"><div><h3>Brand new lead</h3><p class="note">Task from New [Client] Facebook Lead</p></div>
         <div class="body"><p><b>Goal:</b> book the visit. Call right away and double dial.</p><blockquote>"Hey Maria, it's Uriel with Valencia. You just asked about a free estimate for your bathroom. Got a quick second?"</blockquote><p>Then run the <a href="#script" data-go="script">call script</a>.</p></div></div>
 
@@ -292,13 +295,13 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
         <div class="body"><p><b>Goal:</b> get a real day and time.</p><blockquote>"No problem. What day is good for me to call you back? Morning or afternoon?"</blockquote><p><b>In the CRM:</b> set the <b>Follow Up Date</b> and leave a note with the time. See <a href="#rules" data-go="rules">Schedule a follow-up</a>.</p></div></div>
 
       <div class="stage"><div><h3>Not ready yet</h3><p class="note">Months away, or saving up</p></div>
-        <div class="body"><p><b>Goal:</b> keep the door open.</p><blockquote>"Totally fine. When do you think you'd want to start? I'll check back with you then."</blockquote><p><b>In the CRM:</b> move the stage to <b>Follow Up</b>, set the <b>Follow Up Date</b>, and leave a note. Don't add <b>lead nurturing</b> yet. The CRM adds it after the follow-up call.</p></div></div>
+        <div class="body"><p><b>Goal:</b> keep the door open.</p><blockquote>"Totally fine. When do you think you'd want to start? I'll check back with you then."</blockquote><p><b>In the CRM:</b> move the stage to <b>Follow Up</b>, set the <b>Follow Up Date</b>, and leave a note. Moving to Follow Up stops all our texts and calls on its own. Don't add <b>lead nurturing</b>. <small>Forgot the date? The CRM gives you a call task in 14 days anyway.</small></p></div></div>
 
       <div class="stage"><div><h3>Follow-up day is here</h3><p class="note">Task from Follow Up Reminders</p></div>
         <div class="body"><p><b>Goal:</b> call like you promised. Read the note first.</p><blockquote>"Hey Maria, it's Uriel with Valencia. You said today was a good day to talk about the bathroom. Still a good time?"</blockquote><p>Then pick up the script where you left off.</p></div></div>
 
       <div class="stage"><div><h3>Follow-up day, no answer</h3><p class="note">You called on the follow-up day and they didn't pick up</p></div>
-        <div class="body"><p><b>Goal:</b> hand them back to the texts and calls. Double dial first, then send one short text:</p><blockquote>"Hey Maria, it's Uriel with Valencia. Checking in on the bathroom like we talked about. Is texting easier?"</blockquote><p><b>In the CRM:</b> mark the call task done in Manual Actions. That's it. The CRM adds <b>lead nurturing</b> by itself, and they get about a week of our texts and calls again. Don't add the tag yourself.</p><p><b>If you reached them:</b> mark the task done <b>first</b>, then book them or move the stage. Booked or Dead stops the follow-up texts.</p></div></div>
+        <div class="body"><p><b>Goal:</b> hand them back to the texts and calls. Double dial first, then send one short text:</p><blockquote>"Hey Maria, it's Uriel with Valencia. Checking in on the bathroom like we talked about. Is texting easier?"</blockquote><p><b>In the CRM:</b> mark the call task done in Manual Actions. That's it. About 10 minutes later the CRM moves them back to <b>Connecting</b>, adds <b>lead nurturing</b>, and they get about a week of our texts and calls again.</p><p><b>If you reached them:</b> book them, or set a new <b>Follow Up Date</b> if they want a call later. Do it within 10 minutes of marking the task done and they won't go back into the texts.</p><p><small>Want them back in the texts right away? Add <b>lead nurturing</b> yourself. The CRM clears the date and moves them to Connecting.</small></p></div></div>
     </div>
   </div>
 
