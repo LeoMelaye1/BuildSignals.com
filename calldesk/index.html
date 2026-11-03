@@ -97,6 +97,8 @@ th{text-align:left;font-size:13px;font-weight:600;color:var(--ink-2);background:
 td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
 tr:last-child td{border-bottom:0}
 td.q{font-weight:600;width:32%}
+table.wf blockquote{margin:8px 0 4px;font-size:15px;padding:10px 14px}
+table.wf td:nth-child(2){width:24%;color:var(--ink-2)}
 td small{display:block;color:var(--ink-2);font-size:13.5px;margin-top:4px}
 .num{font-variant-numeric:tabular-nums;white-space:nowrap}
 
@@ -310,6 +312,21 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <div class="eyebrow">In the CRM</div>
     <h1>CRM</h1>
     <p class="intro">Texts, call tasks and reminders run on their own. They stop when the lead texts YES or you move them to Booked - Confirmed. Your part is the calls, the calendar and the stage.</p>
+  </div>
+
+  <div>
+    <h2>What each workflow name means</h2>
+    <p class="muted" style="margin-bottom:12px">Every call task in Manual Actions shows a workflow name. It tells you who the lead is and what to say.</p>
+    <div class="tw"><table class="wf">
+      <thead><tr><th>Workflow name</th><th>Who this is</th><th>Your goal and what to say</th></tr></thead>
+      <tbody>
+        <tr><td class="q">New [Client] Facebook Lead</td><td>Just filled out the form. Brand new.</td><td><b>Book the visit.</b> Call now and double dial.<blockquote>"Hey Maria, it's Uriel with Valencia. You just asked about a free estimate for your bathroom. Got a quick second?"</blockquote><small>Then run the full <a href="#script" data-go="script">call script</a>.</small></td></tr>
+        <tr><td class="q">Nurture - [Client] Lead Processing (&lt;7 Days)</td><td>Came in this week but hasn't booked yet. They've been getting our texts.</td><td><b>Book the visit.</b><blockquote>"Hey Maria, it's Uriel with Valencia. Following up on your bathroom estimate. Still looking to get it done?"</blockquote><small>If they say yes, go to Learn the job in the script.</small></td></tr>
+        <tr><td class="q">Self-booked: confirm - calls + texts until reached</td><td>Booked a time online by themselves. We haven't talked to them yet.</td><td><b>Confirm the visit. Don't re-sell it.</b><blockquote>"Hey Maria, it's Uriel with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><small>Ask about the job, materials and decision-makers, repeat the day and time, then set the stage to Booked - Confirmed.</small></td></tr>
+        <tr><td class="q">CaliFirst - Resume calls after payment pause (Oct 30)</td><td>Older CaliFirst leads we stopped calling for a while.</td><td><b>Book the visit.</b><blockquote>"Hey, it's Uriel with CaliFirst Remodel. Following up on your remodel request from a few weeks back. Still thinking about it?"</blockquote><small>No owner name for CaliFirst. Say "our team".</small></td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted" style="margin-top:10px">Names like Appointment Scheduled, Post Estimate Follow Up and SMS Estimate only send texts. They never need a call from you.</p>
   </div>
 
   <div class="steps">
