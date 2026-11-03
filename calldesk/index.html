@@ -78,6 +78,16 @@ li+li{margin-top:6px}
 .basics li{break-inside:avoid}
 
 .flow{display:grid;gap:12px;counter-reset:st}
+.group{display:grid;gap:4px}
+.group-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.group-head h2{margin:0}
+.pill-must,.pill-opt{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px}
+.pill-must{background:var(--accent);color:var(--on-accent)}
+.pill-opt{border:1px solid var(--line);color:var(--ink-2)}
+.optional{border:1px dashed var(--line);border-radius:10px;padding:18px 22px;display:grid;gap:10px;color:var(--ink-2)}
+.optional li{color:var(--ink-2)}
+.after{border:1px solid var(--line);border-radius:10px;padding:18px 22px;display:grid;gap:10px;background:var(--card)}
+.after h2{margin:0}
 .stage.key{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 .why{border:1px dashed var(--accent);border-radius:10px;padding:18px 22px;display:grid;gap:10px;background:var(--bg-soft)}
 .why h2{margin:0;color:var(--heading-accent)}
@@ -194,48 +204,50 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <li>Call from the client's number.</li>
       <li>Only call between 8am and 8pm their time.</li>
       <li>Never give a price on the phone.</li>
-      <li>Ask about materials, then right away ask who else decides.</li>
+      <li>Ready to book? Stop asking and book.</li>
     </ul>
   </div>
 
+  <div class="group">
+    <div class="group-head"><h2>Must do on every call</h2><span class="pill-must">4 steps</span></div>
+    <p class="muted">This is the whole job: a day, a time, and everyone who decides at the visit. If they're ready to book at any point, stop asking questions and book.</p>
+  </div>
+
   <div class="flow">
-    <div class="stage"><div><h3>Open</h3><p class="note">Who you are and why you're calling</p></div>
-      <div class="body"><blockquote>"Hey Maria, it's Uriel with Valencia. You asked about a free estimate for your bathroom. Got a quick second?"</blockquote></div></div>
+    <div class="stage"><div><h3>Open</h3><p class="note">Who you are, then one question</p></div>
+      <div class="body"><blockquote>"Hey Maria, it's Uriel with Valencia. You asked about a free estimate for your bathroom. Got a quick second? What are you looking to get done?"</blockquote></div></div>
 
-    <div class="stage"><div><h3>Learn the job</h3><p class="note">One question at a time</p></div>
-      <div class="body"><ul>
-        <li>"What are you looking to get done?"</li>
-        <li>"Full bathroom, or just the shower?"</li>
-        <li>"When are you hoping to get it done?"</li>
-      </ul></div></div>
-
-    <div class="stage key"><div><h3>Materials</h3><p class="note">This sets up the next question</p></div>
-      <div class="body"><blockquote>"Do you have an idea what materials you want? Tile, slab, or acrylic? There are a few different options, and we bring samples of all of them so you can see and feel them."</blockquote>
-        <p>Let them talk. The more options they picture, the more the next question makes sense.</p></div></div>
-
-    <div class="stage key"><div><h3>Decision-makers</h3><p class="note">Ask right after materials</p></div>
-      <div class="body"><blockquote>"And since we'll be going over all these different options, we want to keep it as productive as possible. Is there anyone else who helps make the decision, like a wife or husband, who should be there too?"</blockquote>
-        <p>If yes: "Great, let's pick a time you're both home."</p></div></div>
-
-    <div class="why">
-      <h2>Why we ask about materials first</h2>
-      <p>The materials question is the setup. Once they're thinking about tile, slab and acrylic, it makes sense that everyone who decides should be there to pick. Asking about the spouse then sounds helpful, not pushy.</p>
-      <div class="why-flow"><span>Materials: "we bring options"</span><span class="arrow">→</span><span>"So we keep it productive…"</span><span class="arrow">→</span><span>"Will your wife or husband be there?"</span></div>
-      <p class="muted">Practice these two back to back until they flow as one. Hear it in <a href="#recordings" data-go="recordings">Recordings</a>: "Learning the job", then "Asking about the spouse".</p>
-    </div>
+    <div class="stage key"><div><h3>Materials, then who decides</h3><p class="note">Ask these two back to back</p></div>
+      <div class="body"><blockquote>"Any idea on materials? Tile, slab, acrylic? We bring samples of all the options so you can see them."</blockquote>
+        <blockquote>"And since we'll be going over all these options, we want to keep it productive. Is there anyone else who helps decide, like a wife or husband, who should be there too?"</blockquote>
+        <p class="muted">The materials question is the setup. Once they picture the options, asking who else decides sounds helpful, not pushy.</p></div></div>
 
     <div class="stage"><div><h3>Set the visit</h3><p class="note">Always offer two times</p></div>
       <div class="body"><blockquote>"The owner, Brian, comes out, measures, and brings the samples. It's free. Does Thursday at 10 or Friday at 2 work better for both of you?"</blockquote><p>Then get the address.</p></div></div>
 
     <div class="stage"><div><h3>Confirm</h3><p class="note">Repeat it back</p></div>
       <div class="body"><blockquote>"Perfect. Thursday at 10 at 123 Oak St. Brian, the owner, will be there. I'll text you so you have it."</blockquote></div></div>
+  </div>
 
-    <div class="stage"><div><h3>After the call</h3></div>
-      <div class="body"><ol>
-        <li>Book it on the client's calendar.</li>
-        <li>Move the stage to Booked - Confirmed.</li>
-        <li>Post it in the client's group chat.</li>
-      </ol><p class="muted">Step by step on the <a href="#crm" data-go="crm">CRM</a> page.</p></div></div>
+  <div class="optional">
+    <div class="group-head"><h2>Only if you have time</h2><span class="pill-opt">Optional</span></div>
+    <p class="muted">Use these when they're chatty or not sure yet. Skip them if they're ready to book. Pick one or two, not all.</p>
+    <ul>
+      <li>"Full bathroom, or just the shower?"</li>
+      <li>"When are you hoping to get it done?"</li>
+      <li>"Are you getting a few quotes?"</li>
+      <li>"What made you want to do it now?"</li>
+    </ul>
+  </div>
+
+  <div class="after">
+    <h2>After the call</h2>
+    <ol>
+      <li>Book it on the client's calendar.</li>
+      <li>Move the stage to Booked - Confirmed.</li>
+      <li>Post it in the client's group chat.</li>
+    </ol>
+    <p class="muted">Step by step on the <a href="#crm" data-go="crm">CRM steps</a> page.</p>
   </div>
 </section>
 
