@@ -24,39 +24,46 @@ a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-.container{max-width:960px;margin:0 auto;padding:0 24px}
-header{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:5}
-.header-inner{display:flex;justify-content:space-between;align-items:center;height:64px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:-.01em;color:var(--ink-1)}
+.app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
+aside{background:var(--bg-soft);border-right:1px solid var(--line);position:sticky;top:0;height:100vh;display:flex;flex-direction:column;padding:20px 14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:-.01em;color:var(--ink-1);padding:4px 10px 18px}
 .logo img{width:30px;height:30px;object-fit:contain}
 .logo:hover{text-decoration:none}
-.header-label{font-size:14px;color:var(--ink-2)}
-nav{display:flex;gap:28px;overflow-x:auto;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
-nav button{all:unset;cursor:pointer;font-size:14.5px;font-weight:500;color:var(--ink-2);padding:12px 0 13px;border-bottom:2px solid transparent;white-space:nowrap}
-nav button:hover{color:var(--ink-1)}
-nav button[aria-selected="true"]{color:var(--ink-1);border-color:var(--ink-1)}
+.logo small{display:block;font-size:12.5px;font-weight:500;color:var(--ink-2);letter-spacing:0}
+.navhead{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding:14px 10px 6px}
+nav{display:grid;gap:2px}
+nav button{all:unset;cursor:pointer;display:flex;align-items:center;gap:11px;font-size:14.5px;font-weight:500;color:var(--ink-2);padding:9px 10px;border-radius:7px}
+nav button svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button:hover{background:var(--bg-mute);color:var(--ink-1)}
+nav button[aria-selected="true"]{background:#fff;color:var(--accent);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(15,23,42,.05)}
 nav button:focus-visible{outline:2px solid var(--accent)}
-
-main{padding:40px 0 96px}
+.side-rules{margin-top:auto;border-top:1px solid var(--line);padding:16px 10px 4px;font-size:13px;color:var(--ink-2);display:grid;gap:7px}
+.side-rules b{color:var(--ink-1);font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+.side-rules span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:2px}
+.side-rules span.r::before{background:var(--red)}
+.container{max-width:980px;padding:0 40px}
+main{padding:36px 40px 96px;max-width:1060px}
 section{display:grid;gap:32px}
-h1{font-size:30px;line-height:1.2;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+.eyebrow{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px}
+h1{font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
 .intro{color:var(--ink-2);margin:0;max-width:60ch}
 h2{font-size:18px;font-weight:600;letter-spacing:-.01em;margin:0 0 12px}
 p{margin:0}
 ul,ol{margin:0;padding-left:20px}
 li+li{margin-top:6px}
 
-.basics{border:1px solid var(--line);border-radius:8px;padding:20px 24px;background:var(--bg-soft)}
+.basics{border:1px solid #BFDBFE;border-radius:10px;padding:18px 22px;background:#EFF6FF}
+.basics h2{color:var(--accent-dark)}
 .basics ul{columns:2;column-gap:40px}
 .basics li{break-inside:avoid}
 
-.stage{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:24px 0;border-top:1px solid var(--line)}
-.stage:first-of-type{border-top:0;padding-top:0}
+.flow{display:grid;gap:12px;counter-reset:st}
+.stage{display:grid;grid-template-columns:36px 190px minmax(0,1fr);gap:18px;padding:20px 22px;border:1px solid var(--line);border-radius:10px;background:#fff;counter-increment:st}
+.stage::before{content:counter(st);width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:600;font-size:14px}
 .stage h3{font-size:15px;font-weight:600;margin:0}
 .stage .note{font-size:14px;color:var(--ink-2);margin-top:4px}
 .stage .body{display:grid;gap:10px;min-width:0}
-blockquote{margin:0;padding:14px 18px;background:var(--bg-mute);border-radius:6px;font-size:16px;color:var(--ink-1)}
+blockquote{margin:0;padding:14px 18px;background:#EFF6FF;border-left:3px solid var(--accent);border-radius:0 6px 6px 0;font-size:16px;color:var(--ink-1)}
 
 table{border-collapse:collapse;width:100%;font-size:15px}
 .tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
@@ -79,8 +86,8 @@ td small{display:block;color:var(--ink-2);font-size:13.5px;margin-top:4px}
 audio{width:100%;max-width:300px;height:36px;display:block}
 .tag-no{color:var(--red);font-weight:600;font-size:13px}
 
-.step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px;padding:28px 0;border-top:1px solid var(--line)}
-.step:first-of-type{border-top:0;padding-top:0}
+.steps{display:grid;gap:14px}
+.step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px;padding:22px;border:1px solid var(--line);border-radius:10px;background:#fff}
 .step .text{display:grid;gap:10px;align-content:start}
 .step h3{font-size:16px;font-weight:600;margin:0}
 .shots{display:grid;gap:12px}
@@ -91,40 +98,48 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 .btn:hover{background:var(--bg-soft)}
 .muted{color:var(--ink-2);font-size:14px}
 
-@media (max-width:760px){
-  .container{padding:0 16px}
-  main{padding-top:28px}
-  h1{font-size:25px}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  aside{position:sticky;height:auto;padding:12px 16px 0;border-right:0;border-bottom:1px solid var(--line);z-index:5}
+  .logo{padding:0 0 10px}
+  .navhead,.side-rules{display:none}
+  nav{display:flex;overflow-x:auto;gap:4px;padding-bottom:10px;scrollbar-width:none}
+  nav button{white-space:nowrap;padding:7px 10px}
+  main{padding:24px 16px 80px}
+  h1{font-size:24px}
   .basics ul{columns:1}
-  .stage,.step,.compare{grid-template-columns:1fr;gap:12px}
-  nav{gap:22px}
+  .stage{grid-template-columns:32px minmax(0,1fr);gap:12px;padding:16px}
+  .stage .body{grid-column:1/-1}
+  .step,.compare{grid-template-columns:1fr;gap:14px}
+  .step{padding:16px}
 }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="container">
-    <div class="header-inner">
-      <a href="/" class="logo"><img src="/buildsignals.png" alt="">BuildSignals</a>
-      <span class="header-label">Call Desk</span>
-    </div>
-    <nav id="tabs">
-      <button data-tab="script">Script</button>
-      <button data-tab="objections">Objections</button>
-      <button data-tab="texting">Texting</button>
-      <button data-tab="recordings">Recordings</button>
-      <button data-tab="crm">CRM</button>
-      <button data-tab="reschedule">Rescheduling</button>
-      <button data-tab="clients">Clients</button>
-    </nav>
-  </div>
-</header>
-
-<main class="container">
+<div class="app">
+<aside>
+  <a href="/" class="logo"><img src="/buildsignals.png" alt=""><span>BuildSignals<small>Call Desk</small></span></a>
+  <div class="navhead">On the call</div>
+  <nav id="tabs">
+      <button data-tab="script"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Call script</button>
+      <button data-tab="objections"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg>Objections</button>
+      <button data-tab="texting"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18h2"/></svg>Texting</button>
+      <button data-tab="recordings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>Recordings</button>
+  </nav>
+  <div class="navhead">In the CRM</div>
+  <nav id="tabs2">
+      <button data-tab="crm"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg>CRM steps</button>
+      <button data-tab="reschedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Rescheduling</button>
+      <button data-tab="clients"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>Clients</button>
+  </nav>
+  <div class="side-rules"><b>Every call</b><span>Double dial</span><span>Quick hang-up: call a 3rd time</span><span>Client's number, 8am–8pm</span><span class="r">No prices on the phone</span></div>
+</aside>
+<main>
 
 <section id="script">
   <div>
+    <div class="eyebrow">On the call</div>
     <h1>Call script</h1>
     <p class="intro">The goal of every call is a day, a time, and every decision-maker at the visit. Keep it short and friendly.</p>
   </div>
@@ -140,7 +155,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     </ul>
   </div>
 
-  <div>
+  <div class="flow">
     <div class="stage"><div><h3>Open</h3><p class="note">Who you are and why you're calling</p></div>
       <div class="body"><blockquote>"Hey Maria, it's Uriel with Valencia. You asked about a free estimate for your bathroom. Got a quick second?"</blockquote></div></div>
 
@@ -173,6 +188,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
 <section id="objections" hidden>
   <div>
+    <div class="eyebrow">On the call</div>
     <h1>Objections</h1>
     <p class="intro">Give a short answer, then go right back to picking a day and time.</p>
   </div>
@@ -194,6 +210,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
 <section id="texting" hidden>
   <div>
+    <div class="eyebrow">On the call</div>
     <h1>Texting</h1>
     <p class="intro">Write the way people text. Casual, kind, and just professional enough. One or two short lines with one question.</p>
   </div>
@@ -228,6 +245,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
 <section id="recordings" hidden>
   <div>
+    <div class="eyebrow">On the call</div>
     <h1>Recordings</h1>
     <p class="intro">Real calls, each under a minute. Listen for how short and relaxed they are. The last two are what to avoid.</p>
   </div>
@@ -239,11 +257,12 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
 <section id="crm" hidden>
   <div>
+    <div class="eyebrow">In the CRM</div>
     <h1>CRM</h1>
     <p class="intro">Texts, call tasks and reminders run on their own. They stop when the lead texts YES or you move them to Booked - Confirmed. Your part is the calls, the calendar and the stage.</p>
   </div>
 
-  <div>
+  <div class="steps">
     <div class="step"><div class="text"><h3>1. Open Manual Actions</h3><p>Conversations → Manual Actions is your call list. Work it from the top.</p>
       <p class="caution">"Let's Start" dials right away. If a box asks "Call Anyway?" late at night, press Cancel.</p></div>
       <div class="shots"><a href="img/manual-actions.jpg" target="_blank"><img src="img/manual-actions.jpg" alt="Manual Actions list" loading="lazy"></a><a href="img/call-prompt.jpg" target="_blank"><img src="img/call-prompt.jpg" alt="Call Anyway prompt" loading="lazy"></a></div></div>
@@ -283,10 +302,11 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
 <section id="reschedule" hidden>
   <div>
+    <div class="eyebrow">In the CRM</div>
     <h1>Rescheduling</h1>
     <p class="intro">Stay on the phone until there's a new day and time.</p>
   </div>
-  <div>
+  <div class="flow">
     <div class="stage"><div><h3>On the phone</h3></div>
       <div class="body"><blockquote>"No problem at all. I have Saturday at 2 or Monday at 10. Which is better?"</blockquote><p>If they want to cancel: "Want me to check back in a couple weeks?"</p></div></div>
     <div class="stage"><div><h3>In the CRM</h3><p class="note">Appointment menu → Edit</p></div>
@@ -301,6 +321,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
 <section id="clients" hidden>
   <div>
+    <div class="eyebrow">In the CRM</div>
     <h1>Clients</h1>
     <p class="intro">Call from the client's number and book on the client's calendar.</p>
   </div>
@@ -315,6 +336,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 </section>
 
 </main>
+</div>
 
 <script>
 const clips=[
@@ -346,7 +368,7 @@ const clients=[
 document.getElementById("clientRows").innerHTML=clients.map(r=>
  `<tr><td class="q">${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td><td>${r[3]||"—"}</td><td>${r[4]}</td></tr>`).join("");
 
-const tabs=[...document.querySelectorAll("#tabs button")];
+const tabs=[...document.querySelectorAll("aside nav button")];
 function show(id){
   const sec=document.getElementById(id);
   if(!sec||sec.tagName!=="SECTION")id="script";
