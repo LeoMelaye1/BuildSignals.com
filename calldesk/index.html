@@ -83,7 +83,15 @@ td small{display:block;color:var(--ink-2);font-size:13.5px;margin-top:4px}
 .examples{display:grid;gap:8px}
 .examples p{padding:10px 14px;border:1px solid var(--line);border-radius:6px;font-size:15px}
 
-audio{width:100%;max-width:300px;height:36px;display:block}
+.player{display:flex;align-items:center;gap:12px;min-width:220px}
+.play{all:unset;cursor:pointer;width:36px;height:36px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none}
+.play:hover{background:var(--accent-dark)}
+.play:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.play svg{width:14px;height:14px;fill:#fff}
+.bar{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden;cursor:pointer;min-width:90px}
+.bar i{display:block;height:100%;width:0;background:var(--accent)}
+.time{font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+td.p{width:260px}
 .tag-no{color:var(--red);font-weight:600;font-size:13px}
 
 .steps{display:grid;gap:14px}
@@ -319,7 +327,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <div class="stage"><div><h3>Tell the client</h3><p class="note">In their group chat</p></div>
       <div class="body"><blockquote>Update: Maria moved to Sat Nov 7 at 2 PM.</blockquote></div></div>
     <div class="stage"><div><h3>Example call</h3></div>
-      <div class="body"><audio controls preload="none" src="audio/08-reschedule.mp3"></audio></div></div>
+      <div class="body"><div class="player" data-src="audio/08-reschedule.mp3" data-len="61"></div></div></div>
   </div>
 </section>
 
@@ -343,6 +351,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 </div>
 
 <script>
+const LEN={"01-opener": 42, "02-discovery": 55, "03-spouse": 29, "04-lock-time": 56, "05-price": 29, "06-busy-call-later": 54, "07-confirm-booked": 55, "08-reschedule": 61, "09-bad-price-on-phone": 52, "10-bad-no-ask": 51};
 const clips=[
  ["01-opener","Opening the call","Name, company, why you're calling, then one easy question."],
  ["02-discovery","Learning the job","Full bath or shower, materials, and that we bring samples."],
@@ -356,7 +365,7 @@ const clips=[
  ["10-bad-no-ask","Avoid: not asking for the visit","\"I'll call you back.\" They never did.",1]
 ];
 document.getElementById("clips").innerHTML=clips.map(([f,t,w,bad])=>
- `<tr><td class="q">${t}${bad?'':''}</td><td>${bad?'<span class="tag-no">Avoid. </span>':''}${w}</td><td><audio controls preload="none" src="audio/${f}.mp3"></audio></td></tr>`).join("");
+ `<tr><td class="q">${t}${bad?'':''}</td><td>${bad?'<span class="tag-no">Avoid. </span>':''}${w}</td><td class="p"><div class="player" data-src="audio/${f}.mp3" data-len="${LEN[f]}"></div></td></tr>`).join("");
 
 const clients=[
  ["Valencia","(209) 318-1967","Valencia","Brian","Pacific"],
@@ -372,6 +381,21 @@ const clients=[
 document.getElementById("clientRows").innerHTML=clients.map(r=>
  `<tr><td class="q">${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td><td>${r[3]||"—"}</td><td>${r[4]}</td></tr>`).join("");
 
+
+const PLAY='<svg viewBox="0 0 14 14"><path d="M3 1.5v11l9.5-5.5z"/></svg>',PAUSE='<svg viewBox="0 0 14 14"><path d="M3 1.5h3v11H3zM8 1.5h3v11H8z"/></svg>';
+const fmt=t=>Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
+let current=null;
+document.querySelectorAll(".player").forEach(p=>{
+  const a=new Audio();a.preload="none";a.src=p.dataset.src;
+  p.innerHTML=`<button class="play" aria-label="Play">${PLAY}</button><span class="bar"><i></i></span><span class="time">${fmt(+p.dataset.len)}</span>`;
+  const b=p.querySelector(".play"),fill=p.querySelector(".bar i"),time=p.querySelector(".time");
+  const set=on=>{b.innerHTML=on?PAUSE:PLAY;b.setAttribute("aria-label",on?"Pause":"Play")};
+  b.onclick=()=>{if(a.paused){if(current&&current!==a)current.pause();current=a;a.play()}else a.pause()};
+  a.onplay=()=>set(1);a.onpause=()=>set(0);
+  a.onended=()=>{set(0);fill.style.width="0";time.textContent=fmt(+p.dataset.len)};
+  a.ontimeupdate=()=>{const d=a.duration||+p.dataset.len;fill.style.width=(a.currentTime/d*100)+"%";time.textContent=fmt(a.currentTime)};
+  p.querySelector(".bar").onclick=e=>{const r=e.currentTarget.getBoundingClientRect(),d=a.duration||+p.dataset.len;a.currentTime=(e.clientX-r.left)/r.width*d;if(a.paused)b.click()};
+});
 const tabs=[...document.querySelectorAll("aside nav button")];
 function show(id){
   const sec=document.getElementById(id);
@@ -379,6 +403,7 @@ function show(id){
   tabs.forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));
   document.querySelectorAll("main section").forEach(s=>s.hidden=s.id!==id);
   if(location.hash.slice(1)!==id)history.replaceState(null,"","#"+id);
+  if(current)current.pause();
   window.scrollTo(0,0);
 }
 tabs.forEach(b=>b.onclick=()=>show(b.dataset.tab));
