@@ -185,7 +185,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <button data-tab="clients"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>Clients</button>
   </nav>
   </div>
-  <div class="side-rules"><b>Every call</b><span>Double dial</span><span>Quick hang-up: call a 3rd time</span><span>Client's number, 8am–8pm</span><span class="r">No prices on the phone</span></div>
+  <div class="side-rules"><b>Every call</b><span>Double dial</span><span>Quick hang-up: call a 3rd time</span><span>Client's number, 8am–8pm</span><span class="r">No exact prices. "Most start at $8,000" is OK</span></div>
 </aside>
 <main>
 
@@ -203,7 +203,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <li>If they pick up and hang up fast, call a third time.</li>
       <li>Call from the client's number.</li>
       <li>Only call between 8am and 8pm their time.</li>
-      <li>Never give a price on the phone.</li>
+      <li>No exact price on the phone. You can say "most projects start at $8,000."</li>
       <li>Ready to book? Stop asking and book.</li>
     </ul>
   </div>
@@ -260,10 +260,10 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   <div class="tw"><table>
     <thead><tr><th>They say</th><th>You say</th></tr></thead>
     <tbody>
-      <tr><td class="q">How much does it cost?</td><td>"Every job is different. The owner gives you an exact price at the free visit, with options. Does Thursday or Friday work?"</td></tr>
-      <tr><td class="q">Just send me a quote.</td><td>"I wish I could. We have to see the space to give you a real number. It's free and there's no pressure."</td></tr>
-      <tr><td class="q">I'm just looking.</td><td>"Totally fine. The visit is free, and you'll have real numbers to compare."</td></tr>
-      <tr><td class="q">I'm getting other quotes.</td><td>"Smart. We'll give you one to compare."</td></tr>
+      <tr><td class="q">How much does it cost?</td><td>"Every job is different. Most projects start at $8,000. The owner gives you an exact price at the free visit, with options. Does Thursday or Friday work?"</td></tr>
+      <tr><td class="q">Just send me a quote.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
+      <tr><td class="q">I'm just looking.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
+      <tr><td class="q">I'm getting other quotes.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
       <tr><td class="q">I need to talk to my husband.</td><td>"Makes sense. Let's pick a time you're both home."</td></tr>
       <tr><td class="q">I'm busy, call me later.</td><td>"No problem. What time is good tomorrow?"<small>Get a real time and leave a note on the contact.</small></td></tr>
       <tr><td class="q">Who is coming?</td><td>"Brian. He's the owner."<small>Owner names are on the <a href="#clients" data-go="clients">Clients</a> page.</small></td></tr>
@@ -480,11 +480,11 @@ const clips=[
  ["02-discovery","Learning the job","Full bath or shower, materials, and that we bring samples."],
  ["03-spouse","Asking about the spouse","\"If we're showing options, we want everyone happy.\""],
  ["04-lock-time","Setting the time","A real day and time, the address, and the owner's name."],
- ["05-price","When they ask the price","No number. The owner comes out and shows options."],
+ ["05-price","When they ask the price","Doesn't guess a number. The owner comes out and shows options."],
  ["06-busy-call-later","\"Call me tomorrow\"","Checks they're still interested and gets a callback time."],
  ["07-confirm-booked","Confirming an online booking","Says the day, learns the job, repeats the day and time."],
  ["08-reschedule","Rescheduling","Offers new times right away and locks one in."],
- ["09-bad-price-on-phone","Avoid: giving a price","Says \"around 10,000.\" She can't afford it and hangs up.",1],
+ ["09-bad-price-on-phone","Avoid: guessing their price","Says \"around 10,000.\" She can't afford it and hangs up.",1],
  ["10-bad-no-ask","Avoid: not asking for the visit","\"I'll call you back.\" They never did.",1]
 ];
 document.getElementById("clips").innerHTML=clips.map(([f,t,w,bad])=>
