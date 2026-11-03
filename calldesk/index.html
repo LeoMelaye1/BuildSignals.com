@@ -78,6 +78,12 @@ li+li{margin-top:6px}
 .basics li{break-inside:avoid}
 
 .flow{display:grid;gap:12px;counter-reset:st}
+.stage.key{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.why{border:1px dashed var(--accent);border-radius:10px;padding:18px 22px;display:grid;gap:10px;background:var(--bg-soft)}
+.why h2{margin:0;color:var(--heading-accent)}
+.why-flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14.5px;font-weight:500}
+.why-flow span:not(.arrow){background:var(--say);border:1px solid var(--basics-line);border-radius:6px;padding:6px 10px}
+.why-flow .arrow{color:var(--accent);font-weight:700}
 .stage{display:grid;grid-template-columns:36px 190px minmax(0,1fr);gap:18px;padding:20px 22px;border:1px solid var(--line);border-radius:10px;background:var(--card);counter-increment:st}
 .stage::before{content:counter(st);width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:600;font-size:14px}
 .stage h3{font-size:15px;font-weight:600;margin:0}
@@ -185,6 +191,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <li>Call from the client's number.</li>
       <li>Only call between 8am and 8pm their time.</li>
       <li>Never give a price on the phone.</li>
+      <li>Ask about materials, then right away ask who else decides.</li>
     </ul>
   </div>
 
@@ -196,16 +203,26 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <div class="body"><ul>
         <li>"What are you looking to get done?"</li>
         <li>"Full bathroom, or just the shower?"</li>
-        <li>"Any idea on materials? Tile, slab, acrylic?"</li>
-        <li>"Are you getting a few quotes?"</li>
         <li>"When are you hoping to get it done?"</li>
       </ul></div></div>
 
-    <div class="stage"><div><h3>Set the visit</h3><p class="note">Always offer two times</p></div>
-      <div class="body"><blockquote>"The owner, Brian, comes out, measures, and brings samples. It's free. Does Thursday at 10 or Friday at 2 work better?"</blockquote><p>Then get the address.</p></div></div>
+    <div class="stage key"><div><h3>Materials</h3><p class="note">This sets up the next question</p></div>
+      <div class="body"><blockquote>"Do you have an idea what materials you want? Tile, slab, or acrylic? There are a few different options, and we bring samples of all of them so you can see and feel them."</blockquote>
+        <p>Let them talk. The more options they picture, the more the next question makes sense.</p></div></div>
 
-    <div class="stage"><div><h3>Decision-makers</h3><p class="note">Everyone at the visit</p></div>
-      <div class="body"><blockquote>"Will your wife or anyone else who helps decide be there too? We bring samples and different options, so you can all pick together. That way nothing changes later and everyone's happy with the quote."</blockquote></div></div>
+    <div class="stage key"><div><h3>Decision-makers</h3><p class="note">Ask right after materials</p></div>
+      <div class="body"><blockquote>"And since we'll be going over all these different options, we want to keep it as productive as possible. Is there anyone else who helps make the decision, like a wife or husband, who should be there too?"</blockquote>
+        <p>If yes: "Great, let's pick a time you're both home."</p></div></div>
+
+    <div class="why">
+      <h2>Why we ask about materials first</h2>
+      <p>The materials question is the setup. Once they're thinking about tile, slab and acrylic, it makes sense that everyone who decides should be there to pick. Asking about the spouse then sounds helpful, not pushy.</p>
+      <div class="why-flow"><span>Materials: "we bring options"</span><span class="arrow">→</span><span>"So we keep it productive…"</span><span class="arrow">→</span><span>"Will your wife or husband be there?"</span></div>
+      <p class="muted">Practice these two back to back until they flow as one. Hear it in <a href="#recordings" data-go="recordings">Recordings</a>: "Learning the job", then "Asking about the spouse".</p>
+    </div>
+
+    <div class="stage"><div><h3>Set the visit</h3><p class="note">Always offer two times</p></div>
+      <div class="body"><blockquote>"The owner, Brian, comes out, measures, and brings the samples. It's free. Does Thursday at 10 or Friday at 2 work better for both of you?"</blockquote><p>Then get the address.</p></div></div>
 
     <div class="stage"><div><h3>Confirm</h3><p class="note">Repeat it back</p></div>
       <div class="body"><blockquote>"Perfect. Thursday at 10 at 123 Oak St. Brian, the owner, will be there. I'll text you so you have it."</blockquote></div></div>
