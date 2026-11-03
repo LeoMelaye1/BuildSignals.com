@@ -391,13 +391,13 @@ document.getElementById("clips").innerHTML=clips.map(([f,t,w,bad])=>
 const clients=[
  ["Valencia","(209) 318-1967","Valencia","Brian","Pacific"],
  ["Watkinson","(916) 713-5966","Watkinson","Eric","Pacific"],
- ["CaliFirst","(213) 667-4790","CaliFirst","",""],
+ ["CaliFirst","(213) 667-4790","CaliFirst","Don't name an owner. Say \"one of our design consultants\".",""],
  ["Dream Bath","(216) 350-1961","Dream Bath","Devin","Eastern"],
  ["DRH","(707) 402-9871","DRH","Don","Pacific"],
- ["HSD Masonry","(209) 528-9865","HSD Masonry","",""],
- ["H. Flores","(209) 340-3731","H. Flores Construction","",""],
- ["MTR Baths","(916) 249-7175","MTR Baths","",""],
- ["Contractor 2.0","(707) 366-6865","Contractor 2.0","",""]
+ ["HSD Masonry","(209) 528-9865","HSD Masonry","Daniel and Kayla",""],
+ ["H. Flores","(209) 340-3731","H. Flores Construction","Huver",""],
+ ["MTR Baths","(916) 249-7175","MTR Baths","Alex",""],
+ ["Contractor 2.0","(707) 366-6865","Contractor 2.0","Esteban",""]
 ].map(r=>{if(!r[4])r[4]="Pacific";return r});
 document.getElementById("clientRows").innerHTML=clients.map(r=>
  `<tr><td class="q">${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td><td>${r[3]||"—"}</td><td>${r[4]}</td></tr>`).join("");
