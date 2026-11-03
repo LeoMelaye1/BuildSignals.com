@@ -170,6 +170,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   <div class="navhead">In the CRM</div>
   <nav id="tabs2">
       <button data-tab="crm"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg>CRM steps</button>
+      <button data-tab="rules"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>Workflows &amp; tags</button>
       <button data-tab="reschedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Rescheduling</button>
       <button data-tab="clients"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>Clients</button>
   </nav>
@@ -314,21 +315,6 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <p class="intro">Texts, call tasks and reminders run on their own. They stop when the lead texts YES or you move them to Booked - Confirmed. Your part is the calls, the calendar and the stage.</p>
   </div>
 
-  <div>
-    <h2>What each workflow name means</h2>
-    <p class="muted" style="margin-bottom:12px">Every call task in Manual Actions shows a workflow name. It tells you who the lead is and what to say.</p>
-    <div class="tw"><table class="wf">
-      <thead><tr><th>Workflow name</th><th>Who this is</th><th>Your goal and what to say</th></tr></thead>
-      <tbody>
-        <tr><td class="q">New [Client] Facebook Lead</td><td>Just filled out the form. Brand new.</td><td><b>Book the visit.</b> Call now and double dial.<blockquote>"Hey Maria, it's Uriel with Valencia. You just asked about a free estimate for your bathroom. Got a quick second?"</blockquote><small>Then run the full <a href="#script" data-go="script">call script</a>.</small></td></tr>
-        <tr><td class="q">Nurture - [Client] Lead Processing (&lt;7 Days)</td><td>Came in this week but hasn't booked yet. They've been getting our texts.</td><td><b>Book the visit.</b><blockquote>"Hey Maria, it's Uriel with Valencia. Following up on your bathroom estimate. Still looking to get it done?"</blockquote><small>If they say yes, go to Learn the job in the script.</small></td></tr>
-        <tr><td class="q">Self-booked: confirm - calls + texts until reached</td><td>Booked a time online by themselves. We haven't talked to them yet.</td><td><b>Confirm the visit. Don't re-sell it.</b><blockquote>"Hey Maria, it's Uriel with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><small>Ask about the job, materials and decision-makers, repeat the day and time, then set the stage to Booked - Confirmed.</small></td></tr>
-        <tr><td class="q">CaliFirst - Resume calls after payment pause (Oct 30)</td><td>Older CaliFirst leads we stopped calling for a while.</td><td><b>Book the visit.</b><blockquote>"Hey, it's Uriel with CaliFirst Remodel. Following up on your remodel request from a few weeks back. Still thinking about it?"</blockquote><small>No owner name for CaliFirst. Say "our team".</small></td></tr>
-      </tbody>
-    </table></div>
-    <p class="muted" style="margin-top:10px">Names like Appointment Scheduled, Post Estimate Follow Up and SMS Estimate only send texts. They never need a call from you.</p>
-  </div>
-
   <div class="steps">
     <div class="step"><div class="text"><h3>1. Open Manual Actions</h3><p>Conversations → Manual Actions is your call list. Work it from the top.</p>
       <p class="caution">"Let's Start" dials right away. If a box asks "Call Anyway?" late at night, press Cancel.</p></div>
@@ -364,6 +350,76 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
     <div class="step"><div class="text"><h3>7. Answer texts</h3><p>Every reply shows up in Conversations. Answer fast and keep it short.</p></div>
       <div class="shots"><a href="img/inbox.jpg" target="_blank"><img src="img/inbox.jpg" alt="Conversations inbox" loading="lazy"></a></div></div>
+  </div>
+</section>
+
+<section id="rules" hidden>
+  <div>
+    <div class="eyebrow">In the CRM</div>
+    <h1>Workflows &amp; tags</h1>
+    <p class="intro">The workflow name on a call task tells you who the lead is and what to say. Tags tell the CRM what to do next.</p>
+  </div>
+
+  <div>
+    <h2>Workflows that give you calls</h2>
+    <p class="muted" style="margin-bottom:12px">Every call task in Manual Actions shows a workflow name. It tells you who the lead is and what to say.</p>
+    <div class="tw"><table class="wf">
+      <thead><tr><th>Workflow name</th><th>Who this is</th><th>Your goal and what to say</th></tr></thead>
+      <tbody>
+        <tr><td class="q">New [Client] Facebook Lead</td><td>Just filled out the form. Brand new.</td><td><b>Book the visit.</b> Call now and double dial.<blockquote>"Hey Maria, it's Uriel with Valencia. You just asked about a free estimate for your bathroom. Got a quick second?"</blockquote><small>Then run the full <a href="#script" data-go="script">call script</a>.</small></td></tr>
+        <tr><td class="q">Nurture - [Client] Lead Processing (&lt;7 Days)</td><td>Came in this week but hasn't booked yet. They've been getting our texts.</td><td><b>Book the visit.</b><blockquote>"Hey Maria, it's Uriel with Valencia. Following up on your bathroom estimate. Still looking to get it done?"</blockquote><small>If they say yes, go to Learn the job in the script.</small></td></tr>
+        <tr><td class="q">Self-booked: confirm - calls + texts until reached</td><td>Booked a time online by themselves. We haven't talked to them yet.</td><td><b>Confirm the visit. Don't re-sell it.</b><blockquote>"Hey Maria, it's Uriel with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><small>Ask about the job, materials and decision-makers, repeat the day and time, then set the stage to Booked - Confirmed.</small></td></tr>
+        <tr><td class="q">CaliFirst - Resume calls after payment pause (Oct 30)</td><td>Older CaliFirst leads we stopped calling for a while.</td><td><b>Book the visit.</b><blockquote>"Hey, it's Uriel with CaliFirst Remodel. Following up on your remodel request from a few weeks back. Still thinking about it?"</blockquote><small>No owner name for CaliFirst. Say "our team".</small></td></tr>
+        <tr><td class="q">Follow Up Reminders</td><td>Someone you set a Follow Up Date for. Today is that day.</td><td><b>Call like you promised.</b><blockquote>"Hey Maria, it's Uriel with Valencia. You said today was a good day to talk about the bathroom. Still a good time?"</blockquote><small>Then pick up the script where you left off.</small></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div>
+    <h2>Workflows to stay out of</h2>
+    <div class="tw"><table>
+      <thead><tr><th>Workflow</th><th>Why</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td class="q">Post Estimate Follow Up - 6 Day Sequence</td><td>Runs after the owner has been out to the home. That's the client's sale, not ours to call.</td><td>Don't add anyone to it. Don't add post-estimate tags. Don't move a lead to Showed or Closed.</td></tr>
+        <tr><td class="q">Appointment Scheduled, Booked -&gt; Shown, SMS Esimate</td><td>Reminder and estimate texts that send on their own.</td><td>Nothing. Leave them alone.</td></tr>
+        <tr><td class="q">Lead Profile to Client, Deliver … to CaliFirst</td><td>Sends lead info to the client automatically.</td><td>Nothing. Leave them alone.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div>
+    <h2>Tags</h2>
+    <div class="tw"><table>
+      <thead><tr><th>Tag</th><th>What it means</th><th>When you use it</th></tr></thead>
+      <tbody>
+        <tr><td class="q">lead nurturing</td><td>Puts the lead in the nurture texts and call tasks, and stops the new-lead workflow.</td><td><b>Add</b> when a lead isn't ready yet or you can't reach them. <b>Never</b> add it to someone with a visit booked.</td></tr>
+        <tr><td class="q">appt-unconfirmed</td><td>They booked online and nobody has talked to them yet.</td><td>Added for you. Don't add or remove it by hand.</td></tr>
+        <tr><td class="q">appt-confirmed</td><td>The visit is confirmed. Stops the confirm calls and texts.</td><td>Added for you when you set the stage to Booked - Confirmed, or when they text YES.</td></tr>
+        <tr><td class="q">Client tags<small>valenciaconstructionpros, califirst-remodel, dreambath, drh lead, hsd-masonry, h.floresconstruction, mtr lead, watkinson-construction, contractor20</small></td><td>Which client the lead belongs to.</td><td>Never remove. Use it to pick the right calling number and calendar.</td></tr>
+        <tr><td class="q">post-estimate tags<small>post-estimate:follow-up, nurture:post-estimate, post-estimate - no-response</small></td><td>Start the after-visit sequence.</td><td>Never add.</td></tr>
+        <tr><td class="q">call:answered, call:missed, lead-stage:unclassified, facebook form</td><td>Tracking the CRM adds on its own.</td><td>Ignore.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted" style="margin-top:10px">Added a tag by mistake? Click the x on it to remove it and let Leo know.</p>
+  </div>
+
+  <div>
+    <h2>Schedule a follow-up</h2>
+    <div class="flow">
+      <div class="stage"><div><h3>On the phone</h3><p class="note">Get a real day and time</p></div>
+        <div class="body"><blockquote>"No problem. What day is good for me to call you back? Morning or afternoon?"</blockquote></div></div>
+      <div class="stage"><div><h3>Set the date</h3><p class="note">On the contact</p></div>
+        <div class="body"><p>Open the contact, click <b>All fields</b>, find <b>Follow Up Date</b>, pick the day, and save.</p></div></div>
+      <div class="stage"><div><h3>Leave a note</h3></div>
+        <div class="body"><p>Write the time they gave you and what they want, like "Call Tue after 3. Wants a walk-in shower."</p></div></div>
+      <div class="stage"><div><h3>On that day</h3></div>
+        <div class="body"><p>A call task shows up in Manual Actions under <b>Follow Up Reminders</b>. Call them at the time they asked for.</p></div></div>
+    </div>
+  </div>
+
+  <div class="basics">
+    <h2>Leads assigned to Leo</h2>
+    <p>If the contact's Owner or the task's Assigned To says <b>Leo Melaye</b>, that's Leo's lead. Don't call or text them. Skip the task and move on.</p>
   </div>
 </section>
 
