@@ -186,6 +186,10 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <button data-tab="reschedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Rescheduling</button>
       <button data-tab="clients"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>Clients</button>
   </nav>
+  <div class="navhead">Texting clients</div>
+  <nav id="tabs3">
+      <button data-tab="sendblue"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>Sendblue</button>
+  </nav>
   </div>
   <div class="side-rules"><b>Every call</b><span>Double dial</span><span>Quick hang-up: call a 3rd time</span><span>Client's number, 8am–8pm</span><span class="r">No exact prices. "Most start at $8,000" is OK</span></div>
 </aside>
@@ -442,7 +446,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
         <li>Added the wrong tag? Click the x on it to remove it and let Leo know.</li></ul></div>
       <div class="shots"><a href="img/guide-tags.jpg" target="_blank"><img src="img/guide-tags.jpg" alt="Tags and the x on a tag circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>6. Send it to the client</h3><p>Post it in the client's group chat (Sendblue, inside the CRM). Use the Lead Profile on the contact to fill it in.</p>
+    <div class="step"><div class="text"><h3>6. Send it to the client</h3><p>Post it in the client's group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a>. Use the Lead Profile on the contact to fill it in.</p>
       <button class="btn" data-copy="format">Copy format</button></div>
       <div class="shots"><pre class="format" id="format">Here's a new appointment:
 • Name: Maria Lopez
@@ -454,19 +458,6 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
     <div class="step"><div class="text"><h3>7. Answer texts</h3><p>Every reply shows up in Conversations. Answer fast and keep it short.</p></div>
       <div class="shots"><a href="img/guide-inbox.jpg" target="_blank"><img src="img/guide-inbox.jpg" alt="Conversations and Unread circled" loading="lazy"></a><a href="img/guide-inbox-reply.jpg" target="_blank"><img src="img/guide-inbox-reply.jpg" alt="Message box circled" loading="lazy"></a></div></div>
-
-    <div class="step"><div class="text"><h3>8. Turn on Sendblue notifications</h3><p>The client group chats are in Sendblue. Do this once so you see every message.</p>
-      <ol>
-        <li>Log in at <b>dashboard.sendblue.com</b> with your email.</li>
-        <li>Click your profile icon at the bottom left, then <b>Notification Settings</b>.</li>
-        <li>Under "Which leads?" pick <b>All leads</b>.</li>
-        <li>On <b>Inbound Message</b>, check <b>Desktop</b> and <b>Mobile</b>.</li>
-        <li>Get the Sendblue app on your phone and log in. Mobile doesn't work until you do.</li>
-        <li>If your browser asks to allow notifications, click <b>Allow</b>.</li>
-        <li>Press <b>Test</b> next to Inbound Message, then <b>Done</b>.</li>
-      </ol>
-      <p class="caution">Test didn't come through on your computer and your phone? Tell Leo.</p></div>
-      <div class="shots"><a href="img/guide-sendblue-menu.jpg" target="_blank"><img src="img/guide-sendblue-menu.jpg" alt="Profile icon and Notification Settings circled" loading="lazy"></a><a href="img/guide-sendblue-notifs.jpg" target="_blank"><img src="img/guide-sendblue-notifs.jpg" alt="All leads, Inbound Message boxes, Test and Done circled" loading="lazy"></a></div></div>
   </div>
 </section>
 
@@ -585,7 +576,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <div class="stage"><div><h3>In the CRM</h3><p class="note">Appointment menu → Edit</p></div>
         <div class="body"><p>Change the date and time, check the time zone, and save.</p>
           <div class="shots"><a href="img/guide-appt-edit.jpg" target="_blank"><img src="img/guide-appt-edit.jpg" alt="Three dots and Edit circled" loading="lazy"></a><a href="img/guide-reschedule.jpg" target="_blank"><img src="img/guide-reschedule.jpg" alt="Time zone, date and time, and Save circled" loading="lazy"></a></div></div></div>
-      <div class="stage"><div><h3>Tell the client</h3><p class="note">In their group chat</p></div>
+      <div class="stage"><div><h3>Tell the client</h3><p class="note">In their group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a></p></div>
         <div class="body"><blockquote>Update: Maria moved to Sat Nov 7 at 2 PM.</blockquote></div></div>
       <div class="stage"><div><h3>Example call</h3></div>
         <div class="body"><div class="player" data-src="audio/08-reschedule.mp3" data-len="61"></div></div></div>
@@ -597,7 +588,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <div class="flow">
       <div class="stage"><div><h3>Text them back</h3><p class="note">Right away</p></div>
         <div class="body"><p><b>They didn't say when:</b> ask about the same time tomorrow, but only if the client can come then. Check the <a href="#clients" data-go="clients">Clients</a> page.</p><blockquote>"Thanks for letting me know, Maria. Would the same time tomorrow work?"</blockquote><p><b>The client can't come then:</b> ask about the next time they can come.</p><p><b>They said when to reach back out:</b> don't ask about tomorrow. Go with what they said.</p><blockquote>"Thanks for letting me know, Maria. I'll reach back out Tuesday."</blockquote><p><b>They asked for a new time:</b> don't ask about tomorrow. Book the time they want and move the appointment the same way as on a call.</p></div></div>
-      <div class="stage"><div><h3>Tell the client</h3><p class="note">In their group chat in Sendblue</p></div>
+      <div class="stage"><div><h3>Tell the client</h3><p class="note">In their group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a></p></div>
         <div class="body"><blockquote>Update: Maria cancelled Thu Nov 5 at 10 AM. I'm following up to rebook.</blockquote></div></div>
       <div class="stage"><div><h3>Cancel the appointment</h3><p class="note">Appointment menu → Cancel</p></div>
         <div class="body"><p>On the contact's appointment, click the three dots, then <b>Cancel</b>.</p><div class="shots"><a href="img/guide-cancel-menu.jpg" target="_blank"><img src="img/guide-cancel-menu.jpg" alt="Three dots and Cancel circled" loading="lazy"></a></div></div></div>
@@ -608,6 +599,85 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <div class="stage"><div><h3>Follow up</h3></div>
         <div class="body"><p><b>They said when:</b> follow up with them then.</p><p><b>No response:</b> just call them.</p><p><b>They say yes to a new time:</b> <a href="#book" data-go="book">book it</a> with your name on it, clear the <b>Follow Up Date</b>, and tell the client the new day and time.</p></div></div>
     </div>
+  </div>
+</section>
+
+<section id="sendblue" hidden>
+  <div>
+    <div class="eyebrow">Texting clients</div>
+    <h1>Sendblue</h1>
+    <p class="intro">Sendblue is the app we use to text our clients. A client is the owner of the company we book for, like Brian or Don. Each client has one group chat. That's where we tell them about their appointments.</p>
+  </div>
+
+  <div class="basics">
+    <h2>Easy way to remember</h2>
+    <ul>
+      <li><b>Homeowners (leads):</b> call and text them in the CRM.</li>
+      <li><b>Owners (clients):</b> text them in Sendblue.</li>
+      <li>Never text a homeowner from Sendblue.</li>
+      <li>Don't start new chats. If a chat is missing, tell Leo.</li>
+    </ul>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="text"><h3>1. Log in</h3><p>Go to <b>dashboard.sendblue.com</b> and log in with your email. Can't get in? Ask Leo.</p></div></div>
+
+    <div class="step"><div class="text"><h3>2. Turn on your notifications</h3><p>Do this one time. Then you'll know when a client texts.</p>
+      <ol>
+        <li>Click your profile icon at the bottom left.</li>
+        <li>Click <b>Notification Settings</b>.</li>
+        <li>Under "Which leads?" pick <b>All leads</b>.</li>
+        <li>On <b>Inbound Message</b>, check <b>Desktop</b> and <b>Mobile</b>.</li>
+        <li>Get the Sendblue app on your phone and log in. Mobile doesn't work until you do.</li>
+        <li>If your browser asks to allow notifications, click <b>Allow</b>.</li>
+        <li>Press <b>Test</b> next to Inbound Message, then <b>Done</b>.</li>
+      </ol>
+      <p class="caution">Didn't get the test on your computer and your phone? Tell Leo.</p></div>
+      <div class="shots"><a href="img/guide-sendblue-menu.jpg" target="_blank"><img src="img/guide-sendblue-menu.jpg" alt="Profile icon and Notification Settings circled" loading="lazy"></a><a href="img/guide-sendblue-notifs.jpg" target="_blank"><img src="img/guide-sendblue-notifs.jpg" alt="All leads, Inbound Message boxes, Test and Done circled" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>3. Find the client's chat</h3><p>Every chat has the client's name on it. Search the name, then click the chat.</p><p>A blue dot means there's a new message.</p></div>
+      <div class="shots"><a href="img/guide-sendblue-find.jpg" target="_blank"><img src="img/guide-sendblue-find.jpg" alt="Search, blue dot and a chat circled" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>4. Send a new appointment</h3><p>Do this every time you book a visit.</p>
+      <ol>
+        <li>Copy the format and fill it in. The Lead Profile on the contact in the CRM has the details.</li>
+        <li>Open the client's chat. <b>Check the name at the top.</b></li>
+        <li>Paste it in the message box and press <b>Send</b>.</li>
+      </ol>
+      <button class="btn" data-copy="format2">Copy format</button>
+      <p class="caution">Never write a price you told the homeowner. If you talked about money, give a budget range, like "Budget: around $18K to $28K."</p></div>
+      <div class="shots"><a href="img/guide-sendblue-send.jpg" target="_blank"><img src="img/guide-sendblue-send.jpg" alt="Chat name, message box and Send circled" loading="lazy"></a><pre class="format" id="format2">Here's a new appointment:
+• Name: Maria Lopez
+• Phone: (209) 555-0142
+• Address: 123 Oak St, Modesto
+• Project: Full bathroom, tub to walk-in shower, tile
+• Estimate Appointment: Thu Nov 5, 10:00 AM
+• Notes: Husband will be there. Wants it done before the holidays.</pre><p class="muted">Example lead.</p></div></div>
+
+    <div class="step"><div class="text"><h3>5. Tell them when something changes</h3><p>Send one short message in the same chat.</p></div>
+      <div class="shots"><p><b>The visit moved:</b></p><blockquote>Update: Maria moved to Sat Nov 7 at 2 PM.</blockquote><p><b>The homeowner canceled:</b></p><blockquote>Update: Maria cancelled Thu Nov 5 at 10 AM. I'm following up to rebook.</blockquote></div></div>
+
+    <div class="step"><div class="text"><h3>6. Answer when a client texts</h3><p>Answer fast and keep it short. Click the chat, type, and press <b>Send</b>.</p><p>Don't know the answer? Ask Leo. Don't guess.</p></div></div>
+  </div>
+
+  <div>
+    <h2>Where each client gets their messages</h2>
+    <div class="tw"><table>
+      <thead><tr><th>Client</th><th>Where to message them</th></tr></thead>
+      <tbody>
+        <tr><td>Altair Residential Remodeling</td><td>Sendblue: Altair Residential Remodeling</td></tr>
+        <tr><td>Contractor 2.0</td><td>Sendblue: Contractor 2.0</td></tr>
+        <tr><td>Dream Bath</td><td>Sendblue: Dream Bath</td></tr>
+        <tr><td>H. Flores Construction</td><td>Sendblue: H. Flores Construction</td></tr>
+        <tr><td>HSD Masonry</td><td>Sendblue: HSD Masonry</td></tr>
+        <tr><td>MTR Baths</td><td>Sendblue: MTR Baths</td></tr>
+        <tr><td>Valencia Construction Pros</td><td>Sendblue: Valencia Construction</td></tr>
+        <tr><td>Watkinson Construction</td><td>Sendblue: Watkinson Construction</td></tr>
+        <tr><td>CaliFirst Remodel</td><td>Not in Sendblue. WhatsApp to Eve.</td></tr>
+        <tr><td>Sakura Cucina</td><td>Not in Sendblue. WhatsApp group: Sakura Cucina Leads.</td></tr>
+        <tr><td>DRH Construction</td><td>Not in Sendblue. Ask Leo.</td></tr>
+      </tbody>
+    </table></div>
   </div>
 </section>
 
