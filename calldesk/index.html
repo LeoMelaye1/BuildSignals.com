@@ -368,8 +368,8 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   </div>
 
   <div class="flow">
-    <div class="stage"><div><h3>Say hi</h3><p class="note">Who you are, then one question</p></div>
-      <div class="body"><blockquote>"Hey Maria, it's [your name] with Valencia. You asked about a free estimate for your bathroom. Got a quick second? What are you looking to get done?"</blockquote></div></div>
+    <div class="stage"><div><h3>Say hi</h3><p class="note">Who you are and why you're calling</p></div>
+      <div class="body"><blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><p class="muted">They say: "Yes, I remember."</p><blockquote>"Great. What were you looking to get done exactly?"</blockquote><p class="muted">Use their project, like bathroom or kitchen. You can say estimate or quote.</p></div></div>
 
     <div class="stage key"><div><h3>Materials, then who decides</h3><p class="note">Ask these two right after each other</p></div>
       <div class="body"><blockquote>"Any idea on materials? Tile, slab, acrylic? We bring samples of all the options so you can see them."</blockquote>
@@ -419,7 +419,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
         <div class="body"><p><b>Goal:</b> get them to pick up. Only say your name and the appointment.</p><blockquote>"Hi, it's [your name], calling about your appointment."</blockquote><p>That's it. Wait for them to pick up. If it hangs up or goes to voicemail, that counts as no answer.</p></div></div>
 
       <div class="stage"><div><h3>Brand new lead</h3><p class="note">Your call list says New [Client] Facebook Lead</p></div>
-        <div class="body"><p><b>Goal:</b> book the visit. Call right away and double dial.</p><blockquote>"Hey Maria, it's [your name] with Valencia. You just asked about a free estimate for your bathroom. Got a quick second?"</blockquote><p>Then run the <a href="#script" data-go="script">call script</a>.</p><p><b>No answer on either call?</b> Leave a voicemail on the second one:</p><blockquote>"Hey Maria, you requested an estimate for your bathroom 2 days ago. This is [your name] with Valencia. We'll try you again later. Thanks."</blockquote></div></div>
+        <div class="body"><p><b>Goal:</b> book the visit. Call right away and double dial.</p><blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><p>Then run the <a href="#script" data-go="script">call script</a>.</p><p><b>No answer on either call?</b> Leave a voicemail on the second one:</p><blockquote>"Hey Maria, you requested an estimate for your bathroom 2 days ago. This is [your name] with Valencia. We'll try you again later. Thanks."</blockquote></div></div>
 
       <div class="stage"><div><h3>Hasn't answered yet</h3><p class="note">Your call list says Nurture - [Client] Lead Processing</p></div>
         <div class="body"><p><b>Goal:</b> reach them. Double dial. If they pick up and hang up fast, call a third time.</p><p>No answer? Send one short text:</p><blockquote>"Hey Maria, it's [your name] with Valencia. Just tried you about the bathroom. Is texting easier?"</blockquote><p><b>In the CRM:</b> leave the stage on Connecting. The CRM adds your next call by itself.</p></div></div>
@@ -437,7 +437,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
         <div class="body"><p>Treat them like two leads. Make one call for each client, from that client's number, and book on that client's calendar.</p></div></div>
 
       <div class="stage"><div><h3>CaliFirst lead</h3><p class="note">They have the tag califirst-remodel</p></div>
-        <div class="body"><p>Use the same script. Don't say an owner's name, just say "our team". Never book a Saturday.</p><blockquote>"Hey, it's [your name] with CaliFirst Remodel. You asked about a free estimate. Got a quick second?"</blockquote></div></div>
+        <div class="body"><p>Use the same script. Don't say an owner's name, just say "our team". Never book a Saturday.</p><blockquote>"Hey Maria, it's [your name] with CaliFirst Remodel. You requested an estimate for your bathroom?"</blockquote></div></div>
     </div>
   </div>
 
@@ -614,7 +614,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <div class="tw"><table class="wf">
       <thead><tr><th>Name</th><th>Who this is</th><th>What to do and say</th></tr></thead>
       <tbody>
-        <tr><td class="q">New [Client] Facebook Lead</td><td>Just filled out the form. Brand new.</td><td><b>Book the visit.</b> Call now and double dial.<blockquote>"Hey Maria, it's [your name] with Valencia. You just asked about a free estimate for your bathroom. Got a quick second?"</blockquote><small>Then run the full <a href="#script" data-go="script">call script</a>.</small></td></tr>
+        <tr><td class="q">New [Client] Facebook Lead</td><td>Just filled out the form. Brand new.</td><td><b>Book the visit.</b> Call now and double dial.<blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><small>Then run the full <a href="#script" data-go="script">call script</a>.</small></td></tr>
         <tr><td class="q">Nurture - [Client] Lead Processing (&lt;7 Days)</td><td>Came in this week but hasn't booked. They've been getting our texts.</td><td><b>Book the visit.</b><blockquote>"Hey Maria, it's [your name] with Valencia. Following up on your bathroom estimate. Still looking to get it done?"</blockquote><small>If they say yes, go to the <a href="#script" data-go="script">call script</a>.</small></td></tr>
         <tr><td class="q">Self-booked: confirm - calls + texts until reached</td><td>Booked online by themselves. Nobody has talked to them yet.</td><td><b>Make sure the visit is still on. Don't sell.</b><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><small>Ask about the job, materials and who decides. Say the day and time back. Then set the stage to Booked - Confirmed.</small></td></tr>
         <tr><td class="q">CaliFirst - Resume calls after payment pause (Oct 30)</td><td>Older CaliFirst leads we stopped calling for a while. Now we call them again.</td><td><b>Book the visit.</b><blockquote>"Hey, it's [your name] with CaliFirst Remodel. Following up on your remodel request from a few weeks back. Still thinking about it?"</blockquote><small>Don't say an owner's name for CaliFirst. Say "our team".</small></td></tr>
