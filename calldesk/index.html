@@ -973,7 +973,7 @@ const clients=[
  ["H. Flores","(209) 340-3731","H. Flores Construction","Huver","","Mon–Fri only, mornings best. <b>Never weekends.</b>","Galt","About 50 miles around"],
  ["MTR Baths","(916) 249-7175","Estimate Appointment - MTR Baths","Alex","","Mon–Sat. <b>No Sunday.</b>","West Sacramento","About 50 miles around"],
  ["Contractor 2.0","(707) 366-6865","Estimate Appointment - Contractor 2.0","Esteban","","Mon–Fri any time. <b>No weekends.</b>","Fairfield","About 50 miles around"],
- ["Punch List","(847) 250-4079","Estimate Appointment - Punch List","Brad Hughes. Tom Witte or David Cantor may come instead.","Central","Only times open in Driive. See below.","Des Plaines (Chicago area)","About 18 miles around Des Plaines"]
+ ["Punch List","(847) 250-4079","Estimate Appointment - Punch List","Brad Hughes. Tom Witte or David Cantor may come instead.","Central","Mon–Fri, 7:30 to 3:00 Central. <b>No weekends.</b> Only times open in Driive. See below.","Morton Grove (Chicago area)","About 18 miles around Des Plaines"]
 ].map(r=>{if(!r[4])r[4]="Pacific";return r});
 document.getElementById("clientRows").innerHTML=clients.map(r=>
  `<tr><td class="q">${r[0]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${r[5]}</td><td class="num">${r[1]}</td><td>${r[2]}</td><td>${r[3]||"—"}</td><td>${r[4]}</td></tr>`).join("");
