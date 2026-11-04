@@ -176,6 +176,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   <div class="navhead">On the call</div>
   <nav id="tabs">
       <button data-tab="script"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Call script</button>
+      <button data-tab="confirm"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg>Confirm a visit</button>
       <button data-tab="situations"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Every situation</button>
       <button data-tab="objections"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg>Objections</button>
       <button data-tab="texting"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18h2"/></svg>Texting</button>
@@ -225,6 +226,22 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   </div>
 
   <div>
+    <h2>Who to call first</h2>
+    <p class="muted" style="margin-bottom:12px">Always work in this order. If a new lead comes in, stop and go back to number 1.</p>
+    <div class="flow">
+      <div class="stage key"><div><h3>New leads</h3><p class="note">Your call list says New [Client] Facebook Lead</p></div>
+        <div class="body"><p>They just filled out the form. <b>Call them in less than 5 minutes.</b> Stop whatever you're doing.</p></div></div>
+      <div class="stage"><div><h3>Self-booked leads</h3><p class="note">Your call list says Self-booked: confirm</p></div>
+        <div class="body"><p>They booked a visit online by themselves. Call to make sure it's still on. See <a href="#confirm" data-go="confirm">Confirm a visit</a>.</p></div></div>
+      <div class="stage"><div><h3>Reschedules</h3><p class="note">They asked to move or cancel a visit</p></div>
+        <div class="body"><p>Get them a new day and time. See <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</p></div></div>
+      <div class="stage"><div><h3>Everyone else</h3><p class="note">Nurture and Follow Up Reminders</p></div>
+        <div class="body"><p>Then call everyone left on your list.</p></div></div>
+    </div>
+    <p class="muted" style="margin-top:10px">To see one group at a time in <a href="#crm" data-go="crm">Manual Actions</a>, use the <b>Select Workflow</b> box at the top.</p>
+  </div>
+
+  <div>
     <h2>Who is who</h2>
     <div class="tw"><table>
       <tbody>
@@ -243,7 +260,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <tbody>
         <tr><td class="q">CRM</td><td>The website where all the leads live. We use GoHighLevel. On your phone, it's the LeadConnector app.</td></tr>
         <tr><td class="q">Contact</td><td>One person's page in the CRM. It has their name, number, texts and notes.</td></tr>
-        <tr><td class="q">Manual Actions</td><td>Your call list. Start at the top and work down.</td></tr>
+        <tr><td class="q">Manual Actions</td><td>Your call list. Work it in the order under "Who to call first."</td></tr>
         <tr><td class="q">Double dial</td><td>You call. No answer. You call right back. Do this on every call.</td></tr>
         <tr><td class="q">Visit, estimate, appointment</td><td>All the same thing: the owner going to the home.</td></tr>
         <tr><td class="q">Stage</td><td>Where the lead is right now, like Booked or Dead. You change it after each call.</td></tr>
@@ -294,7 +311,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   <div class="after">
     <h2>During the day</h2>
     <ol>
-      <li>Open <a href="#crm" data-go="crm">Manual Actions</a> and start at the top.</li>
+      <li>Open <a href="#crm" data-go="crm">Manual Actions</a> and call in the order under "Who to call first."</li>
       <li>New lead comes in? Stop what you're doing and call them.</li>
       <li>Answer texts fast.</li>
       <li>After every call, set the stage and leave a note.</li>
@@ -319,6 +336,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <thead><tr><th>Page</th><th>Go here when</th></tr></thead>
       <tbody>
         <tr><td class="q"><a href="#script" data-go="script">Call script</a></td><td>You need to know what to say on a call.</td></tr>
+        <tr><td class="q"><a href="#confirm" data-go="confirm">Confirm a visit</a></td><td>A lead booked online and you need to call them.</td></tr>
         <tr><td class="q"><a href="#situations" data-go="situations">Every situation</a></td><td>Something's different, like they're busy, cancel, or a robot answers.</td></tr>
         <tr><td class="q"><a href="#objections" data-go="objections">Objections</a></td><td>They ask about price or say "I'm just looking."</td></tr>
         <tr><td class="q"><a href="#texting" data-go="texting">Texting</a></td><td>You're not sure how to word a text.</td></tr>
@@ -405,6 +423,76 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   </div>
 </section>
 
+<section id="confirm" hidden>
+  <div>
+    <div class="eyebrow">On the call</div>
+    <h1>Confirm a visit</h1>
+    <p class="intro">Some leads book a visit online by themselves. Nobody has talked to them yet, so we don't know if it's real. Your job is to call, make sure they're coming, and change the stage from <b>Booked</b> to <b>Booked - Confirmed</b>.</p>
+  </div>
+
+  <div class="basics">
+    <h2>How to spot them</h2>
+    <ul>
+      <li>Your call list says <b>Self-booked: confirm</b>.</li>
+      <li>Their stage says <b>Booked</b>.</li>
+      <li>They have the tag <b>appt-unconfirmed</b>.</li>
+      <li>You booked them yourself on the phone? Skip this page and go right to Booked - Confirmed.</li>
+    </ul>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="text"><h3>1. Look before you call</h3><p>Open the contact. Find these:</p>
+      <ul><li>The day and time of the visit, on the right side.</li><li>What they asked for on the form.</li><li>The city. Is it in the client's area? Check <a href="#clients" data-go="clients">Clients</a>.</li></ul></div>
+      <div class="shots"><a href="img/guide-appt-card.jpg" target="_blank"><img src="img/guide-appt-card.jpg" alt="Appointment card circled" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>2. Call them</h3><p>Call from the client's number. Double dial. They hang up fast? Call a 3rd time.</p></div>
+      <div class="shots"><a href="img/guide-dialer.jpg" target="_blank"><img src="img/guide-dialer.jpg" alt="Dialer button and Change circled" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>3. What to say</h3><p>They already said yes by booking, so don't sell. Just get ready for the visit.</p><p class="muted">Listen to a real one:</p><div class="player" data-src="audio/07-confirm-booked.mp3" data-len="55"></div></div>
+      <div class="shots"><p><b>Say why you're calling:</b></p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote>
+        <p><b>Ask what they want:</b></p><blockquote>"What were you looking to get done exactly?"</blockquote>
+        <p><b>Ask about materials, then who decides:</b></p><blockquote>"Any idea on materials? Tile, slab, acrylic? We bring samples of all the options so you can see them."</blockquote><blockquote>"And since we'll be going over all these options, we want to keep it productive. Is there anyone else who helps decide, like a wife or husband, who should be there too?"</blockquote>
+        <p><b>Say it back:</b></p><blockquote>"Perfect. Thursday at 10 at 123 Oak St. Brian, the owner, will be there."</blockquote></div></div>
+
+    <div class="step"><div class="text"><h3>4. Change the stage to Booked - Confirmed</h3><p>Do this right when you hang up.</p>
+      <ol><li>On the contact, click <b>Actions</b>.</li><li>Click the three dots on the opportunity, then <b>View Opportunity details</b>.</li><li>Click <b>Stage</b> and pick <b>Booked - Confirmed</b>.</li><li>Click <b>Update</b>.</li></ol>
+      <p>That's it. In about a minute, the CRM stops the confirm calls and texts by itself. You don't touch the tags.</p></div>
+      <div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage-choose.jpg" target="_blank"><img src="img/guide-stage-choose.jpg" alt="Stage list with Booked - Confirmed and Update circled" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>5. Check the Lead Profile and leave a note</h3><p>A few minutes after the call, the <b>Lead Profile</b> on the contact fills in by itself. Read it and fix anything wrong.</p>
+      <p class="caution">Take out any price you told them. If you talked about money, give a budget range.</p></div></div>
+
+    <div class="step"><div class="text"><h3>6. Tell the owner</h3><p>Send the details in the client's chat in <a href="#sendblue" data-go="sendblue">Sendblue</a>. Now you're done.</p></div>
+      <div class="shots"><a href="img/guide-sendblue-send.jpg" target="_blank"><img src="img/guide-sendblue-send.jpg" alt="Chat name, message box and Send circled" loading="lazy"></a></div></div>
+  </div>
+
+  <div>
+    <h2>What if it doesn't go like that?</h2>
+    <div class="tw"><table>
+      <thead><tr><th>What happened</th><th>What you do</th><th>The stage</th></tr></thead>
+      <tbody>
+        <tr><td class="q">No answer</td><td>Mark the call done in Manual Actions. The CRM texts them and adds your next call by itself.</td><td>Leave it on <b>Booked</b></td></tr>
+        <tr><td class="q">They text YES</td><td>The CRM stops the confirm calls by itself. Then do steps 4, 5 and 6.</td><td><b>Booked - Confirmed</b></td></tr>
+        <tr><td class="q">They text back but won't pick up</td><td>Ask your questions by text. Keep it short. Then do steps 4, 5 and 6.</td><td><b>Booked - Confirmed</b></td></tr>
+        <tr><td class="q">They want a new time</td><td>Follow <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</td><td><b>Booked - Confirmed</b></td></tr>
+        <tr><td class="q">They want to cancel</td><td>Follow <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</td><td><b>Follow Up</b></td></tr>
+        <tr><td class="q">Too far away, or not interested</td><td>Cancel the visit, tell the owner if they already know about it, and write why in a note.</td><td><b>Dead</b></td></tr>
+        <tr><td class="q">Still can't reach them the day before</td><td>Keep calling. Tell the owner anyway: "Here's a new appointment: Unconfirmed but will send you more info once we speak to her." Then the details.</td><td>Leave it on <b>Booked</b></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="basics">
+    <h2>Never do these</h2>
+    <ul>
+      <li>Don't leave them on Booked after you talked to them.</li>
+      <li>Don't add the lead nurturing tag.</li>
+      <li>Don't add or remove appt-confirmed or appt-unconfirmed.</li>
+      <li>Don't try to sell. They already booked.</li>
+    </ul>
+  </div>
+</section>
+
 <section id="situations" hidden>
   <div>
     <div class="eyebrow">On the call</div>
@@ -462,7 +550,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <h2>Already booked</h2>
     <div class="flow">
       <div class="stage"><div><h3>Booked online, not confirmed</h3><p class="note">Your call list says Self-booked: confirm</p></div>
-        <div class="body"><p><b>Goal:</b> make sure the visit is still on. They already said yes, so don't sell.</p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><p>Ask what they want done, materials, and who decides. Say the day and time back to them.</p><p><b>In the CRM:</b> move the stage to <b>Booked - Confirmed</b>.</p></div></div>
+        <div class="body"><p><b>Goal:</b> make sure the visit is still on. They already said yes, so don't sell.</p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><p>Ask what they want done, materials, and who decides. Say the day and time back to them.</p><p><b>In the CRM:</b> move the stage to <b>Booked - Confirmed</b>. All the steps are on <a href="#confirm" data-go="confirm">Confirm a visit</a>.</p></div></div>
 
       <div class="stage"><div><h3>Wants a new time</h3><p class="note">They need to change their visit</p></div>
         <div class="body"><p>Give two new times right away. Then follow the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps.</p></div></div>
@@ -564,7 +652,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   </div>
 
   <div class="steps">
-    <div class="step"><div class="text"><h3>1. Open Manual Actions</h3><p>Click <b>Conversations</b>, then <b>Manual Actions</b>. This is your call list. Start at the top.</p>
+    <div class="step"><div class="text"><h3>1. Open Manual Actions</h3><p>Click <b>Conversations</b>, then <b>Manual Actions</b>. This is your call list. Call new leads first, then self-booked leads, then reschedules, then everyone else.</p>
       <p class="caution">"Let's Start" calls right away. If a box asks "Call Anyway?" because it's late for them, press Cancel.</p></div>
       <div class="shots"><a href="img/guide-manual-actions.jpg" target="_blank"><img src="img/guide-manual-actions.jpg" alt="Manual Actions tab and the workflow name circled" loading="lazy"></a><a href="img/guide-lets-start.jpg" target="_blank"><img src="img/guide-lets-start.jpg" alt="Let's Start button circled" loading="lazy"></a><a href="img/guide-call-prompt.jpg" target="_blank"><img src="img/guide-call-prompt.jpg" alt="Late-night call warning with Cancel circled" loading="lazy"></a></div></div>
 
@@ -616,7 +704,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <tbody>
         <tr><td class="q">New [Client] Facebook Lead</td><td>Just filled out the form. Brand new.</td><td><b>Book the visit.</b> Call now and double dial.<blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><small>Then run the full <a href="#script" data-go="script">call script</a>.</small></td></tr>
         <tr><td class="q">Nurture - [Client] Lead Processing (&lt;7 Days)</td><td>Came in this week but hasn't booked. They've been getting our texts.</td><td><b>Book the visit.</b><blockquote>"Hey Maria, it's [your name] with Valencia. Following up on your bathroom estimate. Still looking to get it done?"</blockquote><small>If they say yes, go to the <a href="#script" data-go="script">call script</a>.</small></td></tr>
-        <tr><td class="q">Self-booked: confirm - calls + texts until reached</td><td>Booked online by themselves. Nobody has talked to them yet.</td><td><b>Make sure the visit is still on. Don't sell.</b><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><small>Ask about the job, materials and who decides. Say the day and time back. Then set the stage to Booked - Confirmed.</small></td></tr>
+        <tr><td class="q">Self-booked: confirm - calls + texts until reached</td><td>Booked online by themselves. Nobody has talked to them yet.</td><td><b>Make sure the visit is still on. Don't sell.</b><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><small>Ask about the job, materials and who decides. Say the day and time back. Then set the stage to Booked - Confirmed. All the steps are on <a href="#confirm" data-go="confirm">Confirm a visit</a>.</small></td></tr>
         <tr><td class="q">CaliFirst - Resume calls after payment pause (Oct 30)</td><td>Older CaliFirst leads we stopped calling for a while. Now we call them again.</td><td><b>Book the visit.</b><blockquote>"Hey, it's [your name] with CaliFirst Remodel. Following up on your remodel request from a few weeks back. Still thinking about it?"</blockquote><small>Don't say an owner's name for CaliFirst. Say "our team".</small></td></tr>
         <tr><td class="q">Follow Up Reminders</td><td>You set a Follow Up Date for them, and today is the day.</td><td><b>Call when you said you would.</b><blockquote>"Hey Maria, it's [your name] with Valencia. You said today was a good day to talk about the bathroom. Still a good time?"</blockquote><small>Then keep going from where you left off.</small></td></tr>
       </tbody>
