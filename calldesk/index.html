@@ -63,7 +63,7 @@ nav button:focus-visible{outline:2px solid var(--accent)}
 .side-rules span.r::before{background:var(--red)}
 .container{max-width:980px;padding:0 40px}
 main{padding:36px 40px 96px;max-width:1060px}
-section{display:grid;gap:32px}
+section{display:grid;gap:32px;grid-template-columns:minmax(0,1fr)}
 .eyebrow{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px}
 h1{font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
 .intro{color:var(--ink-2);margin:0;max-width:60ch}
@@ -182,6 +182,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   <nav id="tabs2">
       <button data-tab="crm"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg>CRM steps</button>
       <button data-tab="rules"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>Workflows &amp; tags</button>
+      <button data-tab="book"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg>Book a visit</button>
       <button data-tab="reschedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Rescheduling</button>
       <button data-tab="clients"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>Clients</button>
   </nav>
@@ -419,8 +420,8 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <p class="caution">Never use a number marked OLD SPAM.</p></div>
       <div class="shots"><a href="img/dialer.jpg" target="_blank"><img src="img/dialer.jpg" alt="Dialer" loading="lazy"></a><a href="img/number-pick.jpg" target="_blank"><img src="img/number-pick.jpg" alt="Number list" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>3. Book the visit</h3><p>On the contact, open Appointments and click Book.</p>
-      <p class="caution">The calendar box opens on the wrong client. Pick the client's calendar and time zone every time.</p></div>
+    <div class="step"><div class="text"><h3>3. Book the visit</h3><p>On the contact, open Appointments and click Add Appointment. Every step is on the <a href="#book" data-go="book">Book a visit</a> page.</p>
+      <p class="caution">The calendar box opens on the wrong client. Pick the client's calendar, your name under Team member, and the time zone every time.</p></div>
       <div class="shots"><a href="img/contact.jpg" target="_blank"><img src="img/contact.jpg" alt="Contact page" loading="lazy"></a><a href="img/book-modal.jpg" target="_blank"><img src="img/book-modal.jpg" alt="Book appointment" loading="lazy"></a></div></div>
 
     <div class="step"><div class="text"><h3>4. Set the stage</h3><p>Opportunities → edit → Stage.</p>
@@ -518,6 +519,36 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   </div>
 </section>
 
+<section id="book" hidden>
+  <div>
+    <div class="eyebrow">In the CRM</div>
+    <h1>Book a visit</h1>
+    <p class="intro">Two things must be right on every booking: the lead's client calendar and your name. Leo counts your bookings by your name every 2 weeks to pay you.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="text"><h3>1. Open the booking box</h3><p>On the lead's contact, click the calendar icon on the right, then <b>Add Appointment</b>.</p></div>
+      <div class="shots"><a href="img/guide-book-open.jpg" target="_blank"><img src="img/guide-book-open.jpg" alt="Calendar icon and Add Appointment circled" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>2. Pick the client's calendar</h3><p>The box opens on the wrong client. Click <b>Calendar</b>, type the client's name, and click their calendar.</p>
+      <p>Not sure which client? Look at the lead's tags and pipeline. Calendar names are on the <a href="#clients" data-go="clients">Clients</a> page.</p>
+      <p class="caution">The wrong calendar sends the lead the wrong company's texts and the visit to the wrong client.</p></div>
+      <div class="shots"><a href="img/guide-book-wrong.jpg" target="_blank"><img src="img/guide-book-wrong.jpg" alt="Calendar field opens on the wrong client" loading="lazy"></a><a href="img/guide-book-pick.jpg" target="_blank"><img src="img/guide-book-pick.jpg" alt="Type the client name and click their calendar" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>3. Put your name on it</h3><p>Click <b>Team member</b> and pick <b>Uriel Munoz</b>. Never leave it on Calendar Default.</p>
+      <p class="caution">Don't see your name? Book it anyway and tell Leo right after, so the visit still counts for you.</p></div>
+      <div class="shots"><a href="img/guide-book-team.jpg" target="_blank"><img src="img/guide-book-team.jpg" alt="Team member list" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>4. Set the time and book</h3><p>Check the client's time zone, pick the date and time they agreed to, and click <b>Book appointment</b>.</p>
+      <p>Only offer times the client can come. See the <a href="#clients" data-go="clients">Clients</a> page.</p></div>
+      <div class="shots"><a href="img/guide-book-time.jpg" target="_blank"><img src="img/guide-book-time.jpg" alt="Time zone, date and time, and Book appointment circled" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>5. Check it</h3><p>The new appointment shows on the right side of the contact. It should show your name and the client's calendar. If either is wrong, open the three dots, click <b>Edit</b>, and fix it.</p>
+      <p>Then set the stage and tell the client. See <a href="#crm" data-go="crm">CRM steps</a>.</p></div>
+      <div class="shots"><a href="img/appt-menu.jpg" target="_blank"><img src="img/appt-menu.jpg" alt="Appointment card on the contact" loading="lazy"></a></div></div>
+  </div>
+</section>
+
 <section id="reschedule" hidden>
   <div>
     <div class="eyebrow">In the CRM</div>
@@ -548,11 +579,13 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <div class="stage"><div><h3>Tell the client</h3><p class="note">In their group chat in Sendblue</p></div>
         <div class="body"><blockquote>Update: Maria cancelled Thu Nov 5 at 10 AM. I'm following up to rebook.</blockquote></div></div>
       <div class="stage"><div><h3>Cancel the appointment</h3><p class="note">Appointment menu → Cancel</p></div>
-        <div class="body"><div class="shots"><a href="img/appt-menu.jpg" target="_blank"><img src="img/appt-menu.jpg" alt="Appointment menu with Cancel" loading="lazy"></a></div></div></div>
+        <div class="body"><p>On the contact's appointment, click the three dots, then <b>Cancel</b>.</p><div class="shots"><a href="img/guide-cancel-menu.jpg" target="_blank"><img src="img/guide-cancel-menu.jpg" alt="Three dots and Cancel circled" loading="lazy"></a></div></div></div>
+      <div class="stage"><div><h3>Stop the reminders</h3><p class="note">Actions → Workflows</p></div>
+        <div class="body"><p>Under <b>Active workflows</b>, click the <b>x</b> next to <b>Appointment Scheduled</b>. Otherwise the lead can still get "see you tomorrow" texts for a visit that's off. Some clients have a longer name that starts with Appointment Scheduled. Remove that one the same way.</p><div class="shots"><a href="img/guide-remove-reminders.jpg" target="_blank"><img src="img/guide-remove-reminders.jpg" alt="Actions, Workflows and the x next to Appointment Scheduled circled" loading="lazy"></a></div><p class="caution">Only do this when the visit is cancelled and they have no other visit booked. Marking someone for Follow Up who is still booked? Leave it on, because they still need their reminders.</p></div></div>
       <div class="stage"><div><h3>Set the follow-up</h3><p class="note">On the contact</p></div>
-        <div class="body"><p>Move the stage to <b>Follow Up</b>. Then click <b>All fields</b>, find <b>Follow Up Date</b>, pick the day, and save.</p><p>Use the day they said. If they didn't say, use tomorrow. Leave a note with the time, like "Cancelled Thu. Asked about same time tomorrow."</p></div></div>
+        <div class="body"><p>Open the opportunity, move the <b>Stage</b> to <b>Follow Up</b>, and click <b>Update</b>.</p><div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage.jpg" target="_blank"><img src="img/guide-stage.jpg" alt="Stage, Follow Up and Update circled" loading="lazy"></a></div><p>Then click <b>All fields</b>, search <b>Follow Up</b>, click <b>Follow Up Date</b>, pick the day, and save.</p><div class="shots"><a href="img/guide-followup-date.jpg" target="_blank"><img src="img/guide-followup-date.jpg" alt="All fields, search and Follow Up Date circled" loading="lazy"></a></div><p>Use the day they said. If they didn't say, use tomorrow. Leave a note with the time, like "Cancelled Thu. Asked about same time tomorrow."</p></div></div>
       <div class="stage"><div><h3>Follow up</h3></div>
-        <div class="body"><p><b>They said when:</b> follow up with them then.</p><p><b>No response:</b> just call them.</p><p><b>They say yes to a new time:</b> book it, clear the <b>Follow Up Date</b>, and tell the client the new day and time.</p></div></div>
+        <div class="body"><p><b>They said when:</b> follow up with them then.</p><p><b>No response:</b> just call them.</p><p><b>They say yes to a new time:</b> <a href="#book" data-go="book">book it</a> with your name on it, clear the <b>Follow Up Date</b>, and tell the client the new day and time.</p></div></div>
     </div>
   </div>
 </section>
@@ -564,7 +597,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <p class="intro">Call from the client's number and book on the client's calendar. Only offer days and times the client can come.</p>
   </div>
   <div class="tw"><table>
-    <thead><tr><th>Client</th><th>When they can come</th><th>Call from</th><th>Calendar</th><th>Owner</th><th>Time zone</th></tr></thead>
+    <thead><tr><th>Client</th><th>Based in</th><th>Service area</th><th>When they can come</th><th>Call from</th><th>Calendar</th><th>Owner</th><th>Time zone</th></tr></thead>
     <tbody id="clientRows"></tbody>
   </table></div>
   <div>
@@ -594,18 +627,18 @@ document.getElementById("clips").innerHTML=clips.map(([f,t,w,bad])=>
  `<tr><td class="q">${t}${bad?'':''}</td><td>${bad?'<span class="tag-no">Avoid. </span>':''}${w}</td><td class="p"><div class="player" data-src="audio/${f}.mp3" data-len="${LEN[f]}"></div></td></tr>`).join("");
 
 const clients=[
- ["Valencia","(209) 318-1967","Valencia","Brian","Pacific","Mon–Fri. Sat or Sun only if they can't do a weekday."],
- ["Watkinson","(916) 713-5966","Watkinson","Eric","Pacific","Any day, any time."],
- ["CaliFirst","(213) 667-4790","CaliFirst","No owner name. Just say \"our team\".","","Mon–Fri and Sunday. <b>Never Saturday.</b>"],
- ["Dream Bath","(216) 350-1961","Dream Bath","Devin","Eastern","Mon–Fri: 10:00, 2:00 or 6:00. Sat–Sun: 1:00 or 5:00."],
- ["DRH","(707) 402-9871","DRH","Don","Pacific","Any day, any time."],
- ["HSD Masonry","(209) 528-9865","HSD Masonry","Daniel and Kayla","","Mon–Fri any time. Sat–Sun: 1:00 or 5:00."],
- ["H. Flores","(209) 340-3731","H. Flores Construction","Huver","","Mon–Fri only, mornings best. <b>Never weekends.</b>"],
- ["MTR Baths","(916) 249-7175","MTR Baths","Alex","","Mon–Sat. <b>No Sunday.</b>"],
- ["Contractor 2.0","(707) 366-6865","Contractor 2.0","Esteban","","Mon–Fri any time. <b>No weekends.</b>"]
+ ["Valencia","(209) 318-1967","Estimate Appointment - Valencia Construction Pros","Brian","Pacific","Mon–Fri. Sat or Sun only if they can't do a weekday.","Manteca","About 50 miles around"],
+ ["Watkinson","(916) 713-5966","Estimate Appointment - Watkinson Construction","Eric","Pacific","Any day, any time.","Orangevale (Sacramento)","About 40 miles around"],
+ ["CaliFirst","(213) 667-4790","Estimate Appointment - CaliFirst Remodel","No owner name. Just say \"our team\".","","Mon–Fri and Sunday. <b>Never Saturday.</b>","Los Angeles","Fresno down to San Diego"],
+ ["Dream Bath","(216) 350-1961","Schedule Your Free Bathroom Estimate - Dream Bath","Devin","Eastern","Mon–Fri: 10:00, 2:00 or 6:00. Sat–Sun: 1:00 or 5:00.","Lorain, Ohio","About 50 miles around Cleveland"],
+ ["DRH","(707) 402-9871","DRH Construction Free Estimate","Don","Pacific","Any day, any time.","Fairfield","About 50 miles around"],
+ ["HSD Masonry","(209) 528-9865","Estimate Appointment - HSD Masonry","Daniel and Kayla","","Mon–Fri any time. Sat–Sun: 1:00 or 5:00.","Manteca","About 50 miles around"],
+ ["H. Flores","(209) 340-3731","H. Flores Construction","Huver","","Mon–Fri only, mornings best. <b>Never weekends.</b>","Galt","About 50 miles around"],
+ ["MTR Baths","(916) 249-7175","Estimate Appointment - MTR Baths","Alex","","Mon–Sat. <b>No Sunday.</b>","West Sacramento","About 50 miles around"],
+ ["Contractor 2.0","(707) 366-6865","Estimate Appointment - Contractor 2.0","Esteban","","Mon–Fri any time. <b>No weekends.</b>","Fairfield","About 50 miles around"]
 ].map(r=>{if(!r[4])r[4]="Pacific";return r});
 document.getElementById("clientRows").innerHTML=clients.map(r=>
- `<tr><td class="q">${r[0]}</td><td>${r[5]}</td><td class="num">${r[1]}</td><td>${r[2]}</td><td>${r[3]||"—"}</td><td>${r[4]}</td></tr>`).join("");
+ `<tr><td class="q">${r[0]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${r[5]}</td><td class="num">${r[1]}</td><td>${r[2]}</td><td>${r[3]||"—"}</td><td>${r[4]}</td></tr>`).join("");
 
 
 const PLAY='<svg viewBox="0 0 14 14"><path d="M3 1.5v11l9.5-5.5z"/></svg>',PAUSE='<svg viewBox="0 0 14 14"><path d="M3 1.5h3v11H3zM8 1.5h3v11H8z"/></svg>';
