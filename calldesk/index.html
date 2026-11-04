@@ -314,6 +314,9 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <div class="stage"><div><h3>Wants a new time</h3><p class="note">Booked, needs to move it</p></div>
         <div class="body"><p>Offer two new times right away. Follow the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps.</p></div></div>
 
+      <div class="stage"><div><h3>Cancels by text</h3><p class="note">Booked, texts to cancel</p></div>
+        <div class="body"><p><b>Goal:</b> get a new time or a day to follow up.</p><blockquote>"Thanks for letting me know, Maria. Would the same time tomorrow work?"</blockquote><p>Only ask if the client can come then and they didn't already say when. Follow the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps for canceling by text.</p></div></div>
+
       <div class="stage"><div><h3>Missed the visit</h3><p class="note">No-show</p></div>
         <div class="body"><p><b>Goal:</b> rebook the same day. No guilt.</p><blockquote>"Hey Maria, it's Uriel with Valencia. Looks like we missed each other today. I have Saturday at 2 or Monday at 10. Which is better?"</blockquote><p>Then move the appointment like a reschedule.</p></div></div>
     </div>
@@ -521,16 +524,36 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <h1>Rescheduling</h1>
     <p class="intro">Stay on the phone until there's a new day and time.</p>
   </div>
-  <div class="flow">
-    <div class="stage"><div><h3>On the phone</h3></div>
-      <div class="body"><blockquote>"No problem at all. I have Saturday at 2 or Monday at 10. Which is better?"</blockquote><p>If they want to cancel: "Want me to check back in a couple weeks?"</p></div></div>
-    <div class="stage"><div><h3>In the CRM</h3><p class="note">Appointment menu → Edit</p></div>
-      <div class="body"><p>Change the date and time, check the time zone, and save.</p>
-        <div class="shots"><a href="img/appt-menu.jpg" target="_blank"><img src="img/appt-menu.jpg" alt="Appointment menu" loading="lazy"></a><a href="img/reschedule.jpg" target="_blank"><img src="img/reschedule.jpg" alt="Edit appointment" loading="lazy"></a></div></div></div>
-    <div class="stage"><div><h3>Tell the client</h3><p class="note">In their group chat</p></div>
-      <div class="body"><blockquote>Update: Maria moved to Sat Nov 7 at 2 PM.</blockquote></div></div>
-    <div class="stage"><div><h3>Example call</h3></div>
-      <div class="body"><div class="player" data-src="audio/08-reschedule.mp3" data-len="61"></div></div></div>
+
+  <div>
+    <h2>They want to move it on a call</h2>
+    <div class="flow">
+      <div class="stage"><div><h3>On the phone</h3></div>
+        <div class="body"><blockquote>"No problem at all. I have Saturday at 2 or Monday at 10. Which is better?"</blockquote><p>If they want to cancel: "Want me to check back in a couple weeks?"</p></div></div>
+      <div class="stage"><div><h3>In the CRM</h3><p class="note">Appointment menu → Edit</p></div>
+        <div class="body"><p>Change the date and time, check the time zone, and save.</p>
+          <div class="shots"><a href="img/appt-menu.jpg" target="_blank"><img src="img/appt-menu.jpg" alt="Appointment menu" loading="lazy"></a><a href="img/reschedule.jpg" target="_blank"><img src="img/reschedule.jpg" alt="Edit appointment" loading="lazy"></a></div></div></div>
+      <div class="stage"><div><h3>Tell the client</h3><p class="note">In their group chat</p></div>
+        <div class="body"><blockquote>Update: Maria moved to Sat Nov 7 at 2 PM.</blockquote></div></div>
+      <div class="stage"><div><h3>Example call</h3></div>
+        <div class="body"><div class="player" data-src="audio/08-reschedule.mp3" data-len="61"></div></div></div>
+    </div>
+  </div>
+
+  <div id="cancel-text">
+    <h2>They cancel by text</h2>
+    <div class="flow">
+      <div class="stage"><div><h3>1. Text them back</h3><p class="note">Right away</p></div>
+        <div class="body"><p><b>They didn't say when:</b> ask about the same time tomorrow, but only if the client can come then. Check the <a href="#clients" data-go="clients">Clients</a> page.</p><blockquote>"Thanks for letting me know, Maria. Would the same time tomorrow work?"</blockquote><p><b>The client can't come then:</b> ask about the next time they can come.</p><p><b>They said when to reach back out:</b> don't ask about tomorrow. Go with what they said.</p><blockquote>"Thanks for letting me know, Maria. I'll reach back out Tuesday."</blockquote><p><b>They asked for a new time:</b> don't ask about tomorrow. Book the time they want and move the appointment the same way as on a call.</p></div></div>
+      <div class="stage"><div><h3>2. Tell the client</h3><p class="note">In their group chat in Sendblue</p></div>
+        <div class="body"><blockquote>Update: Maria cancelled Thu Nov 5 at 10 AM. I'm following up to rebook.</blockquote></div></div>
+      <div class="stage"><div><h3>3. Cancel the appointment</h3><p class="note">Appointment menu → Cancel</p></div>
+        <div class="body"><div class="shots"><a href="img/appt-menu.jpg" target="_blank"><img src="img/appt-menu.jpg" alt="Appointment menu with Cancel" loading="lazy"></a></div></div></div>
+      <div class="stage"><div><h3>4. Set the follow-up</h3><p class="note">On the contact</p></div>
+        <div class="body"><p>Move the stage to <b>Follow Up</b>. Then click <b>All fields</b>, find <b>Follow Up Date</b>, pick the day, and save.</p><p>Use the day they said. If they didn't say, use tomorrow. Leave a note with the time, like "Cancelled Thu. Asked about same time tomorrow."</p></div></div>
+      <div class="stage"><div><h3>5. Follow up</h3></div>
+        <div class="body"><p><b>They said when:</b> follow up with them then.</p><p><b>No response:</b> just call them.</p><p><b>They say yes to a new time:</b> book it, clear the <b>Follow Up Date</b>, and tell the client the new day and time.</p></div></div>
+    </div>
   </div>
 </section>
 
