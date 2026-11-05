@@ -275,7 +275,9 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <h2>Rules that never change</h2>
     <ul>
       <li>Say you're with the client. Never say BuildSignals.</li>
+      <li>Click the lead's name and read their info before you call. Don't use "Let's Start."</li>
       <li>Always double dial. No answer? Call right back.</li>
+      <li>No answer after you double dial? Delete the call in Manual Actions so the workflow moves on.</li>
       <li>They pick up and hang up fast? Call a 3rd time.</li>
       <li>Call from the client's number.</li>
       <li>Only call and text from the CRM, never your own phone.</li>
@@ -474,7 +476,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     <div class="tw"><table>
       <thead><tr><th>What happened</th><th>What you do</th><th>The stage</th></tr></thead>
       <tbody>
-        <tr><td class="q">No answer</td><td>Mark the call done in Manual Actions. The CRM texts them and adds your next call by itself. <b>Still tell the owner.</b> Send the details and say it's unconfirmed: "Here's a new appointment: Unconfirmed but will send you more info once we speak to her." Then the details.</td><td>Leave it on <b>Booked</b></td></tr>
+        <tr><td class="q">No answer</td><td>Delete the call in Manual Actions. The CRM texts them and adds your next call by itself. <b>Still tell the owner.</b> Send the details and say it's unconfirmed: "Here's a new appointment: Unconfirmed but will send you more info once we speak to her." Then the details.</td><td>Leave it on <b>Booked</b></td></tr>
         <tr><td class="q">They text YES</td><td>The CRM stops the confirm calls by itself. Then do steps 4, 5 and 6.</td><td><b>Booked - Confirmed</b></td></tr>
         <tr><td class="q">They text back but won't pick up</td><td>Ask your questions by text. Keep it short. Then do steps 4, 5 and 6.</td><td><b>Booked - Confirmed</b></td></tr>
         <tr><td class="q">They want a new time</td><td>Follow <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</td><td><b>Booked - Confirmed</b></td></tr>
@@ -545,7 +547,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
         <div class="body"><p><b>Goal:</b> call when you said you would. Read the note first.</p><blockquote>"Hey Maria, it's [your name] with Valencia. You said today was a good day to talk about the bathroom. Still a good time?"</blockquote><p>Then keep going from where you left off.</p></div></div>
 
       <div class="stage"><div><h3>Follow-up day, no answer</h3><p class="note">You called on the follow-up day and they didn't pick up</p></div>
-        <div class="body"><p><b>Goal:</b> try once more. Double dial. No answer? Don't text. The workflow texts them for us.</p><p><b>In the CRM:</b> mark the call done in Manual Actions. That's it. About 10 minutes later, the CRM starts about a week of texts and calls again by itself.</p><p><b>If you reached them:</b> book them, or set a new <b>Follow Up Date</b>. Do it within 10 minutes of marking the call done, so they don't get those texts.</p><p><small>Want the texts to start right now? Add the <b>lead nurturing</b> tag yourself.</small></p></div></div>
+        <div class="body"><p><b>Goal:</b> try once more. Double dial. No answer? Don't text. The workflow texts them for us.</p><p><b>In the CRM:</b> delete the call in Manual Actions. That's it. About 10 minutes later, the CRM starts about a week of texts and calls again by itself.</p><p><b>If you reached them:</b> book them, or set a new <b>Follow Up Date</b>. Do it within 10 minutes of deleting the call, so they don't get those texts.</p><p><small>Want the texts to start right now? Add the <b>lead nurturing</b> tag yourself.</small></p></div></div>
     </div>
   </div>
 
@@ -666,29 +668,41 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
   </div>
 
   <div class="steps">
-    <div class="step"><div class="text"><h3>1. Open Manual Actions</h3><p>Click <b>Conversations</b>, then <b>Manual Actions</b>. This is your call list. Call new leads first, then self-booked leads, then reschedules, then everyone else.</p>
-      <p class="caution">"Let's Start" calls right away. If a box asks "Call Anyway?" because it's late for them, press Cancel.</p></div>
-      <div class="shots"><a href="img/guide-manual-actions.jpg" target="_blank"><img src="img/guide-manual-actions.jpg" alt="Manual Actions tab and the workflow name circled" loading="lazy"></a><a href="img/guide-lets-start.jpg" target="_blank"><img src="img/guide-lets-start.jpg" alt="Let's Start button circled" loading="lazy"></a><a href="img/guide-call-prompt.jpg" target="_blank"><img src="img/guide-call-prompt.jpg" alt="Late-night call warning with Cancel circled" loading="lazy"></a></div></div>
+    <div class="step"><div class="text"><h3>1. Open Manual Actions</h3><p>Click <b>Conversations</b>, then <b>Manual Actions</b>. This is your call list. Call new leads first, then self-booked leads, then reschedules, then everyone else.</p></div>
+      <div class="shots"><a href="img/guide-manual-actions.jpg" target="_blank"><img src="img/guide-manual-actions.jpg" alt="Manual Actions tab and the workflow name circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>2. Call from the client's number</h3><p>Open the dialer. Click <b>Change</b> next to "Calling From" and pick the client's number. The numbers are on the <a href="#clients" data-go="clients">Clients</a> page.</p>
+    <div class="step"><div class="text"><h3>2. Work every call this one way</h3><p>It's more clicks, but you see who you're calling and you call from the right number.</p>
+      <ol><li>Click the lead's <b>name</b> in the list. Their contact opens.</li>
+        <li>Read who they are: what they asked for, their tags, and past calls and texts.</li>
+        <li>Open the dialer and pick the client's number. See step 3.</li>
+        <li>Double dial. They pick up and hang up fast? Call a 3rd time. Leave a voicemail if it's a brand new lead.</li>
+        <li>Talked to them? Finish the call and set the stage first. See step 5.</li>
+        <li>Go back to Manual Actions. Click the <b>trash can</b> on that lead's row and confirm.</li></ol>
+      <p>That deletes only the call on your list. If they didn't answer, the workflow moves on to its next step by itself. Don't text them. The workflow does that too.</p>
+      <p class="caution">Don't use "Let's Start." It dials right away, before you've seen who they are.</p>
+      <p class="caution">Only use the trash can in Manual Actions. The trash can next to their name on the contact page deletes the whole contact. Never click that one.</p>
+      <p class="muted">If a box asks "Call Anyway?" because it's late for them, press Cancel.</p></div>
+      <div class="shots"><a href="img/guide-ma-name-trash.jpg" target="_blank"><img src="img/guide-ma-name-trash.jpg" alt="Lead name and the trash can on the row circled" loading="lazy"></a><a href="img/guide-contact-review.jpg" target="_blank"><img src="img/guide-contact-review.jpg" alt="Contact page with tags and past calls circled, and the contact trash can marked never click" loading="lazy"></a><a href="img/guide-lets-start.jpg" target="_blank"><img src="img/guide-lets-start.jpg" alt="Let's Start button circled, don't use it" loading="lazy"></a><a href="img/guide-call-prompt.jpg" target="_blank"><img src="img/guide-call-prompt.jpg" alt="Late-night call warning with Cancel circled" loading="lazy"></a></div></div>
+
+    <div class="step"><div class="text"><h3>3. Call from the client's number</h3><p>Open the dialer. Click <b>Change</b> next to "Calling From" and pick the client's number. The numbers are on the <a href="#clients" data-go="clients">Clients</a> page.</p>
       <p class="caution">Never use a number marked OLD SPAM.</p></div>
       <div class="shots"><a href="img/guide-dialer.jpg" target="_blank"><img src="img/guide-dialer.jpg" alt="Dialer button and Change circled" loading="lazy"></a><a href="img/guide-number-pick.jpg" target="_blank"><img src="img/guide-number-pick.jpg" alt="Number search and the client's number circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>3. Book the visit</h3><p>On the contact, click the calendar icon, then <b>Add Appointment</b>. Every step is on the <a href="#book" data-go="book">Book a visit</a> page.</p>
+    <div class="step"><div class="text"><h3>4. Book the visit</h3><p>On the contact, click the calendar icon, then <b>Add Appointment</b>. Every step is on the <a href="#book" data-go="book">Book a visit</a> page.</p>
       <p class="caution">The box opens on the wrong client. Every time, pick the client's calendar, your name, and the time zone.</p></div>
       <div class="shots"><a href="img/guide-book-open.jpg" target="_blank"><img src="img/guide-book-open.jpg" alt="Calendar icon and Add Appointment circled" loading="lazy"></a><a href="img/guide-book-pick.jpg" target="_blank"><img src="img/guide-book-pick.jpg" alt="Picking the client's calendar" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>4. Set the stage</h3><p>The stage tells everyone where the lead is. On the contact, click <b>Actions</b>, the three dots, then <b>View Opportunity details</b>. Pick the <b>Stage</b> and click <b>Update</b>.</p>
+    <div class="step"><div class="text"><h3>5. Set the stage</h3><p>The stage tells everyone where the lead is. On the contact, click <b>Actions</b>, the three dots, then <b>View Opportunity details</b>. Pick the <b>Stage</b> and click <b>Update</b>.</p>
       <ul><li>You talked and they said yes: <b>Booked - Confirmed</b></li><li>Booked, but you haven't reached them: leave it on <b>Booked</b></li><li>Not interested: <b>Dead</b></li></ul></div>
       <div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage-choose.jpg" target="_blank"><img src="img/guide-stage-choose.jpg" alt="Stage list with Booked, Booked - Confirmed, Dead and Update circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>5. Tags</h3><ul>
+    <div class="step"><div class="text"><h3>6. Tags</h3><ul>
         <li>A tag is a label on a contact. Most get added for you, like appt-confirmed.</li>
         <li>Never add lead nurturing to someone who has a visit booked.</li>
         <li>Added the wrong tag? Click the x on it and tell Leo.</li></ul></div>
       <div class="shots"><a href="img/guide-tags.jpg" target="_blank"><img src="img/guide-tags.jpg" alt="Tags and the x on a tag circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>6. Tell the owner</h3><p>Send the visit details in the client's group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a>. The Lead Profile on the contact has what you need.</p>
+    <div class="step"><div class="text"><h3>7. Tell the owner</h3><p>Send the visit details in the client's group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a>. The Lead Profile on the contact has what you need.</p>
       <button class="btn" data-copy="format">Copy format</button></div>
       <div class="shots"><pre class="format" id="format">Here's a new appointment:
 • Name: Maria Lopez
@@ -698,7 +712,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 • Estimate Appointment: Thu Nov 5, 10:00 AM
 • Notes: Husband will be there. Wants it done before the holidays.</pre><p class="muted">Example lead.</p></div></div>
 
-    <div class="step"><div class="text"><h3>7. Answer texts</h3><p>When a lead texts back, it shows up in Conversations. Answer fast and keep it short.</p></div>
+    <div class="step"><div class="text"><h3>8. Answer texts</h3><p>When a lead texts back, it shows up in Conversations. Answer fast and keep it short.</p></div>
       <div class="shots"><a href="img/guide-inbox.jpg" target="_blank"><img src="img/guide-inbox.jpg" alt="Conversations and Unread circled" loading="lazy"></a><a href="img/guide-inbox-reply.jpg" target="_blank"><img src="img/guide-inbox-reply.jpg" alt="Message box circled" loading="lazy"></a></div></div>
   </div>
 </section>
