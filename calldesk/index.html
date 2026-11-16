@@ -5,161 +5,218 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <title>Call Desk | BuildSignals</title>
-<script>try{document.documentElement.dataset.theme=localStorage.getItem("cd-theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+<script>(function(){var t;try{t=localStorage.getItem("cd-theme")}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t})();</script>
 <link rel="icon" href="/buildsignals.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <style>
 :root{
-  --ink-1:#0F172A; --ink-2:#475569; --ink-3:#94A3B8;
-  --line:#E2E8F0; --bg-soft:#F8FAFC; --bg-mute:#F1F5F9;
-  --accent:#1D4ED8; --accent-dark:#1E3A8A;
-  --red:#B91C1C; --green:#15803D;
-  --bg:#FFFFFF; --card:#FFFFFF; --say:#EFF6FF; --basics-line:#BFDBFE; --heading-accent:#1E3A8A; --on-accent:#FFFFFF;
+  --bg:#FFFFFF; --side:#F7F8FA; --subtle:#F1F3F5; --quote:#F5F7FA; --card:#FFFFFF;
+  --ink:#16191F; --ink-2:#4B5260; --ink-3:#6B7280;
+  --rule:#E4E7EB; --rule-2:#CDD2D9;
+  --accent:#1D4ED8; --accent-2:#1E3A8A;
+  --warn:#B42318; --ok:#067647;
   color-scheme:light;
 }
 :root[data-theme="dark"]{
-  --ink-1:#E5E9F0; --ink-2:#A3ADBD; --ink-3:#6B7586;
-  --line:#2A3242; --bg-soft:#151A23; --bg-mute:#1C2330;
-  --accent:#6EA2FF; --accent-dark:#4C86F0;
-  --red:#F2827A; --green:#5CCB8A;
-  --bg:#0F131A; --card:#171D27; --say:#1A2741; --basics-line:#2B4170; --heading-accent:#A9C6FF; --on-accent:#0F131A;
+  --bg:#121417; --side:#16191D; --subtle:#1E2126; --quote:#1A1D22; --card:#16191D;
+  --ink:#E6E8EB; --ink-2:#A9AFB8; --ink-3:#8B929C;
+  --rule:#2A2E35; --rule-2:#3B4048;
+  --accent:#8EB2FF; --accent-2:#B8CEFF;
+  --warn:#F49A8F; --ok:#6CCB95;
   color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --side:#16191D; --subtle:#1E2126; --quote:#1A1D22; --card:#16191D;
+    --ink:#E6E8EB; --ink-2:#A9AFB8; --ink-3:#8B929C;
+    --rule:#2A2E35; --rule-2:#3B4048;
+    --accent:#8EB2FF; --accent-2:#B8CEFF;
+    --warn:#F49A8F; --ok:#6CCB95;
+    color-scheme:dark;
+  }
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink-1);font:16px/1.6 'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 [hidden]{display:none!important}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
+a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--accent-2)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+b,strong{font-weight:600}
 
+/* Layout */
 .app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
-aside{background:var(--bg-soft);border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;padding:20px 14px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:-.01em;color:var(--ink-1);padding:4px 10px 18px}
-.logo img{width:30px;height:30px;object-fit:contain}
-.logo:hover{text-decoration:none}
-.logo small{display:block;font-size:12.5px;font-weight:500;color:var(--ink-2);letter-spacing:0}
-.navhead{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding:14px 10px 6px}
-nav{display:grid;gap:2px}
-nav button{all:unset;cursor:pointer;display:flex;align-items:center;gap:11px;font-size:14.5px;font-weight:500;color:var(--ink-2);padding:9px 10px;border-radius:7px}
-nav button svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-nav button:hover{background:var(--bg-mute);color:var(--ink-1)}
-nav button[aria-selected="true"]{background:var(--card);color:var(--accent);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(15,23,42,.05)}
-nav button:focus-visible{outline:2px solid var(--accent)}
-.brandrow{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.theme{all:unset;cursor:pointer;width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--ink-2);flex:none}
-.theme:hover{color:var(--ink-1)}
+aside{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--side);border-right:1px solid var(--rule);display:flex;flex-direction:column;padding:22px 14px 18px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 6px 18px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.logo:hover{color:var(--ink)}
+.logo img{width:26px;height:26px;object-fit:contain}
+.logo span{display:block;font-size:15px;font-weight:600;line-height:1.25}
+.logo small{display:block;font-size:12.5px;font-weight:400;color:var(--ink-3)}
+.theme{all:unset;cursor:pointer;width:30px;height:30px;border:1px solid var(--rule-2);border-radius:4px;display:grid;place-items:center;color:var(--ink-2);flex:none}
+.theme:hover{color:var(--ink);background:var(--subtle)}
 .theme:focus-visible{outline:2px solid var(--accent)}
-.theme svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.theme svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .theme .moon,.lg-d{display:none}
 :root[data-theme="dark"] .theme .moon,:root[data-theme="dark"] .lg-d{display:block}
 :root[data-theme="dark"] .theme .sun,:root[data-theme="dark"] .lg-l{display:none}
-:root[data-theme="dark"] .shots a,:root[data-theme="dark"] .shots img{opacity:.92}
-.side-rules{margin-top:auto;border-top:1px solid var(--line);padding:16px 10px 4px;font-size:13px;color:var(--ink-2);display:grid;gap:7px}
-.side-rules b{color:var(--ink-1);font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase}
-.side-rules span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:2px}
-.side-rules span.r::before{background:var(--red)}
-.container{max-width:980px;padding:0 40px}
-main{padding:36px 40px 96px;max-width:1060px}
-section{display:grid;gap:32px;grid-template-columns:minmax(0,1fr)}
-.eyebrow{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px}
-h1{font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
-.intro{color:var(--ink-2);margin:0;max-width:60ch}
-h2{font-size:18px;font-weight:600;letter-spacing:-.01em;margin:0 0 12px}
-p{margin:0}
-ul,ol{margin:0;padding-left:20px}
-li+li{margin-top:6px}
+.navhead{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding:18px 8px 6px}
+nav{display:grid;gap:1px}
+nav button{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;font-size:14.5px;line-height:1.4;color:var(--ink-2);padding:6px 10px;border-left:2px solid transparent;border-radius:0 4px 4px 0}
+nav button:hover{color:var(--ink);background:var(--subtle)}
+nav button[aria-selected="true"]{color:var(--ink);font-weight:600;background:var(--subtle);border-left-color:var(--accent)}
+nav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.side-foot{margin-top:auto;padding:18px 8px 0;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-2)}
+.side-foot h4{margin:0 0 6px;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.side-foot ul{margin:0;padding-left:16px}
+.side-foot li+li{margin-top:3px}
+.side-foot .upd{margin:14px 0 0;font-size:12px;color:var(--ink-3)}
+main{padding:44px 56px 120px;min-width:0}
+section{max-width:900px}
 
-.basics{border:1px solid var(--basics-line);border-radius:10px;padding:18px 22px;background:var(--say)}
-.basics h2{color:var(--heading-accent)}
-.basics ul{columns:2;column-gap:40px}
-.basics li{break-inside:avoid}
+/* Type */
+.page-head{padding-bottom:22px;border-bottom:1px solid var(--rule)}
+h1{font-size:28px;line-height:1.25;font-weight:600;letter-spacing:-.015em;margin:0}
+.lead{margin:8px 0 0;color:var(--ink-2);font-size:17px;max-width:66ch}
+h2{font-size:19px;line-height:1.35;font-weight:600;letter-spacing:-.01em;margin:0 0 12px}
+h3{font-size:16px;line-height:1.4;font-weight:600;margin:0}
+p{margin:0 0 12px;max-width:72ch}
+ul,ol{margin:0 0 12px;padding-left:22px;max-width:72ch}
+li+li{margin-top:5px}
+p:last-child,ul:last-child,ol:last-child{margin-bottom:0}
+.muted{color:var(--ink-2);font-size:14.5px}
+small{font-size:13.5px;color:var(--ink-2)}
+.block{padding:30px 0 6px}
+.block+.block{border-top:1px solid var(--rule);margin-top:24px}
+.cols{columns:2;column-gap:44px}
+.cols li{break-inside:avoid}
+blockquote{margin:6px 0 12px;padding:10px 16px;background:var(--quote);border-left:3px solid var(--accent);border-radius:0 3px 3px 0;font-size:16px;line-height:1.55;max-width:66ch;color:var(--ink)}
+blockquote:last-child{margin-bottom:0}
+.they{margin:2px 0 8px;font-size:14.5px;color:var(--ink-2)}
+.caution{margin:10px 0 12px;padding:2px 0 2px 12px;border-left:3px solid var(--warn);font-size:15px;max-width:68ch}
+.caution:last-child{margin-bottom:0}
+code,.mono{font:13.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
 
-.flow{display:grid;gap:12px;counter-reset:st}
-.group{display:grid;gap:4px}
-.group-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.group-head h2{margin:0}
-.pill-must,.pill-opt{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px}
-.pill-must{background:var(--accent);color:var(--on-accent)}
-.pill-opt{border:1px solid var(--line);color:var(--ink-2)}
-.optional{border:1px dashed var(--line);border-radius:10px;padding:18px 22px;display:grid;gap:10px;color:var(--ink-2)}
-.optional li{color:var(--ink-2)}
-.after{border:1px solid var(--line);border-radius:10px;padding:18px 22px;display:grid;gap:10px;background:var(--card)}
-.after h2{margin:0}
-.stage.key{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
-.why{border:1px dashed var(--accent);border-radius:10px;padding:18px 22px;display:grid;gap:10px;background:var(--bg-soft)}
-.why h2{margin:0;color:var(--heading-accent)}
-.why-flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14.5px;font-weight:500}
-.why-flow span:not(.arrow){background:var(--say);border:1px solid var(--basics-line);border-radius:6px;padding:6px 10px}
-.why-flow .arrow{color:var(--accent);font-weight:700}
-.stage{display:grid;grid-template-columns:36px 190px minmax(0,1fr);gap:18px;padding:20px 22px;border:1px solid var(--line);border-radius:10px;background:var(--card);counter-increment:st}
-.stage::before{content:counter(st);width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:600;font-size:14px}
-.stage h3{font-size:15px;font-weight:600;margin:0}
-.stage .note{font-size:14px;color:var(--ink-2);margin-top:4px}
-.stage .body{display:grid;gap:10px;min-width:0}
-blockquote{margin:0;padding:14px 18px;background:var(--say);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;font-size:16px;color:var(--ink-1)}
+/* Rows: label on the left, what to do on the right */
+.rows{border-top:1px solid var(--rule)}
+.row{display:grid;grid-template-columns:210px minmax(0,1fr);gap:24px;padding:18px 0;border-bottom:1px solid var(--rule)}
+.row .k h3{font-size:15.5px}
+.row .k p{margin:4px 0 0;font-size:14px;line-height:1.45;color:var(--ink-3)}
+.row .v>*:last-child{margin-bottom:0}
+.rows.counted{counter-reset:r}
+.rows.counted .row{counter-increment:r}
+.rows.counted .row .k h3::before{content:counter(r) ".";display:inline-block;min-width:1.5em;color:var(--ink-3);font-weight:500}
 
-table{border-collapse:collapse;width:100%;font-size:15px}
-.tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
-th{text-align:left;font-size:13px;font-weight:600;color:var(--ink-2);background:var(--bg-soft);padding:10px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
-tr:last-child td{border-bottom:0}
-td.q{font-weight:600;width:32%}
-table.wf blockquote{margin:8px 0 4px;font-size:15px;padding:10px 14px}
-table.wf td:nth-child(2){width:24%;color:var(--ink-2)}
-td small{display:block;color:var(--ink-2);font-size:13.5px;margin-top:4px}
-.num{font-variant-numeric:tabular-nums;white-space:nowrap}
-
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.compare>div{border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:grid;gap:8px;align-content:start}
-.label{font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-.label.no{color:var(--red)}
-.label.yes{color:var(--green)}
-.compare p{font-size:15px}
-.examples{display:grid;gap:8px}
-.examples p{padding:10px 14px;border:1px solid var(--line);border-radius:6px;font-size:15px}
-
-.player{display:flex;align-items:center;gap:12px;min-width:220px}
-.play{all:unset;cursor:pointer;width:36px;height:36px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none}
-.play:hover{background:var(--accent-dark)}
-.play:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.play svg{width:14px;height:14px;fill:var(--on-accent)}
-.bar{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden;cursor:pointer;min-width:90px}
-.bar i{display:block;height:100%;width:0;background:var(--accent)}
-.time{font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
-td.p{width:260px}
-.tag-no{color:var(--red);font-weight:600;font-size:13px}
-
-.steps{display:grid;gap:14px}
-.step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px;padding:22px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
-.step .text{display:grid;gap:10px;align-content:start}
-.step h3{font-size:16px;font-weight:600;margin:0}
+/* Steps with screenshots */
+.steps{border-top:1px solid var(--rule)}
+.step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:32px;padding:24px 0;border-bottom:1px solid var(--rule)}
+.step .text>h3{margin-bottom:8px}
+.step .text>*:last-child{margin-bottom:0}
+.step.solo{grid-template-columns:minmax(0,1fr)}
+.page-head+.block>.steps:first-child,.page-head+.block>.rows:first-child{border-top:0}
+.page-head+.block>.steps:first-child>.step:first-child{padding-top:0}
 .shots{display:grid;gap:12px;align-content:start}
-.shots a{display:block;border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.caution{font-size:14.5px;color:var(--ink-1);border-left:3px solid var(--red);padding:2px 0 2px 12px}
-pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--bg-soft);border:1px solid var(--line);border-radius:6px;padding:14px 16px;white-space:pre-wrap}
-.btn{all:unset;cursor:pointer;font-size:14px;font-weight:500;color:var(--ink-1);border:1px solid var(--line);border-radius:6px;padding:7px 14px;justify-self:start}
-.btn:hover{background:var(--bg-soft)}
-.muted{color:var(--ink-2);font-size:14px}
+.shots a{display:block;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
+:root[data-theme="dark"] .shots img{opacity:.93}
+
+/* Tables */
+.tw{overflow-x:auto;margin:4px 0 12px}
+.tw:last-child{margin-bottom:0}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{text-align:left;font-size:12.5px;font-weight:600;letter-spacing:.02em;color:var(--ink-3);padding:8px 16px 8px 0;border-bottom:1px solid var(--rule-2);white-space:nowrap;vertical-align:bottom}
+td{padding:11px 16px 11px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th:last-child,td:last-child{padding-right:0}
+td.q{font-weight:600;width:30%}
+td small{display:block;margin-top:3px}
+td blockquote{margin:8px 0 4px;font-size:15px;padding:8px 12px}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.no{color:var(--warn);font-weight:600}
+
+/* Texting examples */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:820px}
+.compare>div{border:1px solid var(--rule);border-radius:4px;padding:14px 16px}
+.compare p{font-size:15px;margin:6px 0 0}
+.label{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.label.no{color:var(--warn)}
+.label.yes{color:var(--ok)}
+.examples{display:grid;gap:8px;max-width:620px}
+.examples p{margin:0;padding:9px 14px;border:1px solid var(--rule);border-radius:4px;font-size:15px}
+
+/* Audio */
+.player{display:flex;align-items:center;gap:12px;min-width:210px;max-width:340px}
+.play{all:unset;cursor:pointer;width:32px;height:32px;border-radius:50%;border:1px solid var(--rule-2);display:grid;place-items:center;flex:none;color:var(--ink)}
+.play:hover{background:var(--subtle)}
+.play:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.play svg{width:12px;height:12px;fill:currentColor}
+.bar{flex:1;height:3px;background:var(--rule);border-radius:2px;overflow:hidden;cursor:pointer;min-width:90px}
+.bar i{display:block;height:100%;width:0;background:var(--accent)}
+.time{font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+td.p{width:250px}
+
+/* Buttons and copy blocks */
+.btn{all:unset;cursor:pointer;display:inline-block;font-size:14px;font-weight:500;color:var(--ink);border:1px solid var(--rule-2);border-radius:4px;padding:6px 12px;margin-top:4px}
+.btn:hover{background:var(--subtle)}
+pre.format{margin:0;font:13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--subtle);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;white-space:pre-wrap;color:var(--ink)}
+
+/* Start here: the job in one picture */
+.jobflow{margin:16px 0 4px;container-type:inline-size}
+.jf-io{display:flex;gap:16px;align-items:baseline;padding:12px 16px;border:1px solid var(--rule-2);border-radius:4px;background:var(--subtle);font-size:15px}
+.jf-io .k{flex:none;min-width:112px;white-space:nowrap;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.jf-down{height:28px;position:relative}
+.jf-down::before{content:"";position:absolute;left:50%;top:4px;bottom:6px;border-left:1.5px solid var(--ink-3)}
+.jf-down::after{content:"";position:absolute;left:50%;bottom:4px;width:8px;height:8px;border-right:1.5px solid var(--ink-3);border-bottom:1.5px solid var(--ink-3);transform:translateX(-50%) rotate(45deg)}
+.jf-steps{list-style:none;margin:0;padding:0;max-width:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px}
+.jf-steps li{position:relative;margin:0;display:flex;flex-direction:column;gap:4px;padding:12px 12px 10px;border:1px solid var(--rule-2);border-radius:4px;background:var(--card)}
+.jf-steps li+li::before{content:"";position:absolute;left:-17px;top:50%;width:9px;height:9px;border-top:1.5px solid var(--ink-3);border-right:1.5px solid var(--ink-3);transform:translateY(-50%) rotate(45deg)}
+.jf-steps .n{font-size:12px;font-weight:600;color:var(--ink-3)}
+.jf-steps b{font-size:15.5px;line-height:1.3}
+.jf-steps .d{font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.jf-steps .r{margin-top:auto;padding-top:9px;border-top:1px dashed var(--rule-2);font-size:13px;line-height:1.4;color:var(--ink)}
+.jf-steps .r::before{content:"Result";display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+/* Narrow column: stack the steps, each one a single row */
+@container (max-width:680px){
+  .jf-io{flex-direction:column;gap:2px}
+  .jf-steps{grid-template-columns:minmax(0,1fr);gap:22px}
+  .jf-steps li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px 18px;padding:12px 14px}
+  .jf-steps .n,.jf-steps b,.jf-steps .d{grid-column:1}
+  .jf-steps .r{grid-column:2;grid-row:1/span 3;margin:0;padding:0 0 0 16px;border-top:0;border-left:1px dashed var(--rule-2);align-self:stretch}
+  .jf-steps li+li::before{left:50%;top:-15px;transform:translateX(-50%) rotate(135deg)}
+}
+@container (max-width:420px){
+  .jf-steps li{grid-template-columns:minmax(0,1fr)}
+  .jf-steps .r{grid-column:1;grid-row:auto;margin-top:6px;padding:8px 0 0;border-left:0;border-top:1px dashed var(--rule-2)}
+}
+
+/* Clients */
+.client{display:grid;grid-template-columns:210px minmax(0,1fr);gap:24px;padding:20px 0;border-bottom:1px solid var(--rule)}
+.client h3{font-size:16px}
+.client .k p{margin:4px 0 0;font-size:14px;color:var(--ink-3)}
+.kv{display:grid;grid-template-columns:136px minmax(0,1fr);gap:6px 18px;margin:0;font-size:15px}
+.kv dt{color:var(--ink-3)}
+.kv dd{margin:0}
 
 @media (max-width:860px){
   .app{grid-template-columns:minmax(0,1fr)}
-  aside{position:sticky;height:auto;padding:12px 16px 0;border-right:0;border-bottom:1px solid var(--line);z-index:5}
-  .logo{padding:0 0 10px}
-  .navhead,.side-rules{display:none}
-  .navs{display:flex;gap:4px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+  aside{position:sticky;top:0;z-index:5;height:auto;padding:12px 16px 0;border-right:0;border-bottom:1px solid var(--rule)}
+  .brand{padding:0 0 10px}
+  .navhead,.side-foot{display:none}
+  .navs{display:flex;gap:2px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
   .navs::-webkit-scrollbar{display:none}
-  nav{display:flex;gap:4px}
-  nav button{white-space:nowrap;padding:7px 10px}
-  main{padding:24px 16px 80px}
+  nav{display:flex;gap:2px}
+  nav button{width:auto;white-space:nowrap;padding:6px 10px;border-left:0;border-bottom:2px solid transparent;border-radius:4px 4px 0 0}
+  nav button[aria-selected="true"]{border-bottom-color:var(--accent)}
+  main{padding:26px 16px 80px}
   h1{font-size:24px}
-  .basics ul{columns:1}
-  .stage{grid-template-columns:32px minmax(0,1fr);gap:12px;padding:16px}
-  .stage .body{grid-column:1/-1}
-  .step,.compare{grid-template-columns:1fr;gap:14px}
-  .step{padding:16px}
+  .lead{font-size:16px}
+  .cols{columns:1}
+  .row,.client{grid-template-columns:minmax(0,1fr);gap:8px}
+  .step,.compare{grid-template-columns:minmax(0,1fr);gap:14px}
+  .kv{grid-template-columns:minmax(0,1fr);gap:0}
+  .kv dt{margin-top:8px;font-size:13px}
+  td.p{width:auto}
 }
 </style>
 </head>
@@ -167,81 +224,107 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 
 <div class="app">
 <aside>
-  <div class="brandrow"><a href="/" class="logo"><img class="lg-l" src="/buildsignals.png" alt=""><img class="lg-d" src="/buildsignals-icon-white.png" alt=""><span>BuildSignals<small>Call Desk</small></span></a>
-  <button class="theme" id="theme" aria-label="Switch to light mode" title="Light / dark"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button></div>
+  <div class="brand"><a href="/" class="logo"><img class="lg-l" src="/buildsignals.png" alt=""><img class="lg-d" src="/buildsignals-icon-white.png" alt=""><span>BuildSignals<small>Call Desk</small></span></a>
+  <button class="theme" id="theme" aria-label="Switch to dark mode" title="Light / dark"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button></div>
   <div class="navs">
-  <nav id="tabs0">
-      <button data-tab="start"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Start here</button>
+  <nav>
+      <button data-tab="start">Start here</button>
   </nav>
   <div class="navhead">On the call</div>
-  <nav id="tabs">
-      <button data-tab="script"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Call script</button>
-      <button data-tab="confirm"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg>Confirm a visit</button>
-      <button data-tab="situations"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Every situation</button>
-      <button data-tab="objections"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg>Objections</button>
-      <button data-tab="texting"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18h2"/></svg>Texting</button>
-      <button data-tab="recordings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>Recordings</button>
+  <nav>
+      <button data-tab="script">Call script</button>
+      <button data-tab="confirm">Confirm a visit</button>
+      <button data-tab="situations">Every situation</button>
+      <button data-tab="objections">Objections</button>
+      <button data-tab="texting">Texting</button>
+      <button data-tab="recordings">Recordings</button>
   </nav>
   <div class="navhead">In the CRM</div>
-  <nav id="tabs2">
-      <button data-tab="crm"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg>CRM steps</button>
-      <button data-tab="rules"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>Workflows &amp; tags</button>
-      <button data-tab="book"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg>Book a visit</button>
-      <button data-tab="reschedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Rescheduling</button>
-      <button data-tab="clients"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>Clients</button>
+  <nav>
+      <button data-tab="crm">CRM steps</button>
+      <button data-tab="rules">Workflows &amp; tags</button>
+      <button data-tab="book">Book a visit</button>
+      <button data-tab="reschedule">Rescheduling</button>
+      <button data-tab="clients">Clients</button>
   </nav>
-  <div class="navhead">Texting clients</div>
-  <nav id="tabs3">
-      <button data-tab="sendblue"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>Sendblue</button>
+  <div class="navhead">Telling the owner</div>
+  <nav>
+      <button data-tab="sendblue">Sendblue</button>
   </nav>
   </div>
-  <div class="side-rules"><b>Every call</b><span>Double dial</span><span>They hang up fast: call a 3rd time</span><span>Client's number, 8am–8pm</span><span class="r">No exact prices. "Most start at $8,000" is OK</span></div>
+  <div class="side-foot">
+    <h4>On every call</h4>
+    <ul>
+      <li>Double dial</li>
+      <li>Hang up fast? Call a 3rd time</li>
+      <li>Client's number only</li>
+      <li>8am to 8pm their time</li>
+      <li>No exact prices</li>
+    </ul>
+    <p class="upd">Updated Nov 16, 2026</p>
+  </div>
 </aside>
 <main>
 
 <section id="start">
-  <div>
-    <div class="eyebrow">New here?</div>
+  <header class="page-head">
     <h1>Start here</h1>
-    <p class="intro">Read this page first. It tells you what we do, what your job is, and what all the words mean.</p>
-  </div>
+    <p class="lead">Read this page first. It tells you what we do, what your job is, and what the words mean.</p>
+  </header>
 
-  <div>
+  <div class="block">
     <h2>What we do</h2>
-    <p>BuildSignals runs Facebook ads for companies that remodel homes. Most of them do bathrooms. A homeowner sees an ad and fills out a form to ask for a free estimate. That's where your job starts.</p>
+    <p>BuildSignals runs Facebook ads for companies that remodel homes. Most of them do bathrooms and kitchens. A homeowner sees an ad and fills out a form to ask for a free estimate. That's where your job starts.</p>
   </div>
 
-  <div>
-    <h2>Your job, in 4 steps</h2>
-    <div class="flow">
-      <div class="stage"><div><h3>Call them fast</h3><p class="note">New leads always come first</p></div>
-        <div class="body"><p>When a homeowner fills out the form, call them within 5 minutes. Whoever calls first usually gets the job.</p></div></div>
-      <div class="stage"><div><h3>Find out what they want</h3></div>
-        <div class="body"><p>Ask a few easy questions. The <a href="#script" data-go="script">Call script</a> tells you exactly what to say.</p></div></div>
-      <div class="stage key"><div><h3>Book a free visit</h3><p class="note">This is the big one</p></div>
-        <div class="body"><p>Get a day, a time, and everyone who decides. The owner of the company goes to the home, measures, shows samples, and gives the price. You never have to know the price.</p></div></div>
-      <div class="stage"><div><h3>Tell the owner</h3></div>
-        <div class="body"><p>Send the visit details to the owner in <a href="#sendblue" data-go="sendblue">Sendblue</a>.</p></div></div>
+  <div class="block">
+    <h2>Your job in one picture</h2>
+    <p>Every new lead goes through the same five steps. You take a homeowner who asked for a price and turn them into a visit the owner knows about.</p>
+    <div class="jobflow" role="group" aria-label="Your job, step by step">
+      <div class="jf-io"><span class="k">You start with</span><span>A homeowner fills out a form on a Facebook ad. A call shows up in your list.</span></div>
+      <div class="jf-down" aria-hidden="true"></div>
+      <ol class="jf-steps">
+        <li><span class="n">Step 1</span><b>Call</b><span class="d">Within 5 minutes, from the client's number. Double dial.</span><span class="r">You're talking to them</span></li>
+        <li><span class="n">Step 2</span><b>Ask</b><span class="d">What they want done, materials, and who decides.</span><span class="r">You know the job and who'll be there</span></li>
+        <li><span class="n">Step 3</span><b>Book</b><span class="d">A day and time on the client's calendar. Get the address.</span><span class="r">The visit is on the calendar</span></li>
+        <li><span class="n">Step 4</span><b>Confirm</b><span class="d">Check the Lead Profile. Set the stage to Booked&nbsp;- Confirmed.</span><span class="r">The owner gets a text by itself</span></li>
+        <li><span class="n">Step 5</span><b>Tell the owner</b><span class="d">Post the visit in the client's group chat.</span><span class="r">The owner has every detail</span></li>
+      </ol>
+      <div class="jf-down" aria-hidden="true"></div>
+      <div class="jf-io"><span class="k">You end with</span><span>A confirmed visit. The owner goes to the home, measures, and gives the price. That part isn't your job.</span></div>
     </div>
   </div>
 
-  <div>
+  <div class="block">
+    <h2>When it doesn't go that way</h2>
+    <div class="tw"><table>
+      <thead><tr><th>What happens</th><th>What you do</th><th>The CRM then</th></tr></thead>
+      <tbody>
+        <tr><td class="q">No answer</td><td>Double dial. Delete the call in Manual Actions.</td><td>Texts them and puts them back in your list later.</td></tr>
+        <tr><td class="q">Not ready yet</td><td>Stage: <b>Follow Up</b>. Set a Follow Up Date.</td><td>Puts them back in your list on that date.</td></tr>
+        <tr><td class="q">Not interested, wrong number, or too far</td><td>Stage: <b>Dead</b>. Write why in a note.</td><td>Stops every call and text.</td></tr>
+        <tr><td class="q">They booked online by themselves</td><td>Call to make sure it's on. See <a href="#confirm" data-go="confirm">Confirm a visit</a>.</td><td>Keeps calling and texting them until you reach them.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="block">
     <h2>Who to call first</h2>
-    <p class="muted" style="margin-bottom:12px">Always work in this order. If a new lead comes in, stop and go back to number 1.</p>
-    <div class="flow">
-      <div class="stage key"><div><h3>New leads</h3><p class="note">Your call list says New [Client] Facebook Lead</p></div>
-        <div class="body"><p>They just filled out the form. <b>Call them in less than 5 minutes.</b> Stop whatever you're doing.</p></div></div>
-      <div class="stage"><div><h3>Self-booked leads</h3><p class="note">Your call list says Self-booked: confirm</p></div>
-        <div class="body"><p>They booked a visit online by themselves. Call to make sure it's still on. See <a href="#confirm" data-go="confirm">Confirm a visit</a>.</p></div></div>
-      <div class="stage"><div><h3>Reschedules</h3><p class="note">They asked to move or cancel a visit</p></div>
-        <div class="body"><p>Get them a new day and time. See <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</p></div></div>
-      <div class="stage"><div><h3>Everyone else</h3><p class="note">Nurture and Follow Up Reminders</p></div>
-        <div class="body"><p>Then call everyone left on your list.</p></div></div>
+    <p>Always work in this order. If a new lead comes in, stop and go back to number 1.</p>
+    <div class="rows counted">
+      <div class="row"><div class="k"><h3>New leads</h3><p>New [Client] Facebook Lead, or Google Ads Submissions</p></div>
+        <div class="v"><p>They just filled out a form. <b>Call them in less than 5 minutes.</b> Stop whatever you're doing.</p></div></div>
+      <div class="row"><div class="k"><h3>Self-booked leads</h3><p>Self-booked: confirm</p></div>
+        <div class="v"><p>They booked a visit online by themselves. Call to make sure it's still on. See <a href="#confirm" data-go="confirm">Confirm a visit</a>.</p></div></div>
+      <div class="row"><div class="k"><h3>Reschedules</h3><p>They asked to move or cancel a visit</p></div>
+        <div class="v"><p>Get them a new day and time. See <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</p></div></div>
+      <div class="row"><div class="k"><h3>Everyone else</h3><p>Nurture and Follow Up Reminders</p></div>
+        <div class="v"><p>Then call everyone left on your list.</p></div></div>
     </div>
-    <p class="muted" style="margin-top:10px">To see one group at a time in <a href="#crm" data-go="crm">Manual Actions</a>, use the <b>Select Workflow</b> box at the top.</p>
+    <p class="muted" style="margin-top:12px">To see one group at a time in <a href="#crm" data-go="crm">Manual Actions</a>, use the <b>Select Workflow</b> box at the top.</p>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Who is who</h2>
     <div class="tw"><table>
       <tbody>
@@ -251,10 +334,10 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
         <tr><td class="q">You</td><td>On every call and text, you work for the client. Never say BuildSignals.</td></tr>
       </tbody>
     </table></div>
-    <p class="muted" style="margin-top:10px">If a homeowner sees "BuildSignals" on their phone and asks, say: "That's just our phone system. I'm with Valencia."</p>
+    <p class="muted" style="margin-top:12px">If a homeowner sees "BuildSignals" on their phone and asks, say: "That's just our phone system. I'm with Valencia."</p>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Words you'll see</h2>
     <div class="tw"><table>
       <tbody>
@@ -264,6 +347,8 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
         <tr><td class="q">Double dial</td><td>You call. No answer. You call right back. Do this on every call.</td></tr>
         <tr><td class="q">Visit, estimate, appointment</td><td>All the same thing: the owner going to the home.</td></tr>
         <tr><td class="q">Stage</td><td>Where the lead is right now, like Booked or Dead. You change it after each call.</td></tr>
+        <tr><td class="q">Booked&nbsp;- Confirmed</td><td>The stage that means someone on our team talked to them and the visit is on.</td></tr>
+        <tr><td class="q">Lead Profile</td><td>A short write-up of the lead on their contact. The owner gets it by text when you set Booked&nbsp;- Confirmed.</td></tr>
         <tr><td class="q">Tag</td><td>A label on a contact. It tells the CRM what to do with them.</td></tr>
         <tr><td class="q">Workflow</td><td>A robot in the CRM. It sends texts and adds calls to your list by itself.</td></tr>
         <tr><td class="q">Sendblue</td><td>The app we use to text the owners.</td></tr>
@@ -271,9 +356,9 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     </table></div>
   </div>
 
-  <div class="basics">
+  <div class="block">
     <h2>Rules that never change</h2>
-    <ul>
+    <ul class="cols">
       <li>Say you're with the client. Never say BuildSignals.</li>
       <li>Click the lead's name and read their info before you call. Don't use "Let's Start."</li>
       <li>Always double dial. No answer? Call right back.</li>
@@ -284,13 +369,14 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <li>Don't text leads unless there's a reason. The workflow texts them for us. See <a href="#texting" data-go="texting">Texting</a>.</li>
       <li>Only call between 8am and 8pm their time.</li>
       <li>No exact prices. You can say "most projects start at $8,000."</li>
+      <li>Never write a price you told them in the Lead Profile or the group chat.</li>
       <li>Only offer days the client can come.</li>
       <li>If someone says stop calling or texting, stop. Move them to Dead and turn on DND on their contact.</li>
       <li>Not sure? Ask Leo. Asking is always better than guessing.</li>
     </ul>
   </div>
 
-  <div class="after">
+  <div class="block">
     <h2>Your first day</h2>
     <ol>
       <li>Log in to the CRM. Leo sends you the login.</li>
@@ -298,11 +384,11 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <li>Turn on your notifications in <a href="#sendblue" data-go="sendblue">Sendblue</a>.</li>
       <li>Listen to the <a href="#recordings" data-go="recordings">Recordings</a>.</li>
       <li>Read the <a href="#script" data-go="script">Call script</a> out loud a few times.</li>
-      <li>Read <a href="#situations" data-go="situations">Every situation</a> so nothing surprises you.</li>
+      <li>Read <a href="#situations" data-go="situations">Every situation</a> and <a href="#clients" data-go="clients">Clients</a> so nothing surprises you.</li>
     </ol>
   </div>
 
-  <div class="basics">
+  <div class="block">
     <h2>Your work hours</h2>
     <ul>
       <li><b>Days:</b> Monday through Friday</li>
@@ -311,29 +397,29 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     </ul>
   </div>
 
-  <div class="after">
+  <div class="block">
     <h2>During the day</h2>
     <ol>
       <li>Open <a href="#crm" data-go="crm">Manual Actions</a> and call in the order under "Who to call first."</li>
       <li>New lead comes in? Stop what you're doing and call them.</li>
       <li>Answer texts fast.</li>
       <li>After every call, set the stage and leave a note.</li>
-      <li>Every time you book a visit, tell the owner in Sendblue.</li>
+      <li>Every time you book a visit, tell the owner. See <a href="#sendblue" data-go="sendblue">Sendblue</a>.</li>
     </ol>
   </div>
 
-  <div class="after">
+  <div class="block">
     <h2>Before you sign out</h2>
     <p>Don't sign out until all of this is done. Every day.</p>
     <ol>
       <li><b>Manual Actions:</b> every call is done.</li>
       <li><b>Reschedules:</b> every visit that needs to move or cancel is taken care of. See <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</li>
-      <li><b>Clients:</b> every owner has been told what they need to know, and every owner's text is answered. See <a href="#sendblue" data-go="sendblue">Sendblue</a>.</li>
+      <li><b>Owners:</b> every owner has been told what they need to know, and every owner's text is answered. See <a href="#sendblue" data-go="sendblue">Sendblue</a>.</li>
       <li><b>Leads:</b> every text is answered, and every lead you talked to has the right stage and a note.</li>
     </ol>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Where to find things</h2>
     <div class="tw"><table>
       <thead><tr><th>Page</th><th>Go here when</th></tr></thead>
@@ -344,28 +430,27 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
         <tr><td class="q"><a href="#objections" data-go="objections">Objections</a></td><td>They ask about price or say "I'm just looking."</td></tr>
         <tr><td class="q"><a href="#texting" data-go="texting">Texting</a></td><td>You're not sure how to word a text.</td></tr>
         <tr><td class="q"><a href="#recordings" data-go="recordings">Recordings</a></td><td>You want to hear real calls.</td></tr>
-        <tr><td class="q"><a href="#crm" data-go="crm">CRM steps</a></td><td>You need the steps for your call list, stages or tags.</td></tr>
-        <tr><td class="q"><a href="#rules" data-go="rules">Workflows &amp; tags</a></td><td>You don't know what a task or tag means.</td></tr>
+        <tr><td class="q"><a href="#crm" data-go="crm">CRM steps</a></td><td>You need the steps for your call list, the Lead Profile, stages or tags.</td></tr>
+        <tr><td class="q"><a href="#rules" data-go="rules">Workflows &amp; tags</a></td><td>You don't know what a call, workflow or tag means.</td></tr>
         <tr><td class="q"><a href="#book" data-go="book">Book a visit</a></td><td>You're putting a visit on the calendar.</td></tr>
         <tr><td class="q"><a href="#reschedule" data-go="reschedule">Rescheduling</a></td><td>Someone wants to move or cancel a visit.</td></tr>
-        <tr><td class="q"><a href="#clients" data-go="clients">Clients</a></td><td>You need a client's number, calendar, owner or days.</td></tr>
-        <tr><td class="q"><a href="#sendblue" data-go="sendblue">Sendblue</a></td><td>You're texting an owner.</td></tr>
+        <tr><td class="q"><a href="#clients" data-go="clients">Clients</a></td><td>You need a client's number, calendar, owner, days or current deal.</td></tr>
+        <tr><td class="q"><a href="#sendblue" data-go="sendblue">Sendblue</a></td><td>You're telling an owner about a visit.</td></tr>
       </tbody>
     </table></div>
-    <p class="muted" style="margin-top:10px">Names like Maria, Brian and Valencia and times like Thursday at 10 are just examples. Use the real ones. Where you see [your name], say your name.</p>
+    <p class="muted" style="margin-top:12px">Names like Maria, Brian and Valencia and times like Thursday at 10 are just examples. Use the real ones. Where you see [your name], say your name.</p>
   </div>
 </section>
 
 <section id="script" hidden>
-  <div>
-    <div class="eyebrow">On the call</div>
+  <header class="page-head">
     <h1>Call script</h1>
-    <p class="intro">Every call has one goal: get a day, a time, and everyone who decides at the visit. Keep it short and friendly.</p>
-  </div>
+    <p class="lead">Every call has one goal: get a day, a time, and everyone who decides at the visit. Keep it short and friendly.</p>
+  </header>
 
-  <div class="basics">
+  <div class="block">
     <h2>Before every call</h2>
-    <ul>
+    <ul class="cols">
       <li>Always double dial. No answer? Call right back.</li>
       <li>If they pick up and hang up fast, call a third time.</li>
       <li>Call from the client's number.</li>
@@ -376,37 +461,36 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     </ul>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Voicemail</h2>
-    <p class="muted">Calling a new lead for the first time and nobody picks up? Leave this voicemail on your second call.</p>
+    <p>Calling a new lead for the first time and nobody picks up? Leave this voicemail on your second call.</p>
     <blockquote>"Hey Maria, you requested an estimate for your bathroom 2 days ago. This is [your name] with Valencia. We'll try you again later. Thanks."</blockquote>
     <p class="muted">Use their name, their project, how long ago they asked (say "today" if it was today), and the client's name.</p>
   </div>
 
-  <div class="group">
-    <div class="group-head"><h2>Must do on every call</h2><span class="pill-must">4 steps</span></div>
-    <p class="muted">Do these 4 steps in order. If they're ready to book at any point, stop asking questions and book.</p>
+  <div class="block">
+    <h2>Must do on every call</h2>
+    <p>Do these 4 steps in order. If they're ready to book at any point, stop asking questions and book.</p>
+    <div class="rows counted">
+      <div class="row"><div class="k"><h3>Say hi</h3><p>Who you are and why you're calling</p></div>
+        <div class="v"><blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><p class="they">They say: "Yes, I remember."</p><blockquote>"Great. What were you looking to get done exactly?"</blockquote><p class="muted">Use their project, like bathroom or kitchen. You can say estimate or quote.</p></div></div>
+
+      <div class="row"><div class="k"><h3>Materials, then who decides</h3><p>Ask these two right after each other</p></div>
+        <div class="v"><blockquote>"Any idea on materials? Tile, slab, acrylic? We bring samples of all the options so you can see them."</blockquote>
+          <blockquote>"And since we'll be going over all these options, we want to keep it productive. Is there anyone else who helps decide, like a wife or husband, who should be there too?"</blockquote>
+          <p class="muted">Ask about materials first. Then asking who else decides sounds helpful, not pushy.</p></div></div>
+
+      <div class="row"><div class="k"><h3>Set the visit</h3><p>Always offer two times</p></div>
+        <div class="v"><blockquote>"The owner, Brian, comes out, measures, and brings the samples. It's free. Does Thursday at 10 or Friday at 2 work better for both of you?"</blockquote><p>Only offer times the client can come. Check their days on <a href="#clients" data-go="clients">Clients</a> and the open times on their calendar. Then get the address.</p></div></div>
+
+      <div class="row"><div class="k"><h3>Say it back</h3><p>Repeat the day, time and address</p></div>
+        <div class="v"><blockquote>"Perfect. Thursday at 10 at 123 Oak St. Brian, the owner, will be there. I'll text you so you have it."</blockquote></div></div>
+    </div>
   </div>
 
-  <div class="flow">
-    <div class="stage"><div><h3>Say hi</h3><p class="note">Who you are and why you're calling</p></div>
-      <div class="body"><blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><p class="muted">They say: "Yes, I remember."</p><blockquote>"Great. What were you looking to get done exactly?"</blockquote><p class="muted">Use their project, like bathroom or kitchen. You can say estimate or quote.</p></div></div>
-
-    <div class="stage key"><div><h3>Materials, then who decides</h3><p class="note">Ask these two right after each other</p></div>
-      <div class="body"><blockquote>"Any idea on materials? Tile, slab, acrylic? We bring samples of all the options so you can see them."</blockquote>
-        <blockquote>"And since we'll be going over all these options, we want to keep it productive. Is there anyone else who helps decide, like a wife or husband, who should be there too?"</blockquote>
-        <p class="muted">Ask about materials first. Then asking who else decides sounds helpful, not pushy.</p></div></div>
-
-    <div class="stage"><div><h3>Set the visit</h3><p class="note">Always offer two times</p></div>
-      <div class="body"><blockquote>"The owner, Brian, comes out, measures, and brings the samples. It's free. Does Thursday at 10 or Friday at 2 work better for both of you?"</blockquote><p>Only offer days the client can come (see <a href="#clients" data-go="clients">Clients</a>). Then get the address.</p></div></div>
-
-    <div class="stage"><div><h3>Say it back</h3><p class="note">Repeat the day, time and address</p></div>
-      <div class="body"><blockquote>"Perfect. Thursday at 10 at 123 Oak St. Brian, the owner, will be there. I'll text you so you have it."</blockquote></div></div>
-  </div>
-
-  <div class="optional">
-    <div class="group-head"><h2>Extra questions</h2><span class="pill-opt">Optional</span></div>
-    <p class="muted">Use these if they want to talk or aren't sure yet. Skip them if they're ready to book. Pick one or two.</p>
+  <div class="block">
+    <h2>Extra questions <small>(optional)</small></h2>
+    <p>Use these if they want to talk or aren't sure yet. Skip them if they're ready to book. Pick one or two.</p>
     <ul>
       <li>"Full bathroom, or just the shower?"</li>
       <li>"When are you hoping to get it done?"</li>
@@ -415,79 +499,81 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     </ul>
   </div>
 
-  <div class="after">
+  <div class="block">
     <h2>After the call</h2>
     <ol>
-      <li>Book it on the client's calendar.</li>
-      <li>Move the stage to Booked - Confirmed.</li>
-      <li>Post it in the client's group chat.</li>
+      <li>Book it on the client's calendar. See <a href="#book" data-go="book">Book a visit</a>.</li>
+      <li>Check the Lead Profile and take out any price. See <a href="#crm" data-go="crm">CRM steps</a>.</li>
+      <li>Move the stage to <b>Booked&nbsp;- Confirmed</b>. About a minute later, the owner gets the Lead Profile by text.</li>
+      <li>Tell the owner in their group chat. See <a href="#sendblue" data-go="sendblue">Sendblue</a>.</li>
     </ol>
-    <p class="muted">The steps are on the <a href="#crm" data-go="crm">CRM steps</a> page.</p>
   </div>
 </section>
 
 <section id="confirm" hidden>
-  <div>
-    <div class="eyebrow">On the call</div>
+  <header class="page-head">
     <h1>Confirm a visit</h1>
-    <p class="intro">Some leads book a visit online by themselves. Nobody has talked to them yet, so we don't know if it's real. Your job is to call, make sure they're coming, and change the stage from <b>Booked</b> to <b>Booked - Confirmed</b>.</p>
-  </div>
+    <p class="lead">Some leads book a visit online by themselves. Nobody has talked to them yet, so we don't know if it's real. Your job is to call, make sure they're coming, and change the stage from <b>Booked</b> to <b>Booked&nbsp;- Confirmed</b>.</p>
+  </header>
 
-  <div class="basics">
+  <div class="block">
     <h2>How to spot them</h2>
     <ul>
       <li>Your call list says <b>Self-booked: confirm</b>.</li>
       <li>Their stage says <b>Booked</b>.</li>
       <li>They have the tag <b>appt-unconfirmed</b>.</li>
       <li>Their stage isn't Booked? Change it to <b>Booked</b> right away. Everyone who books a visit must be on Booked.</li>
-      <li>You booked them yourself on the phone? Skip this page and go right to Booked - Confirmed.</li>
+      <li>You booked them yourself on the phone? Skip this page and go right to Booked&nbsp;- Confirmed.</li>
     </ul>
   </div>
 
-  <div class="steps">
-    <div class="step"><div class="text"><h3>1. Look before you call</h3><p>Open the contact. Find these:</p>
-      <ul><li>The day and time of the visit, on the right side.</li><li>What they asked for on the form.</li><li>The city. Is it in the client's area? Check <a href="#clients" data-go="clients">Clients</a>.</li></ul></div>
-      <div class="shots"><a href="img/guide-appt-card.jpg" target="_blank"><img src="img/guide-appt-card.jpg" alt="Appointment card circled" loading="lazy"></a></div></div>
+  <div class="block">
+    <h2>Steps</h2>
+    <div class="steps">
+      <div class="step"><div class="text"><h3>1. Look before you call</h3><p>Open the contact. Find these:</p>
+        <ul><li>The day and time of the visit, on the right side.</li><li>What they asked for on the form.</li><li>The city. Is it in the client's area? Check <a href="#clients" data-go="clients">Clients</a>.</li></ul></div>
+        <div class="shots"><a href="img/guide-appt-card.jpg" target="_blank"><img src="img/guide-appt-card.jpg" alt="Appointment card circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>2. Call them</h3><p>Call from the client's number. Double dial. They hang up fast? Call a 3rd time.</p></div>
-      <div class="shots"><a href="img/guide-dialer.jpg" target="_blank"><img src="img/guide-dialer.jpg" alt="Dialer button and Change circled" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>2. Call them</h3><p>Call from the client's number. Double dial. They hang up fast? Call a 3rd time.</p></div>
+        <div class="shots"><a href="img/guide-dialer.jpg" target="_blank"><img src="img/guide-dialer.jpg" alt="Dialer button and Change circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>3. What to say</h3><p>They already said yes by booking, so don't sell. Just get ready for the visit.</p><p class="muted">Listen to a real one:</p><div class="player" data-src="audio/07-confirm-booked.mp3" data-len="55"></div></div>
-      <div class="shots"><p><b>Say why you're calling:</b></p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote>
-        <p><b>Ask what they want:</b></p><blockquote>"What were you looking to get done exactly?"</blockquote>
-        <p><b>Ask about materials, then who decides:</b></p><blockquote>"Any idea on materials? Tile, slab, acrylic? We bring samples of all the options so you can see them."</blockquote><blockquote>"And since we'll be going over all these options, we want to keep it productive. Is there anyone else who helps decide, like a wife or husband, who should be there too?"</blockquote>
-        <p><b>Say it back:</b></p><blockquote>"Perfect. Thursday at 10 at 123 Oak St. Brian, the owner, will be there."</blockquote></div></div>
+      <div class="step"><div class="text"><h3>3. What to say</h3><p>They already said yes by booking, so don't sell. Just get ready for the visit.</p><p class="muted">Listen to a real one:</p><div class="player" data-src="audio/07-confirm-booked.mp3" data-len="55"></div></div>
+        <div class="shots"><p><b>Say why you're calling:</b></p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote>
+          <p><b>Ask what they want:</b></p><blockquote>"What were you looking to get done exactly?"</blockquote>
+          <p><b>Ask about materials, then who decides:</b></p><blockquote>"Any idea on materials? Tile, slab, acrylic? We bring samples of all the options so you can see them."</blockquote><blockquote>"And since we'll be going over all these options, we want to keep it productive. Is there anyone else who helps decide, like a wife or husband, who should be there too?"</blockquote>
+          <p><b>Say it back:</b></p><blockquote>"Perfect. Thursday at 10 at 123 Oak St. Brian, the owner, will be there."</blockquote></div></div>
 
-    <div class="step"><div class="text"><h3>4. Change the stage to Booked - Confirmed</h3><p>Do this right when you hang up.</p>
-      <ol><li>On the contact, click <b>Actions</b>.</li><li>Click the three dots on the opportunity, then <b>View Opportunity details</b>.</li><li>Click <b>Stage</b> and pick <b>Booked - Confirmed</b>.</li><li>Click <b>Update</b>.</li></ol>
-      <p>That's it. In about a minute, the CRM stops the confirm calls and texts by itself. You don't touch the tags.</p></div>
-      <div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage-choose.jpg" target="_blank"><img src="img/guide-stage-choose.jpg" alt="Stage list with Booked - Confirmed and Update circled" loading="lazy"></a></div></div>
+      <div class="step solo"><div class="text"><h3>4. Check the Lead Profile and leave a note</h3><p>A few minutes after the call, the <b>Lead Profile</b> on the contact fills in by itself. Read it and fix anything wrong before the next step. The owner gets this exact text. The steps are on <a href="#crm" data-go="crm">CRM steps</a>.</p>
+        <p class="caution">Take out any price you told them. If you talked about money, give a budget range.</p></div></div>
 
-    <div class="step"><div class="text"><h3>5. Check the Lead Profile and leave a note</h3><p>A few minutes after the call, the <b>Lead Profile</b> on the contact fills in by itself. Read it and fix anything wrong.</p>
-      <p class="caution">Take out any price you told them. If you talked about money, give a budget range.</p></div></div>
+      <div class="step"><div class="text"><h3>5. Change the stage to Booked&nbsp;- Confirmed</h3>
+        <ol><li>On the contact, click <b>Actions</b>.</li><li>Click the three dots on the opportunity, then <b>View Opportunity details</b>.</li><li>Click <b>Stage</b> and pick <b>Booked&nbsp;- Confirmed</b>.</li><li>Click <b>Update</b>.</li></ol>
+        <p>That's it. In about a minute, the CRM stops the confirm calls and texts and sends the owner the Lead Profile by itself. You don't touch the tags.</p></div>
+        <div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage-choose.jpg" target="_blank"><img src="img/guide-stage-choose.jpg" alt="Stage list with Booked&nbsp;- Confirmed and Update circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>6. Tell the owner</h3><p>Send the details in the client's chat in <a href="#sendblue" data-go="sendblue">Sendblue</a>. Now you're done.</p><p><b>The owner always gets the appointment,</b> even if the lead never answers you. If you couldn't reach them, say it's unconfirmed.</p>
-      <p class="caution">Not every client is on Sendblue. CaliFirst and Sakura use WhatsApp. DRH has no chat, so ask Leo. CaliFirst also gets its leads right away and doesn't use the self-booked confirm calls.</p></div>
-      <div class="shots"><a href="img/guide-sendblue-send.jpg" target="_blank"><img src="img/guide-sendblue-send.jpg" alt="Chat name, message box and Send circled" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>6. Tell the owner</h3><p>Post it in the client's group chat. Start the message with <b>Confirmed appointment:</b>. See <a href="#sendblue" data-go="sendblue">Sendblue</a>. Now you're done.</p><p><b>The owner always gets the appointment,</b> even if the lead never answers you. If you couldn't reach them, post it with <b>New appointment (UNCONFIRMED):</b> at the top.</p>
+        <p class="caution">Not every client has a Sendblue chat. The table at the bottom of <a href="#sendblue" data-go="sendblue">Sendblue</a> shows where each owner gets their messages.</p></div>
+        <div class="shots"><a href="img/guide-sendblue-send.jpg" target="_blank"><img src="img/guide-sendblue-send.jpg" alt="Chat name, message box and Send circled" loading="lazy"></a></div></div>
+    </div>
   </div>
 
-  <div>
+  <div class="block">
     <h2>What if it doesn't go like that?</h2>
     <div class="tw"><table>
       <thead><tr><th>What happened</th><th>What you do</th><th>The stage</th></tr></thead>
       <tbody>
-        <tr><td class="q">No answer</td><td>Delete the call in Manual Actions. The CRM texts them and adds your next call by itself. <b>Still tell the owner.</b> Send the details and say it's unconfirmed: "Here's a new appointment: Unconfirmed but will send you more info once we speak to her." Then the details.</td><td>Leave it on <b>Booked</b></td></tr>
-        <tr><td class="q">They text YES</td><td>The CRM stops the confirm calls by itself. Then do steps 4, 5 and 6.</td><td><b>Booked - Confirmed</b></td></tr>
-        <tr><td class="q">They text back but won't pick up</td><td>Ask your questions by text. Keep it short. Then do steps 4, 5 and 6.</td><td><b>Booked - Confirmed</b></td></tr>
-        <tr><td class="q">They want a new time</td><td>Follow <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</td><td><b>Booked - Confirmed</b></td></tr>
+        <tr><td class="q">No answer</td><td>Delete the call in Manual Actions. The CRM texts them and adds your next call by itself. <b>Still tell the owner.</b> Post it with <b>New appointment (UNCONFIRMED):</b> at the top and this note: "Booked online. We haven't reached them yet."</td><td>Leave it on <b>Booked</b></td></tr>
+        <tr><td class="q">They text YES</td><td>The CRM stops the confirm calls by itself. Then do steps 4, 5 and 6.</td><td><b>Booked&nbsp;- Confirmed</b></td></tr>
+        <tr><td class="q">They text back but won't pick up</td><td>Ask your questions by text. Keep it short. Then do steps 4, 5 and 6.</td><td><b>Booked&nbsp;- Confirmed</b></td></tr>
+        <tr><td class="q">They want a new time</td><td>Follow <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</td><td><b>Booked&nbsp;- Confirmed</b></td></tr>
         <tr><td class="q">They want to cancel</td><td>Follow <a href="#reschedule" data-go="reschedule">Rescheduling</a>.</td><td><b>Follow Up</b></td></tr>
         <tr><td class="q">Too far away, or not interested</td><td>Cancel the visit, tell the owner if they already know about it, and write why in a note.</td><td><b>Dead</b></td></tr>
-        <tr><td class="q">You reach them after you told the owner</td><td>Do steps 4 and 5. Then send the owner the new info and say it's confirmed.</td><td><b>Booked - Confirmed</b></td></tr>
+        <tr><td class="q">You reach them after you told the owner</td><td>Do steps 4 and 5. Then post the details again with <b>Confirmed appointment:</b> at the top.</td><td><b>Booked&nbsp;- Confirmed</b></td></tr>
       </tbody>
     </table></div>
   </div>
 
-  <div class="basics">
+  <div class="block">
     <h2>Never do these</h2>
     <ul>
       <li>Don't leave them on Booked after you talked to them.</li>
@@ -499,117 +585,131 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 </section>
 
 <section id="situations" hidden>
-  <div>
-    <div class="eyebrow">On the call</div>
+  <header class="page-head">
     <h1>Every situation</h1>
-    <p class="intro">Find what's happening below. Each card tells you what to say and what to do next.</p>
-  </div>
+    <p class="lead">Find what's happening below. Each one tells you what to say and what to do next.</p>
+  </header>
 
-  <div>
+  <div class="block">
     <h2>Not booked yet</h2>
-    <div class="flow">
-      <div class="stage"><div><h3>A robot answers</h3><p class="note">It says "Record your name and why you're calling"</p></div>
-        <div class="body"><p><b>Goal:</b> get them to pick up. Only say your name and the appointment.</p><blockquote>"Hi, it's [your name], calling about your appointment."</blockquote><p>That's it. Wait for them to pick up. If it hangs up or goes to voicemail, that counts as no answer.</p></div></div>
+    <div class="rows">
+      <div class="row"><div class="k"><h3>A robot answers</h3><p>It says "Record your name and why you're calling"</p></div>
+        <div class="v"><p><b>Goal:</b> get them to pick up. Only say your name and the appointment.</p><blockquote>"Hi, it's [your name], calling about your appointment."</blockquote><p>That's it. Wait for them to pick up. If it hangs up or goes to voicemail, that counts as no answer.</p></div></div>
 
-      <div class="stage"><div><h3>Brand new lead</h3><p class="note">Your call list says New [Client] Facebook Lead</p></div>
-        <div class="body"><p><b>Goal:</b> book the visit. Call right away and double dial.</p><blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><p>Then run the <a href="#script" data-go="script">call script</a>.</p><p><b>No answer on either call?</b> Leave a voicemail on the second one:</p><blockquote>"Hey Maria, you requested an estimate for your bathroom 2 days ago. This is [your name] with Valencia. We'll try you again later. Thanks."</blockquote></div></div>
+      <div class="row"><div class="k"><h3>Brand new lead</h3><p>Your call list says New [Client] Facebook Lead or Google Ads Submissions</p></div>
+        <div class="v"><p><b>Goal:</b> book the visit. Call right away and double dial.</p><blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><p>Then run the <a href="#script" data-go="script">call script</a>.</p><p><b>No answer on either call?</b> Leave a voicemail on the second one:</p><blockquote>"Hey Maria, you requested an estimate for your bathroom 2 days ago. This is [your name] with Valencia. We'll try you again later. Thanks."</blockquote></div></div>
 
-      <div class="stage"><div><h3>Hasn't answered yet</h3><p class="note">Your call list says Nurture - [Client] Lead Processing</p></div>
-        <div class="body"><p><b>Goal:</b> reach them. Double dial. If they pick up and hang up fast, call a third time.</p><p>No answer? Don't text. The workflow texts them for us.</p><p><b>In the CRM:</b> leave the stage on Connecting. The CRM adds your next call by itself.</p></div></div>
+      <div class="row"><div class="k"><h3>Hasn't answered yet</h3><p>Your call list says Nurture - [Client] Lead Processing</p></div>
+        <div class="v"><p><b>Goal:</b> reach them. Double dial. If they pick up and hang up fast, call a third time.</p><p>No answer? Don't text. The workflow texts them for us.</p><p><b>In the CRM:</b> leave the stage on Connecting. The CRM adds your next call by itself.</p></div></div>
 
-      <div class="stage"><div><h3>Texts back but won't pick up</h3><p class="note">They text you back in Conversations</p></div>
-        <div class="body"><p><b>Goal:</b> book by text. Don't push a call. Give two times.</p><blockquote>"Easy. The owner can come out Thursday at 10 or Friday at 2. Which works better?"</blockquote><p>Once they pick, get the address by text and book it like normal.</p></div></div>
+      <div class="row"><div class="k"><h3>Texts back but won't pick up</h3><p>They text you back in Conversations</p></div>
+        <div class="v"><p><b>Goal:</b> book by text. Don't push a call. Give two times.</p><blockquote>"Easy. The owner can come out Thursday at 10 or Friday at 2. Which works better?"</blockquote><p>Once they pick, get the address by text and book it like normal.</p></div></div>
 
-      <div class="stage"><div><h3>Wants a price first</h3><p class="note">They only want a number</p></div>
-        <div class="body"><p><b>Goal:</b> give a range, then book. Never an exact number.</p><blockquote>"Every job is different. Most projects start at $8,000. The owner gives you an exact price at the free visit, with options. Does Thursday or Friday work?"</blockquote><p>More answers on <a href="#objections" data-go="objections">Objections</a>.</p></div></div>
+      <div class="row"><div class="k"><h3>Wants a price first</h3><p>They only want a number</p></div>
+        <div class="v"><p><b>Goal:</b> give a range, then book. Never an exact number.</p><blockquote>"Every job is different. Most projects start at $8,000. The owner gives you an exact price at the free visit, with options. Does Thursday or Friday work?"</blockquote><p>Punch List has its own starting prices. See <a href="#clients" data-go="clients">Clients</a>. More answers on <a href="#objections" data-go="objections">Objections</a>.</p></div></div>
 
-      <div class="stage"><div><h3>Filled out the form again</h3><p class="note">Same client, already on our list</p></div>
-        <div class="body"><p>The CRM sends them a thank-you text by itself. You won't get a new call in your list.</p><p><b>Goal:</b> keep going from where you left off. Read the notes first.</p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you sent your info again. Still looking to get the bathroom done?"</blockquote></div></div>
+      <div class="row"><div class="k"><h3>Asks about the deal in the ad</h3><p>"The ad said $3,000 off"</p></div>
+        <div class="v"><p>Each client's current deal and its end date are on <a href="#clients" data-go="clients">Clients</a>. Tell them it's real and when it ends. Never promise anything that isn't on that page.</p></div></div>
 
-      <div class="stage"><div><h3>Filled out forms for two clients</h3><p class="note">Two client tags on one person</p></div>
-        <div class="body"><p>Treat them like two leads. Make one call for each client, from that client's number, and book on that client's calendar.</p></div></div>
+      <div class="row"><div class="k"><h3>Filled out the form again</h3><p>Same client, already on our list</p></div>
+        <div class="v"><p>The CRM sends them a thank-you text by itself. You won't get a new call in your list.</p><p><b>Goal:</b> keep going from where you left off. Read the notes first.</p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you sent your info again. Still looking to get the bathroom done?"</blockquote></div></div>
 
-      <div class="stage"><div><h3>CaliFirst lead</h3><p class="note">They have the tag califirst-remodel</p></div>
-        <div class="body"><p>Use the same script. Don't say an owner's name, just say "our team". Never book a Saturday.</p><blockquote>"Hey Maria, it's [your name] with CaliFirst Remodel. You requested an estimate for your bathroom?"</blockquote></div></div>
+      <div class="row"><div class="k"><h3>Filled out forms for two clients</h3><p>Two client tags on one person</p></div>
+        <div class="v"><p>Treat them like two leads. Make one call for each client, from that client's number, and book on that client's calendar.</p></div></div>
+
+      <div class="row"><div class="k"><h3>Outside the client's area, or a small job</h3><p>Far away, or not a big enough project</p></div>
+        <div class="v"><p>Check the client's area and rules on <a href="#clients" data-go="clients">Clients</a>. Not sure? Ask Leo before you book it.</p></div></div>
+
+      <div class="row"><div class="k"><h3>CaliFirst lead</h3><p>They have the tag califirst-remodel</p></div>
+        <div class="v"><p>Don't call or text them. CaliFirst calls its own leads now. If one shows up in your list, skip it and tell Leo.</p></div></div>
     </div>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Call back later</h2>
-    <div class="flow">
-      <div class="stage"><div><h3>Busy, call me later</h3><p class="note">They picked up but can't talk</p></div>
-        <div class="body"><p><b>Goal:</b> get a real day and time.</p><blockquote>"No problem. What day is good for me to call you back? Morning or afternoon?"</blockquote><p><b>In the CRM:</b> set the <b>Follow Up Date</b> and write the time in a note. The steps are under <a href="#rules" data-go="rules">Schedule a follow-up</a>.</p></div></div>
+    <div class="rows">
+      <div class="row"><div class="k"><h3>Busy, call me later</h3><p>They picked up but can't talk</p></div>
+        <div class="v"><p><b>Goal:</b> get a real day and time.</p><blockquote>"No problem. What day is good for me to call you back? Morning or afternoon?"</blockquote><p><b>In the CRM:</b> set the <b>Follow Up Date</b> and write the time in a note. The steps are under <a href="#rules" data-go="rules">Schedule a follow-up</a>.</p></div></div>
 
-      <div class="stage"><div><h3>Not ready yet</h3><p class="note">Months away, or saving up</p></div>
-        <div class="body"><p><b>Goal:</b> stay in touch for later.</p><blockquote>"Totally fine. When do you think you'd want to start? I'll check back with you then."</blockquote><p><b>In the CRM:</b> move the stage to <b>Follow Up</b>, set the <b>Follow Up Date</b>, and leave a note. This stops our texts and calls by itself. Don't add <b>lead nurturing</b>. <small>Forgot the date? The CRM adds a call to your list in 14 days anyway.</small></p></div></div>
+      <div class="row"><div class="k"><h3>Not ready yet</h3><p>Months away, or saving up</p></div>
+        <div class="v"><p><b>Goal:</b> stay in touch for later.</p><blockquote>"Totally fine. When do you think you'd want to start? I'll check back with you then."</blockquote><p><b>In the CRM:</b> move the stage to <b>Follow Up</b>, set the <b>Follow Up Date</b>, and leave a note. This stops our texts and calls by itself. Don't add <b>lead nurturing</b>.</p><p class="muted">Forgot the date? The CRM adds a call to your list in 14 days anyway.</p></div></div>
 
-      <div class="stage"><div><h3>Follow-up day is here</h3><p class="note">Your call list says Follow Up Reminders</p></div>
-        <div class="body"><p><b>Goal:</b> call when you said you would. Read the note first.</p><blockquote>"Hey Maria, it's [your name] with Valencia. You said today was a good day to talk about the bathroom. Still a good time?"</blockquote><p>Then keep going from where you left off.</p></div></div>
+      <div class="row"><div class="k"><h3>Follow-up day is here</h3><p>Your call list says Follow Up Reminders</p></div>
+        <div class="v"><p><b>Goal:</b> call when you said you would. Read the note first.</p><blockquote>"Hey Maria, it's [your name] with Valencia. You said today was a good day to talk about the bathroom. Still a good time?"</blockquote><p>Then keep going from where you left off.</p></div></div>
 
-      <div class="stage"><div><h3>Follow-up day, no answer</h3><p class="note">You called on the follow-up day and they didn't pick up</p></div>
-        <div class="body"><p><b>Goal:</b> try once more. Double dial. No answer? Don't text. The workflow texts them for us.</p><p><b>In the CRM:</b> delete the call in Manual Actions. That's it. About 10 minutes later, the CRM starts about a week of texts and calls again by itself.</p><p><b>If you reached them:</b> book them, or set a new <b>Follow Up Date</b>. Do it within 10 minutes of deleting the call, so they don't get those texts.</p><p><small>Want the texts to start right now? Add the <b>lead nurturing</b> tag yourself.</small></p></div></div>
+      <div class="row"><div class="k"><h3>Follow-up day, no answer</h3><p>You called on the follow-up day and they didn't pick up</p></div>
+        <div class="v"><p><b>Goal:</b> try once more. Double dial. No answer? Don't text. The workflow texts them for us.</p><p><b>In the CRM:</b> delete the call in Manual Actions. That's it. About 10 minutes later, the CRM starts about a week of texts and calls again by itself.</p><p><b>If you reached them:</b> book them, or set a new <b>Follow Up Date</b>. Do it within 10 minutes of deleting the call, so they don't get those texts.</p><p class="muted">Want the texts to start right now? Add the <b>lead nurturing</b> tag yourself.</p></div></div>
     </div>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Already booked</h2>
-    <div class="flow">
-      <div class="stage"><div><h3>Booked online, not confirmed</h3><p class="note">Your call list says Self-booked: confirm</p></div>
-        <div class="body"><p><b>Goal:</b> make sure the visit is still on. They already said yes, so don't sell.</p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><p>Ask what they want done, materials, and who decides. Say the day and time back to them.</p><p><b>In the CRM:</b> move the stage to <b>Booked - Confirmed</b>. All the steps are on <a href="#confirm" data-go="confirm">Confirm a visit</a>.</p></div></div>
+    <div class="rows">
+      <div class="row"><div class="k"><h3>Booked online, not confirmed</h3><p>Your call list says Self-booked: confirm</p></div>
+        <div class="v"><p><b>Goal:</b> make sure the visit is still on. They already said yes, so don't sell.</p><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><p>Ask what they want done, materials, and who decides. Say the day and time back to them.</p><p><b>In the CRM:</b> check the Lead Profile, then move the stage to <b>Booked&nbsp;- Confirmed</b>. All the steps are on <a href="#confirm" data-go="confirm">Confirm a visit</a>.</p></div></div>
 
-      <div class="stage"><div><h3>Wants a new time</h3><p class="note">They need to change their visit</p></div>
-        <div class="body"><p>Give two new times right away. Then follow the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps.</p></div></div>
+      <div class="row"><div class="k"><h3>Wants a new time</h3><p>They need to change their visit</p></div>
+        <div class="v"><p>Give two new times right away. Then follow the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps.</p></div></div>
 
-      <div class="stage"><div><h3>Cancels by text</h3><p class="note">They were booked and texted to cancel</p></div>
-        <div class="body"><p><b>Goal:</b> get a new time or a day to follow up.</p><blockquote>"Thanks for letting me know, Maria. Would the same time tomorrow work?"</blockquote><p>Only ask this if the client can come then and they didn't already say when. Then follow the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps.</p></div></div>
+      <div class="row"><div class="k"><h3>Cancels by text</h3><p>They were booked and texted to cancel</p></div>
+        <div class="v"><p><b>Goal:</b> get a new time or a day to follow up.</p><blockquote>"Thanks for letting me know, Maria. Would the same time tomorrow work?"</blockquote><p>Only ask this if the client can come then and they didn't already say when. Then follow the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps.</p></div></div>
 
-      <div class="stage"><div><h3>Missed the visit</h3><p class="note">They weren't home</p></div>
-        <div class="body"><p><b>Goal:</b> pick a new time the same day. Be nice about it.</p><blockquote>"Hey Maria, it's [your name] with Valencia. Looks like we missed each other today. I have Saturday at 2 or Monday at 10. Which is better?"</blockquote><p>Then move the visit using the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps.</p></div></div>
+      <div class="row"><div class="k"><h3>Missed the visit</h3><p>They weren't home</p></div>
+        <div class="v"><p><b>Goal:</b> pick a new time the same day. Be nice about it.</p><blockquote>"Hey Maria, it's [your name] with Valencia. Looks like we missed each other today. I have Saturday at 2 or Monday at 10. Which is better?"</blockquote><p>Then move the visit using the <a href="#reschedule" data-go="reschedule">Rescheduling</a> steps.</p></div></div>
+
+      <div class="row"><div class="k"><h3>Someone else wants the reminders</h3><p>A wife, husband, or grown child</p></div>
+        <div class="v"><p>Add their number to the lead's contact as <b>Phone (Additional)</b>: click the <b>+</b> next to Phone. Never make a new contact for them. The CRM's reminders only go to the main number, so tell Leo after you add it.</p></div></div>
+
+      <div class="row"><div class="k"><h3>The owner is going back a second time</h3><p>To measure again or show a design</p></div>
+        <div class="v"><p>Don't put it on the calendar. That would text the homeowner and the owner like it's a brand new visit. Tell Leo the day and time instead.</p></div></div>
     </div>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Stop calling</h2>
-    <div class="flow">
-      <div class="stage"><div><h3>Not a real lead</h3><p class="note">Wrong number, never filled out a form, not interested, or too far away</p></div>
-        <div class="body"><p>If they just say "not interested," first ask: "Oh, did you end up pushing this out?" See <a href="#objections" data-go="objections">Objections</a>.</p><blockquote>"Sorry to bother you. Have a good day."</blockquote><p><b>In the CRM:</b> move the stage to <b>Dead</b> and write why in a note. Dead stops all calls and texts by itself.</p></div></div>
+    <div class="rows">
+      <div class="row"><div class="k"><h3>Not a real lead</h3><p>Wrong number, never filled out a form, not interested, or too far away</p></div>
+        <div class="v"><p>If they just say "not interested," first ask: "Oh, did you end up pushing this out?" See <a href="#objections" data-go="objections">Objections</a>.</p><blockquote>"Sorry to bother you. Have a good day."</blockquote><p><b>In the CRM:</b> move the stage to <b>Dead</b> and write why in a note. Dead stops all calls and texts by itself.</p></div></div>
 
-      <div class="stage"><div><h3>Lead assigned to Leo</h3><p class="note">It says Leo Melaye next to Owner or Assigned To</p></div>
-        <div class="body"><p>Don't call or text them. Skip it and go to the next one.</p></div></div>
+      <div class="row"><div class="k"><h3>Asks us to stop</h3><p>"Stop calling me," or STOP by text</p></div>
+        <div class="v"><p>Stop. Move the stage to <b>Dead</b>, write why in a note, and turn on <b>DND</b> on their contact.</p></div></div>
+
+      <div class="row"><div class="k"><h3>Lead assigned to Leo</h3><p>It says Leo Melaye next to Owner or Assigned To</p></div>
+        <div class="v"><p>Don't call or text them. Skip it and go to the next one.</p></div></div>
     </div>
   </div>
 </section>
 
 <section id="objections" hidden>
-  <div>
-    <div class="eyebrow">On the call</div>
+  <header class="page-head">
     <h1>Objections</h1>
-    <p class="intro">People say these a lot. Give the short answer, then go right back to picking a day and time.</p>
+    <p class="lead">People say these a lot. Give the short answer, then go right back to picking a day and time.</p>
+  </header>
+  <div class="block">
+    <div class="tw"><table>
+      <thead><tr><th>They say</th><th>You say</th></tr></thead>
+      <tbody>
+        <tr><td class="q">How much does it cost?</td><td>"Every job is different. Most projects start at $8,000. The owner gives you an exact price at the free visit, with options. Does Thursday or Friday work?"</td></tr>
+        <tr><td class="q">Just send me a quote.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
+        <tr><td class="q">I'm just looking.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
+        <tr><td class="q">I'm getting other quotes.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
+        <tr><td class="q">I need to talk to my husband.</td><td>"Makes sense. Let's pick a time you're both home."</td></tr>
+        <tr><td class="q">I'm busy, call me later.</td><td>"No problem. What time is good tomorrow?"<small>Get a real time and write it in a note.</small></td></tr>
+        <tr><td class="q">Who is coming?</td><td>"Brian. He's the owner."<small>Owner names are on the <a href="#clients" data-go="clients">Clients</a> page.</small></td></tr>
+        <tr><td class="q">Not interested.</td><td>"Oh, did you end up pushing this out?"<small>If they pushed it out, ask when to call back. If they're done, move the stage to Dead.</small></td></tr>
+        <tr><td class="q">A question you can't answer</td><td>"Good question. The owner can go over that at the visit."</td></tr>
+      </tbody>
+    </table></div>
   </div>
-  <div class="tw"><table>
-    <thead><tr><th>They say</th><th>You say</th></tr></thead>
-    <tbody>
-      <tr><td class="q">How much does it cost?</td><td>"Every job is different. Most projects start at $8,000. The owner gives you an exact price at the free visit, with options. Does Thursday or Friday work?"</td></tr>
-      <tr><td class="q">Just send me a quote.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
-      <tr><td class="q">I'm just looking.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
-      <tr><td class="q">I'm getting other quotes.</td><td>"I don't even know if I can help you yet. What are you trying to get done?"</td></tr>
-      <tr><td class="q">I need to talk to my husband.</td><td>"Makes sense. Let's pick a time you're both home."</td></tr>
-      <tr><td class="q">I'm busy, call me later.</td><td>"No problem. What time is good tomorrow?"<small>Get a real time and write it in a note.</small></td></tr>
-      <tr><td class="q">Who is coming?</td><td>"Brian. He's the owner."<small>Owner names are on the <a href="#clients" data-go="clients">Clients</a> page.</small></td></tr>
-      <tr><td class="q">Not interested.</td><td>"Oh, did you end up pushing this out?"<small>If they pushed it out, ask when to call back. If they're done, move the stage to Dead.</small></td></tr>
-      <tr><td class="q">A question you can't answer</td><td>"Good question. The owner can go over that at the visit."</td></tr>
-    </tbody>
-  </table></div>
 </section>
 
 <section id="texting" hidden>
-  <div>
-    <div class="eyebrow">On the call</div>
+  <header class="page-head">
     <h1>Texting</h1>
-    <p class="intro">Your job is calling. The workflows already text leads for us, so don't text unless you have a reason. When you do text, write like a normal person: one or two short lines and one question.</p>
-  </div>
+    <p class="lead">Your job is calling. The workflows already text leads for us, so don't text unless you have a reason. When you do text, write like a normal person: one or two short lines and one question.</p>
+  </header>
 
-  <div class="basics">
+  <div class="block">
     <h2>Only text when there's a reason</h2>
     <p>No reason on this list? Don't text. Call instead.</p>
     <ul>
@@ -618,10 +718,10 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
       <li>You were talking and they dropped off, and now you can't reach them.</li>
       <li>You have another real reason, like you need one thing from them to get the visit ready.</li>
     </ul>
-    <p class="muted" style="margin-top:10px">Never send a text just to check in or because they didn't answer. The workflow already does that.</p>
+    <p class="muted">Never send a text just to check in or because they didn't answer. The workflow already does that.</p>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Following up</h2>
     <div class="compare">
       <div><span class="label no">Don't send</span><p>Hi Seema, this is [your name] with Valencia Construction Pros. Just wanted to follow up and remind you to give us a call when you have a moment so we can schedule your free, no-obligation estimate for your new laundry room with bathroom remodeling project. We'd love the opportunity to discuss your vision and provide pricing at no charge. Looking forward to hearing from you!</p></div>
@@ -629,7 +729,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     </div>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Getting the address</h2>
     <div class="compare">
       <div><span class="label no">Don't send</span><p>Thanks for letting me know, Phil! Since it's a big rush, we'll make sure to prioritize your estimate. Can you send me the address where the work will be done? That way I can get you on the calendar ASAP.</p></div>
@@ -637,7 +737,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     </div>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Texts that work, when you have a reason</h2>
     <div class="examples">
       <p>Phil you are harder to reach than the president!</p>
@@ -649,223 +749,265 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 </section>
 
 <section id="recordings" hidden>
-  <div>
-    <div class="eyebrow">On the call</div>
+  <header class="page-head">
     <h1>Recordings</h1>
-    <p class="intro">These are real calls, about a minute each. Listen to how short and relaxed they are. The last two show what not to do.</p>
+    <p class="lead">These are real calls, about a minute each. Listen to how short and relaxed they are. The last two show what not to do.</p>
+  </header>
+  <div class="block">
+    <div class="tw"><table>
+      <thead><tr><th>Moment</th><th>What to listen for</th><th>Play</th></tr></thead>
+      <tbody id="clips"></tbody>
+    </table></div>
   </div>
-  <div class="tw"><table>
-    <thead><tr><th>Moment</th><th>What to listen for</th><th>Play</th></tr></thead>
-    <tbody id="clips"></tbody>
-  </table></div>
 </section>
 
 <section id="crm" hidden>
-  <div>
-    <div class="eyebrow">In the CRM</div>
+  <header class="page-head">
     <h1>CRM steps</h1>
-    <p class="intro">The CRM sends texts and reminders by itself. They stop when the lead texts YES or you set the stage to Booked - Confirmed. Your part is calling, booking, and setting the stage.</p>
-  </div>
+    <p class="lead">The CRM sends texts and reminders by itself. Your part is calling, booking, checking the Lead Profile, and setting the stage.</p>
+  </header>
 
-  <div class="steps">
-    <div class="step"><div class="text"><h3>1. Open Manual Actions</h3><p>Click <b>Conversations</b>, then <b>Manual Actions</b>. This is your call list. Call new leads first, then self-booked leads, then reschedules, then everyone else.</p></div>
-      <div class="shots"><a href="img/guide-manual-actions.jpg" target="_blank"><img src="img/guide-manual-actions.jpg" alt="Manual Actions tab and the workflow name circled" loading="lazy"></a></div></div>
+  <div class="block">
+    <div class="steps">
+      <div class="step"><div class="text"><h3>1. Open Manual Actions</h3><p>Click <b>Conversations</b>, then <b>Manual Actions</b>. This is your call list. Call new leads first, then self-booked leads, then reschedules, then everyone else.</p></div>
+        <div class="shots"><a href="img/guide-manual-actions.jpg" target="_blank"><img src="img/guide-manual-actions.jpg" alt="Manual Actions tab and the workflow name circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>2. Work every call this one way</h3><p>It's more clicks, but you see who you're calling and you call from the right number.</p>
-      <ol><li>Click the lead's <b>name</b> in the list. Their contact opens.</li>
-        <li>Read who they are: what they asked for, their tags, and past calls and texts.</li>
-        <li>Open the dialer and pick the client's number. See step 3.</li>
-        <li>Double dial. They pick up and hang up fast? Call a 3rd time. Leave a voicemail if it's a brand new lead.</li>
-        <li>Talked to them? Finish the call and set the stage first. See step 5.</li>
-        <li>Go back to Manual Actions. Click the <b>trash can</b> on that lead's row and confirm.</li></ol>
-      <p>That deletes only the call on your list. If they didn't answer, the workflow moves on to its next step by itself. Don't text them. The workflow does that too.</p>
-      <p class="caution">Don't use "Let's Start." It dials right away, before you've seen who they are.</p>
-      <p class="caution">Only use the trash can in Manual Actions. The trash can next to their name on the contact page deletes the whole contact. Never click that one.</p>
-      <p class="muted">If a box asks "Call Anyway?" because it's late for them, press Cancel.</p></div>
-      <div class="shots"><a href="img/guide-ma-name-trash.jpg" target="_blank"><img src="img/guide-ma-name-trash.jpg" alt="Lead name and the trash can on the row circled" loading="lazy"></a><a href="img/guide-contact-review.jpg" target="_blank"><img src="img/guide-contact-review.jpg" alt="Contact page with tags and past calls circled, and the contact trash can marked never click" loading="lazy"></a><a href="img/guide-lets-start.jpg" target="_blank"><img src="img/guide-lets-start.jpg" alt="Let's Start button circled, don't use it" loading="lazy"></a><a href="img/guide-call-prompt.jpg" target="_blank"><img src="img/guide-call-prompt.jpg" alt="Late-night call warning with Cancel circled" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>2. Work every call this one way</h3><p>It's more clicks, but you see who you're calling and you call from the right number.</p>
+        <ol><li>Click the lead's <b>name</b> in the list. Their contact opens.</li>
+          <li>Read who they are: what they asked for, their tags, and past calls and texts.</li>
+          <li>Open the dialer and pick the client's number. See step 3.</li>
+          <li>Double dial. They pick up and hang up fast? Call a 3rd time. Leave a voicemail if it's a brand new lead.</li>
+          <li>Talked to them? Finish the call and set the stage first. See steps 4 to 6.</li>
+          <li>Go back to Manual Actions. Click the <b>trash can</b> on that lead's row and confirm.</li></ol>
+        <p>That deletes only the call on your list. If they didn't answer, the workflow moves on to its next step by itself. Don't text them. The workflow does that too.</p>
+        <p class="caution">Don't use "Let's Start." It dials right away, before you've seen who they are.</p>
+        <p class="caution">Only use the trash can in Manual Actions. The trash can next to their name on the contact page deletes the whole contact. Never click that one.</p>
+        <p class="muted">If a box asks "Call Anyway?" because it's late for them, press Cancel.</p></div>
+        <div class="shots"><a href="img/guide-ma-name-trash.jpg" target="_blank"><img src="img/guide-ma-name-trash.jpg" alt="Lead name and the trash can on the row circled" loading="lazy"></a><a href="img/guide-contact-review.jpg" target="_blank"><img src="img/guide-contact-review.jpg" alt="Contact page with tags and past calls circled, and the contact trash can marked never click" loading="lazy"></a><a href="img/guide-lets-start.jpg" target="_blank"><img src="img/guide-lets-start.jpg" alt="Let's Start button circled, don't use it" loading="lazy"></a><a href="img/guide-call-prompt.jpg" target="_blank"><img src="img/guide-call-prompt.jpg" alt="Late-night call warning with Cancel circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>3. Call from the client's number</h3><p>Open the dialer. Click <b>Change</b> next to "Calling From" and pick the client's number. The numbers are on the <a href="#clients" data-go="clients">Clients</a> page.</p>
-      <p class="caution">Never use a number marked OLD SPAM.</p></div>
-      <div class="shots"><a href="img/guide-dialer.jpg" target="_blank"><img src="img/guide-dialer.jpg" alt="Dialer button and Change circled" loading="lazy"></a><a href="img/guide-number-pick.jpg" target="_blank"><img src="img/guide-number-pick.jpg" alt="Number search and the client's number circled" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>3. Call from the client's number</h3><p>Open the dialer. Click <b>Change</b> next to "Calling From" and pick the client's number. The numbers are on the <a href="#clients" data-go="clients">Clients</a> page.</p>
+        <p class="caution">Never use a number marked <b>OLD SPAM</b> or <b>CLIENT TEXTS ONLY</b>.</p></div>
+        <div class="shots"><a href="img/guide-dialer.jpg" target="_blank"><img src="img/guide-dialer.jpg" alt="Dialer button and Change circled" loading="lazy"></a><a href="img/guide-number-pick.jpg" target="_blank"><img src="img/guide-number-pick.jpg" alt="Number search and the client's number circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>4. Book the visit</h3><p>On the contact, click the calendar icon, then <b>Add Appointment</b>. Every step is on the <a href="#book" data-go="book">Book a visit</a> page.</p>
-      <p class="caution">The box opens on the wrong client. Every time, pick the client's calendar, your name, and the time zone.</p></div>
-      <div class="shots"><a href="img/guide-book-open.jpg" target="_blank"><img src="img/guide-book-open.jpg" alt="Calendar icon and Add Appointment circled" loading="lazy"></a><a href="img/guide-book-pick.jpg" target="_blank"><img src="img/guide-book-pick.jpg" alt="Picking the client's calendar" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>4. Book the visit</h3><p>On the contact, click the calendar icon, then <b>Add Appointment</b>. Every step is on the <a href="#book" data-go="book">Book a visit</a> page.</p>
+        <p class="caution">The box opens on the wrong client. Every time, pick the client's calendar, the client's name as team member, and the time zone.</p></div>
+        <div class="shots"><a href="img/guide-book-open.jpg" target="_blank"><img src="img/guide-book-open.jpg" alt="Calendar icon and Add Appointment circled" loading="lazy"></a><a href="img/guide-book-pick.jpg" target="_blank"><img src="img/guide-book-pick.jpg" alt="Picking the client's calendar" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>5. Set the stage</h3><p>The stage tells everyone where the lead is. On the contact, click <b>Actions</b>, the three dots, then <b>View Opportunity details</b>. Pick the <b>Stage</b> and click <b>Update</b>.</p>
-      <ul><li>You talked and they said yes: <b>Booked - Confirmed</b></li><li>Booked, but you haven't reached them: leave it on <b>Booked</b></li><li>Not interested: <b>Dead</b></li></ul></div>
-      <div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage-choose.jpg" target="_blank"><img src="img/guide-stage-choose.jpg" alt="Stage list with Booked, Booked - Confirmed, Dead and Update circled" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>5. Check the Lead Profile</h3><p>On the contact, click <b>All fields</b> and search <b>Lead Profile</b>. It fills in by itself a few minutes after a call. Still empty, or you booked by text? Write it yourself.</p>
+        <p>The owner gets this exact text when you set Booked&nbsp;- Confirmed, so fix it first:</p>
+        <ul><li>Name, Phone and Address stay at the top.</li><li>What they want done, in their words.</li><li>Who will be there and the best way to reach them.</li><li>Plain text. Keep it short.</li></ul>
+        <p class="caution">Never write a price you told them. Give a budget range instead, like "Budget: around $18K to $28K."</p></div>
+        <div class="shots"><pre class="format">Name: Maria Lopez
+Phone: (209) 555-0142
+Address:
+123 Oak St
+Modesto, CA 95350
 
-    <div class="step"><div class="text"><h3>6. Tags</h3><ul>
-        <li>A tag is a label on a contact. Most get added for you, like appt-confirmed.</li>
-        <li>Never add lead nurturing to someone who has a visit booked.</li>
-        <li>Added the wrong tag? Click the x on it and tell Leo.</li></ul></div>
-      <div class="shots"><a href="img/guide-tags.jpg" target="_blank"><img src="img/guide-tags.jpg" alt="Tags and the x on a tag circled" loading="lazy"></a></div></div>
+Project:
+- Full bathroom. Tub out, walk-in shower in, tile.
+- Old tub is leaking at the floor.
 
-    <div class="step"><div class="text"><h3>7. Tell the owner</h3><p>Send the visit details in the client's group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a>. The Lead Profile on the contact has what you need.</p>
-      <button class="btn" data-copy="format">Copy format</button></div>
-      <div class="shots"><pre class="format" id="format">Here's a new appointment:
-• Name: Maria Lopez
-• Phone: (209) 555-0142
-• Address: 123 Oak St, Modesto
-• Project: Full bathroom, tub to walk-in shower, tile
-• Estimate Appointment: Thu Nov 5, 10:00 AM
-• Notes: Husband will be there. Wants it done before the holidays.</pre><p class="muted">Example lead.</p></div></div>
+Notes:
+- Her husband will be there.
+- Texting works best.</pre><p class="muted">Example lead.</p></div></div>
 
-    <div class="step"><div class="text"><h3>8. Answer texts</h3><p>When a lead texts back, it shows up in Conversations. Answer fast and keep it short.</p></div>
-      <div class="shots"><a href="img/guide-inbox.jpg" target="_blank"><img src="img/guide-inbox.jpg" alt="Conversations and Unread circled" loading="lazy"></a><a href="img/guide-inbox-reply.jpg" target="_blank"><img src="img/guide-inbox-reply.jpg" alt="Message box circled" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>6. Set the stage</h3><p>The stage tells everyone where the lead is. On the contact, click <b>Actions</b>, the three dots, then <b>View Opportunity details</b>. Pick the <b>Stage</b> and click <b>Update</b>.</p>
+        <ul><li>You talked and they said yes: <b>Booked&nbsp;- Confirmed</b></li><li>Booked, but you haven't reached them: leave it on <b>Booked</b></li><li>Not ready yet: <b>Follow Up</b>, and set a Follow Up Date</li><li>Not interested: <b>Dead</b></li></ul></div>
+        <div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage-choose.jpg" target="_blank"><img src="img/guide-stage-choose.jpg" alt="Stage list with Booked, Booked&nbsp;- Confirmed, Dead and Update circled" loading="lazy"></a></div></div>
+
+      <div class="step"><div class="text"><h3>7. Tags</h3><ul>
+          <li>A tag is a label on a contact. Most get added for you, like appt-confirmed.</li>
+          <li>Never add lead nurturing to someone who has a visit booked.</li>
+          <li>Added the wrong tag? Click the x on it and tell Leo.</li></ul></div>
+        <div class="shots"><a href="img/guide-tags.jpg" target="_blank"><img src="img/guide-tags.jpg" alt="Tags and the x on a tag circled" loading="lazy"></a></div></div>
+
+      <div class="step"><div class="text"><h3>8. Tell the owner</h3><p>Post the visit in the client's group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a>. Copy the format and fill it in from the contact.</p>
+        <p>Get the address from <b>All fields</b> (Street address, City, State, Postal code). Check there before you ever write "no address."</p>
+        <button class="btn" data-copy="format">Copy format</button></div>
+        <div class="shots"><pre class="format" id="format">New appointment:
+Name: Maria Lopez
+Phone: (209) 555-0142
+Address: 123 Oak St, Modesto, CA 95350
+Estimate Appointment: Thursday, Nov 19 at 10:00 AM
+Project: Full bathroom. Wants the tub out and a walk-in shower with tile.
+Notes: Confirmed by phone with our team. Her husband will be there.</pre><p class="muted">Example lead.</p></div></div>
+
+      <div class="step"><div class="text"><h3>9. Answer texts</h3><p>When a lead texts back, it shows up in Conversations. Answer fast and keep it short.</p></div>
+        <div class="shots"><a href="img/guide-inbox.jpg" target="_blank"><img src="img/guide-inbox.jpg" alt="Conversations and Unread circled" loading="lazy"></a><a href="img/guide-inbox-reply.jpg" target="_blank"><img src="img/guide-inbox-reply.jpg" alt="Message box circled" loading="lazy"></a></div></div>
+    </div>
   </div>
 </section>
 
 <section id="rules" hidden>
-  <div>
-    <div class="eyebrow">In the CRM</div>
+  <header class="page-head">
     <h1>Workflows &amp; tags</h1>
-    <p class="intro">A workflow is a robot in the CRM. It sends texts and adds calls to your list. A tag is a label that tells the robot what to do. You don't have to run them, just know what they mean.</p>
-  </div>
+    <p class="lead">A workflow is a robot in the CRM. It sends texts and adds calls to your list. A tag is a label that tells the robot what to do. You don't have to run them, just know what they mean.</p>
+  </header>
 
-  <div>
+  <div class="block">
     <h2>Names you'll see in your call list</h2>
-    <p class="muted" style="margin-bottom:12px">Every call in Manual Actions has a name next to it. The name tells you who the lead is and what to say.</p>
-    <div class="tw"><table class="wf">
+    <p>Every call in Manual Actions has a name next to it. The name tells you who the lead is and what to say.</p>
+    <div class="tw"><table>
       <thead><tr><th>Name</th><th>Who this is</th><th>What to do and say</th></tr></thead>
       <tbody>
         <tr><td class="q">New [Client] Facebook Lead</td><td>Just filled out the form. Brand new.</td><td><b>Book the visit.</b> Call now and double dial.<blockquote>"Hey Maria, it's [your name] with Valencia. You requested an estimate for your bathroom?"</blockquote><small>Then run the full <a href="#script" data-go="script">call script</a>.</small></td></tr>
+        <tr><td class="q">Google Ads Submissions<small>Also: Watkinson Google Ads Submissions</small></td><td>Filled out a form on the client's website after a Google ad. Brand new.</td><td><b>Book the visit.</b> Same as a new Facebook lead. Call now and double dial.</td></tr>
         <tr><td class="q">Nurture - [Client] Lead Processing (&lt;7 Days)</td><td>Came in this week but hasn't booked. They've been getting our texts.</td><td><b>Book the visit.</b><blockquote>"Hey Maria, it's [your name] with Valencia. Following up on your bathroom estimate. Still looking to get it done?"</blockquote><small>If they say yes, go to the <a href="#script" data-go="script">call script</a>.</small></td></tr>
-        <tr><td class="q">Self-booked: confirm - calls + texts until reached</td><td>Booked online by themselves. Nobody has talked to them yet.</td><td><b>Make sure the visit is still on. Don't sell.</b><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><small>Ask about the job, materials and who decides. Say the day and time back. Then set the stage to Booked - Confirmed. All the steps are on <a href="#confirm" data-go="confirm">Confirm a visit</a>.</small></td></tr>
-        <tr><td class="q">CaliFirst - Resume calls after payment pause (Oct 30)</td><td>Older CaliFirst leads we stopped calling for a while. Now we call them again.</td><td><b>Book the visit.</b><blockquote>"Hey, it's [your name] with CaliFirst Remodel. Following up on your remodel request from a few weeks back. Still thinking about it?"</blockquote><small>Don't say an owner's name for CaliFirst. Say "our team".</small></td></tr>
+        <tr><td class="q">Self-booked: confirm - calls + texts until reached</td><td>Booked online by themselves. Nobody has talked to them yet.</td><td><b>Make sure the visit is still on. Don't sell.</b><blockquote>"Hey Maria, it's [your name] with Valencia. Saw you booked for Thursday at 10. Got a quick second so we're ready when we come out?"</blockquote><small>Ask about the job, materials and who decides. Say the day and time back. Then check the Lead Profile and set the stage to Booked&nbsp;- Confirmed. All the steps are on <a href="#confirm" data-go="confirm">Confirm a visit</a>.</small></td></tr>
         <tr><td class="q">Follow Up Reminders</td><td>You set a Follow Up Date for them, and today is the day.</td><td><b>Call when you said you would.</b><blockquote>"Hey Maria, it's [your name] with Valencia. You said today was a good day to talk about the bathroom. Still a good time?"</blockquote><small>Then keep going from where you left off.</small></td></tr>
       </tbody>
     </table></div>
   </div>
 
-  <div>
+  <div class="block">
+    <h2>What the CRM does by itself</h2>
+    <ul>
+      <li>Texts every new lead right away, and keeps texting until they answer.</li>
+      <li>Adds calls to your list: new leads, nurture, self-booked, and follow-up days.</li>
+      <li>Texts the homeowner "you're all set" when you book, then reminders before the visit.</li>
+      <li>Texts the owner the Lead Profile about a minute after you set Booked&nbsp;- Confirmed. If nobody reached a self-booked lead, the owner gets it 18 hours before the visit, marked UNCONFIRMED.</li>
+      <li>Texts most owners their schedule every evening (tomorrow's visits) and every morning (today's). You never need to remind an owner.</li>
+      <li>After the visit, checks in with the owner and texts the homeowner. That's the client's part.</li>
+    </ul>
+  </div>
+
+  <div class="block">
     <h2>Don't touch these</h2>
     <div class="tw"><table>
       <thead><tr><th>Name</th><th>Why</th><th>What you do</th></tr></thead>
       <tbody>
-        <tr><td class="q">Post Estimate Follow Up - 6 Day Sequence</td><td>Runs after the owner has been to the home. That part is the client's job, not ours.</td><td>Don't add anyone. Don't add post-estimate tags. Don't move a lead to Showed or Closed.</td></tr>
-        <tr><td class="q">Appointment Scheduled, Booked -&gt; Shown, SMS Esimate</td><td>Reminder texts that send by themselves.</td><td>Nothing. Leave them alone.</td></tr>
-        <tr><td class="q">Lead Profile to Client, Deliver … to CaliFirst</td><td>Sends lead info to the client by itself.</td><td>Nothing. Leave them alone.</td></tr>
+        <tr><td class="q">Post Estimate Follow Up<small>6 Day Texts, 6 Day Sequence</small></td><td>Runs after the owner has been to the home. That part is the client's job, not ours.</td><td>Don't add anyone. Don't add post-estimate tags. Don't move a lead to Showed or Closed.</td></tr>
+        <tr><td class="q">Appointment Scheduled, Booked -&gt; Shown, SMS Esimate, Client Reminders</td><td>Reminder texts that send by themselves.</td><td>Nothing. Leave them alone.</td></tr>
+        <tr><td class="q">Lead Profile to Client, New Appointment - Dream Bath, Deliver … to CaliFirst</td><td>Sends lead info to the client by itself.</td><td>Nothing. Leave them alone.</td></tr>
       </tbody>
     </table></div>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Tags</h2>
     <div class="tw"><table>
       <thead><tr><th>Tag</th><th>What it means</th><th>When you use it</th></tr></thead>
       <tbody>
         <tr><td class="q">lead nurturing</td><td>Starts about a week of texts and calls to the lead.</td><td><b>Add it</b> when you can't reach a lead. <b>Never</b> add it to someone who has a visit booked.</td></tr>
         <tr><td class="q">appt-unconfirmed</td><td>They booked online and nobody has talked to them.</td><td>Added for you. Don't add or remove it.</td></tr>
-        <tr><td class="q">appt-confirmed</td><td>The visit is confirmed. Stops the "please confirm" calls and texts.</td><td>Added for you when you set Booked - Confirmed, or when they text YES.</td></tr>
-        <tr><td class="q">Client tags<small>valenciaconstructionpros, califirst-remodel, dreambath, drh lead, hsd-masonry, h.floresconstruction, mtr lead, watkinson-construction, contractor20</small></td><td>Which client the lead belongs to.</td><td>Never remove it. Use it to pick the right phone number and calendar.</td></tr>
+        <tr><td class="q">appt-confirmed</td><td>The visit is confirmed. Stops the "please confirm" calls and texts.</td><td>Added for you when you set Booked&nbsp;- Confirmed, or when they text YES.</td></tr>
+        <tr><td class="q">Client tags<small>valenciaconstructionpros, watkinson-construction, dreambath, hsd-masonry, h.floresconstruction, mtr baths, mtr lead, contractor20, drh lead, punch-list, sakuracucina, deluxe-lifecote, califirst-remodel</small></td><td>Which client the lead belongs to.</td><td>Never remove it. Use it to pick the right phone number and calendar.</td></tr>
         <tr><td class="q">post-estimate tags<small>post-estimate:follow-up, nurture:post-estimate, post-estimate - no-response</small></td><td>Start the texts that go out after a visit.</td><td>Never add.</td></tr>
         <tr><td class="q">call:answered, call:missed, lead-stage:unclassified, facebook form</td><td>The CRM adds these by itself.</td><td>Ignore.</td></tr>
       </tbody>
     </table></div>
-    <p class="muted" style="margin-top:10px">Added a tag by mistake? Click the x on it and tell Leo.</p>
+    <p class="muted" style="margin-top:12px">Added a tag by mistake? Click the x on it and tell Leo.</p>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Schedule a follow-up</h2>
-    <div class="flow">
-      <div class="stage"><div><h3>On the phone</h3><p class="note">Get a real day and time</p></div>
-        <div class="body"><blockquote>"No problem. What day is good for me to call you back? Morning or afternoon?"</blockquote></div></div>
-      <div class="stage"><div><h3>Set the date</h3><p class="note">On the contact</p></div>
-        <div class="body"><p>Open the contact and click <b>All fields</b>. Find <b>Follow Up Date</b>, pick the day, and save.</p></div></div>
-      <div class="stage"><div><h3>Leave a note</h3></div>
-        <div class="body"><p>Write the time they gave you and what they want. Like this: "Call Tue after 3. Wants a walk-in shower."</p></div></div>
-      <div class="stage"><div><h3>On that day</h3></div>
-        <div class="body"><p>A call shows up in Manual Actions called <b>Follow Up Reminders</b>. Call them at the time they asked for.</p></div></div>
+    <div class="rows counted">
+      <div class="row"><div class="k"><h3>On the phone</h3><p>Get a real day and time</p></div>
+        <div class="v"><blockquote>"No problem. What day is good for me to call you back? Morning or afternoon?"</blockquote></div></div>
+      <div class="row"><div class="k"><h3>Set the date</h3><p>On the contact</p></div>
+        <div class="v"><p>Open the contact and click <b>All fields</b>. Find <b>Follow Up Date</b>, pick the day, and save.</p></div></div>
+      <div class="row"><div class="k"><h3>Leave a note</h3><p>So you know what to say</p></div>
+        <div class="v"><p>Write the time they gave you and what they want. Like this: "Call Tue after 3. Wants a walk-in shower."</p></div></div>
+      <div class="row"><div class="k"><h3>On that day</h3><p>It shows up in your list</p></div>
+        <div class="v"><p>A call shows up in Manual Actions called <b>Follow Up Reminders</b>. Call them at the time they asked for.</p></div></div>
     </div>
   </div>
 
-  <div class="basics">
+  <div class="block">
     <h2>Leads assigned to Leo</h2>
     <p>If it says <b>Leo Melaye</b> next to Owner or Assigned To, that's Leo's lead. Don't call or text them. Skip it and go to the next one.</p>
   </div>
 </section>
 
 <section id="book" hidden>
-  <div>
-    <div class="eyebrow">In the CRM</div>
+  <header class="page-head">
     <h1>Book a visit</h1>
-    <p class="intro">Two things must be right every time: the client's calendar and your name. Leo counts your bookings by your name, so this is how you get paid.</p>
+    <p class="lead">Two things must be right every time: the client's calendar and the client's name as team member. Always book while you're logged in as you. That's how your bookings are counted.</p>
+  </header>
+
+  <div class="block">
+    <div class="steps">
+      <div class="step"><div class="text"><h3>1. Open the booking box</h3><p>On the lead's contact, click the calendar icon on the right, then <b>Add Appointment</b>.</p></div>
+        <div class="shots"><a href="img/guide-book-open.jpg" target="_blank"><img src="img/guide-book-open.jpg" alt="Calendar icon and Add Appointment circled" loading="lazy"></a></div></div>
+
+      <div class="step"><div class="text"><h3>2. Pick the client's calendar</h3><p>The box usually opens on the wrong client. Click <b>Calendar</b>, type the client's name, and click their calendar.</p>
+        <p>Not sure which client? Look at the lead's tags. Calendar names are on the <a href="#clients" data-go="clients">Clients</a> page.</p>
+        <p class="caution">If you pick the wrong calendar, the lead gets texts from the wrong company and the wrong client gets the visit.</p></div>
+        <div class="shots"><a href="img/guide-book-wrong.jpg" target="_blank"><img src="img/guide-book-wrong.jpg" alt="Calendar field opens on the wrong client" loading="lazy"></a><a href="img/guide-book-pick.jpg" target="_blank"><img src="img/guide-book-pick.jpg" alt="Type the client name and click their calendar" loading="lazy"></a></div></div>
+
+      <div class="step"><div class="text"><h3>3. Pick the client's name as team member</h3><p>Click <b>Team member</b> and pick the client's name, like <b>Watkinson Construction</b>. Each client has its own name in this list. It keeps that client's visits from landing on top of each other.</p>
+        <p>Don't leave it on Calendar Default. You don't pick your own name: the CRM already knows you booked it.</p></div>
+        <div class="shots"><a href="img/guide-book-team.jpg" target="_blank"><img src="img/guide-book-team.jpg" alt="Team member list with the client's name circled" loading="lazy"></a></div></div>
+
+      <div class="step"><div class="text"><h3>4. Set the time and book</h3><p>Check the time zone is the client's. Pick the date, then a time from the <b>Slot</b> list, then click <b>Book appointment</b>.</p>
+        <p>The Slot list only shows open times, spaced so the owner is never double-booked. The lead wants a time that isn't in the list, but it's on the client's days? Ask Leo before you book it.</p>
+        <p class="muted">The homeowner gets a "you're all set" text right away by itself.</p></div>
+        <div class="shots"><a href="img/guide-book-time.jpg" target="_blank"><img src="img/guide-book-time.jpg" alt="Time zone, date and time, and Book appointment circled" loading="lazy"></a></div></div>
+
+      <div class="step"><div class="text"><h3>5. Check it</h3><p>The visit shows on the right side of the contact. Check the client's calendar and the client's name on it. If one is wrong, click the three dots, then <b>Edit</b>, and fix it.</p>
+        <p>Then check the Lead Profile, set the stage, and tell the owner. See <a href="#crm" data-go="crm">CRM steps</a>.</p></div>
+        <div class="shots"><a href="img/guide-appt-card.jpg" target="_blank"><img src="img/guide-appt-card.jpg" alt="Appointment card circled" loading="lazy"></a></div></div>
+    </div>
   </div>
 
-  <div class="steps">
-    <div class="step"><div class="text"><h3>1. Open the booking box</h3><p>On the lead's contact, click the calendar icon on the right, then <b>Add Appointment</b>.</p></div>
-      <div class="shots"><a href="img/guide-book-open.jpg" target="_blank"><img src="img/guide-book-open.jpg" alt="Calendar icon and Add Appointment circled" loading="lazy"></a></div></div>
-
-    <div class="step"><div class="text"><h3>2. Pick the client's calendar</h3><p>The box usually opens on the wrong client. Click <b>Calendar</b>, type the client's name, and click their calendar.</p>
-      <p>Not sure which client? Look at the lead's tags. Calendar names are on the <a href="#clients" data-go="clients">Clients</a> page.</p>
-      <p class="caution">If you pick the wrong calendar, the lead gets texts from the wrong company and the wrong client gets the visit.</p></div>
-      <div class="shots"><a href="img/guide-book-wrong.jpg" target="_blank"><img src="img/guide-book-wrong.jpg" alt="Calendar field opens on the wrong client" loading="lazy"></a><a href="img/guide-book-pick.jpg" target="_blank"><img src="img/guide-book-pick.jpg" alt="Type the client name and click their calendar" loading="lazy"></a></div></div>
-
-    <div class="step"><div class="text"><h3>3. Put your name on it</h3><p>Click <b>Team member</b> and pick <b>your own name</b>. Never leave it on Calendar Default.</p>
-      <p class="caution">Don't see your name? Book it anyway and tell Leo right after. The visit still counts for you.</p></div>
-      <div class="shots"><a href="img/guide-book-team.jpg" target="_blank"><img src="img/guide-book-team.jpg" alt="Team member list" loading="lazy"></a></div></div>
-
-    <div class="step"><div class="text"><h3>4. Set the time and book</h3><p>Check the time zone is the client's. Pick the date and time, then click <b>Book appointment</b>.</p>
-      <p>Only offer times the client can come. See the <a href="#clients" data-go="clients">Clients</a> page.</p></div>
-      <div class="shots"><a href="img/guide-book-time.jpg" target="_blank"><img src="img/guide-book-time.jpg" alt="Time zone, date and time, and Book appointment circled" loading="lazy"></a></div></div>
-
-    <div class="step"><div class="text"><h3>5. Check it</h3><p>The visit shows on the right side of the contact. Look for your name and the client's calendar. If one is wrong, click the three dots, then <b>Edit</b>, and fix it.</p>
-      <p>Then set the stage and tell the owner. See <a href="#crm" data-go="crm">CRM steps</a>.</p></div>
-      <div class="shots"><a href="img/guide-appt-card.jpg" target="_blank"><img src="img/guide-appt-card.jpg" alt="Appointment card circled" loading="lazy"></a></div></div>
+  <div class="block">
+    <h2>Never book these on the calendar</h2>
+    <ul>
+      <li><b>A second visit.</b> The owner is going back to measure again or show a design. Booking it would text the homeowner and the owner like it's a brand new visit. Tell Leo the day and time instead.</li>
+      <li><b>A CaliFirst lead.</b> CaliFirst calls its own leads.</li>
+      <li><b>A Punch List visit that isn't in Driive yet.</b> Book it in Driive first. See <a href="#clients" data-go="clients">Clients</a>.</li>
+    </ul>
   </div>
 </section>
 
 <section id="reschedule" hidden>
-  <div>
-    <div class="eyebrow">In the CRM</div>
+  <header class="page-head">
     <h1>Rescheduling</h1>
-    <p class="intro">Someone wants to move or cancel their visit. Try to get a new day and time before you hang up.</p>
-  </div>
+    <p class="lead">Someone wants to move or cancel their visit. Try to get a new day and time before you hang up.</p>
+  </header>
 
-  <div>
+  <div class="block">
     <h2>They want to move it, and you're on the phone</h2>
-    <div class="flow">
-      <div class="stage"><div><h3>On the phone</h3></div>
-        <div class="body"><blockquote>"No problem at all. I have Saturday at 2 or Monday at 10. Which is better?"</blockquote><p>If they want to cancel: "Want me to check back in a couple weeks?"</p></div></div>
-      <div class="stage"><div><h3>In the CRM</h3><p class="note">Three dots, then Edit</p></div>
-        <div class="body"><p>On the contact, click the three dots on the visit, then <b>Edit</b>. Change the date and time, check the time zone, and click <b>Save</b>.</p>
-          <div class="shots"><a href="img/guide-appt-edit.jpg" target="_blank"><img src="img/guide-appt-edit.jpg" alt="Three dots and Edit circled" loading="lazy"></a><a href="img/guide-reschedule.jpg" target="_blank"><img src="img/guide-reschedule.jpg" alt="Time zone, date and time, and Save circled" loading="lazy"></a></div></div></div>
-      <div class="stage"><div><h3>Tell the owner</h3><p class="note">In their group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a></p></div>
-        <div class="body"><blockquote>Update: Maria moved to Sat Nov 7 at 2 PM.</blockquote></div></div>
-      <div class="stage"><div><h3>Example call</h3></div>
-        <div class="body"><div class="player" data-src="audio/08-reschedule.mp3" data-len="61"></div></div></div>
+    <div class="rows counted">
+      <div class="row"><div class="k"><h3>On the phone</h3><p>Offer two new times</p></div>
+        <div class="v"><blockquote>"No problem at all. I have Saturday at 2 or Monday at 10. Which is better?"</blockquote><p>If they want to cancel: "Want me to check back in a couple weeks?"</p></div></div>
+      <div class="row"><div class="k"><h3>In the CRM</h3><p>Three dots, then Edit</p></div>
+        <div class="v"><p>On the contact, click the three dots on the visit, then <b>Edit</b>. Change the date and time, check the time zone, and click <b>Save</b>.</p>
+          <div class="shots"><a href="img/guide-appt-edit.jpg" target="_blank"><img src="img/guide-appt-edit.jpg" alt="Three dots and Edit circled" loading="lazy"></a><a href="img/guide-reschedule.jpg" target="_blank"><img src="img/guide-reschedule.jpg" alt="Time zone, date and time, and Save circled" loading="lazy"></a></div>
+          <p class="muted" style="margin-top:12px">The homeowner gets a new "you're all set" text by itself. That's normal. If they still get reminders for the old time, tell Leo.</p></div></div>
+      <div class="row"><div class="k"><h3>Tell the owner</h3><p>In their group chat</p></div>
+        <div class="v"><blockquote>Update: Maria moved to Sat Nov 21 at 2 PM.</blockquote></div></div>
+      <div class="row"><div class="k"><h3>Example call</h3><p>About a minute</p></div>
+        <div class="v"><div class="player" data-src="audio/08-reschedule.mp3" data-len="61"></div></div></div>
     </div>
   </div>
 
-  <div id="cancel-text">
+  <div class="block" id="cancel-text">
     <h2>They cancel by text</h2>
-    <div class="flow">
-      <div class="stage"><div><h3>Text them back</h3><p class="note">Right away</p></div>
-        <div class="body"><p><b>They didn't say when:</b> ask about the same time tomorrow, but only if the client can come then. The days are on the <a href="#clients" data-go="clients">Clients</a> page.</p><blockquote>"Thanks for letting me know, Maria. Would the same time tomorrow work?"</blockquote><p><b>The client can't come then:</b> ask about the next time the client can come.</p><p><b>They said when to reach back out:</b> don't ask about tomorrow. Go with what they said.</p><blockquote>"Thanks for letting me know, Maria. I'll reach back out Tuesday."</blockquote><p><b>They asked for a new time:</b> book that time. Move the visit the same way as above.</p></div></div>
-      <div class="stage"><div><h3>Tell the owner</h3><p class="note">In their group chat in <a href="#sendblue" data-go="sendblue">Sendblue</a></p></div>
-        <div class="body"><blockquote>Update: Maria cancelled Thu Nov 5 at 10 AM. I'm following up to rebook.</blockquote></div></div>
-      <div class="stage"><div><h3>Cancel the appointment</h3><p class="note">Three dots, then Cancel</p></div>
-        <div class="body"><p>On the contact, click the three dots on the visit, then <b>Cancel</b>.</p><div class="shots"><a href="img/guide-cancel-menu.jpg" target="_blank"><img src="img/guide-cancel-menu.jpg" alt="Three dots and Cancel circled" loading="lazy"></a></div></div></div>
-      <div class="stage"><div><h3>Stop the reminders</h3><p class="note">Actions → Workflows</p></div>
-        <div class="body"><p>Under <b>Active workflows</b>, click the <b>x</b> next to <b>Appointment Scheduled</b>. If you skip this, they still get "see you tomorrow" texts. Some clients have a longer name that starts with Appointment Scheduled. Remove that one the same way.</p><div class="shots"><a href="img/guide-remove-reminders.jpg" target="_blank"><img src="img/guide-remove-reminders.jpg" alt="Actions, Workflows and the x next to Appointment Scheduled circled" loading="lazy"></a></div><p class="caution">Only do this when the visit is cancelled and they have no other visit booked. Marking someone for Follow Up who is still booked? Leave it on, because they still need their reminders.</p></div></div>
-      <div class="stage"><div><h3>Set the follow-up</h3><p class="note">On the contact</p></div>
-        <div class="body"><p>On the contact, open the opportunity. Set the <b>Stage</b> to <b>Follow Up</b> and click <b>Update</b>.</p><div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage.jpg" target="_blank"><img src="img/guide-stage.jpg" alt="Stage, Follow Up and Update circled" loading="lazy"></a></div><p>Then click <b>All fields</b>, search <b>Follow Up</b>, click <b>Follow Up Date</b>, pick the day, and save.</p><div class="shots"><a href="img/guide-followup-date.jpg" target="_blank"><img src="img/guide-followup-date.jpg" alt="All fields, search and Follow Up Date circled" loading="lazy"></a></div><p>Use the day they said. If they didn't say, use tomorrow. Leave a note with the time, like "Cancelled Thu. Asked about same time tomorrow."</p></div></div>
-      <div class="stage"><div><h3>Follow up</h3></div>
-        <div class="body"><p><b>They said when:</b> reach out then.</p><p><b>They didn't answer your text:</b> just call them.</p><p><b>They say yes to a new time:</b> <a href="#book" data-go="book">book it</a> with your name on it, clear the <b>Follow Up Date</b>, and tell the owner the new day and time.</p></div></div>
+    <div class="rows counted">
+      <div class="row"><div class="k"><h3>Text them back</h3><p>Right away</p></div>
+        <div class="v"><p><b>They didn't say when:</b> ask about the same time tomorrow, but only if the client can come then. The days are on the <a href="#clients" data-go="clients">Clients</a> page.</p><blockquote>"Thanks for letting me know, Maria. Would the same time tomorrow work?"</blockquote><p><b>The client can't come then:</b> ask about the next time the client can come.</p><p><b>They said when to reach back out:</b> don't ask about tomorrow. Go with what they said.</p><blockquote>"Thanks for letting me know, Maria. I'll reach back out Tuesday."</blockquote><p><b>They asked for a new time:</b> book that time. Move the visit the same way as above.</p></div></div>
+      <div class="row"><div class="k"><h3>Tell the owner</h3><p>In their group chat</p></div>
+        <div class="v"><blockquote>Update: Maria cancelled Thu Nov 19 at 10 AM. I'm following up to rebook.</blockquote></div></div>
+      <div class="row"><div class="k"><h3>Cancel the appointment</h3><p>Three dots, then Cancel</p></div>
+        <div class="v"><p>On the contact, click the three dots on the visit, then <b>Cancel</b>.</p><div class="shots"><a href="img/guide-cancel-menu.jpg" target="_blank"><img src="img/guide-cancel-menu.jpg" alt="Three dots and Cancel circled" loading="lazy"></a></div></div></div>
+      <div class="row"><div class="k"><h3>Stop the reminders</h3><p>Actions, then Workflows</p></div>
+        <div class="v"><p>Under <b>Active workflows</b>, click the <b>x</b> next to <b>Appointment Scheduled</b>. If you skip this, they still get "see you tomorrow" texts. Some clients have a longer name that starts with Appointment Scheduled. Remove that one the same way.</p><div class="shots"><a href="img/guide-remove-reminders.jpg" target="_blank"><img src="img/guide-remove-reminders.jpg" alt="Actions, Workflows and the x next to Appointment Scheduled circled" loading="lazy"></a></div><p class="caution">Only do this when the visit is cancelled and they have no other visit booked. Marking someone for Follow Up who is still booked? Leave it on, because they still need their reminders.</p></div></div>
+      <div class="row"><div class="k"><h3>Set the follow-up</h3><p>On the contact</p></div>
+        <div class="v"><p>On the contact, open the opportunity. Set the <b>Stage</b> to <b>Follow Up</b> and click <b>Update</b>.</p><div class="shots"><a href="img/guide-opp-open.jpg" target="_blank"><img src="img/guide-opp-open.jpg" alt="Actions, three dots and View Opportunity details circled" loading="lazy"></a><a href="img/guide-stage.jpg" target="_blank"><img src="img/guide-stage.jpg" alt="Stage, Follow Up and Update circled" loading="lazy"></a></div><p style="margin-top:12px">Then click <b>All fields</b>, search <b>Follow Up</b>, click <b>Follow Up Date</b>, pick the day, and save.</p><div class="shots"><a href="img/guide-followup-date.jpg" target="_blank"><img src="img/guide-followup-date.jpg" alt="All fields, search and Follow Up Date circled" loading="lazy"></a></div><p style="margin-top:12px">Use the day they said. If they didn't say, use tomorrow. Leave a note with the time, like "Cancelled Thu. Asked about same time tomorrow."</p></div></div>
+      <div class="row"><div class="k"><h3>Follow up</h3><p>When they said, or by phone</p></div>
+        <div class="v"><p><b>They said when:</b> reach out then.</p><p><b>They didn't answer your text:</b> just call them.</p><p><b>They say yes to a new time:</b> <a href="#book" data-go="book">book it</a>, set the stage back to <b>Booked&nbsp;- Confirmed</b>, clear the <b>Follow Up Date</b>, and tell the owner the new day and time.</p></div></div>
     </div>
   </div>
 </section>
 
 <section id="sendblue" hidden>
-  <div>
-    <div class="eyebrow">Texting clients</div>
+  <header class="page-head">
     <h1>Sendblue</h1>
-    <p class="intro">Sendblue is the app we use to text our clients. A client is the owner of the company we book for, like Brian or Don. Each client has one group chat. That's where we tell them about their appointments.</p>
-  </div>
+    <p class="lead">Sendblue is the app we use to text the owners of our clients, like Brian or Eric. Each client has one group chat. That's where we tell them about their visits.</p>
+  </header>
 
-  <div class="basics">
+  <div class="block">
     <h2>Easy way to remember</h2>
     <ul>
       <li><b>Homeowners (leads):</b> call and text them in the CRM.</li>
@@ -875,86 +1017,92 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
     </ul>
   </div>
 
-  <div class="steps">
-    <div class="step"><div class="text"><h3>1. Log in</h3><p>Go to <b>dashboard.sendblue.com</b> and log in with your email. Can't get in? Ask Leo.</p></div></div>
+  <div class="block">
+    <h2>Steps</h2>
+    <div class="steps">
+      <div class="step solo"><div class="text"><h3>1. Log in</h3><p>Go to <b>dashboard.sendblue.com</b> and log in with your email. Can't get in? Ask Leo.</p></div></div>
 
-    <div class="step"><div class="text"><h3>2. Turn on your notifications</h3><p>Do this one time. Then you'll know when a client texts.</p>
-      <ol>
-        <li>Click your profile icon at the bottom left.</li>
-        <li>Click <b>Notification Settings</b>.</li>
-        <li>Under "Which leads?" pick <b>All leads</b>.</li>
-        <li>On <b>Inbound Message</b>, check <b>Desktop</b> and <b>Mobile</b>.</li>
-        <li>Get the Sendblue app on your phone and log in. Mobile doesn't work until you do.</li>
-        <li>If your browser asks to allow notifications, click <b>Allow</b>.</li>
-        <li>Press <b>Test</b> next to Inbound Message, then <b>Done</b>.</li>
-      </ol>
-      <p class="caution">Didn't get the test on your computer and your phone? Tell Leo.</p></div>
-      <div class="shots"><a href="img/guide-sendblue-menu.jpg" target="_blank"><img src="img/guide-sendblue-menu.jpg" alt="Profile icon and Notification Settings circled" loading="lazy"></a><a href="img/guide-sendblue-notifs.jpg" target="_blank"><img src="img/guide-sendblue-notifs.jpg" alt="All leads, Inbound Message boxes, Test and Done circled" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>2. Turn on your notifications</h3><p>Do this one time. Then you'll know when an owner texts.</p>
+        <ol>
+          <li>Click your profile icon at the bottom left.</li>
+          <li>Click <b>Notification Settings</b>.</li>
+          <li>Under "Which leads?" pick <b>All leads</b>.</li>
+          <li>On <b>Inbound Message</b>, check <b>Desktop</b> and <b>Mobile</b>.</li>
+          <li>Get the Sendblue app on your phone and log in. Mobile doesn't work until you do.</li>
+          <li>If your browser asks to allow notifications, click <b>Allow</b>.</li>
+          <li>Press <b>Test</b> next to Inbound Message, then <b>Done</b>.</li>
+        </ol>
+        <p class="caution">Didn't get the test on your computer and your phone? Tell Leo.</p></div>
+        <div class="shots"><a href="img/guide-sendblue-menu.jpg" target="_blank"><img src="img/guide-sendblue-menu.jpg" alt="Profile icon and Notification Settings circled" loading="lazy"></a><a href="img/guide-sendblue-notifs.jpg" target="_blank"><img src="img/guide-sendblue-notifs.jpg" alt="All leads, Inbound Message boxes, Test and Done circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>3. Find the client's chat</h3><p>Every chat has the client's name on it. Search the name, then click the chat.</p><p>A blue dot means there's a new message.</p></div>
-      <div class="shots"><a href="img/guide-sendblue-find.jpg" target="_blank"><img src="img/guide-sendblue-find.jpg" alt="Search, blue dot and a chat circled" loading="lazy"></a></div></div>
+      <div class="step"><div class="text"><h3>3. Find the client's chat</h3><p>Every chat has the client's name on it. Search the name, then click the chat.</p><p>A blue dot means there's a new message.</p></div>
+        <div class="shots"><a href="img/guide-sendblue-find.jpg" target="_blank"><img src="img/guide-sendblue-find.jpg" alt="Search, blue dot and a chat circled" loading="lazy"></a></div></div>
 
-    <div class="step"><div class="text"><h3>4. Send a new appointment</h3><p>Do this every time you book a visit.</p>
-      <ol>
-        <li>Copy the format and fill it in. The Lead Profile on the contact in the CRM has the details.</li>
-        <li>Open the client's chat. <b>Check the name at the top.</b></li>
-        <li>Paste it in the message box and press <b>Send</b>.</li>
-      </ol>
-      <button class="btn" data-copy="format2">Copy format</button>
-      <p class="caution">Never write a price you told the homeowner. If you talked about money, give a budget range, like "Budget: around $18K to $28K."</p></div>
-      <div class="shots"><a href="img/guide-sendblue-send.jpg" target="_blank"><img src="img/guide-sendblue-send.jpg" alt="Chat name, message box and Send circled" loading="lazy"></a><pre class="format" id="format2">Here's a new appointment:
-• Name: Maria Lopez
-• Phone: (209) 555-0142
-• Address: 123 Oak St, Modesto
-• Project: Full bathroom, tub to walk-in shower, tile
-• Estimate Appointment: Thu Nov 5, 10:00 AM
-• Notes: Husband will be there. Wants it done before the holidays.</pre><p class="muted">Example lead.</p></div></div>
+      <div class="step"><div class="text"><h3>4. Send a new appointment</h3><p>Do this every time you book a visit.</p>
+        <ol>
+          <li>Copy the format and fill it in from the contact in the CRM.</li>
+          <li>Pick the first line:
+            <ul>
+              <li><b>New appointment:</b> you booked it, or confirmed it on the call.</li>
+              <li><b>New appointment (UNCONFIRMED):</b> nobody has reached them yet.</li>
+              <li><b>Confirmed appointment:</b> you just confirmed someone the owner already knows about.</li>
+            </ul></li>
+          <li>Get the address from <b>All fields</b> on the contact. Check there before you ever write "no address."</li>
+          <li>Open the client's chat. <b>Check the name at the top.</b></li>
+          <li>Paste it in the message box and press <b>Send</b>.</li>
+        </ol>
+        <button class="btn" data-copy="format2">Copy format</button>
+        <p class="caution">Never write a price you told the homeowner. If you talked about money, give a budget range, like "Budget: around $18K to $28K."</p></div>
+        <div class="shots"><a href="img/guide-sendblue-send.jpg" target="_blank"><img src="img/guide-sendblue-send.jpg" alt="Chat name, message box and Send circled" loading="lazy"></a><pre class="format" id="format2">New appointment:
+Name: Maria Lopez
+Phone: (209) 555-0142
+Address: 123 Oak St, Modesto, CA 95350
+Estimate Appointment: Thursday, Nov 19 at 10:00 AM
+Project: Full bathroom. Wants the tub out and a walk-in shower with tile.
+Notes: Confirmed by phone with our team. Her husband will be there.</pre><p class="muted">Example lead.</p></div></div>
 
-    <div class="step"><div class="text"><h3>5. Tell them when something changes</h3><p>Send one short message in the same chat.</p></div>
-      <div class="shots"><p><b>The visit moved:</b></p><blockquote>Update: Maria moved to Sat Nov 7 at 2 PM.</blockquote><p><b>The homeowner canceled:</b></p><blockquote>Update: Maria cancelled Thu Nov 5 at 10 AM. I'm following up to rebook.</blockquote></div></div>
+      <div class="step"><div class="text"><h3>5. Tell them when something changes</h3><p>Send one short message in the same chat.</p></div>
+        <div class="shots"><p><b>The visit moved:</b></p><blockquote>Update: Maria moved to Sat Nov 21 at 2 PM.</blockquote><p><b>The homeowner cancelled:</b></p><blockquote>Update: Maria cancelled Thu Nov 19 at 10 AM. I'm following up to rebook.</blockquote></div></div>
 
-    <div class="step"><div class="text"><h3>6. Answer when a client texts</h3><p>Answer fast and keep it short. Click the chat, type, and press <b>Send</b>.</p><p>Don't know the answer? Ask Leo. Don't guess.</p></div></div>
+      <div class="step solo"><div class="text"><h3>6. Answer when an owner texts</h3><p>Answer fast and keep it short. Click the chat, type, and press <b>Send</b>.</p><p>Don't know the answer? Ask Leo. Don't guess.</p></div></div>
+    </div>
   </div>
 
-  <div>
+  <div class="block">
     <h2>Where each client gets their messages</h2>
+    <p>Most clients have a Sendblue chat. A few don't. Here's where each one goes.</p>
     <div class="tw"><table>
-      <thead><tr><th>Client</th><th>Where to message them</th></tr></thead>
-      <tbody>
-        <tr><td>Altair Residential Remodeling</td><td>Sendblue: Altair Residential Remodeling</td></tr>
-        <tr><td>Contractor 2.0</td><td>Sendblue: Contractor 2.0</td></tr>
-        <tr><td>Dream Bath</td><td>Sendblue: Dream Bath</td></tr>
-        <tr><td>H. Flores Construction</td><td>Sendblue: H. Flores Construction</td></tr>
-        <tr><td>HSD Masonry</td><td>Sendblue: HSD Masonry</td></tr>
-        <tr><td>MTR Baths</td><td>Sendblue: MTR Baths</td></tr>
-        <tr><td>Valencia Construction Pros</td><td>Sendblue: Valencia Construction</td></tr>
-        <tr><td>Watkinson Construction</td><td>Sendblue: Watkinson Construction</td></tr>
-        <tr><td>CaliFirst Remodel</td><td>Not in Sendblue. WhatsApp to Eve.</td></tr>
-        <tr><td>Sakura Cucina</td><td>Not in Sendblue. WhatsApp group: Sakura Cucina Leads.</td></tr>
-        <tr><td>DRH Construction</td><td>Not in Sendblue. Ask Leo.</td></tr>
-      </tbody>
+      <thead><tr><th>Client</th><th>Where to tell them</th></tr></thead>
+      <tbody id="chatRows"></tbody>
     </table></div>
   </div>
 </section>
 
 <section id="clients" hidden>
-  <div>
-    <div class="eyebrow">In the CRM</div>
+  <header class="page-head">
     <h1>Clients</h1>
-    <p class="intro">Each client's phone number, calendar, owner, and the days they can come. Only offer those days.</p>
+    <p class="lead">Each client's phone number, calendar, owner, the days they can come, and the deal in their ads right now. Only offer those days.</p>
+  </header>
+
+  <div class="block">
+    <h2>Quick list</h2>
+    <p class="muted">Times are the client's own time. Dream Bath is Eastern, 3 hours ahead of Pacific. Punch List is Central, 2 hours ahead.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Client</th><th>Call from</th><th>Days they can come</th><th>Time zone</th></tr></thead>
+      <tbody id="clientRows"></tbody>
+    </table></div>
   </div>
-  <div class="tw"><table>
-    <thead><tr><th>Client</th><th>Based in</th><th>How far they go</th><th>Days they can come</th><th>Call from</th><th>Calendar</th><th>Owner</th><th>Time zone</th></tr></thead>
-    <tbody id="clientRows"></tbody>
-  </table></div>
-  <div>
-    <h2>Punch List</h2>
-    <p><b>Booking:</b> book in Driive first at <a href="https://app.getdriive.com/book/punch-list-remodeling" target="_blank">app.getdriive.com/book/punch-list-remodeling</a>. Then put the same day and time on the Estimate Appointment - Punch List calendar in the CRM. Leads who booked themselves from our text are already on that calendar. When you confirm them, book the same time through the Driive link too. If that time isn't open in Driive, offer the closest open time and move it on the CRM calendar.</p>
-    <p><b>Prices:</b> walk-in showers start around $9,500 to $10,000. Full remodels start at $15,000. Walk-in tubs start at $17,000. Don't book anyone below these. Use these instead of the $8,000 line.</p>
+
+  <div class="block">
+    <h2>Each client</h2>
+    <div id="clientCards"></div>
   </div>
-  <div>
-    <h2>Old numbers. Never call from these.</h2>
-    <p class="num muted" style="white-space:normal">(209) 314-8310 · (213) 802-8942 · (817) 672-7464 · (916) 426-0592 · (916) 892-0745</p>
+
+  <div class="block">
+    <h2>Numbers you never call from</h2>
+    <p>Only use the numbers in the list above. These are old or flagged as spam:</p>
+    <p class="num" style="white-space:normal">(209) 314-8310 · (213) 802-8942 · (707) 402-9871 · (817) 672-7464 · (916) 426-0592 · (916) 892-0745</p>
+    <p><span class="num">(209) 528-9865</span> is for texting owners only. Never call or text a lead from it.</p>
   </div>
 </section>
 
@@ -962,7 +1110,7 @@ pre.format{margin:0;font:14px/1.6 ui-monospace,Menlo,monospace;background:var(--
 </div>
 
 <script>
-const LEN={"01-opener": 42, "02-discovery": 55, "03-spouse": 29, "04-lock-time": 56, "05-price": 29, "06-busy-call-later": 54, "07-confirm-booked": 55, "08-reschedule": 61, "09-bad-price-on-phone": 52, "10-bad-no-ask": 51};
+const LEN={"01-opener":42,"02-discovery":55,"03-spouse":29,"04-lock-time":56,"05-price":29,"06-busy-call-later":54,"07-confirm-booked":55,"08-reschedule":61,"09-bad-price-on-phone":52,"10-bad-no-ask":51};
 const clips=[
  ["01-opener","Opening the call","Name, company, why you're calling, then one easy question."],
  ["02-discovery","Learning the job","Full bath or shower, materials, and that we bring samples."],
@@ -976,23 +1124,33 @@ const clips=[
  ["10-bad-no-ask","Avoid: not asking for the visit","\"I'll call you back.\" They never did.",1]
 ];
 document.getElementById("clips").innerHTML=clips.map(([f,t,w,bad])=>
- `<tr><td class="q">${t}${bad?'':''}</td><td>${bad?'<span class="tag-no">Avoid. </span>':''}${w}</td><td class="p"><div class="player" data-src="audio/${f}.mp3" data-len="${LEN[f]}"></div></td></tr>`).join("");
+ `<tr><td class="q">${t}</td><td>${bad?'<span class="no">Avoid. </span>':''}${w}</td><td class="p"><div class="player" data-src="audio/${f}.mp3" data-len="${LEN[f]}"></div></td></tr>`).join("");
 
+/* One list of clients feeds the Clients page and the Sendblue table. Checked against the CRM on Nov 16, 2026. */
 const clients=[
- ["Valencia","(209) 318-1967","Estimate Appointment - Valencia Construction Pros","Brian","Pacific","Mon–Fri. Sat or Sun only if they can't do a weekday.","Manteca","About 50 miles around"],
- ["Watkinson","(916) 713-5966","Estimate Appointment - Watkinson Construction","Eric","Pacific","Any day, any time.","Orangevale (Sacramento)","About 40 miles around"],
- ["CaliFirst","(213) 667-4790","Estimate Appointment - CaliFirst Remodel","No owner name. Just say \"our team\".","","Mon–Fri and Sunday. <b>Never Saturday.</b>","Los Angeles","Fresno down to San Diego"],
- ["Dream Bath","(216) 350-1961","Schedule Your Free Bathroom Estimate - Dream Bath","Devin","Eastern","Mon–Fri: 10:00, 2:00 or 6:00. Sat: 10:00 or 1:00. Sun: 1:00 or 5:00.","Lorain, Ohio","About 50 miles around Cleveland"],
- ["DRH","(707) 402-9871","DRH Construction Free Estimate","Don","Pacific","Any day, any time.","Fairfield","About 50 miles around"],
- ["HSD Masonry","(209) 528-9865","Estimate Appointment - HSD Masonry","Daniel and Kayla","","Mon–Fri any time. Sat–Sun: 1:00 or 5:00.","Manteca","About 50 miles around"],
- ["H. Flores","(209) 340-3731","H. Flores Construction","Huver","","Mon–Fri only, mornings best. <b>Never weekends.</b>","Galt","About 50 miles around"],
- ["MTR Baths","(916) 249-7175","Estimate Appointment - MTR Baths","Alex","","Mon–Sat. <b>No Sunday.</b>","West Sacramento","About 50 miles around"],
- ["Contractor 2.0","(707) 366-6865","Estimate Appointment - Contractor 2.0","Esteban","","Mon–Fri any time. <b>No weekends.</b>","Fairfield","About 50 miles around"],
- ["Punch List","(847) 250-4079","Estimate Appointment - Punch List","Brad Hughes. Tom Witte or David Cantor may come instead.","Central","Mon–Fri, 7:30 to 3:00 Central. <b>No weekends.</b> Only times open in Driive. See below.","Morton Grove (Chicago area)","About 18 miles around Des Plaines"]
-].map(r=>{if(!r[4])r[4]="Pacific";return r});
-document.getElementById("clientRows").innerHTML=clients.map(r=>
- `<tr><td class="q">${r[0]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${r[5]}</td><td class="num">${r[1]}</td><td>${r[2]}</td><td>${r[3]||"—"}</td><td>${r[4]}</td></tr>`).join("");
-
+ {n:"Valencia Construction Pros",owner:"Brian. Rick also gets the texts.",phone:"(209) 318-1967",cal:"Estimate Appointment - Valencia Construction Pros",team:"Valencia Construction Pros",tz:"Pacific",days:"Mon–Fri. Sat or Sun only if they can't do a weekday.",area:"Manteca. About 50 miles around.",chat:"Sendblue: <b>Valencia Construction</b>",deal:"$3,000 off if they book before Thanksgiving (Nov 26)."},
+ {n:"Watkinson Construction",owner:"Eric",phone:"(916) 713-5966",cal:"Estimate Appointment - Watkinson Construction",team:"Watkinson Construction",tz:"Pacific",days:"Any day, any time.",area:"Orangevale (Sacramento). About 40 miles around.",work:"Kitchens and bathrooms, with their own crew.",chat:"Sendblue: <b>Watkinson Construction</b>",deal:"Until Thanksgiving (Nov 26): free heated floors with a bathroom, or a free appliance upgrade with a kitchen. Finished on time, or Watkinson pays them $100 a day."},
+ {n:"Dream Bath",owner:"Devin",phone:"(216) 350-1961",cal:"Schedule Your Free Bathroom Estimate - Dream Bath",team:"Dream Bath",tz:"Eastern",days:"Mon–Fri at 10:00, 2:00 or 6:00. Sat at 10:00 or 1:00. Sun at 1:00 or 5:00.",area:"Lorain, Ohio. About 50 miles around Cleveland.",work:"Bathrooms.",chat:"Sendblue: <b>Dream Bath</b>",deal:"$3,000 off if they book before Thanksgiving (Nov 26).",notes:"The calendar only shows the weekday times. Ask Leo before you book a weekend. Leads who book from the ad can land on a calendar called Schedule Your Free Estimate. The CRM moves them to Dream Bath's calendar within a few minutes by itself. Still there after 10 minutes? Tell Leo."},
+ {n:"HSD Masonry",owner:"Daniel and Kayla",phone:"(209) 330-7731",cal:"Estimate Appointment - HSD Masonry",team:"HSD Masonry",tz:"Pacific",days:"Mon–Fri any time (Mon, Wed or Fri is best). Sat–Sun at 1:00 or 5:00 only.",area:"Manteca. About 50 miles around. They also take Bay Area jobs.",work:"Concrete and walls (masonry), not bathrooms.",chat:"Sendblue: <b>HSD Masonry</b>",deal:"$3,000 off if they book before Thanksgiving (Nov 26). One newer ad says before Dec 15.",notes:"Kayla wants bigger jobs: about $15,000 and up, or 1,000+ square feet. A small job past Stockton? Ask Leo before you book it. On Saturdays, 5:00 is better than 1:00."},
+ {n:"H. Flores Construction",owner:"Huver",phone:"(209) 340-3731",cal:"H. Flores Construction",team:"H. Flores Construction",tz:"Pacific",days:"Mon–Fri only. Mornings are best. <b>Never weekends.</b>",area:"Galt. About 50 miles around.",work:"Kitchens and bathrooms. 25+ years in business.",chat:"Sendblue: <b>H. Flores Construction</b>",deal:"$3,000 off if they book before Dec 15."},
+ {n:"MTR Baths",owner:"Alex",phone:"(916) 249-7175",cal:"Estimate Appointment - MTR Baths",team:"MTR Baths",tz:"Pacific",days:"Mon–Sat. <b>No Sunday.</b>",area:"West Sacramento. About 50 miles around.",work:"Walk-in tubs, walk-in showers and bathrooms. Many leads are seniors.",chat:"Sendblue: <b>MTR Baths</b>",deal:"$3,000 off if they book before Thanksgiving (Nov 26). Seniors and veterans get an extra discount on top.",notes:"Some MTR leads come from Google ads on MTR's website. Your call list says Google Ads Submissions. Call them like any new lead."},
+ {n:"Contractor 2.0",owner:"Esteban",phone:"(707) 366-6865",cal:"Estimate Appointment - Contractor 2.0",team:"Contractor 2.0",tz:"Pacific",days:"Mon–Fri any time. <b>No weekends.</b>",area:"Fairfield. About 50 miles around.",chat:"Sendblue: <b>Contractor 2.0</b>",deal:"Ask Leo."},
+ {n:"DRH Construction",owner:"Don",phone:"(707) 640-6928",cal:"DRH Construction Free Estimate",team:"DRH Construction",tz:"Pacific",days:"Any day, any time.",area:"Fairfield. About 50 miles around.",work:"Bathrooms and kitchens.",chat:"No group chat. The CRM texts Don when you set Booked&nbsp;- Confirmed. Also send Leo the details.",deal:"$3,000 off if they book before Thanksgiving (Nov 26)."},
+ {n:"Punch List",owner:"Brad Hughes. Tom Witte or David Cantor may go instead.",phone:"(847) 250-4079",cal:"Estimate Appointment - Punch List",team:"Punch List Remodeling",tz:"Central",days:"Mon–Fri, 7:30 to 3:00 Central. <b>No weekends.</b> Only times open in Driive.",area:"Morton Grove (Chicago area). About 18 miles around Des Plaines.",work:"Bathrooms, walk-in showers and walk-in tubs.",chat:"No group chat. The CRM emails Punch List when you set Booked&nbsp;- Confirmed.",deal:"$3,000 off if they book before Thanksgiving (Nov 26).",notes:"<b>Book in Driive first</b> at <a href=\"https://app.getdriive.com/book/punch-list-remodeling\" target=\"_blank\">app.getdriive.com/book/punch-list-remodeling</a>. Then put the same day and time on the CRM calendar. Leads who booked themselves are already on the CRM calendar: when you confirm them, book the same time in Driive too. If that time isn't open in Driive, offer the closest open time and move it on the CRM calendar.<br><b>Prices:</b> walk-in showers start around $9,500 to $10,000. Full remodels start at $15,000. Walk-in tubs start at $17,000. Don't book anyone below these. Use these instead of the $8,000 line."},
+ {n:"Sakura Cucina",owner:"Kim",phone:"(213) 799-5373",cal:"Sakura Cucina Free Estimate",team:"Leo Melaye (the only name in the list)",tz:"Pacific",days:"Ask Leo.",area:"Los Angeles County.",work:"Kitchens: full remodels, cabinets and countertops. The visit is a free design consultation.",chat:"WhatsApp group: <b>Sakura Cucina Leads</b>. Not in it? Send Leo the details.",deal:"$3,000 off plus free under-cabinet lighting if they book before Dec 15."},
+ {n:"Deluxe LifeCote",owner:"Steve",phone:"No number yet. Ask Leo.",cal:"Estimate Appointment - Deluxe LifeCote",team:"Deluxe LifeCote",tz:"Pacific",days:"Ask Leo.",area:"Southern California.",work:"A coating for the outside walls of a house, so it doesn't need paint again. The ads and texts say Paint Pal. The visit is a free exterior inspection.",chat:"WhatsApp group: <b>DLC Build Signals</b>. Send Leo the details.",deal:"$3,000 off if they book before Dec 15.",notes:"New client (Nov 2026). Ask Leo before your first Deluxe LifeCote call."},
+ {n:"CaliFirst Remodel",owner:"Never name an owner. Say \"our team.\"",phone:"<b>Don't call.</b> CaliFirst calls its own leads.",cal:"Don't book.",team:"",tz:"Pacific",days:"Don't book.",area:"Los Angeles. Fresno down to San Diego.",chat:"Not ours. CaliFirst gets its leads by itself.",deal:"",notes:"Since Nov 6, CaliFirst calls its own leads. If a CaliFirst lead shows up in your list, skip it and tell Leo."}
+];
+const tzLabel=c=>c.tz==="Eastern"?"Eastern (3 hrs ahead)":c.tz==="Central"?"Central (2 hrs ahead)":c.tz;
+document.getElementById("clientRows").innerHTML=clients.map(c=>
+ `<tr><td class="q">${c.n}</td><td class="num">${c.phone}</td><td>${c.days}</td><td>${tzLabel(c)}</td></tr>`).join("");
+const kv=(k,v)=>v?`<dt>${k}</dt><dd>${v}</dd>`:"";
+document.getElementById("clientCards").innerHTML=clients.map(c=>
+ `<div class="client"><div class="k"><h3>${c.n}</h3>${c.work?`<p>${c.work}</p>`:""}</div><dl class="kv">`+
+ kv("Owner",c.owner)+kv("Call from",c.phone)+kv("Calendar",c.cal)+kv("Team member",c.team)+kv("Days",c.days)+kv("Time zone",tzLabel(c))+kv("Area",c.area)+kv("Tell the owner",c.chat)+kv("Deal in the ads",c.deal)+kv("Good to know",c.notes)+
+ `</dl></div>`).join("");
+document.getElementById("chatRows").innerHTML=clients.map(c=>
+ `<tr><td class="q">${c.n}</td><td>${c.chat}</td></tr>`).join("");
 
 const PLAY='<svg viewBox="0 0 14 14"><path d="M3 1.5v11l9.5-5.5z"/></svg>',PAUSE='<svg viewBox="0 0 14 14"><path d="M3 1.5h3v11H3zM8 1.5h3v11H8z"/></svg>';
 const fmt=t=>Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
@@ -1008,10 +1166,12 @@ document.querySelectorAll(".player").forEach(p=>{
   a.ontimeupdate=()=>{const d=a.duration||+p.dataset.len;fill.style.width=(a.currentTime/d*100)+"%";time.textContent=fmt(a.currentTime)};
   p.querySelector(".bar").onclick=e=>{const r=e.currentTarget.getBoundingClientRect(),d=a.duration||+p.dataset.len;a.currentTime=(e.clientX-r.left)/r.width*d;if(a.paused)b.click()};
 });
+
 const tbtn=document.getElementById("theme");
 const syncTheme=()=>tbtn.setAttribute("aria-label",document.documentElement.dataset.theme==="dark"?"Switch to light mode":"Switch to dark mode");
 syncTheme();
 tbtn.onclick=()=>{const t=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=t;try{localStorage.setItem("cd-theme",t)}catch(e){}syncTheme()};
+
 const tabs=[...document.querySelectorAll("aside nav button")];
 function show(id){
   const sec=document.getElementById(id);
@@ -1020,6 +1180,8 @@ function show(id){
   document.querySelectorAll("main section").forEach(s=>s.hidden=s.id!==id);
   if(location.hash.slice(1)!==id)history.replaceState(null,"","#"+id);
   if(current)current.pause();
+  const sel=tabs.find(b=>b.dataset.tab===id);
+  if(sel&&window.matchMedia("(max-width:860px)").matches)sel.scrollIntoView({block:"nearest",inline:"center"});
   window.scrollTo(0,0);
 }
 tabs.forEach(b=>b.onclick=()=>show(b.dataset.tab));
