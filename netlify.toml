@@ -1,0 +1,10 @@
+# Netlify reads this file on every build.
+#
+# Netlify's secrets scanner flags the Firebase web config apiKey in home.html and roster.html as a
+# "likely secret" and fails the whole build. Every deploy from Nov 9 to Nov 16, 2026 failed this way,
+# so nothing after Nov 4 went live (including the /calldesk password gate).
+# Firebase web API keys are public by design: they only identify the Firebase project
+# (build-signals-client-portal); access is controlled by Firebase Auth and security rules.
+# So this one value is marked as expected. Any other likely secret still fails the build.
+[build.environment]
+  SECRETS_SCAN_SMART_DETECTION_OMIT_VALUES = "AIzaSyADdLA3tFXkTo-WrIbbrox9vvO0inYIotI"
