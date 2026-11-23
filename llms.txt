@@ -1,39 +1,40 @@
 # BuildSignals
 
-> BuildSignals is a lead generation and appointment-setting agency for residential kitchen and bath remodelers across the United States. New clients try BuildSignals free for 2 weeks, then choose how to pay: pay per appointment or pay per close. No long-term contracts. $2.8M+ in remodeling work generated for contractor clients. Founded by Leo Melaye in 2016; based in Davis, California; serves clients nationwide.
+> BuildSignals books in-home appointments for residential bathroom remodelers in the United States. BuildSignals pays for the ads, calls every homeowner in under 5 minutes and books appointments with every decision-maker home. Remodelers pay $297 per sat appointment from a prepaid balance, and no-shows are free. One bath company per area. No long-term contracts. $2.8M+ in remodeling work generated for contractor clients. Founded by Leo Melaye in 2016; based in Davis, California.
 
 ## The offer
 
-- Free 2-week trial. No card required to set it up.
-- Then the contractor picks one of two models:
-  - Pay per appointment: a set price per qualified, budget-confirmed appointment, charged weekly for the appointments delivered that week. Price set per market on a 20-minute call.
-  - Pay per close: an agreed percentage of the jobs the contractor closes from appointments BuildSignals booked.
-- No long-term contracts with either model.
-- The contractor pays ad spend directly to Meta from their own ad account, which they own.
+- $297 per sat appointment: the remodeler's rep sits with every decision-maker in the home. Ad spend is included.
+- Not billed: no-shows, cancellations, reschedules, one-legs (only one decision-maker home), appointments the remodeler chooses not to run, and homeowners already in the remodeler's CRM in the last 90 days.
+- Prepaid balance: $5,940 opens the account and covers the first 20 sat appointments. The remodeler tops up when the balance runs low.
+- Stop any time with 7 days' notice. Unused appointments are refunded.
+- 10x guarantee: if the jobs signed from the first 20 sits add up to less than 10 times what was paid ($59,400) within 90 days, BuildSignals adds 10 sits free.
+- One bath company per area, in writing.
+- CRM integration is free. For remodelers without a CRM, BuildSignals builds one for $1,500.
 
 ## What BuildSignals does
 
-- Writes, designs, and runs Facebook and Instagram ads for the contractor's service area
-- Calls every new lead within minutes and qualifies them (homeowner, project, budget)
-- Books in-home estimates on the contractor's calendar and confirms them beforehand
-- Shows every lead, appointment, and closed job in a live dashboard
+- Writes, designs, pays for and runs Facebook and Instagram ads for the remodeler's service area
+- Calls every new lead in under 5 minutes and screens it against the remodeler's criteria
+- Books appointments on the remodeler's calendar and confirms every decision-maker will be home
+- Sends every lead and call recording into the remodeler's CRM
 
 ## Who it is for
 
-- Residential kitchen and bath remodeling contractors anywhere in the United States who want a steady flow of booked in-home estimates
+- Residential bathroom remodeling companies with 3 or more people running in-home appointments and 40 or more demos a month
+- Bathrooms only: full remodels, tub-to-shower conversions, walk-in showers and tubs, and bath replacements
 
 ## Results
 
 - $2.8M+ in residential remodeling work generated for contractor clients to date
-- Valencia Construction Pros: $44,000 in closed deals in the first 12 days
-- H. Flores Construction: 6 appointments and $120k in scheduled work from $361 in ad spend; 3 jobs and $44k within the first month
-- MTR Baths: over $135,000 from $14,000 in ad spend; over $140,000 closed in a single month
-- Contractor 2.0: first appointment 15 minutes after ads went live; $22,000 job closed in 10 days
+- Valencia Construction Pros: $264,025 closed from 11 jobs since July 2026, on $4,380 in ads
+- H. Flores Construction: $63,299 closed from 5 jobs since July 2026, on $3,872 in ads
+- MTR Baths: $275,000 closed this year on $16,000 in ads
+- A Los Angeles remodeler: 71 booked bathroom appointments from BuildSignals ads in its first five weeks
 
 ## Key pages
 
-- [Home](https://buildsignals.com/): the offer at a glance
-- [How it works and pricing](https://buildsignals.com/how-it-works): free trial, pay per appointment vs. pay per close, FAQ
+- [Home](https://buildsignals.com/): the offer, pricing, how it works and FAQ
 - [Results](https://buildsignals.com/results): client results
 - [Blog](https://buildsignals.com/blog/): guides for remodelers
 - [How Much Do Bathroom Remodeling Leads Cost?](https://buildsignals.com/blog/how-much-do-bathroom-remodeling-leads-cost)
@@ -47,7 +48,7 @@
 ## Contact
 
 - Website: https://buildsignals.com
-- Book a 20-minute call: https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ
+- Check your area and book a 15-minute call: https://buildsignals.com/#book
 - Phone: (213) 449-7226
 - Founder: Leo Melaye
 - Founded: 2016
