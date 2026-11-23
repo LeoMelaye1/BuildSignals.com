@@ -1,3 +1,6 @@
 # The old how-it-works page described the 2-week trial offer. That content now lives on the homepage.
 /how-it-works       /#how-it-works   301!
 /how-it-works.html  /#how-it-works   301!
+# The old apply page described the 2-week trial offer. Booking now happens on the homepage calendar.
+/apply       /#book   301!
+/apply.html  /#book   301!

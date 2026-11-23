@@ -75,7 +75,7 @@
           "name": "How do I know if my remodeling leads are being shared?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ask whose name is on the ad, whose ad account runs it, and whether the same lead is ever sent to another contractor in your area. If the ad shows a marketplace brand instead of your company, assume the lead may be shared."
+            "text": "Ask whether the same lead is ever sent to another contractor in your area, and get the answer in writing. A provider that sells exclusive leads should put one contractor per area in your agreement."
           }
         },
         {
@@ -191,10 +191,11 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2609465719513721');
 fbq('track', 'PageView');
-// Clicking any "book a call" link or the phone number counts as Contact. The booking itself is tracked by the GHL calendar's own pixel setting.
+// Clicking the phone number counts as Contact; a link to the homepage calendar counts as OpenCalendar. The booking itself is tracked by the GHL calendar's own pixel setting.
 document.addEventListener('click', function (e) {
-  var a = e.target.closest && e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"]');
-  if (a) fbq('track', 'Contact');
+  if (!e.target.closest) return;
+  if (e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"], a[href^="sms:"]')) fbq('track', 'Contact');
+  else if (e.target.closest('a[href$="#book"]')) fbq('trackCustom', 'OpenCalendar');
 });
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2609465719513721&ev=PageView&noscript=1"/></noscript>
@@ -211,10 +212,10 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <div class="container wide header-inner">
     <a href="/" class="logo"><img src="/buildsignals.png" alt="BuildSignals logo">BuildSignals</a>
     <nav class="top" aria-label="Main">
-      <a class="link" href="/how-it-works.html">How it works</a>
+      <a class="link" href="/#how-it-works">How it works</a>
       <a class="link" href="/results.html">Results</a>
       <a class="link" href="/blog/">Blog</a>
-      <a class="btn btn-small" href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Book a call →</a>
+      <a class="btn btn-small" href="/#book">Book a call →</a>
     </nav>
   </div>
 </header>
@@ -241,7 +242,6 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     <tr><td>What the homeowner knows about you</td><td>Often nothing; they asked a marketplace, not you</td><td>Your name, your ad, your project photos</td></tr>
     <tr><td>Price per lead</td><td>Usually lower</td><td>Usually higher, or tied to ad spend</td></tr>
     <tr><td>What wins the job</td><td>Speed, then often the lowest price</td><td>Follow-up, trust and a good estimate</td></tr>
-    <tr><td>Who owns the marketing</td><td>The marketplace</td><td>You (your page, your ad account, your audience)</td></tr>
     <tr><td>Pressure on your price</td><td>High; you're one of several bids</td><td>Lower; you may be the only bid</td></tr>
   </tbody>
 </table>
@@ -268,7 +268,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
 <p>Plenty of vendors say "exclusive." Ask these questions before you sign anything:</p>
 <ol>
   <li><strong>Whose name is on the ad?</strong> If the ad shows your company, the homeowner is responding to you. If it shows a generic brand or marketplace, ask where else that form goes.</li>
-  <li><strong>Whose ad account runs the ads?</strong> If it's yours, you can see every lead and every dollar. If it's theirs, you're trusting their reporting.</li>
+  <li><strong>Do you see every lead?</strong> If you get every lead and call recording, you can check their work. If you only see the appointments they pick, you're trusting their reporting.</li>
   <li><strong>Can I see the lead the moment it comes in?</strong> A live dashboard or CRM view of every lead, appointment and outcome keeps everyone honest.</li>
   <li><strong>Is the same lead ever sold to another contractor in my area?</strong> Get the answer in writing.</li>
   <li><strong>What do I actually pay for?</strong> A raw lead, a qualified appointment, or a closed job? The answer tells you who carries the risk. We compare the two main options in <a href="/blog/pay-per-appointment-vs-pay-per-close.html">pay per appointment vs. pay per close</a>.</li>
@@ -279,7 +279,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
 <p>That's why some contractors stop buying leads at all and pay for booked, qualified appointments instead. The vendor handles the calling and qualifying, and you only see homeowners who have confirmed they own the home, have a real project and have a budget for it.</p>
 
 <h2>What this looks like with BuildSignals</h2>
-<p>At BuildSignals, every lead is exclusive. We write and run Facebook and Instagram ads under your company name, in your own Meta ad account that you own and pay for directly. We call each lead within minutes, qualify them on homeownership, project and budget, and book the in-home estimate on your calendar. You can <a href="/how-it-works.html">see how it works here</a>. If bathrooms are your main business, here is how we handle <a href="/solutions/bathroom-remodeling-leads.html">exclusive bathroom remodeling leads</a>. The offer is simple: <strong>Try us free for 2 weeks. Then pay per appointment or per close.</strong> No long-term contracts.</p>
+<p>At BuildSignals, every lead is exclusive. We write, run and pay for Facebook and Instagram ads in your service area, and we book for one remodeler per area. We call each lead within minutes, qualify them on homeownership, project and budget, and book the in-home estimate on your calendar. You can <a href="/#how-it-works">see how it works here</a>. If bathrooms are your main business, here is how we handle <a href="/solutions/bathroom-remodeling-leads.html">exclusive bathroom remodeling leads</a>. The offer is simple: <strong>$297 per appointment that sits. We pay for the ads, and no-shows are free.</strong> No long-term contracts.</p>
 <p>For example, H. Flores Construction got 6 appointments and $120k scheduled from $361 in ad spend, and closed 3 jobs worth $44k in their first month. Results vary by market, but none of those homeowners were being called by four other contractors.</p>
 
     <h2>Quick answers</h2>
@@ -289,7 +289,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
       </details>
       <details>
         <summary>How do I know if my remodeling leads are being shared?</summary>
-        <p>Ask whose name is on the ad, whose ad account runs it, and whether the same lead is ever sent to another contractor in your area. If the ad shows a marketplace brand instead of your company, assume the lead may be shared.</p>
+        <p>Ask whether the same lead is ever sent to another contractor in your area, and get the answer in writing. A provider that sells exclusive leads should put one contractor per area in your agreement.</p>
       </details>
       <details>
         <summary>What is better than buying exclusive leads?</summary>
@@ -297,9 +297,9 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
       </details>
 
     <section class="cta">
-      <h2>Try BuildSignals free for 2 weeks</h2>
-      <p>Then pick how you pay: per appointment or per close. No long-term contracts. Book a 30-minute call and we'll check whether your area is open.</p>
-      <a class="btn" href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Book a 30-minute call →</a>
+      <h2>Get bathroom appointments on your calendar</h2>
+      <p>We run the ads and call every lead in under 5 minutes. You pay $297 only when the homeowner sits down with you. No-shows are free, and there's no long-term contract.</p>
+      <a class="btn" href="/#book">Book a call with Leo →</a>
       <p style="margin:14px 0 0;font-size:15px;">Or call Leo: <a href="tel:+12134497226">(213) 449-7226</a></p>
     </section>
   </div>
@@ -308,7 +308,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <div class="container wide footer-inner">
     <div>© 2026 BuildSignals · Founded by Leo Melaye</div>
     <div class="footer-links">
-      <a href="/how-it-works.html">How it works &amp; pricing</a>
+      <a href="/#how-it-works">How it works &amp; pricing</a>
       <a href="/results.html">Results</a>
       <a href="/blog/">Blog</a>
       <a href="tel:+12134497226">(213) 449-7226</a>

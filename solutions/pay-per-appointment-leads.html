@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pay Per Appointment Leads for Remodelers | BuildSignals</title>
-<meta name="description" content="Pay only for qualified, budget-confirmed in-home estimates booked on your calendar. Exclusive leads, no contract. Try BuildSignals free for 2 weeks.">
+<meta name="description" content="Pay only when the homeowner sits down with you: $297 per in-home bathroom appointment, ads included. Exclusive leads, no-shows free, no contract.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="author" content="Leo Melaye">
 <meta name="bs:nav" content="Pay per appointment leads">
@@ -13,11 +13,11 @@
 <meta property="og:site_name" content="BuildSignals">
 <meta property="og:url" content="https://buildsignals.com/solutions/pay-per-appointment-leads">
 <meta property="og:title" content="Pay Per Appointment Leads for Remodelers | BuildSignals">
-<meta property="og:description" content="Pay only for qualified, budget-confirmed in-home estimates booked on your calendar. Exclusive leads, no contract. Try BuildSignals free for 2 weeks.">
+<meta property="og:description" content="Pay only when the homeowner sits down with you: $297 per in-home bathroom appointment, ads included. Exclusive leads, no-shows free, no contract.">
 <meta property="og:image" content="https://buildsignals.com/buildsignals.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Pay Per Appointment Leads for Remodelers | BuildSignals">
-<meta name="twitter:description" content="Pay only for qualified, budget-confirmed in-home estimates booked on your calendar. Exclusive leads, no contract. Try BuildSignals free for 2 weeks.">
+<meta name="twitter:description" content="Pay only when the homeowner sits down with you: $297 per in-home bathroom appointment, ads included. Exclusive leads, no-shows free, no contract.">
 <link rel="icon" type="image/png" href="/buildsignals.png">
 <link rel="alternate" type="text/plain" title="BuildSignals summary for AI assistants" href="/llms.txt">
 <script type="application/ld+json">
@@ -29,7 +29,7 @@
       "@id": "https://buildsignals.com/solutions/pay-per-appointment-leads",
       "url": "https://buildsignals.com/solutions/pay-per-appointment-leads",
       "name": "Pay Per Appointment Leads for Remodelers | BuildSignals",
-      "description": "Pay only for qualified, budget-confirmed in-home estimates booked on your calendar. Exclusive leads, no contract. Try BuildSignals free for 2 weeks.",
+      "description": "Pay only when the homeowner sits down with you: $297 per in-home bathroom appointment, ads included. Exclusive leads, no-shows free, no contract.",
       "dateModified": "2026-10-14",
       "inLanguage": "en-US",
       "isPartOf": {
@@ -59,7 +59,7 @@
     },
     {
       "@type": "Service",
-      "name": "Pay per appointment leads for bathroom and kitchen remodelers",
+      "name": "Pay per appointment leads for bathroom remodelers",
       "serviceType": "Lead generation and appointment setting for remodeling contractors",
       "provider": {
         "@type": "Organization",
@@ -88,11 +88,13 @@
       },
       "audience": {
         "@type": "BusinessAudience",
-        "audienceType": "Residential kitchen and bath remodeling contractors"
+        "audienceType": "Residential bathroom remodeling contractors"
       },
       "offers": {
         "@type": "Offer",
-        "description": "Free 2-week trial, then pay per appointment or pay per close. No long-term contracts."
+        "price": "297",
+        "priceCurrency": "USD",
+        "description": "Per in-home bathroom appointment where the homeowner sits down with the contractor. Ad spend included. No-shows are free. No long-term contracts."
       }
     },
     {
@@ -103,7 +105,7 @@
           "name": "How much do pay per appointment remodeling leads cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your market and the type of remodel. BuildSignals sets a price per qualified, budget-confirmed appointment for your market on a 30-minute call, after a free 2-week trial. Ad spend is paid by you directly to Meta from your own ad account."
+            "text": "BuildSignals charges $297 for each appointment where the homeowner sits down with you. We pay for the ads, and no-shows, cancellations and reschedules are free."
           }
         },
         {
@@ -127,15 +129,15 @@
           "name": "Is there a contract for pay per appointment?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No long-term contract. You start with a free 2-week trial, then pay per appointment, charged once a week for that week's appointments, or pay per close. You can stop when it stops working for you."
+            "text": "No long-term contract. You prepay a balance, and each appointment that sits comes off it. Stop any time with 7 days' notice and we refund what you haven't used."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I pay per close instead of per appointment?",
+          "name": "Do I pay for no-shows?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. With pay per close you pay an agreed percentage of the jobs you close from appointments BuildSignals booked, so you pay only when work is sold."
+            "text": "No. You pay $297 only when the homeowner sits down with you. No-shows, cancellations and reschedules are free."
           }
         }
       ]
@@ -243,10 +245,11 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2609465719513721');
 fbq('track', 'PageView');
-// Clicking any "book a call" link or the phone number counts as Contact. The booking itself is tracked by the GHL calendar's own pixel setting.
+// Clicking the phone number counts as Contact; a link to the homepage calendar counts as OpenCalendar. The booking itself is tracked by the GHL calendar's own pixel setting.
 document.addEventListener('click', function (e) {
-  var a = e.target.closest && e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"]');
-  if (a) fbq('track', 'Contact');
+  if (!e.target.closest) return;
+  if (e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"], a[href^="sms:"]')) fbq('track', 'Contact');
+  else if (e.target.closest('a[href$="#book"]')) fbq('trackCustom', 'OpenCalendar');
 });
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2609465719513721&ev=PageView&noscript=1"/></noscript>
@@ -263,10 +266,10 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <div class="container wide header-inner">
     <a href="/" class="logo"><img src="/buildsignals.png" alt="BuildSignals logo">BuildSignals</a>
     <nav class="top" aria-label="Main">
-      <a class="link" href="/how-it-works.html">How it works</a>
+      <a class="link" href="/#how-it-works">How it works</a>
       <a class="link" href="/results.html">Results</a>
       <a class="link" href="/blog/">Blog</a>
-      <a class="btn btn-small" href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Book a call →</a>
+      <a class="btn btn-small" href="/#book">Book a call →</a>
     </nav>
   </div>
 </header>
@@ -274,8 +277,8 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/solutions/">Lead generation by service</a> / Pay per appointment leads</nav>
     <p class="eyebrow">Lead generation by service</p>
-    <h1>Pay per appointment leads for bathroom and kitchen remodelers</h1>
-    <p class="lede">This page is for kitchen and bath remodelers who are tired of paying for clicks, shared leads and monthly retainers that may or may not turn into estimates. With BuildSignals you pay per appointment: a set price for each qualified, budget-confirmed in-home estimate we book on your calendar. Try us free for 2 weeks. Then pay per appointment or per close.</p>
+    <h1>Pay per appointment leads for bathroom remodelers</h1>
+    <p class="lede">This page is for bathroom remodelers who are tired of paying for clicks, shared leads and monthly retainers that may or may not turn into estimates. With BuildSignals you pay per appointment: $297 for each in-home estimate where the homeowner sits down with you, with the ad spend included. No-shows are free.</p>
 
     <h2>What you are actually buying</h2>
     <p>Most lead sources sell you a name and a phone number. What happens next is your problem. Some never pick up, some are renters, some wanted a price for a job they will never do. A pay per appointment program sells you the step after that: a homeowner who has already talked to a person, said yes to the project, confirmed a budget and picked a time for you to come out.</p>
@@ -306,37 +309,36 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
 
     <h2>How BuildSignals books your appointments</h2>
     <ol>
-      <li><strong>Ads in your service area.</strong> We write and run Facebook and Instagram ads aimed at homeowners where you work. The ads run from your own Meta ad account, which you own, and you pay Meta for ad spend directly.</li>
+      <li><strong>Ads in your service area.</strong> We write and run Facebook and Instagram ads aimed at homeowners where you work. We pay for the ads.</li>
       <li><strong>A call within minutes.</strong> Every new lead gets a call within minutes of filling out the form. Homeowners who wait an hour have often moved on. See <a href="/blog/speed-to-lead-for-remodeling-contractors.html">why speed to lead matters for remodelers</a>.</li>
       <li><strong>Qualification on the phone.</strong> We check homeowner status, the project and the budget before anything goes on your calendar.</li>
       <li><strong>Booked on your calendar.</strong> The in-home estimate lands on your calendar with the homeowner's details and project notes.</li>
       <li><strong>Confirmed before you go.</strong> We confirm the appointment ahead of the visit to cut down on no-shows. More on that in <a href="/blog/how-to-reduce-no-shows-for-in-home-remodeling-estimates.html">how to reduce no-shows for in-home estimates</a>.</li>
       <li><strong>Everything on a live dashboard.</strong> You see every lead, every appointment and every closed job in one place, so you always know what you are paying for.</li>
     </ol>
-    <p>Every lead is exclusive to you. We never share or resell it to another contractor. If you want to know why that matters for close rates, read <a href="/blog/exclusive-vs-shared-remodeling-leads.html">exclusive vs. shared remodeling leads</a>. The full process is on <a href="/how-it-works.html">how it works</a>.</p>
+    <p>Every lead is exclusive to you. We never share or resell it to another contractor. If you want to know why that matters for close rates, read <a href="/blog/exclusive-vs-shared-remodeling-leads.html">exclusive vs. shared remodeling leads</a>. The full process is on <a href="/#how-it-works">how it works</a>.</p>
 
     <h2>How billing works</h2>
     <ul>
-      <li><strong>Free for the first 2 weeks.</strong> You see real appointments in your market before you pay us anything.</li>
-      <li><strong>A set price per appointment, set for your market.</strong> We agree on it together on a 30-minute call. It depends on your area and the kind of remodel you want.</li>
-      <li><strong>Charged once a week.</strong> Your card is charged once a week for that week's appointments. No monthly retainer.</li>
+      <li><strong>$297 per appointment that sits.</strong> One flat price, with the ad spend included. You pay only when the homeowner and every decision-maker sit down with you.</li>
+      <li><strong>Prepaid, no retainer.</strong> Each appointment that sits comes off a prepaid balance. If you stop, we refund what you haven't used.</li>
       <li><strong>No long-term contract.</strong> If it stops working for you, you stop.</li>
-      <li><strong>Prefer to pay only on sold jobs?</strong> Choose pay per close instead: an agreed percentage of the jobs you close from appointments we booked.</li>
+      <li><strong>No-shows are free.</strong> Cancellations and reschedules aren't billed either.</li>
     </ul>
 
     <h2>How to tell if a per-appointment price makes sense for you</h2>
     <p>You do not need anyone's pitch to answer this. You need three numbers from your own business:</p>
     <ol>
-      <li>Your average gross profit on a job of the type you want more of (tub-to-shower, full bath, kitchen).</li>
+      <li>Your average gross profit on a job of the type you want more of (tub-to-shower, walk-in shower, full bath).</li>
       <li>Your close rate on in-home estimates that were actually qualified. Be honest; count the last 20 or so.</li>
       <li>How much you are willing to spend to win one job.</li>
     </ol>
-    <p>Multiply your average gross profit per job by your close rate. That is roughly what one qualified appointment is worth to you. Then decide what share of that you are willing to spend on marketing. If you close one in three, each appointment is worth about a third of your profit on a job. If the per-appointment price plus your share of ad spend sits well under that, the program pays for itself. If your close rate swings a lot, pay per close may fit you better.</p>
+    <p>Multiply your average gross profit per job by your close rate. That is roughly what one qualified appointment is worth to you. Then decide what share of that you are willing to spend on marketing. If you close one in three, each appointment is worth about a third of your profit on a job. If the per-appointment price sits well under that, the program pays for itself. At BuildSignals that price is $297 with the ad spend included, so if you close one in three, you need about $900 of profit per job to break even.</p>
     <p>One outside note on timing: Harvard's Joint Center for Housing Studies projects that homeowner spending on improvements will reach about $518 billion by the end of 2026, with growth easing late in the year (<a href="https://www.jchs.harvard.edu/press-releases/remodeling-growth-set-downshift-late-2026" rel="noopener">LIRA, revised April 2026</a>). A slower market is when wasted estimates hurt the most, and when paying only for qualified ones helps the most.</p>
 
     <h2>Who pay per appointment fits best</h2>
     <ul>
-      <li>Kitchen and bath remodelers who close a solid share of the estimates they run.</li>
+      <li>Bathroom remodelers who close a solid share of the estimates they run.</li>
       <li>Owners who run their own sales and cannot afford to spend evenings calling leads back.</li>
       <li>Companies with crew capacity that want a steady, predictable number of estimates each week.</li>
       <li>Contractors burned by retainers or shared leads who want to pay for results instead.</li>
@@ -350,7 +352,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     <h2>Common questions</h2>
       <details>
         <summary>How much do pay per appointment remodeling leads cost?</summary>
-        <p>It depends on your market and the type of remodel. BuildSignals sets a price per qualified, budget-confirmed appointment for your market on a 30-minute call, after a free 2-week trial. Ad spend is paid by you directly to Meta from your own ad account.</p>
+        <p>BuildSignals charges $297 for each appointment where the homeowner sits down with you. We pay for the ads, and no-shows, cancellations and reschedules are free.</p>
       </details>
       <details>
         <summary>What is the difference between a lead and an appointment?</summary>
@@ -362,17 +364,17 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
       </details>
       <details>
         <summary>Is there a contract for pay per appointment?</summary>
-        <p>No long-term contract. You start with a free 2-week trial, then pay per appointment, charged once a week for that week&#x27;s appointments, or pay per close. You can stop when it stops working for you.</p>
+        <p>No long-term contract. You prepay a balance, and each appointment that sits comes off it. Stop any time with 7 days' notice and we refund what you haven't used.</p>
       </details>
       <details>
-        <summary>Can I pay per close instead of per appointment?</summary>
-        <p>Yes. With pay per close you pay an agreed percentage of the jobs you close from appointments BuildSignals booked, so you pay only when work is sold.</p>
+        <summary>Do I pay for no-shows?</summary>
+        <p>No. You pay $297 only when the homeowner sits down with you. No-shows, cancellations and reschedules are free.</p>
       </details>
 
     <section class="cta">
-      <h2>Try BuildSignals free for 2 weeks</h2>
-      <p>Then pick how you pay: per appointment or per close. No long-term contracts. Book a 30-minute call and we'll check whether your area is open.</p>
-      <a class="btn" href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Book a 30-minute call →</a>
+      <h2>Get bathroom appointments on your calendar</h2>
+      <p>We run the ads and call every lead in under 5 minutes. You pay $297 only when the homeowner sits down with you. No-shows are free, and there's no long-term contract.</p>
+      <a class="btn" href="/#book">Book a call with Leo →</a>
       <p style="margin:14px 0 0;font-size:15px;">Or call Leo: <a href="tel:+12134497226">(213) 449-7226</a></p>
     </section>
   </div>
@@ -381,7 +383,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <div class="container wide footer-inner">
     <div>© 2026 BuildSignals · Founded by Leo Melaye</div>
     <div class="footer-links">
-      <a href="/how-it-works.html">How it works &amp; pricing</a>
+      <a href="/#how-it-works">How it works &amp; pricing</a>
       <a href="/results.html">Results</a>
       <a href="/blog/">Blog</a>
       <a href="tel:+12134497226">(213) 449-7226</a>

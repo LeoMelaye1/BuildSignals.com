@@ -75,7 +75,7 @@
           "name": "How much does a pay-per-appointment program cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on the market and the type of remodel. BuildSignals sets the per-appointment price for your market on a 30-minute call, after a free 2-week trial."
+            "text": "It depends on the market and the type of remodel. BuildSignals charges a flat $297 for each bathroom appointment where the homeowner sits down with you, with the ad spend included. No-shows are free."
           }
         }
       ]
@@ -183,10 +183,11 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2609465719513721');
 fbq('track', 'PageView');
-// Clicking any "book a call" link or the phone number counts as Contact. The booking itself is tracked by the GHL calendar's own pixel setting.
+// Clicking the phone number counts as Contact; a link to the homepage calendar counts as OpenCalendar. The booking itself is tracked by the GHL calendar's own pixel setting.
 document.addEventListener('click', function (e) {
-  var a = e.target.closest && e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"]');
-  if (a) fbq('track', 'Contact');
+  if (!e.target.closest) return;
+  if (e.target.closest('a[href*="widget/booking/"], a[href*="iclosed.io"], a[href^="tel:"], a[href^="sms:"]')) fbq('track', 'Contact');
+  else if (e.target.closest('a[href$="#book"]')) fbq('trackCustom', 'OpenCalendar');
 });
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2609465719513721&ev=PageView&noscript=1"/></noscript>
@@ -203,10 +204,10 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <div class="container wide header-inner">
     <a href="/" class="logo"><img src="/buildsignals.png" alt="BuildSignals logo">BuildSignals</a>
     <nav class="top" aria-label="Main">
-      <a class="link" href="/how-it-works.html">How it works</a>
+      <a class="link" href="/#how-it-works">How it works</a>
       <a class="link" href="/results.html">Results</a>
       <a class="link" href="/blog/">Blog</a>
-      <a class="btn btn-small" href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Book a call →</a>
+      <a class="btn btn-small" href="/#book">Book a call →</a>
     </nav>
   </div>
 </header>
@@ -232,7 +233,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     <p>Get this definition in writing before you start. It's the single biggest difference between agencies.</p>
 
     <h2>How billing usually works</h2>
-    <p>You agree on a price per appointment for your market. Appointments get booked on your calendar, and you're billed for what was delivered. At BuildSignals, your card is charged once a week for that week's appointments. No retainer, no long-term contract, and you can stop when it stops working for you. Here is how our <a href="/solutions/pay-per-appointment-leads.html">pay per appointment program for remodelers</a> works, including how to check whether a per-appointment price makes sense for your close rate.</p>
+    <p>You agree on a price per appointment for your market. Appointments get booked on your calendar, and you're billed for what was delivered. At BuildSignals, each appointment that sits costs $297 and comes off a prepaid balance. No retainer, no long-term contract, and you can stop any time with 7 days' notice. Here is how our <a href="/solutions/pay-per-appointment-leads.html">pay per appointment program for remodelers</a> works, including how to check whether a per-appointment price makes sense for your close rate.</p>
 
     <h2>What the agency should be doing behind the scenes</h2>
     <ol>
@@ -246,13 +247,13 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     <h2>Red flags</h2>
     <ul>
       <li>No written definition of a qualified appointment.</li>
-      <li>The agency owns the ad account and won't give you access.</li>
+      <li>The agency won't show you the leads and call recordings behind your appointments.</li>
       <li>Long contracts or big setup fees before you've seen a single appointment.</li>
       <li>No real results from contractors like you.</li>
     </ul>
 
     <h2>How to try it without much risk</h2>
-    <p>BuildSignals offers a free 2-week trial. After that you choose to pay per appointment or <a href="/blog/pay-per-appointment-vs-pay-per-close.html">pay per close</a>. Our contractor clients have closed $2.8M+ in remodeling work so far, including Contractor 2.0's first appointment 15 minutes after their ads went live and a $22,000 job closed on day 10.</p>
+    <p>BuildSignals charges $297 for each appointment where the homeowner sits down with you, and we pay for the ads. See how that compares with <a href="/blog/pay-per-appointment-vs-pay-per-close.html">pay per close</a>. Our contractor clients have closed $2.8M+ in remodeling work so far, including Contractor 2.0's first appointment 15 minutes after their ads went live and a $22,000 job closed on day 10.</p>
     <h2>Quick answers</h2>
       <details>
         <summary>What is pay-per-appointment lead generation?</summary>
@@ -260,13 +261,13 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
       </details>
       <details>
         <summary>How much does a pay-per-appointment program cost?</summary>
-        <p>It depends on the market and the type of remodel. BuildSignals sets the per-appointment price for your market on a 30-minute call, after a free 2-week trial.</p>
+        <p>It depends on the market and the type of remodel. BuildSignals charges a flat $297 for each bathroom appointment where the homeowner sits down with you, with the ad spend included. No-shows are free.</p>
       </details>
 
     <section class="cta">
-      <h2>Try BuildSignals free for 2 weeks</h2>
-      <p>Then pick how you pay: per appointment or per close. No long-term contracts. Book a 30-minute call and we'll check whether your area is open.</p>
-      <a class="btn" href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Book a 30-minute call →</a>
+      <h2>Get bathroom appointments on your calendar</h2>
+      <p>We run the ads and call every lead in under 5 minutes. You pay $297 only when the homeowner sits down with you. No-shows are free, and there's no long-term contract.</p>
+      <a class="btn" href="/#book">Book a call with Leo →</a>
       <p style="margin:14px 0 0;font-size:15px;">Or call Leo: <a href="tel:+12134497226">(213) 449-7226</a></p>
     </section>
   </div>
@@ -275,7 +276,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <div class="container wide footer-inner">
     <div>© 2026 BuildSignals · Founded by Leo Melaye</div>
     <div class="footer-links">
-      <a href="/how-it-works.html">How it works &amp; pricing</a>
+      <a href="/#how-it-works">How it works &amp; pricing</a>
       <a href="/results.html">Results</a>
       <a href="/blog/">Blog</a>
       <a href="tel:+12134497226">(213) 449-7226</a>
