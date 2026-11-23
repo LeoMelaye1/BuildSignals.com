@@ -1,22 +1,23 @@
 # BuildSignals
 
-> BuildSignals books in-home appointments for bathroom remodeling contractors in the United States. BuildSignals pays for the ads, calls every new lead in under 5 minutes and books the appointment on the remodeler's calendar with every decision-maker home. Remodelers pay $297 for each appointment where the homeowner sits down with them, and no-shows are free. One bathroom remodeler per area. No long-term contracts. Contractor clients have closed $2.8M+ in remodeling work. Founded by Leo Melaye in 2016; based in Davis, California.
+> BuildSignals books in-home appointments for bathroom remodeling contractors in the United States. BuildSignals runs Facebook and Instagram ads in the remodeler's service area, calls every new lead in under 5 minutes and books sat appointments on the remodeler's calendar with every decision-maker home. New clients try BuildSignals free for 2 weeks, then pay per sat appointment or per close. One remodeler per area. No long-term contracts. Contractor clients have closed $2.8M+ in remodeling work. Founded by Leo Melaye in 2016; based in Davis, California.
 
 ## The offer
 
-- $297 per sat appointment: the remodeler sits down in the home with the homeowner and every decision-maker. Ad spend is included.
-- Not billed: no-shows, cancellations, reschedules, one-legs (only one decision-maker home), appointments the remodeler chooses not to run, and homeowners already in the remodeler's CRM in the last 90 days.
-- Prepaid balance: each sat appointment comes off it. The starting amount is set on the first call. Stop any time with 7 days' notice and the unused balance is refunded.
-- 10x guarantee: if the jobs signed from the first 20 sits add up to less than 10 times what was paid for them ($59,400) within 90 days, BuildSignals adds 10 sits free.
-- One bathroom remodeler per area, in writing.
-- CRM integration is free. For remodelers without a CRM, BuildSignals builds one for $1,500.
+- Free 2-week trial. No card needed to set it up.
+- Then the remodeler picks one of two models:
+  - Pay per sat appointment: a set price per appointment, set for the remodeler's market on a 30-minute call and billed weekly for the appointments delivered that week.
+  - Pay per close: an agreed percentage of the jobs the remodeler closes from appointments BuildSignals booked.
+- A sat appointment means every decision-maker is home, they want the work done within 3 months, they have heard the remodeler's price range and are OK with it, they are inside the service area, and it is work the remodeler does. If any of these is false when the remodeler shows up, the remodeler doesn't pay.
+- The remodeler pays ad spend directly to Meta from their own ad account, which they own.
+- One remodeler per area. No long-term contracts with either model.
 
 ## What BuildSignals does
 
-- Writes, designs, pays for and runs Facebook and Instagram ads in the remodeler's service area
-- Calls every new lead in under 5 minutes and screens it against the remodeler's criteria
-- Books appointments on the remodeler's calendar and confirms every decision-maker will be home
-- Sends every lead and call recording into the remodeler's CRM
+- Writes, designs and runs Facebook and Instagram ads in the remodeler's service area
+- Calls every new lead in under 5 minutes and qualifies them (homeowner, project, budget)
+- Books in-home appointments on the remodeler's calendar and confirms them beforehand
+- Shows every lead, appointment and closed job in a live dashboard
 
 ## Who it is for
 
@@ -26,25 +27,24 @@
 ## Results
 
 - $2.8M+ in remodeling work closed by contractor clients to date
-- MTR Baths (Dillon McEwin): $275,000 closed this year on $16,000 in ads
-- Valencia Construction Pros: $264,025 closed from 11 jobs since July 2026, on $4,380 in ads
-- H. Flores Construction (Huver Flores): $63,299 closed from 5 jobs since July 2026, on $3,872 in ads
-- Contractor 2.0 (Esteban Molina): first appointment 15 minutes after the ads went live, and a $22,000 job signed on day 10
-- A Los Angeles remodeler: 71 booked bathroom appointments from BuildSignals ads in its first five weeks
+- Valencia Construction Pros (Ricardo Valencia): $264,025 closed from 11 jobs since July 2026, on $4,380 in ads. $44,000 closed in the first 12 days and $76,000 by the end of month one; renewed for three more months.
+- H. Flores Construction (Huver Flores): $63,299 closed from 5 jobs since July 2026, on $3,872 in ads. 6 appointments and $120,000 scheduled in the first 5 days from $361 in ads; 3 jobs worth $44,000 by day 30.
+- MTR Baths (Dillon McEwin): $275,000 closed this year on $16,000 in ads, including $140,000 in a single month, the biggest in company history.
+- Contractor 2.0 (Esteban Molina): first appointment 15 minutes after the ads went live, the second in under 12 hours, and a $22,000 job signed on day 10.
+- A Los Angeles remodeler: 71 booked bathroom appointments from BuildSignals ads in its first five weeks.
 
 ## Common questions
 
-- How much does BuildSignals cost? $297 for each appointment where the homeowner sits down with the remodeler. Ad spend is included, and no-shows are free.
-- What counts as a sit? The remodeler is in the home with the homeowner and every decision-maker. No-shows, cancellations and reschedules don't count.
-- How fast are leads called? Every new lead is called in under 5 minutes.
-- Is there a contract? No long-term contract. Stop any time with 7 days' notice.
-- Where does BuildSignals work? Across the United States, with one bathroom remodeler per area.
-- How do I get started? Book a 30-minute call with Leo at https://buildsignals.com/#book, or call or text (213) 449-7226.
+- What does BuildSignals cost? Nothing for the first 2 weeks. After that the remodeler chooses to pay per sat appointment, at a price set for their market on the call, or per close, as an agreed percentage of the jobs they close.
+- Is there a contract? No long-term contract. If it stops working, the remodeler stops.
+- How fast are leads called? Every new lead gets a call in under 5 minutes. BuildSignals books the appointment on the remodeler's calendar and confirms it before the visit.
+- Where does BuildSignals work? Across the United States, with one remodeler per area.
+- How do I get started? Book a 30-minute call with Leo at https://buildsignals.com/#book, or call (213) 449-7226.
 
 ## Key pages
 
-- [Home](https://buildsignals.com/): the offer, how it works, client results, FAQ and an open booking calendar
-- [Results](https://buildsignals.com/results): client results
+- [Home](https://buildsignals.com/): the free 2-week trial, client results, how it works, FAQ and an open booking calendar
+- [Results](https://buildsignals.com/results): client results with screenshots
 - [Blog](https://buildsignals.com/blog/): guides for remodelers
 - [How Much Do Bathroom Remodeling Leads Cost?](https://buildsignals.com/blog/how-much-do-bathroom-remodeling-leads-cost)
 - [Exclusive vs. Shared Remodeling Leads: Which Is Better for Kitchen and Bath Contractors?](https://buildsignals.com/blog/exclusive-vs-shared-remodeling-leads)
@@ -58,7 +58,7 @@
 
 - Website: https://buildsignals.com
 - Check your area and book a 30-minute call: https://buildsignals.com/#book
-- Phone and text: (213) 449-7226
+- Phone: (213) 449-7226
 - Founder: Leo Melaye
 - Founded: 2016
 - Headquarters: Davis, California
