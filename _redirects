@@ -4,3 +4,6 @@
 # The old apply page described the 2-week trial offer. Booking now happens on the homepage calendar.
 /apply       /#book   301!
 /apply.html  /#book   301!
+# The old trial landing page offered a free trial, which the site no longer offers.
+/trial       /#book   301!
+/trial.html  /#book   301!

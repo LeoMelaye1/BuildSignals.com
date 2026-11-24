@@ -1,11 +1,10 @@
 # BuildSignals
 
-> BuildSignals books in-home appointments for bathroom remodeling contractors in the United States. BuildSignals runs Facebook and Instagram ads in the remodeler's service area, calls every new lead in under 5 minutes and books sat appointments on the remodeler's calendar with every decision-maker home. New clients try BuildSignals free for 2 weeks, then pay per sat appointment or per close. One remodeler per area. No long-term contracts. Contractor clients have closed $2.8M+ in remodeling work. Founded by Leo Melaye in 2016; based in Davis, California.
+> BuildSignals books in-home appointments for bathroom remodeling contractors in the United States. BuildSignals runs Facebook and Instagram ads in the remodeler's service area, calls every new lead in under 5 minutes and books sat appointments on the remodeler's calendar with every decision-maker home. Remodelers pay per sat appointment or per close. One remodeler per area. No long-term contracts. Contractor clients have closed $2.8M+ in remodeling work. Founded by Leo Melaye in 2016; based in Davis, California.
 
 ## The offer
 
-- Free 2-week trial. No card needed to set it up.
-- Then the remodeler picks one of two models:
+- The remodeler picks one of two models:
   - Pay per sat appointment: a set price per appointment, set for the remodeler's market on a 30-minute call and billed weekly for the appointments delivered that week.
   - Pay per close: an agreed percentage of the jobs the remodeler closes from appointments BuildSignals booked.
 - A sat appointment means every decision-maker is home, they want the work done within 3 months, they have heard the remodeler's price range and are OK with it, they are inside the service area, and it is work the remodeler does. If any of these is false when the remodeler shows up, the remodeler doesn't pay.
@@ -35,7 +34,7 @@
 
 ## Common questions
 
-- What does BuildSignals cost? Nothing for the first 2 weeks. After that the remodeler chooses to pay per sat appointment, at a price set for their market on the call, or per close, as an agreed percentage of the jobs they close.
+- What does BuildSignals cost? The remodeler chooses to pay per sat appointment, at a price set for their market on the call, or per close, as an agreed percentage of the jobs they close.
 - Is there a contract? No long-term contract. If it stops working, the remodeler stops.
 - How fast are leads called? Every new lead gets a call in under 5 minutes. BuildSignals books the appointment on the remodeler's calendar and confirms it before the visit.
 - Where does BuildSignals work? Across the United States, with one remodeler per area.
@@ -43,7 +42,7 @@
 
 ## Key pages
 
-- [Home](https://buildsignals.com/): the free 2-week trial, client results, how it works, FAQ and an open booking calendar
+- [Home](https://buildsignals.com/): the offer, client results, how it works, FAQ and an open booking calendar
 - [Results](https://buildsignals.com/results): client results with screenshots
 - [Blog](https://buildsignals.com/blog/): guides for remodelers
 - [How Much Do Bathroom Remodeling Leads Cost?](https://buildsignals.com/blog/how-much-do-bathroom-remodeling-leads-cost)
