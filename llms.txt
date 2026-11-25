@@ -43,6 +43,7 @@
 ## Key pages
 
 - [Home](https://buildsignals.com/): the offer, client results, how it works, FAQ and an open booking calendar
+- [About](https://buildsignals.com/about): who runs Build Signals, how to reach us and where to find us online
 - [Results](https://buildsignals.com/results): client results with screenshots
 - [Blog](https://buildsignals.com/blog/): guides for remodelers
 - [What Counts as a Qualified Remodeling Appointment?](https://buildsignals.com/blog/what-counts-as-a-qualified-remodeling-appointment)
@@ -62,6 +63,10 @@
 - Founder: Leo Melaye
 - Founded: 2016
 - Headquarters: Davis, California
+- Also written: Build Signals
+- Google Business Profile: https://maps.google.com/?cid=11353840574540296096
+- Facebook: https://www.facebook.com/profile.php?id=61596443055416
+- Instagram: https://www.instagram.com/buildsignals/
 - LinkedIn: https://www.linkedin.com/company/build-signals1/
 
 <!-- solutions -->
