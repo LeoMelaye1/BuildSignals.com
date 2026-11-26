@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Build Signals (BuildSignals) | Leo Melaye, Founder</title>
-<meta name="description" content="Build Signals (BuildSignals) books in-home appointments for bathroom remodelers across the US. Founded in 2016 by Leo Melaye in Davis, California.">
+<title>About Build Signals (BuildSignals) | Our Team</title>
+<meta name="description" content="Build Signals (BuildSignals) books in-home appointments for contractors and home improvement companies across the US. Founded in 2016 by Leo Melaye in Davis, California. Meet the team.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="author" content="Leo Melaye">
 <link rel="canonical" href="https://buildsignals.com/about">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Build Signals">
 <meta property="og:url" content="https://buildsignals.com/about">
-<meta property="og:title" content="About Build Signals (BuildSignals) | Leo Melaye, Founder">
-<meta property="og:description" content="Build Signals (BuildSignals) books in-home appointments for bathroom remodelers across the US. Founded in 2016 by Leo Melaye in Davis, California.">
+<meta property="og:title" content="About Build Signals (BuildSignals) | Our Team">
+<meta property="og:description" content="Build Signals (BuildSignals) books in-home appointments for contractors and home improvement companies across the US. Founded in 2016 by Leo Melaye in Davis, California. Meet the team.">
 <meta property="og:image" content="https://buildsignals.com/buildsignals.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="About Build Signals (BuildSignals) | Leo Melaye, Founder">
-<meta name="twitter:description" content="Build Signals (BuildSignals) books in-home appointments for bathroom remodelers across the US. Founded in 2016 by Leo Melaye in Davis, California.">
+<meta name="twitter:title" content="About Build Signals (BuildSignals) | Our Team">
+<meta name="twitter:description" content="Build Signals (BuildSignals) books in-home appointments for contractors and home improvement companies across the US. Founded in 2016 by Leo Melaye in Davis, California. Meet the team.">
 <link rel="icon" type="image/png" href="/buildsignals.png">
 <link rel="alternate" type="text/plain" title="BuildSignals summary for AI assistants" href="/llms.txt">
 <script type="application/ld+json">
@@ -46,12 +46,16 @@
         "https://www.instagram.com/buildsignals/",
         "https://www.linkedin.com/company/build-signals1/"
       ],
-      "description": "Build Signals books in-home appointments for bathroom remodelers in the United States: Facebook and Instagram ads, a call to every lead in under 5 minutes, and appointments booked on the remodeler's calendar. Pay per sat appointment or per close.",
+      "description": "Build Signals books in-home appointments for contractors and home improvement companies in the United States: Facebook and Instagram ads, a call to every lead in under 5 minutes, and appointments booked on the contractor's calendar. 30-day trial with no retainer, then $100 per shown appointment plus $1,000 a month.",
       "telephone": "+1-213-449-7226",
       "email": "leo@buildsignals.com",
       "founder": {
         "@id": "https://buildsignals.com/#founder"
       },
+      "employee": [
+        { "@id": "https://buildsignals.com/#founder" },
+        { "@id": "https://buildsignals.com/about#jennifer" }
+      ],
       "areaServed": {
         "@type": "Country",
         "name": "United States"
@@ -72,6 +76,15 @@
       },
       "image": "https://buildsignals.com/leo-melaye.jpg",
       "url": "https://buildsignals.com/about"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://buildsignals.com/about#jennifer",
+      "name": "Jennifer",
+      "jobTitle": "Appointment Setter",
+      "worksFor": {
+        "@id": "https://buildsignals.com/#organization"
+      }
     },
     {
       "@type": "AboutPage",
@@ -169,12 +182,19 @@ details p{padding-bottom:16px}
 .posts a.t{font-size:21px;font-weight:600;color:var(--ink-1);text-decoration:none;letter-spacing:-.01em}
 .posts a.t:hover{color:var(--accent)}
 .posts p{margin:6px 0 0}
+.team{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0 8px}
+.person{border:1px solid var(--rule);border-radius:var(--radius);padding:22px}
+.person img,.person .initial{width:88px;height:88px;border-radius:50%;object-fit:cover;display:block;margin-bottom:14px}
+.person .initial{display:flex;align-items:center;justify-content:center;background:#E8EEFC;color:var(--accent);font-size:34px;font-weight:600}
+.person h3{margin:0 0 2px;font-size:19px}
+.person .role{font-size:14px;color:var(--ink-3);margin:0 0 10px}
+.person p:last-child{margin:0;font-size:15.5px}
 footer{border-top:1px solid var(--rule);padding:28px 0;font-size:14px;color:var(--ink-3)}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .footer-links{display:flex;flex-wrap:wrap;gap:6px 18px}
 footer a{color:var(--ink-3);text-decoration:none}
 footer a:hover{color:var(--ink-1)}
-@media (max-width:720px){.cards{grid-template-columns:1fr}nav.top a.link{display:none}main{padding:40px 0 56px}.container{padding:0 18px}}
+@media (max-width:720px){.cards,.team{grid-template-columns:1fr}nav.top a.link{display:none}main{padding:40px 0 56px}.container{padding:0 18px}}
 </style>
 </head>
 <body>
@@ -185,6 +205,7 @@ footer a:hover{color:var(--ink-1)}
       <a class="link" href="/#how-it-works">How it works</a>
       <a class="link" href="/results.html">Results</a>
       <a class="link" href="/blog/">Blog</a>
+      <a class="link" href="/about" aria-current="page">About</a>
       <a class="btn btn-small" href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Book a call →</a>
     </nav>
   </div>
@@ -194,23 +215,41 @@ footer a:hover{color:var(--ink-1)}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / About</nav>
     <p class="eyebrow">About</p>
     <h1>About Build Signals</h1>
-    <p class="lede">Build Signals (also written BuildSignals) books in-home appointments for bathroom remodelers across the United States. Leo Melaye founded the company in 2016. We're based in Davis, California, and work with remodelers nationwide.</p>
+    <p class="lede">Build Signals (also written BuildSignals) books in-home appointments for contractors and home improvement companies across the United States: remodelers, roofers and every other trade that sells in the home. Leo Melaye founded the company in 2016. We're based in Davis, California, and work with companies nationwide.</p>
 
     <h2>What we do</h2>
     <ul>
-      <li>We write and run Facebook and Instagram ads in your service area.</li>
+      <li>We write and run Facebook and Instagram ads in your service area, in your own ad account.</li>
       <li>We call every new lead in under 5 minutes and qualify them: homeowner, real project, budget.</li>
       <li>We book in-home appointments on your calendar and confirm them before you drive out.</li>
       <li>You see every lead, appointment and closed job in a live dashboard.</li>
     </ul>
-    <p>Your leads are yours. We never share or resell them, and we work with one remodeler per area.</p>
+    <p>Your leads are yours. We never share or resell them, and we work with one company per trade in each area.</p>
+
+    <h2>Meet the team</h2>
+    <div class="team">
+      <div class="person" id="leo">
+        <img src="/leo-melaye-face.jpg" alt="Leo Melaye, founder of Build Signals" width="88" height="88" loading="lazy">
+        <h3>Leo Melaye</h3>
+        <p class="role">Founder</p>
+        <p>Leo founded Build Signals in 2016 and runs the ads and the strategy for every client. Your first call is with him, not a sales rep.</p>
+      </div>
+      <div class="person" id="jennifer">
+        <div class="initial" aria-hidden="true">J</div>
+        <h3>Jennifer</h3>
+        <p class="role">Appointment Setter</p>
+        <p>Jennifer is the voice your homeowners hear first. She calls every new lead, qualifies the project and the budget, books the appointment on your calendar and confirms it before your rep drives out.</p>
+      </div>
+    </div>
 
     <h2>How you pay</h2>
-    <p>Pay per sat appointment or per close. You choose: a price per sat appointment, set for your market on our call, or an agreed percentage of the jobs you close. No long-term contracts. You pay for the ads directly in your own ad account, which you own.</p>
-
-    <h2>Who's behind it</h2>
-    <img src="/leo-melaye.jpg" alt="Leo Melaye, founder of Build Signals, speaking on stage" width="720" height="900" loading="lazy" style="display:block;width:100%;max-width:340px;height:auto;border-radius:12px;margin:6px 0 18px">
-    <p>Leo Melaye founded Build Signals in 2016 and runs it with a small team in Davis, California.</p>
+    <ul>
+      <li><strong>$1 today</strong> puts your card on file.</li>
+      <li><strong>Your first 30 days:</strong> no retainer. You pay $100 per shown appointment, charged once a week.</li>
+      <li><strong>After day 30:</strong> $1,000 a month plus $100 per shown appointment.</li>
+      <li><strong>Your ad budget</strong> goes straight to Meta from your own ad account, which you own. The minimum is $75 a day.</li>
+    </ul>
+    <p>A shown appointment means the homeowner is there and meets your rep at the booked time. No-shows and cancellations cost you nothing. No long-term contract.</p>
 
     <h2>Results</h2>
     <p>Our clients have closed over $2.8M in remodeling jobs. A few examples:</p>
@@ -226,7 +265,7 @@ footer a:hover{color:var(--ink-1)}
     <ul>
       <li>Phone: <a href="tel:+12134497226">(213) 449-7226</a></li>
       <li>Email: <a href="mailto:leo@buildsignals.com">leo@buildsignals.com</a></li>
-      <li>Based in Davis, California. We work with remodelers anywhere in the US.</li>
+      <li>Based in Davis, California. We work with companies anywhere in the US.</li>
     </ul>
 
     <h2>Find us online</h2>
@@ -238,9 +277,9 @@ footer a:hover{color:var(--ink-1)}
     </ul>
 
     <section class="cta">
-      <h2>Get appointments booked on your calendar</h2>
-      <p>Pick how you pay: per appointment or per close. No long-term contracts. Book a 30-minute call and we'll check whether your area is open.</p>
-      <a class="btn" href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Book a 30-minute call →</a>
+      <h2>Try us for 30 days with no retainer</h2>
+      <p>$100 per shown appointment, and $1 puts your card on file. No long-term contract. Book a 30-minute call and we'll check whether your area is open.</p>
+      <a class="btn" href="/#book">Book a 30-minute call →</a>
       <p style="margin:14px 0 0;font-size:15px;">Or call Leo: <a href="tel:+12134497226">(213) 449-7226</a></p>
     </section>
   </div>
@@ -250,6 +289,7 @@ footer a:hover{color:var(--ink-1)}
     <div>© 2026 BuildSignals · Founded by Leo Melaye</div>
     <div class="footer-links">
       <a href="/#how-it-works">How it works &amp; pricing</a>
+      <a href="/about">About</a>
       <a href="/results.html">Results</a>
       <a href="/blog/">Blog</a>
       <a href="tel:+12134497226">(213) 449-7226</a>
