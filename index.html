@@ -178,8 +178,23 @@ a:focus-visible,summary:focus-visible{outline:3px solid rgba(224,50,43,.35);outl
 .ctas .alt{font-size:16px;color:var(--muted)}
 .ctas .alt a{color:var(--ink);font-weight:600;text-decoration:none}
 .ctas .alt a.u{font-weight:500;text-decoration:underline}
-.badges{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);gap:10px 26px}
-.badges li{font-size:16px;color:var(--ink-2)}
+/* Callback form in the hero (Leo, Nov 25): posts to Firestore (websiteCallbacks); the portal's
+   onWebsiteCallback trigger puts it in the Build Signals GHL sub-account and texts Leo and Jennifer. */
+.callback,.cb-done{margin-top:30px;max-width:560px;border:1px solid var(--line);border-radius:18px;padding:22px 22px 18px;background:#FFFFFF;box-shadow:0 10px 30px rgba(14,20,22,.06);scroll-margin-top:96px}
+.cb-title{margin:0;font:600 21px/1.25 'Poppins',system-ui,sans-serif;color:var(--ink)}
+.cb-sub{margin:4px 0 16px;font-size:16px;color:var(--muted)}
+.cb-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cb-grid label{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600;color:var(--ink-2)}
+.cb-grid input,.cb-grid select{font:500 16px/1.2 'Barlow',system-ui,sans-serif;color:var(--ink);padding:12px;border:1px solid #D9D4C8;border-radius:10px;background-color:#FFFFFF;width:100%;min-width:0;-webkit-appearance:none;appearance:none}
+.cb-grid select{background:#FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%2345443E' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") right 12px center/12px no-repeat;padding-right:34px}
+.cb-grid input:focus,.cb-grid select:focus{outline:2px solid rgba(224,50,43,.3);border-color:var(--accent)}
+.callback .btn{width:100%;margin-top:14px}
+.callback .btn[disabled]{opacity:.7;cursor:default}
+.cb-error{margin:10px 0 0;font-size:14.5px;font-weight:600;color:var(--accent-2)}
+.cb-fine{margin:12px 0 0;font-size:13.5px;line-height:1.45;color:var(--muted)}
+.cb-fine a{color:var(--ink);font-weight:600}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.cb-done .when{margin:6px 0 0;font-size:17px;color:var(--ink-2)}
 .micro{margin:14px 0 0;font-size:15px;color:var(--muted)}
 .trust{margin:28px 0 0;font-size:16px;color:var(--muted)}
 .trust b{color:var(--gold);letter-spacing:2px}
@@ -291,8 +306,8 @@ a:focus-visible,summary:focus-visible{outline:3px solid rgba(224,50,43,.35);outl
   .section{padding:64px 0}
   .ctas{flex-direction:column}
   .ctas .btn{width:100%}
-  .ctas .alt{text-align:center}
-  .badges{grid-template-columns:1fr}
+  .cb-grid{grid-template-columns:1fr}
+  .callback,.cb-done{padding:18px 16px 14px}
   .result-body{padding:22px 22px 26px}
   .result .num{font-size:28px}
   .words{margin-top:64px}
@@ -344,7 +359,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
       <a href="#faq">FAQ</a>
       <a href="/about">About</a>
       <a href="/blog/">Blog</a>
-      <a href="#book" class="btn small">Book a call</a>
+      <a href="#callback" class="btn small">Get a call back</a>
     </nav>
   </div>
 </header>
@@ -356,16 +371,24 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
         <p class="eyebrow">For contractors and home improvement companies</p>
         <h1>Try us for 30 days. <span class="then">Then decide.</span></h1>
         <p class="lede">We run the ads, call every lead in under 5 minutes and book appointments on your calendar, with every decision-maker home.</p>
-        <div class="ctas">
-          <a href="#book" class="btn">Book a call</a>
-          <span class="alt">or call <a href="tel:+12134497226">(213) 449-7226</a> · <a class="u" href="#how-it-works">How it works</a></span>
+        <form class="callback" id="callback" novalidate>
+          <p class="cb-title">Get a call back in 5 minutes</p>
+          <p class="cb-sub">The same speed we give your leads.</p>
+          <div class="cb-grid">
+            <label><span>Your name</span><input name="name" autocomplete="name" maxlength="80" required></label>
+            <label><span>Mobile number</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" required></label>
+            <label><span>Company</span><input name="company" autocomplete="organization" maxlength="120" required></label>
+            <label><span>Trade</span><select name="trade" required><option value="">Pick one</option><option>Bathrooms</option><option>Kitchens</option><option>Roofing</option><option>Windows and doors</option><option>Full remodels</option><option>Other</option></select></label>
+          </div>
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit">Call me</button>
+          <p class="cb-error" role="alert" hidden></p>
+          <p class="cb-fine">Weekdays 8 AM to 6 PM Pacific. By tapping Call me, you agree we can call and text you about your request. Rather pick a time? <a href="#book">Book a 30-minute call</a> or call <a href="tel:+12134497226">(213) 449-7226</a>.</p>
+        </form>
+        <div class="cb-done" id="callback-done" hidden>
+          <p class="cb-title who">Got it.</p>
+          <p class="when">Expect a call in the next few minutes. Keep your phone close.</p>
         </div>
-        <ul class="badges">
-          <li>No retainer for 30 days</li>
-          <li>No-shows are free</li>
-          <li>Appointments only for you</li>
-          <li>No long-term contract</li>
-        </ul>
         <div class="founder">
           <img src="/leo-melaye-face.jpg" alt="" width="52" height="52">
           <p><strong>Leo Melaye, founder</strong>You'll talk to me, not a sales rep.</p>
@@ -554,7 +577,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
 </footer>
 
 <div class="mobile-bar is-hidden" id="mobile-bar">
-  <a href="#book" class="btn">Book a call</a>
+  <a href="#callback" class="btn">Get a call back</a>
 </div>
 
 <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript" async></script>
@@ -570,7 +593,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
 
 // Phone bar: show it once the hero button scrolls away, hide it again while the calendar is on screen.
 (function () {
-  var bar = document.getElementById('mobile-bar'), book = document.getElementById('book'), ctas = document.querySelector('.hero .ctas');
+  var bar = document.getElementById('mobile-bar'), book = document.getElementById('book'), ctas = document.querySelector('.hero .callback');
   if (!bar) return;
   if (!book || !ctas || !('IntersectionObserver' in window)) { bar.classList.remove('is-hidden'); return; }
   var ctasOnScreen = true, bookOnScreen = false;
@@ -578,6 +601,57 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   // The top margin skips the strip under the sticky header, where the button can't be seen.
   new IntersectionObserver(function (e) { ctasOnScreen = e[0].isIntersecting; update(); }, { rootMargin: '-80px 0px 0px 0px' }).observe(ctas);
   new IntersectionObserver(function (e) { bookOnScreen = e[0].isIntersecting; update(); }, { threshold: 0.15 }).observe(book);
+})();
+
+// Callback form: writes a websiteCallbacks doc through the Firestore REST API (firestore.rules
+// allows create only, with these fields). The portal's onWebsiteCallback trigger does the rest.
+(function () {
+  var f = document.getElementById('callback');
+  if (!f) return;
+  var t0 = Date.now();
+  var URL = 'https://firestore.googleapis.com/v1/projects/buildsignals-portal/databases/(default)/documents/websiteCallbacks';
+  var err = f.querySelector('.cb-error'), btn = f.querySelector('button[type=submit]');
+  function show(msg) { err.textContent = msg || ''; err.hidden = !msg; }
+  function sv(v) { return { stringValue: String(v) }; }
+  function inHours() {
+    var p = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', weekday: 'short', hour: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
+    var wd = p.filter(function (x) { return x.type === 'weekday'; })[0].value, hr = Number(p.filter(function (x) { return x.type === 'hour'; })[0].value);
+    return wd !== 'Sat' && wd !== 'Sun' && hr >= 8 && hr < 18;
+  }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault(); show('');
+    var el = f.elements; // f.name would be the form's own name, so read every field through elements
+    var name = el['name'].value.trim(), phone = el['phone'].value.trim(), company = el['company'].value.trim(), trade = el['trade'].value;
+    var digits = phone.replace(/\D/g, '');
+    if (name.length < 2) return show('Please add your name.');
+    if (digits.length < 10 || phone.length > 20) return show('Please add a 10-digit phone number.');
+    if (company.length < 2) return show('Please add your company name.');
+    if (!trade) return show('Please pick your trade.');
+    var q = new URLSearchParams(location.search), utm = {};
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'fbclid', 'gclid'].forEach(function (k) { if (q.get(k)) utm[k] = sv(q.get(k).slice(0, 160)); });
+    var fields = { name: sv(name.slice(0, 80)), phone: sv(phone), company: sv(company.slice(0, 120)), trade: sv(trade),
+      page: sv(location.pathname.slice(0, 120)), elapsedMs: { integerValue: String(Date.now() - t0) }, website: sv(el['website'].value.slice(0, 200)) };
+    if (Object.keys(utm).length) fields.utm = { mapValue: { fields: utm } };
+    btn.disabled = true; btn.textContent = 'Sending...';
+    fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: fields }) })
+      .then(function (r) { if (!r.ok) throw new Error(String(r.status)); })
+      .then(function () {
+        var test = /^claude test/i.test(name);
+        if (!test && window.fbq) fbq('track', 'Lead', { content_name: 'Website callback' });
+        if (!test && window.clarity) clarity('event', 'callback_submitted');
+        var done = document.getElementById('callback-done');
+        done.querySelector('.who').textContent = 'Got it, ' + name.split(' ')[0] + '.';
+        done.querySelector('.when').textContent = inHours()
+          ? 'Expect a call in the next few minutes. Keep your phone close.'
+          : "We're closed right now, so we'll call you first thing when we open, 8 AM Pacific.";
+        f.hidden = true; done.hidden = false;
+        var bar = document.getElementById('mobile-bar'); if (bar) bar.remove();
+      })
+      .catch(function () {
+        btn.disabled = false; btn.textContent = 'Call me';
+        show('That didn\'t go through. Call us at (213) 449-7226, or book a time below.');
+      });
+  });
 })();
 </script>
 
