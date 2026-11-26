@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Remodeling Client Results | BuildSignals</title>
+<title>Client Results | BuildSignals</title>
 <link rel="canonical" href="https://buildsignals.com/results">
-<meta name="description" content="Results from bathroom and kitchen remodelers running BuildSignals appointment systems: screenshots, case studies and live numbers from our internal dashboard.">
+<meta name="description" content="Results from contractors running BuildSignals appointment systems: their texts, their pipelines and live numbers from our dashboard.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta property="og:title" content="Remodeling Client Results | BuildSignals">
-<meta property="og:description" content="Proof, straight from our clients' phones and our internal dashboard.">
+<meta property="og:title" content="Client Results | BuildSignals">
+<meta property="og:description" content="Proof, straight from our clients' phones, their pipelines and our dashboard.">
 <meta property="og:image" content="https://buildsignals.com/results-mtr-3.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,6 +110,7 @@
     .case .who img.call { aspect-ratio: 1; }
     .case .who img.logo { margin: 0 0 6px; height: 34px; }
     .promise-grid { grid-template-columns: 1fr; }
+    .case .who.noimg { display: block; }
     .ref { grid-template-columns: 1fr; padding: 24px; }
   }
   @media (max-width: 520px) {
@@ -119,6 +120,41 @@
     .shots { grid-template-columns: repeat(2, 1fr); }
     .btn { width: 100%; text-align: center; }
   }
+
+  /* Trust row under the hero stats */
+  .topbar a { display: block; }
+  .trustrow { margin: 28px auto 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .cta-line { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 18px; }
+  .cta-line .alt { color: var(--muted); font-size: 16px; }
+  .cta-line .alt a { color: var(--ink); font-weight: 600; text-decoration: none; }
+  .cta-line .alt a.u { font-weight: 500; text-decoration: underline; }
+  .checks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 24px; }
+  .checks li { position: relative; padding-left: 30px; font-size: 16px; color: var(--ink); }
+  .checks li::before { content: ""; position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; background: #FBF1F0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.3l2.2 2.2 4.8-5' fill='none' stroke='%23E0322B' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/13px no-repeat; }
+
+  /* Jump links */
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+  .jump a { border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font-size: 15px; color: var(--ink); text-decoration: none; background: #fff; }
+  .jump a:hover { border-color: var(--accent); color: var(--accent); }
+  .case { scroll-margin-top: 16px; }
+
+  /* Screenshots that aren't phone-shaped (group chats, pipelines) keep their own shape */
+  .shot.half, .shot.wide, .shot.nat { aspect-ratio: auto; background: #F8F9FB; }
+  .shot.half { grid-column: span 2; }
+  .shot.wide { grid-column: 1 / -1; }
+  .shot.half img, .shot.wide img, .shot.nat img { height: auto; object-fit: contain; }
+  .case .who.noimg { display: block; }
+  .case .who.noimg img.logo { height: 64px; margin-top: 0; }
+  .more-link { display: inline-block; margin-top: 16px; font-weight: 600; color: var(--accent); text-decoration: none; }
+
+  /* More clients, more trades */
+  .more-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+  .mini { border: 1px solid var(--line); border-radius: 12px; padding: 20px; background: #fff; display: flex; flex-direction: column; gap: 8px; }
+  .mini .k { font: 600 13px/1.2 Barlow, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .mini b { font: 600 21px/1.25 Poppins, sans-serif; color: var(--ink); }
+  .mini p { margin: 0; color: var(--muted); font-size: 15.5px; }
+  .mini .shot { margin-top: 6px; }
+  @media (max-width: 860px) { .more-grid { grid-template-columns: 1fr; } }
 </style>
 <!-- Meta Pixel Code (BuildSignals ads pixel) -->
 <script>
@@ -146,58 +182,73 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
 </head>
 <body>
 
-<div class="topbar"><img src="buildsignals-horizontal-white.png" alt="BuildSignals"></div>
+<div class="topbar"><a href="/"><img src="buildsignals-horizontal-white.png" alt="BuildSignals"></a></div>
 
 <header class="hero wrap">
-  <div class="eyebrow">Before our call</div>
-  <h1>Here's what we've done for remodelers <span>like you.</span></h1>
-  <p>No pitch on this page. Just results, screenshots from our clients' phones, and live numbers from the dashboard we run the business on.</p>
+  <div class="eyebrow">Client results</div>
+  <h1>Here's what we've done for companies <span>like yours.</span></h1>
+  <p>No pitch on this page. Just results: our clients' texts, their pipelines, and live numbers from the dashboard we run the business on.</p>
   <div class="headline-stats">
-    <div><b class="num">$2.8M+</b><small>generated for clients this year</small></div>
-    <div><b class="num" id="hs-appts">$275k</b><small id="hs-appts-label">closed by one client this year, on $16k in ads</small></div>
-    <div><b><span class="stars">★★★★★</span></b><small>23 five-star reviews on Google</small></div>
+    <div><b class="num">$2.8M+</b><small>closed by our clients</small></div>
+    <div><b class="num" id="hs-appts">$131,150</b><small id="hs-appts-label">closed by one client in November</small></div>
+    <div><b class="num">15 min</b><small>from launch to a client's first appointment</small></div>
+  </div>
+  <div class="trustrow">
+    <div class="cta-line"><a class="btn" href="/#book">Book a call</a><span class="alt">or call <a href="tel:+12134497226">(213) 449-7226</a> · <a class="u" href="/#how-it-works">How it works</a></span></div>
+    <ul class="checks">
+      <li>No retainer for 30 days</li>
+      <li>No-shows are free</li>
+      <li>Appointments only for you</li>
+      <li>No long-term contract</li>
+    </ul>
   </div>
 </header>
 
 <div class="logos" aria-label="Clients">
-  <p>Remodelers we run appointments for</p>
+  <p>Companies we run appointments for</p>
   <div class="marquee" id="marquee"></div>
 </div>
 
 
 <section class="wrap" id="cases">
   <div class="sec-head">
-    <h2>Four clients. Their numbers, their words.</h2>
-    <p>Tap any screenshot to see it full size. These are their own texts and Instagram stories, not our mockups.</p>
+    <h2>Their numbers, their words.</h2>
+    <p>Tap any screenshot to see it full size. These are their own texts, stories and pipelines, with homeowner names and phone numbers blurred.</p>
   </div>
+  <nav class="jump" aria-label="Jump to a client">
+    <a href="#valencia">Valencia</a><a href="#mtr">MTR Baths</a><a href="#hflores">H. Flores</a><a href="#califirst">CaliFirst</a><a href="#contractor2">Contractor 2.0</a><a href="#more">More clients</a>
+  </nav>
 
-  <article class="case">
+  <article class="case" id="valencia">
     <div class="who">
-      <img class="call" src="call-hflores.jpg" alt="Leo Melaye on a call with Huver Flores" loading="lazy">
+      <img class="call" src="call-valencia.jpg" alt="Kickoff call with Ricardo Valencia" loading="lazy">
       <div>
-        <img class="logo" src="hfloresconstruction.png" alt="H. Flores Construction" loading="lazy">
-        <h3>Huver Flores</h3>
-        <div class="role">Owner, H. Flores Construction</div>
+        <img class="logo" src="Valencia-logo.png" alt="Valencia Construction Pros" loading="lazy">
+        <h3>Ricardo Valencia</h3>
+        <div class="role">Valencia Construction Pros</div>
       </div>
     </div>
     <div>
-      <div class="big">$120k on the board in 5 days</div>
-      <div class="big-sub">From $361 in ads.</div>
+      <div class="big">$264,025 closed since July</div>
+      <div class="big-sub">$131,150 of it in November alone.</div>
       <ul class="facts">
-        <li>6 appointments, first 5 days</li>
-        <li>$16k job signed in week 3</li>
-        <li>3 jobs, $44k by day 30</li>
+        <li>$44k in the first 12 days</li>
+        <li>11 jobs, the biggest $46,850</li>
+        <li>29 appointments in November</li>
+        <li>Renewed after the trial</li>
       </ul>
-      <p class="story">Six appointments and $120k in estimates scheduled in his first five days. By day 30 he'd signed three jobs worth $44k on $1,186 of ad spend.</p>
+      <p class="story">Three booked appointments in under two days, then $44,000 closed in the first 12 days. They renewed, and by November their rep Brian was closing several jobs a week: $46,850, $27,000, $24,500, $17,500 and $15,300. His words, from our group chat:</p>
       <div class="shots">
-        <button class="shot" data-cap="6 appointments, $120k scheduled, from $361 in ads"><img src="results-hflores-1.jpg" alt="H. Flores: 6 appointments, $120k scheduled, from $361 in ads" loading="lazy"></button>
-        <button class="shot" data-cap="&quot;Hey I think we have our first deal&quot;: $16,000 job in 3 weeks"><img src="results-hflores-2.jpg" alt="H. Flores: $16,000 job in 3 weeks" loading="lazy"></button>
-        <button class="shot" data-cap="3 jobs, $44k, from $1,186 in ads"><img src="results-hflores-3.jpg" alt="H. Flores: 3 jobs, $44k, from $1,186 in ads" loading="lazy"></button>
+        <button class="shot half" data-cap="Nov 17, Brian: &ldquo;Cuz I closed and stuff :)&rdquo; That job was $46,850."><img src="results-valencia-nov17-closed.jpg" alt="Valencia group chat, Nov 17: Brian says he closed a job" loading="lazy"></button>
+        <button class="shot half" data-cap="Nov 20, Brian: &ldquo;Closed another one.&rdquo;"><img src="results-valencia-nov20-closed.jpg" alt="Valencia group chat, Nov 20: Closed another one" loading="lazy"></button>
+        <button class="shot wide" data-cap="Nov 18, Brian, with 4 estimates in one day: &ldquo;LOVE THIS AS A PROBLEM AND NOT HAVING NO WORK LETS GOOOO&rdquo;"><img src="results-valencia-nov18-4-estimates.jpg" alt="Valencia group chat, Nov 18: 4 estimates in one day" loading="lazy"></button>
+        <button class="shot" data-cap="$44,000 closed in the first 12 days"><img src="results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"></button>
+        <button class="shot" data-cap="3 booked appointments in under 2 days"><img src="valencia-dashboard-appointments.jpg" alt="Valencia Construction Pros: 3 booked appointments in under 2 days" loading="lazy"></button>
       </div>
     </div>
   </article>
 
-  <article class="case">
+  <article class="case" id="mtr">
     <div class="who">
       <img class="call" src="mtr-baths-140k-month.jpg" alt="MTR Baths Instagram story: over $140k closed this month" style="object-fit:contain;background:#000" loading="lazy">
       <div>
@@ -208,47 +259,74 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     </div>
     <div>
       <div class="big">$275k closed this year</div>
-      <div class="big-sub">On $16k of ads.</div>
+      <div class="big-sub">$140k of it in one month, their biggest ever.</div>
       <ul class="facts">
-        <li>$135k closed Jan to Jun</li>
+        <li>$135k closed January to June</li>
         <li>$140k in a single month after</li>
-        <li>Biggest month in company history</li>
+        <li>4 bathrooms closed in one week</li>
+        <li>3 more closed by Nov 12</li>
       </ul>
-      <p class="story">From January to June they'd closed $135k. We reviewed the offer and audited their sales process, and the next month they closed $140k, their biggest month ever. $275k total on $16k in ad spend.</p>
+      <p class="story">From January to June they'd closed $135k. We reviewed the offer and audited their sales process, and the next month they closed $140k, their biggest month ever.</p>
       <div class="shots">
         <button class="shot" data-cap="Over $140k closed in one month"><img src="results-mtr-3.jpg" alt="MTR Baths: over $140k closed in a month" loading="lazy"></button>
-        <button class="shot" data-cap="Client closed 4 more bathrooms in a single week"><img src="mtr-baths-4-bathrooms-week.jpg" alt="MTR Baths: closed 4 more bathrooms in one week" loading="lazy" style="object-fit:contain;background:#3A7BC8"></button>
-        <button class="shot" data-cap="$135,000 from $14,000 in ads"><img src="results-mtr-1.jpg" alt="MTR Baths: $135,000 from $14,000 in ads" loading="lazy"></button>
+        <button class="shot" data-cap="4 more bathrooms closed in a single week"><img src="mtr-baths-4-bathrooms-week.jpg" alt="MTR Baths: closed 4 more bathrooms in one week" loading="lazy" style="object-fit:contain;background:#3A7BC8"></button>
+        <button class="shot" data-cap="$135,000 closed by June"><img src="results-mtr-1.jpg" alt="MTR Baths: $135,000 closed" loading="lazy"></button>
       </div>
     </div>
   </article>
 
-  <article class="case">
+  <article class="case" id="hflores">
     <div class="who">
-      <img class="call" src="call-valencia.jpg" alt="Kickoff call with Ricardo Valencia" loading="lazy">
+      <img class="call" src="call-hflores.jpg" alt="Leo Melaye on a call with Huver Flores" loading="lazy">
       <div>
-        <img class="logo" src="Valencia-logo.png" alt="Valencia Construction Pros" loading="lazy">
-        <h3>Ricardo Valencia</h3>
-        <div class="role">Valencia Construction Pros</div>
+        <img class="logo" src="hfloresconstruction.png" alt="H. Flores Construction" loading="lazy">
+        <h3>Huver Flores</h3>
+        <div class="role">Owner, H. Flores Construction</div>
       </div>
     </div>
     <div>
-      <div class="big">$76,000 closed in month one</div>
-      <div class="big-sub">$44,000 of it in the first 12 days.</div>
+      <div class="big">$63,299 closed from 5 jobs</div>
+      <div class="big-sub">$120k on the board in his first 5 days.</div>
       <ul class="facts">
-        <li>$44k closed in 12 days</li>
-        <li>$76k by end of month one</li>
-        <li>Renewed for 3 more months</li>
+        <li>6 appointments, first 5 days</li>
+        <li>$16k job signed in week 3</li>
+        <li>3 jobs, $44k by day 30</li>
       </ul>
-      <p class="story">Three booked appointments in under two days on less than $100 of ads. $44k closed inside the first 12 days, $76k by the end of month one. They renewed for three more months.</p>
+      <p class="story">Six appointments and $120k in estimates scheduled in his first five days. He signed a $16,000 job in week 3, had three jobs worth $44k by day 30, and has closed five jobs for $63,299 so far.</p>
       <div class="shots">
-        <button class="shot" data-cap="3 booked appointments in under 2 days, less than $100 spent"><img src="valencia-dashboard-appointments.jpg" alt="Valencia Construction Pros: 3 booked appointments in under 2 days on less than $100" loading="lazy"></button>
-        <button class="shot" data-cap="$44,000 closed in 12 days"><img src="results-valencia-1.jpg" alt="Valencia Construction Pros: $44,000 closed in 12 days" loading="lazy"></button>
+        <button class="shot" data-cap="6 appointments and $120k scheduled in 5 days"><img src="results-hflores-1.jpg" alt="H. Flores: 6 appointments, $120k scheduled in 5 days" loading="lazy"></button>
+        <button class="shot" data-cap="&quot;Hey I think we have our first deal&quot;: $16,000 job in 3 weeks"><img src="results-hflores-2.jpg" alt="H. Flores: $16,000 job in 3 weeks" loading="lazy"></button>
+        <button class="shot" data-cap="3 jobs, $44k in the first month"><img src="results-hflores-3.jpg" alt="H. Flores: 3 jobs, $44k in the first month" loading="lazy"></button>
       </div>
     </div>
   </article>
 
-  <article class="case">
+  <article class="case" id="califirst">
+    <div class="who noimg">
+      <div>
+        <img class="logo" src="logos/califirst.webp" alt="CaliFirst Remodel" loading="lazy">
+        <h3>CaliFirst Remodel</h3>
+        <div class="role">Bathroom and roofing remodeler, Los Angeles</div>
+      </div>
+    </div>
+    <div>
+      <div class="big">$145,751 closed in 30 days</div>
+      <div class="big-sub">8 jobs, bathrooms and roofs.</div>
+      <ul class="facts">
+        <li>8 sales, about $18k each</li>
+        <li>A $28,000 roof sold 2 days after the lead</li>
+        <li>24 appointments in the first 30 days</li>
+      </ul>
+      <p class="story">These are the Closed columns of their own pipeline, with homeowner names blurred.</p>
+      <div class="shots">
+        <button class="shot nat" data-cap="Closed: 6 jobs, $106,551"><img src="califirst-crm-closed.jpg" alt="CaliFirst Remodel pipeline: Closed, 6 jobs, $106,551" loading="lazy"></button>
+        <button class="shot nat" data-cap="Closed and billed: 2 jobs, $39,200"><img src="califirst-crm-closed-billed.jpg" alt="CaliFirst Remodel pipeline: Closed and billed, 2 jobs, $39,200" loading="lazy"></button>
+      </div>
+      <a class="more-link" href="https://apply.buildsignals.com/califirst">Read the full CaliFirst case study &rarr;</a>
+    </div>
+  </article>
+
+  <article class="case" id="contractor2">
     <div class="who">
       <img class="call" src="call-esteban.jpg" alt="Leo Melaye on a call with Esteban Molina" loading="lazy">
       <div>
@@ -275,6 +353,22 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   </article>
 </section>
 
+<section class="wrap" id="more">
+  <div class="sec-head">
+    <h2>More clients, more trades</h2>
+    <p>Newer clients and other trades. Fewer closed-job numbers so far, so here's what we can show today.</p>
+  </div>
+  <div class="more-grid">
+    <div class="mini"><span class="k">A window company</span><b>11 appointments, 2 closed jobs</b><p>In a 4-week trial, April to May 2026. Proof the system works outside bathrooms.</p></div>
+    <div class="mini"><span class="k">DRH Construction Services</span><b>&ldquo;Yes 2&rdquo;: two closes in one month</b><p>Don, the owner, when Leo asked whether any closes came in that month. 41 appointments so far, 21 of them in October and November.</p>
+      <button class="shot nat" data-cap="Don, DRH's owner: two closes this month"><img src="results-drh-2-closes.jpg" alt="Text from DRH's owner: Yes 2" loading="lazy"></button></div>
+    <div class="mini"><span class="k">Dream Bath</span><b>52 appointments in about 2 months</b><p>22 in October and 23 in November.</p></div>
+    <div class="mini"><span class="k">Punch List</span><b>11 appointments in the first 10 days</b><p>November 2026.</p></div>
+    <div class="mini"><span class="k">Deluxe LifeCote</span><b>8 appointments in the first 7 days</b><p>The first was booked 1.8 hours after the first lead came in.</p></div>
+    <div class="mini"><span class="k">HSD Masonry</span><b>17 appointments in the first 30 days</b><p>The first was booked 1.3 hours after the first lead came in.</p></div>
+  </div>
+</section>
+
 <section class="promise">
   <div class="wrap">
     <div class="sec-head">
@@ -283,8 +377,8 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
     </div>
     <div class="promise-grid">
       <div><h3>Both spouses home</h3><p>The decision makers are at the table, so you're not coming back for a second visit.</p></div>
-      <div><h3>$10k+ budget confirmed</h3><p>Budget is qualified before the appointment is ever booked on your calendar.</p></div>
-      <div><h3>One remodeler per area</h3><p>We never run the same system for your competitor down the street.</p></div>
+      <div><h3>Budget confirmed</h3><p>The homeowner's budget is qualified before the appointment is ever booked on your calendar.</p></div>
+      <div><h3>One company per trade</h3><p>We never run the same system for your competitor down the street.</p></div>
     </div>
   </div>
 </section>
@@ -293,7 +387,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
   <div class="ref">
     <div>
       <h2>Want to hear it from one of them?</h2>
-      <p>Happy to connect you with a remodeler we work with so you can ask them anything, without us on the line. Send me a text and I'll set it up before our call.</p>
+      <p>Happy to connect you with a client we work with so you can ask them anything, without us on the line. Send me a text and I'll set it up before our call.</p>
     </div>
     <div class="ref-cta">
       <a class="btn" id="ref-btn" href="sms:+12134497226">Text Leo to connect</a>
@@ -304,7 +398,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
 
 <footer>
   <img src="buildsignals-horizontal-white.png" alt="BuildSignals">
-  <div>Talk soon. &nbsp;·&nbsp; <a href="/privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="/terms.html">Terms</a></div>
+  <div><a href="/">Home</a> &nbsp;·&nbsp; <a href="/about">About</a> &nbsp;·&nbsp; <a href="/privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="/terms.html">Terms</a></div>
 </footer>
 
 <dialog id="lightbox" aria-label="Screenshot">
@@ -327,6 +421,8 @@ const LOGOS = [
   ['contractor2.png', 'Contractor 2.0'], ['DRH_Logo_Half_Size-removebg-preview%20(1).png', 'DRH Construction Services'], ['watkinson_construction_logo_-_Moises_Abarca-removebg-preview-1.png', 'Watkinson Construction', true],
   ['bath-by-tomorrow.png', 'Bath By Tomorrow'], ['dream-bath.png', 'Dream Bath'], ['first-priority-home-solutions.png', 'First Priority Home Solutions'],
   ['sakura-cucina.png', 'Sakura Cucina'], ['logo.png', 'Banner LLC', true],
+  ['logos/califirst.webp', 'CaliFirst Remodel'], ['logos/punch-list.webp', 'Punch List Bath & Home Remodeling'], ['logos/rws.webp', 'RWS Building & Remodeling'],
+  ['logos/sfl-builders.webp', 'SFL Builders Group'], ['logos/deluxe-lifecote.webp', 'Deluxe LifeCote'],
 ];
 document.getElementById('marquee').innerHTML = [...LOGOS, ...LOGOS]
   .map(([f, n, dark], i) => `<div class="chip${dark ? ' dark' : ''}"><img src="${f}" alt="${i < LOGOS.length ? n : ''}" loading="lazy"></div>`).join('');
