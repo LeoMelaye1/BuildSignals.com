@@ -172,10 +172,10 @@ a:focus-visible,summary:focus-visible{outline:3px solid rgba(224,50,43,.35);outl
 
 /* Hero */
 .hero{padding:96px 0 104px}
-.hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:64px;align-items:start}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .hero-grid>*{min-width:0}
 .eyebrow{margin:0 0 18px;font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-.hero h1{font-size:clamp(38px,5vw,60px);font-weight:600;line-height:1.08;letter-spacing:-.025em;text-wrap:balance}
+.hero h1{font-size:clamp(38px,4.6vw,54px);font-weight:600;line-height:1.08;letter-spacing:-.025em;text-wrap:balance}
 /* The July homepage format Leo asked to go back to (Nov 26): "Then decide." in red, same size, same line. */
 .hero h1 em{font-style:normal;color:var(--accent)}
 .lede{margin:26px 0 0;font-size:clamp(18px,1.6vw,21px);color:var(--ink-2);max-width:540px}
@@ -184,12 +184,6 @@ a:focus-visible,summary:focus-visible{outline:3px solid rgba(224,50,43,.35);outl
 .trust b{color:var(--gold);letter-spacing:2px}
 .trust strong{color:var(--ink)}
 .trust a{color:var(--accent);font-weight:600;text-decoration:none}
-/* The calendar makes the left column tall, so the photo stays beside the headline and follows the calendar down. */
-.leo{margin:0;position:sticky;top:108px}
-.leo img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:28px}
-.leo figcaption{position:absolute;left:20px;right:20px;bottom:20px;background:rgba(255,255,255,.96);border-radius:16px;padding:14px 18px;box-shadow:0 10px 30px rgba(14,20,22,.12)}
-.leo strong{display:block;font-size:17px}
-.leo span{font-size:15px;color:var(--muted)}
 
 /* Client logos right under the hero, as on the July homepage. Plain HTML, so search engines and AI assistants read the names. */
 .clients{padding:30px 0 34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
@@ -250,12 +244,12 @@ a:focus-visible,summary:focus-visible{outline:3px solid rgba(224,50,43,.35);outl
 .checks{list-style:none;margin:32px auto 40px;padding:0;display:inline-grid;gap:12px;text-align:left}
 .checks li{font-size:18px}
 
-/* Book: the GHL calendar sits in the hero, where the callback form was (Leo, Nov 26: "instead of the form just
-   making it the booking calendar please for now"). Every /#book link on the site lands here. Phones get a small
-   face next to the title, because the big photo is hidden there. */
-.hero-book{margin-top:32px;max-width:620px;scroll-margin-top:96px}
+/* Book: the GHL calendar is the right half of the hero, where Leo's photo was (Leo, Nov 26: "instead of the form
+   just making it the booking calendar please for now"; Nov 27: "replace that image on the right side with the
+   calendar"). Every /#book link on the site lands here. Leo's face sits next to the calendar's title. */
+.hero-book{width:100%;max-width:540px;justify-self:end;scroll-margin-top:96px}
 .book-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.book-head .avatar{display:none;width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none}
+.book-head .avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none}
 .book-title{margin:0;font:600 21px/1.25 'Poppins',system-ui,sans-serif;color:var(--ink)}
 .book-head .sub{margin:3px 0 0;font-size:16px;line-height:1.4;color:var(--muted)}
 /* GHL's widget starts with its own header card; shifting the iframe up by --book-crop opens it on the dates and times.
@@ -288,9 +282,8 @@ a:focus-visible,summary:focus-visible{outline:3px solid rgba(224,50,43,.35);outl
 @media (max-width:900px){
   .nav a:not(.btn){display:none}
   .hero{padding:56px 0 72px}
-  .hero-grid{grid-template-columns:1fr;gap:48px}
-  .leo{display:none}
-  .book-head .avatar{display:block}
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-book{justify-self:stretch;max-width:620px}
   .results,.steps{grid-template-columns:1fr;gap:28px}
   .steps{gap:48px}
   .section{padding:80px 0}
@@ -364,30 +357,26 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, documen
 <main>
   <section class="hero">
     <div class="container hero-grid">
-      <div>
+      <div class="hero-copy">
         <p class="eyebrow">For remodeling and home improvement contractors</p>
         <h1>Try us for 30 days. <em>Then decide.</em></h1>
         <p class="lede">BuildSignals delivers pre-qualified, budget-confirmed appointments for remodeling and home improvement contractors, nationwide. No retainer for the first 30 days: you pay per appointment that shows. After that, your call.</p>
-        <div class="hero-book" id="book">
-          <div class="book-head">
-            <img src="/leo-melaye-face.jpg" alt="Leo Melaye" class="avatar" width="52" height="52">
-            <div>
-              <p class="book-title">Book a 30-minute call</p>
-              <p class="sub">Set up your trial with Leo. We'll check if your area is open.</p>
-            </div>
-          </div>
-          <div class="book-frame">
-            <p class="book-loading" aria-hidden="true">Loading calendar…</p>
-            <iframe src="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" title="Book a call with Leo" scrolling="no" id="KGpXKzKABemmVF1LZvIQ_book"></iframe>
-          </div>
-          <p class="fallback">Calendar not loading? <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Open it in a new tab</a>, or call <a href="tel:+12134497226">(213) 449-7226</a>.</p>
-        </div>
         <p class="trust"><strong>$2.8M+</strong> in remodeling work closed by our clients · <a href="/results">See their numbers</a></p>
       </div>
-      <figure class="leo">
-        <img src="/leo-melaye.jpg" alt="Leo Melaye, founder of BuildSignals, speaking on stage" width="720" height="900" fetchpriority="high">
-        <figcaption><strong>Leo Melaye, founder</strong><span>You'll talk to me, not a sales rep.</span></figcaption>
-      </figure>
+      <div class="hero-book" id="book">
+        <div class="book-head">
+          <img src="/leo-melaye-face.jpg" alt="Leo Melaye" class="avatar" width="52" height="52">
+          <div>
+            <p class="book-title">Book a 30-minute call</p>
+            <p class="sub">Set up your trial with Leo. We'll check if your area is open.</p>
+          </div>
+        </div>
+        <div class="book-frame">
+          <p class="book-loading" aria-hidden="true">Loading calendar…</p>
+          <iframe src="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" title="Book a call with Leo" scrolling="no" id="KGpXKzKABemmVF1LZvIQ_book"></iframe>
+        </div>
+        <p class="fallback">Calendar not loading? <a href="https://api.leadconnectorhq.com/widget/booking/KGpXKzKABemmVF1LZvIQ" target="_blank" rel="noopener">Open it in a new tab</a>, or call <a href="tel:+12134497226">(213) 449-7226</a>.</p>
+      </div>
     </div>
   </section>
 
